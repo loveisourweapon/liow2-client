@@ -1,0 +1,13 @@
+@import '../../bower_components/material-design-lite/src/color-definitions';
+
+$color-primary: $palette-red-700;
+$color-primary-dark: $palette-red-900;
+$color-accent: $palette-grey-50;
+$color-primary-contrast: $color-dark-contrast;
+$color-accent-contrast: $color-light-contrast;
+
+@import '../../bower_components/material-design-lite/src/material-design-lite';
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  color: unquote("rgb(#{$palette-grey-900})");
+}

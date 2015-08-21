@@ -1,0 +1,6 @@
+{
+  "name": "liow2-client",
+  "dependencies": {
+    "material-design-lite": "~1.0.4"
+  }
+}

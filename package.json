@@ -1,0 +1,57 @@
+{
+  "name": "liow2-client",
+  "version": "1.0.0",
+  "description": "The Love is our Weapon Campaign website client app",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "babel-node server.js",
+    "watch": "nodemon --exec babel-node -- server.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkbooth/liow2-client.git"
+  },
+  "keywords": [
+    "Love",
+    "Weapon",
+    "Campaign",
+    "website",
+    "client",
+    "app",
+    "React",
+    "Flux",
+    "Alt"
+  ],
+  "author": "Ben Booth <bkbooth@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "alt": "^0.17.1",
+    "babel": "^5.8.21",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6",
+    "morgan": "^1.6.1",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "babelify": "^6.2.0",
+    "bower": "^1.4.1",
+    "browserify": "^11.0.1",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-if": "^1.2.5",
+    "gulp-plumber": "^1.0.1",
+    "gulp-sass": "^2.0.4",
+    "gulp-streamify": "^1.0.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.3.1"
+  }
+}
