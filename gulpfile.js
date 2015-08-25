@@ -29,7 +29,8 @@ var dependencies = [
  */
 gulp.task('vendor', function() {
   return gulp.src([
-    'bower_components/material-design-lite/material.js',
+    'bower_components/jquery/dist/jquery.js',
+    'bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
   ]).pipe(concat('vendor.js'))
     .pipe(gulpif(production, uglify({ mangle: false })))
     .pipe(gulp.dest('public/js'));

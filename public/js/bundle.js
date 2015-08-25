@@ -25,10 +25,6 @@ var _Navbar = require('./Navbar');
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
 
-var _Drawer = require('./Drawer');
-
-var _Drawer2 = _interopRequireDefault(_Drawer);
-
 var _Footer = require('./Footer');
 
 var _Footer2 = _interopRequireDefault(_Footer);
@@ -47,9 +43,8 @@ var App = (function (_React$Component) {
     value: function render() {
       return _react2['default'].createElement(
         'div',
-        { className: 'mdl-layout mdl-js-layout mdl-layout--fixed-header' },
+        null,
         _react2['default'].createElement(_Navbar2['default'], null),
-        _react2['default'].createElement(_Drawer2['default'], null),
         _react2['default'].createElement(_reactRouter.RouteHandler, null),
         _react2['default'].createElement(_Footer2['default'], null)
       );
@@ -62,72 +57,7 @@ var App = (function (_React$Component) {
 exports['default'] = App;
 module.exports = exports['default'];
 
-},{"./Drawer":2,"./Footer":3,"./Navbar":6,"react":"react","react-router":"react-router"}],2:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var Drawer = (function (_React$Component) {
-  _inherits(Drawer, _React$Component);
-
-  function Drawer() {
-    _classCallCheck(this, Drawer);
-
-    _get(Object.getPrototypeOf(Drawer.prototype), "constructor", this).apply(this, arguments);
-  }
-
-  _createClass(Drawer, [{
-    key: "render",
-    value: function render() {
-      return _react2["default"].createElement(
-        "div",
-        { className: "mdl-layout__drawer mdl-layout--small-screen-only" },
-        _react2["default"].createElement(
-          "nav",
-          { className: "mdl-navigation" },
-          _react2["default"].createElement(
-            "a",
-            { className: "mdl-navigation__link", href: "#" },
-            "Campaign"
-          ),
-          _react2["default"].createElement(
-            "a",
-            { className: "mdl-navigation__link", href: "#" },
-            "Updates"
-          ),
-          _react2["default"].createElement(
-            "a",
-            { className: "mdl-navigation__link", href: "#" },
-            "Comments (6)"
-          )
-        )
-      );
-    }
-  }]);
-
-  return Drawer;
-})(_react2["default"].Component);
-
-exports["default"] = Drawer;
-module.exports = exports["default"];
-
-},{"react":"react"}],3:[function(require,module,exports){
+},{"./Footer":2,"./Navbar":5,"react":"react","react-router":"react-router"}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -166,36 +96,40 @@ var Footer = (function (_React$Component) {
     value: function render() {
       return _react2['default'].createElement(
         'footer',
-        { className: 'mdl-mini-footer' },
+        { className: 'footer' },
         _react2['default'].createElement(
           'div',
-          { className: 'mdl-mini-footer__left-section' },
+          { className: 'container' },
           _react2['default'].createElement(
             'div',
-            { className: 'mdl-logo' },
+            { className: 'pull-left' },
             '© ',
             (0, _moment2['default'])().format('YYYY'),
             ' Love is our Weapon'
           ),
           _react2['default'].createElement(
-            'ul',
-            { className: 'mdl-mini-footer__link-list' },
+            'div',
+            { className: 'pull-right' },
             _react2['default'].createElement(
-              'li',
-              null,
+              'ul',
+              { className: 'list-inline' },
               _react2['default'].createElement(
-                'a',
-                { href: '#' },
-                'Help'
-              )
-            ),
-            _react2['default'].createElement(
-              'li',
-              null,
+                'li',
+                null,
+                _react2['default'].createElement(
+                  'a',
+                  { href: '#' },
+                  'Help'
+                )
+              ),
               _react2['default'].createElement(
-                'a',
-                { href: '#' },
-                'Privacy & Terms'
+                'li',
+                null,
+                _react2['default'].createElement(
+                  'a',
+                  { href: '#' },
+                  'Privacy & Terms'
+                )
               )
             )
           )
@@ -210,7 +144,90 @@ var Footer = (function (_React$Component) {
 exports['default'] = Footer;
 module.exports = exports['default'];
 
-},{"moment":10,"react":"react"}],4:[function(require,module,exports){
+},{"moment":9,"react":"react"}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Jumbotron = require('./Jumbotron');
+
+var _Jumbotron2 = _interopRequireDefault(_Jumbotron);
+
+var _Welcome = require('./Welcome');
+
+var _Welcome2 = _interopRequireDefault(_Welcome);
+
+var Home = (function (_React$Component) {
+  _inherits(Home, _React$Component);
+
+  function Home() {
+    _classCallCheck(this, Home);
+
+    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(Home, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(_Jumbotron2['default'], { imageUrl: '/images/header.jpg' }),
+        _react2['default'].createElement(_Welcome2['default'], null),
+        _react2['default'].createElement(
+          'div',
+          { className: 'container' },
+          _react2['default'].createElement(
+            'div',
+            { className: 'row' },
+            _react2['default'].createElement(
+              'div',
+              { className: 'col-xs-12' },
+              _react2['default'].createElement(
+                'p',
+                null,
+                'Content'
+              ),
+              _react2['default'].createElement(
+                'p',
+                null,
+                'Goes'
+              ),
+              _react2['default'].createElement(
+                'p',
+                null,
+                'Here'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Home;
+})(_react2['default'].Component);
+
+exports['default'] = Home;
+module.exports = exports['default'];
+
+},{"./Jumbotron":4,"./Welcome":6,"react":"react"}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -243,12 +260,15 @@ var Header = (function (_React$Component) {
   _createClass(Header, [{
     key: "render",
     value: function render() {
-      var altText = this.props.altText || "Header Image";
       var imgStyle = {
         backgroundImage: "url(" + this.props.imageUrl + ")"
       };
 
-      return _react2["default"].createElement("div", { className: "header-image", alt: altText, title: altText, style: imgStyle });
+      return _react2["default"].createElement(
+        "div",
+        { className: "jumbotron", style: imgStyle },
+        _react2["default"].createElement("div", { className: "container" })
+      );
     }
   }]);
 
@@ -257,87 +277,12 @@ var Header = (function (_React$Component) {
 
 exports["default"] = Header;
 module.exports = exports["default"];
+/*<h1>
+ "Love your neighbor as yourself"
+ <br></br><small>- Jesus</small>
+</h1>*/
 
 },{"react":"react"}],5:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Header = require('./Header');
-
-var _Header2 = _interopRequireDefault(_Header);
-
-var _Welcome = require('./Welcome');
-
-var _Welcome2 = _interopRequireDefault(_Welcome);
-
-var Home = (function (_React$Component) {
-  _inherits(Home, _React$Component);
-
-  function Home() {
-    _classCallCheck(this, Home);
-
-    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).apply(this, arguments);
-  }
-
-  _createClass(Home, [{
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'main',
-        { className: 'mdl-layout__content mdl-color--yellow-50' },
-        _react2['default'].createElement(_Header2['default'], { imageUrl: '/images/header.jpg', altText: "\"Love your neighbor as yourself\" - Jesus" }),
-        _react2['default'].createElement(_Welcome2['default'], null),
-        _react2['default'].createElement(
-          'div',
-          { className: 'mdl-grid' },
-          _react2['default'].createElement(
-            'div',
-            { className: 'mdl-cell' },
-            _react2['default'].createElement(
-              'p',
-              null,
-              'Content'
-            ),
-            _react2['default'].createElement(
-              'p',
-              null,
-              'Goes'
-            ),
-            _react2['default'].createElement(
-              'p',
-              null,
-              'Here'
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return Home;
-})(_react2['default'].Component);
-
-exports['default'] = Home;
-module.exports = exports['default'];
-
-},{"./Header":4,"./Welcome":7,"react":"react"}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -371,36 +316,71 @@ var Navbar = (function (_React$Component) {
     key: "render",
     value: function render() {
       return _react2["default"].createElement(
-        "header",
-        { className: "mdl-layout__header mdl-color--white mdl-color-text--grey-900" },
-        _react2["default"].createElement("div", { className: "mdl-layout__icon" }),
+        "nav",
+        { className: "navbar navbar-default navbar-fixed-top", id: "liow-navbar", role: "navigation" },
         _react2["default"].createElement(
           "div",
-          { className: "mdl-layout__header-row" },
+          { className: "container" },
           _react2["default"].createElement(
-            "span",
-            { className: "mdl-layout-title" },
-            _react2["default"].createElement("img", { src: "/images/logo-navbar.png" }),
-            "Love is our Weapon"
+            "div",
+            { className: "navbar-header" },
+            _react2["default"].createElement(
+              "button",
+              { type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#liow-navbar-collapse", "aria-expanded": "false" },
+              _react2["default"].createElement(
+                "span",
+                { className: "sr-only" },
+                "Toggle navigation"
+              ),
+              _react2["default"].createElement("span", { className: "icon-bar" }),
+              _react2["default"].createElement("span", { className: "icon-bar" }),
+              _react2["default"].createElement("span", { className: "icon-bar" })
+            ),
+            _react2["default"].createElement(
+              "a",
+              { className: "navbar-brand", href: "/" },
+              _react2["default"].createElement("img", { alt: "Love is our Weapon", src: "/images/logo-navbar.png" }),
+              "Love is our Weapon"
+            )
           ),
-          _react2["default"].createElement("div", { className: "mdl-layout-spacer" }),
           _react2["default"].createElement(
-            "nav",
-            { className: "mdl-navigation mdl-layout--large-screen-only" },
+            "div",
+            { className: "collapse navbar-collapse", id: "liow-navbar-collapse" },
             _react2["default"].createElement(
-              "a",
-              { className: "mdl-navigation__link", href: "#" },
-              "Campaign"
-            ),
-            _react2["default"].createElement(
-              "a",
-              { className: "mdl-navigation__link", href: "#" },
-              "Updates"
-            ),
-            _react2["default"].createElement(
-              "a",
-              { className: "mdl-navigation__link", href: "#" },
-              "Comments (6)"
+              "ul",
+              { className: "nav navbar-nav navbar-right" },
+              _react2["default"].createElement(
+                "li",
+                null,
+                _react2["default"].createElement(
+                  "a",
+                  { href: "#" },
+                  "Campaign"
+                )
+              ),
+              _react2["default"].createElement(
+                "li",
+                null,
+                _react2["default"].createElement(
+                  "a",
+                  { href: "#" },
+                  "Updates"
+                )
+              ),
+              _react2["default"].createElement(
+                "li",
+                null,
+                _react2["default"].createElement(
+                  "a",
+                  { href: "#" },
+                  "Comments ",
+                  _react2["default"].createElement(
+                    "span",
+                    { className: "badge" },
+                    "6"
+                  )
+                )
+              )
             )
           )
         )
@@ -414,7 +394,7 @@ var Navbar = (function (_React$Component) {
 exports["default"] = Navbar;
 module.exports = exports["default"];
 
-},{"react":"react"}],7:[function(require,module,exports){
+},{"react":"react"}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -449,84 +429,88 @@ var Welcome = (function (_React$Component) {
     value: function render() {
       return _react2["default"].createElement(
         "div",
-        { className: "mdl-grid mdl-color--white" },
+        { className: "container" },
         _react2["default"].createElement(
           "div",
-          { className: "mdl-cell mdl-cell--8-col mdl-cell--5-col-tablet" },
+          { className: "row" },
           _react2["default"].createElement(
-            "h4",
-            null,
-            "The Love is our Weapon Campaign is a youth movement that exists to change cities through the love of Jesus by doing strategic practical acts of love."
-          ),
-          _react2["default"].createElement(
-            "p",
-            null,
-            "Thousands of people, doing thousands of acts of love, bringing change, value, healing and hope throughout cities and communities everywhere."
-          ),
-          _react2["default"].createElement(
-            "p",
-            { style: { textAlign: 'center' } },
-            _react2["default"].createElement("br", null),
+            "div",
+            { className: "col-md-8" },
             _react2["default"].createElement(
-              "button",
-              { className: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--colored" },
-              "Login"
+              "h4",
+              null,
+              "The Love is our Weapon Campaign is a youth movement that exists to change cities through the love of Jesus by doing strategic practical acts of love."
             ),
-            "   or   ",
             _react2["default"].createElement(
-              "button",
-              { className: "mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary" },
-              "Sign up"
+              "p",
+              null,
+              "Thousands of people, doing thousands of acts of love, bringing change, value, healing and hope throughout cities and communities everywhere."
+            ),
+            _react2["default"].createElement(
+              "p",
+              { style: { textAlign: 'center' } },
+              _react2["default"].createElement("br", null),
+              _react2["default"].createElement(
+                "button",
+                { type: "button", className: "btn btn-primary" },
+                "Login"
+              ),
+              "   or   ",
+              _react2["default"].createElement(
+                "button",
+                { type: "button", className: "btn btn-default" },
+                "Sign up"
+              )
             )
-          )
-        ),
-        _react2["default"].createElement(
-          "div",
-          { className: "mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet" },
-          _react2["default"].createElement(
-            "h2",
-            { className: "mdl-color-text--red-700", style: { marginBottom: 0 } },
-            "80,900"
           ),
           _react2["default"].createElement(
-            "h4",
-            { style: { marginTop: 0, marginBottom: 0 } },
-            "acts of love"
-          ),
-          _react2["default"].createElement(
-            "p",
-            { style: { marginTop: 0 } },
-            "done around the world"
-          ),
-          _react2["default"].createElement(
-            "h2",
-            { className: "mdl-color-text--red-700", style: { marginBottom: 0 } },
-            "125"
-          ),
-          _react2["default"].createElement(
-            "h4",
-            { style: { marginTop: 0, marginBottom: 0 } },
-            "ministries"
-          ),
-          _react2["default"].createElement(
-            "p",
-            { style: { marginTop: 0 } },
-            "serving together"
-          ),
-          _react2["default"].createElement(
-            "h2",
-            { className: "mdl-color-text--red-700", style: { marginBottom: 0 } },
-            "65,000"
-          ),
-          _react2["default"].createElement(
-            "h4",
-            { style: { marginTop: 0, marginBottom: 0 } },
-            "individuals"
-          ),
-          _react2["default"].createElement(
-            "p",
-            { style: { marginTop: 0 } },
-            "causing change"
+            "div",
+            { className: "col-md-4" },
+            _react2["default"].createElement(
+              "h2",
+              { className: "text-primary", style: { marginBottom: 0 } },
+              "80,900"
+            ),
+            _react2["default"].createElement(
+              "h4",
+              { style: { marginTop: 0, marginBottom: 0 } },
+              "acts of love"
+            ),
+            _react2["default"].createElement(
+              "p",
+              { style: { marginTop: 0 } },
+              "done around the world"
+            ),
+            _react2["default"].createElement(
+              "h2",
+              { className: "text-primary", style: { marginBottom: 0 } },
+              "125"
+            ),
+            _react2["default"].createElement(
+              "h4",
+              { style: { marginTop: 0, marginBottom: 0 } },
+              "ministries"
+            ),
+            _react2["default"].createElement(
+              "p",
+              { style: { marginTop: 0 } },
+              "serving together"
+            ),
+            _react2["default"].createElement(
+              "h2",
+              { className: "text-primary", style: { marginBottom: 0 } },
+              "65,000"
+            ),
+            _react2["default"].createElement(
+              "h4",
+              { style: { marginTop: 0, marginBottom: 0 } },
+              "individuals"
+            ),
+            _react2["default"].createElement(
+              "p",
+              { style: { marginTop: 0 } },
+              "causing change"
+            )
           )
         )
       );
@@ -539,7 +523,7 @@ var Welcome = (function (_React$Component) {
 exports["default"] = Welcome;
 module.exports = exports["default"];
 
-},{"react":"react"}],8:[function(require,module,exports){
+},{"react":"react"}],7:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -560,7 +544,7 @@ _reactRouter2['default'].run(_routes2['default'], _reactRouter2['default'].Histo
   _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('app'));
 });
 
-},{"./routes":9,"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
+},{"./routes":8,"react":"react","react-router":"react-router"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -590,7 +574,7 @@ exports['default'] = _react2['default'].createElement(
 );
 module.exports = exports['default'];
 
-},{"./components/App":1,"./components/Home":5,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+},{"./components/App":1,"./components/Home":3,"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -3786,4 +3770,4 @@ module.exports = exports['default'];
     return _moment;
 
 }));
-},{}]},{},[8]);
+},{}]},{},[7]);

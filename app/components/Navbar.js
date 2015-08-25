@@ -3,21 +3,31 @@ import React from 'react';
 class Navbar extends React.Component {
   render() {
     return (
-      <header className="mdl-layout__header mdl-color--white mdl-color-text--grey-900">
-        <div className="mdl-layout__icon"></div>
-        <div className="mdl-layout__header-row">
-          <span className="mdl-layout-title">
-            <img src="/images/logo-navbar.png"></img>
-            Love is our Weapon
-          </span>
-          <div className="mdl-layout-spacer"></div>
-          <nav className="mdl-navigation mdl-layout--large-screen-only">
-            <a className="mdl-navigation__link" href="#">Campaign</a>
-            <a className="mdl-navigation__link" href="#">Updates</a>
-            <a className="mdl-navigation__link" href="#">Comments (6)</a>
-          </nav>
+      <nav className="navbar navbar-default navbar-fixed-top" id="liow-navbar" role="navigation">
+        <div className="container">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#liow-navbar-collapse" aria-expanded="false">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+
+            <a className="navbar-brand" href="/">
+              <img alt="Love is our Weapon" src="/images/logo-navbar.png"></img>
+              Love is our Weapon
+            </a>
+          </div>
+
+          <div className="collapse navbar-collapse" id="liow-navbar-collapse">
+            <ul className="nav navbar-nav navbar-right">
+              <li><a href="#">Campaign</a></li>
+              <li><a href="#">Updates</a></li>
+              <li><a href="#">Comments <span className="badge">6</span></a></li>
+            </ul>
+          </div>
         </div>
-      </header>
+      </nav>
     );
   }
 }

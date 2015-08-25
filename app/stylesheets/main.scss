@@ -1,12 +1,27 @@
-@import '../../bower_components/material-design-lite/src/color-definitions';
+// Bootstrap variable overrides
+$brand-primary: #da190b;
 
-$color-primary: $palette-red-700;
-$color-primary-dark: $palette-red-900;
-$color-accent: $palette-grey-50;
-$color-primary-contrast: $color-dark-contrast;
-$color-accent-contrast: $color-light-contrast;
+$navbar-height: 58px;
+$navbar-default-bg: #ffffff;
+$navbar-default-color: #111111;
+$navbar-default-link-color: $navbar-default-color;
 
-@import '../../bower_components/material-design-lite/src/material-design-lite';
+@import '../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 
-@import './navbar';
-@import './header';
+body {
+  padding-top: $navbar-height;
+}
+
+nav#liow-navbar {
+  .navbar-brand > img {
+    display: inline-block;
+    width: 30px;
+    margin-right: 15px;
+  }
+}
+
+.jumbotron {
+  background-position: center;
+  background-size: cover;
+  height: 40vw;
+}
