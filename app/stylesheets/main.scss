@@ -8,6 +8,5 @@ $color-accent-contrast: $color-light-contrast;
 
 @import '../../bower_components/material-design-lite/src/material-design-lite';
 
-.mdl-layout__header .mdl-layout__drawer-button {
-  color: unquote("rgb(#{$palette-grey-900})");
-}
+@import './navbar';
+@import './header';

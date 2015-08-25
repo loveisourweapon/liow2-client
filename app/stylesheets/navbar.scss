@@ -1,0 +1,10 @@
+.mdl-layout__header {
+  .mdl-layout__drawer-button, .mdl-navigation__link {
+    color: unquote("rgb(#{$palette-grey-900})");
+  }
+
+  .mdl-layout-title > img {
+    width: 40px;
+    margin-right: 15px;
+  }
+}
