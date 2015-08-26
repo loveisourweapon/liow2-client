@@ -6,7 +6,9 @@ $navbar-default-bg: #ffffff;
 $navbar-default-color: #111111;
 $navbar-default-link-color: $navbar-default-color;
 
-@import '../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
+// Customised bootstrap and font-awesome loaders
+@import './font-awesome';
+@import './bootstrap';
 
 body {
   padding-top: $navbar-height;

@@ -3,7 +3,8 @@ var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
 var streamify = require('gulp-streamify');
 var autoprefixer = require('gulp-autoprefixer');
-var cssmin = require('gulp-cssmin');
+var sourcemaps = require('gulp-sourcemaps');
+var minifycss = require('gulp-minify-css');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
@@ -99,15 +100,27 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
 gulp.task('styles', function() {
   return gulp.src('app/stylesheets/main.scss')
     .pipe(plumber())
-    .pipe(sass())
-    .pipe(autoprefixer())
-    .pipe(gulpif(production, cssmin()))
+    .pipe(sourcemaps.init())
+      .pipe(sass({ includePaths: ['bower_components'] }))
+      .pipe(autoprefixer())
+      .pipe(gulpif(production, minifycss()))
+    .pipe(sourcemaps.write('../maps'))
     .pipe(gulp.dest('public/css'));
+});
+
+/*
+ |--------------------------------------------------------------------------
+ | Copy fonts.
+ |--------------------------------------------------------------------------
+ */
+gulp.task('fonts', function() {
+  return gulp.src('bower_components/font-awesome/fonts/*')
+    .pipe(gulp.dest('public/fonts'))
 });
 
 gulp.task('watch', function() {
   gulp.watch('app/stylesheets/**/*.scss', ['styles']);
 });
 
-gulp.task('default', ['styles', 'vendor', 'browserify-watch', 'watch']);
-gulp.task('build', ['styles', 'vendor', 'browserify']);
+gulp.task('default', ['fonts', 'styles', 'vendor', 'browserify-watch', 'watch']);
+gulp.task('build', ['fonts', 'styles', 'vendor', 'browserify']);
