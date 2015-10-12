@@ -8,7 +8,7 @@
     <title>Love is our Weapon</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/{{ 'main.css' | revManifest }}">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
   <body>
     <div id="app">{{ html | safe }}</div>
 
-    <script src="/js/vendor.js"></script>
-    <script src="/js/vendor.bundle.js"></script>
-    <script src="/js/bundle.js"></script>
+    <script src="/js/{{ 'vendor.js' | revManifest }}"></script>
+    <script src="/js/{{ 'vendor.bundle.js' | revManifest }}"></script>
+    <script src="/js/{{ 'app.bundle.js' | revManifest }}"></script>
   </body>
 </html>
