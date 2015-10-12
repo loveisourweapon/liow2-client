@@ -29,7 +29,10 @@
   "dependencies": {
     "alt": "^0.17.1",
     "babel": "^5.8.21",
+    "bootstrap-sass": "^3.3.5",
     "express": "^4.13.3",
+    "font-awesome": "^4.4.0",
+    "jquery": "^2.1.4",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
@@ -39,7 +42,6 @@
   },
   "devDependencies": {
     "babelify": "^6.2.0",
-    "bower": "^1.4.1",
     "browserify": "^11.0.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",

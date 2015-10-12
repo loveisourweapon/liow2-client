@@ -30,8 +30,8 @@ var dependencies = [
  */
 gulp.task('vendor', function() {
   return gulp.src([
-    'bower_components/jquery/dist/jquery.js',
-    'bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js',
   ]).pipe(concat('vendor.js'))
     .pipe(gulpif(production, uglify({ mangle: false })))
     .pipe(gulp.dest('public/js'));
@@ -101,7 +101,7 @@ gulp.task('styles', function() {
   return gulp.src('app/stylesheets/main.scss')
     .pipe(plumber())
     .pipe(sourcemaps.init())
-      .pipe(sass({ includePaths: ['bower_components'] }))
+      .pipe(sass({ includePaths: ['node_modules'] }))
       .pipe(autoprefixer())
       .pipe(gulpif(production, minifycss()))
     .pipe(sourcemaps.write('../maps'))
@@ -114,7 +114,7 @@ gulp.task('styles', function() {
  |--------------------------------------------------------------------------
  */
 gulp.task('fonts', function() {
-  return gulp.src('bower_components/font-awesome/fonts/*')
+  return gulp.src('node_modules/font-awesome/fonts/*')
     .pipe(gulp.dest('public/fonts'))
 });
 
