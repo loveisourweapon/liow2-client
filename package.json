@@ -20,14 +20,15 @@
     "website",
     "client",
     "app",
-    "React",
-    "Flux",
-    "Alt"
+    "Angular",
+    "ES6"
   ],
   "author": "Ben Booth <bkbooth@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "alt": "^0.17.1",
+    "angular": "^1.4.7",
+    "angular-animate": "^1.4.7",
+    "angular-route": "^1.4.7",
     "babel": "^5.8.21",
     "bootstrap-sass": "^3.3.5",
     "express": "^4.13.3",
@@ -36,8 +37,6 @@
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
-    "react": "^0.13.3",
-    "react-router": "^0.13.3",
     "swig": "^1.4.2"
   },
   "devDependencies": {
@@ -47,7 +46,6 @@
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.0.2",
     "gulp-concat": "^2.6.0",
-    "gulp-if": "^2.0.0",
     "gulp-minify-css": "^1.2.1",
     "gulp-plumber": "^1.0.1",
     "gulp-rev": "^6.0.1",
@@ -56,6 +54,7 @@
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
     "minifyify": "^7.1.0",
+    "partialify": "^3.1.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

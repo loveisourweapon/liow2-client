@@ -1,11 +1,8 @@
 var http = require('http');
 var path = require('path');
-var express = require('express');
 var logger = require('morgan');
-
-var React = require('react');
-var Router = require('react-router');
-var routes = require('./app/routes');
+var express = require('express');
+var app = express();
 
 var swig = require('swig');
 var fs = require('fs');
@@ -16,19 +13,15 @@ swig.setFilter('revManifest', (input) => {
   return revManifest[input] || input;
 });
 
-var app = express();
-
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res) => {
-  Router.run(routes, req.path, (Handler) => {
-    var html = React.renderToString(React.createElement(Handler));
-    var page = swig.renderFile('views/index.html', { html: html });
-    res.send(page);
-  });
+var router = express.Router();
+router.get('/', (req, res) => {
+  res.send(swig.renderFile('views/index.html'));
 });
+app.use('/', router);
 
 var server = http.createServer(app);
 server.listen(app.get('port'), () => {
