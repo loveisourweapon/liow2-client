@@ -38,11 +38,10 @@ var dependencies = [
  */
 gulp.task('vendor', ['clean'], function() {
   return gulp.src([
-    'node_modules/jquery/dist/jquery.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js'
-  ]).pipe(sourcemaps.init())
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+  ]).pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(concat({ path: 'vendor.js', cwd: '.' }))
-      .pipe(uglify())
       .pipe(rev())
     .pipe(sourcemaps.write('../assets'))
     .pipe(gulp.dest(jsDir))
