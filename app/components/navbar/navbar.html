@@ -14,6 +14,25 @@
       </a>
     </div>
 
+    <form class="navbar-form navbar-left" id="group-search" role="search">
+      <div class="form-group">
+        <label class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <ui-select ng-model="navbar.group" on-select="navbar.selectGroup($item)">
+            <ui-select-match placeholder="Find a group...">
+              {{ $select.selected.name }}
+            </ui-select-match>
+            <ui-select-choices repeat="group in navbar.groups"
+                               position="down"
+                               refresh="navbar.refreshGroups($select.search)"
+                               refresh-delay="200">
+              <div ng-bind-html="group.name | highlight:$select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </label>
+      </div>
+    </form>
+
     <div class="collapse navbar-collapse" id="liow-navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Campaign</a></li>

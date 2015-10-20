@@ -29,6 +29,7 @@
     "angular": "^1.4.7",
     "angular-animate": "^1.4.7",
     "angular-route": "^1.4.7",
+    "angular-sanitize": "^1.4.7",
     "babel": "^5.8.21",
     "bootstrap-sass": "^3.3.5",
     "express": "^4.13.3",
@@ -37,7 +38,8 @@
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "ui-select": "github:angular-ui/ui-select"
   },
   "devDependencies": {
     "babelify": "^6.2.0",

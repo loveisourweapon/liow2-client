@@ -6,20 +6,16 @@ $navbar-default-bg: #ffffff;
 $navbar-default-color: #111111;
 $navbar-default-link-color: $navbar-default-color;
 
-// Customised bootstrap and font-awesome loaders
+// Include vendor dependencies
 @import './font-awesome';
 @import './bootstrap';
+@import 'ui-select/src/common';
+
+// Component stylesheets
+@import './navbar';
 
 body {
   padding-top: $navbar-height;
-}
-
-nav#liow-navbar {
-  .navbar-brand > img {
-    display: inline-block;
-    width: 30px;
-    margin-right: 15px;
-  }
 }
 
 .jumbotron {

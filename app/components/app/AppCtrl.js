@@ -1,6 +1,7 @@
-function AppCtrl() {
-  this.date = Date.now();
+export default class AppCtrl {
+  constructor() {
+    this.date = Date.now();
+  }
 }
-AppCtrl.$inject = [];
 
-export default AppCtrl;
+AppCtrl.$inject = [];

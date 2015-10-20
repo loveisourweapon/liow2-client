@@ -4,12 +4,9 @@ import angular from 'angular';
 import jumbotron from '../jumbotron';
 import welcome from '../welcome';
 
+import HomeCtrl from './HomeCtrl';
 import template from './home.html';
 export let homeTpl = template;
-
-function HomeCtrl() {
-  this.name = 'Ben';
-}
 
 export let home = angular.module('app.components.home', [jumbotron, welcome])
   .controller('HomeCtrl', HomeCtrl)

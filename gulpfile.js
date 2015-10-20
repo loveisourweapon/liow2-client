@@ -25,6 +25,8 @@ var manifestFile = 'public/assets/rev-manifest.json';
 var dependencies = [
   'angular',
   'angular-route',
+  'angular-sanitize',
+  'ui-select',
   'lodash',
   'moment'
 ];
