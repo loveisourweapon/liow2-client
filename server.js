@@ -18,7 +18,7 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var router = express.Router();
-router.get('/', (req, res) => {
+router.get('*', (req, res) => {
   res.send(swig.renderFile('views/index.html'));
 });
 app.use('/', router);

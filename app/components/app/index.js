@@ -39,7 +39,8 @@ export default angular.module('app', [ngRoute, 'ui.select', navbar, home, group]
           controller: 'GroupCtrl',
           controllerAs: 'group',
           template: groupTpl
-        });
+        })
+        .otherwise('/');
 
       $locationProvider.html5Mode(true);
 
