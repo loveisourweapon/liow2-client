@@ -1,10 +1,12 @@
 // Bootstrap variable overrides
 $brand-primary: #da190b;
+$gray-border: #999;
 
 $navbar-height: 58px;
-$navbar-default-bg: #ffffff;
-$navbar-default-color: #111111;
+$navbar-default-bg: #fff;
+$navbar-default-color: #111;
 $navbar-default-link-color: $navbar-default-color;
+$navbar-default-border: $gray-border;
 
 // Include vendor dependencies
 @import './font-awesome';
@@ -13,6 +15,7 @@ $navbar-default-link-color: $navbar-default-color;
 
 // Component stylesheets
 @import './navbar';
+@import './footer';
 
 body {
   padding-top: $navbar-height;
