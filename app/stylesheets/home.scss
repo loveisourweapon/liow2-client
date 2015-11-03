@@ -1,0 +1,39 @@
+.Home__Welcome1 {}
+
+.Home__Welcome2 {
+  background: #de2b2b;
+  color: white;
+  min-height: 730px;
+  position: relative;
+
+  .row > div {
+    position: inherit;
+  }
+
+  h2 {
+    margin-top: 30px;
+  }
+
+  img {
+    position: absolute;
+    right: 0;
+    bottom: -22px;
+  }
+
+  ol {
+    padding-top: 200px;
+    font-size: large;
+
+    li {
+      margin: 30px;
+    }
+  }
+}
+
+.Home__Welcome3 {
+  margin-bottom: 30px;
+
+  h2 {
+    margin-top: 45px;
+  }
+}
