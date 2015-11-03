@@ -18,13 +18,24 @@ nav#liow-navbar {
   }
 
   #group-search {
+    margin-top: 14px;
+
     .input-group {
       margin: 0;
     }
 
+    .input-group-addon {
+      border-radius: 15px 0 0 15px;
+    }
+
     .form-control {
-      border-radius: 0 $border-radius-small $border-radius-small 0;
+      border-radius: 0 15px 15px 0;
       width: 200px;
+      height: 30px;
+      background: #eee;
+      color: #555;
+      font-weight: normal;
+      box-shadow: none;
     }
   }
 }
