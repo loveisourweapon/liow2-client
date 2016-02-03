@@ -59,6 +59,6 @@ class Group {
 }
 Group.$inject = ['$http'];
 
-export default angular.module('app.services.group', [])
+export default angular.module('app.services.Group', [])
   .service('Group', Group)
   .name;

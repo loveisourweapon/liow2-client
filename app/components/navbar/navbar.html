@@ -20,13 +20,15 @@
       <div class="form-group">
         <label class="input-group">
           <div class="input-group-addon"><i class="fa fa-search"></i></div>
-          <ui-select ng-model="navbar.group" on-select="navbar.selectGroup($item)">
+          <ui-select ng-model="NavbarCtrl.group"
+                     on-select="NavbarCtrl.selectGroup($item)"
+                     append-to-body="false">
             <ui-select-match placeholder="Find a group...">
               {{ $select.selected.name }}
             </ui-select-match>
-            <ui-select-choices repeat="group in navbar.groups"
+            <ui-select-choices repeat="group in NavbarCtrl.groups"
                                position="down"
-                               refresh="navbar.refreshGroups($select.search)"
+                               refresh="NavbarCtrl.refreshGroups($select.search)"
                                refresh-delay="200">
               <div ng-bind-html="group.name | highlight:$select.search"></div>
             </ui-select-choices>
@@ -40,6 +42,16 @@
         <li><a href="#">Campaign</a></li>
         <li><a href="#">Updates</a></li>
         <li><a href="#">Comments <span class="badge">6</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <img src="images/user.png" style="width: 25px;">
+            <span class="caret"></span>
+            <ul class="dropdown-menu">
+              <li><a ng-click="NavbarCtrl.Modal.openTest()" href>Login</a></li>
+              <li><a ng-click="NavbarCtrl.Modal.openTest()" href>Sign up</a></li>
+            </ul>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

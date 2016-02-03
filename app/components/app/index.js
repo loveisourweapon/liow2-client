@@ -57,6 +57,7 @@ export default angular.module('app', [ngRoute, 'ui.select', navbar, home, deed, 
       $locationProvider.html5Mode(true);
 
       uiSelectConfig.theme = 'bootstrap';
+      uiSelectConfig.appendToBody = true;
     }
   ])
   .name;

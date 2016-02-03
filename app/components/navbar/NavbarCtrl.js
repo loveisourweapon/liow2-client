@@ -1,9 +1,8 @@
 const MIN_QUERY_LENGTH = 3;
 
 export default class NavbarCtrl {
-  constructor($location, Group) {
-    this.$location = $location;
-    this.Group = Group;
+  constructor($location, Group, Modal) {
+    Object.assign(this, { $location, Group, Modal });
 
     this.groups = [];
     this.group = null;
@@ -29,4 +28,4 @@ export default class NavbarCtrl {
   }
 }
 
-NavbarCtrl.$inject = ['$location', 'Group'];
+NavbarCtrl.$inject = ['$location', 'Group', 'Modal'];
