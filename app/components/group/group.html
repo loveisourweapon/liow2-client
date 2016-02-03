@@ -1,9 +1,22 @@
 <jumbotron image="/images/header.jpg"></jumbotron>
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
-      <h1>This is a Group Homepage!</h1>
-      <p>Though it's just a placeholder for now...</p>
+    <div class="col-xs-12" ng-hide="GroupCtrl.loading || GroupCtrl.error">
+      <h1>Welcome to {{ GroupCtrl.group.name }}</h1>
+      <div marked="GroupCtrl.group.welcomeMessage"></div>
+    </div>
+
+    <div class="col-xs-12" ng-show="GroupCtrl.loading">
+      <p class="text-center">
+        <i class="fa fa-cog fa-5x fa-spin"></i>
+      </p>
+    </div>
+
+    <div class="col-xs-12" ng-show="GroupCtrl.error">
+      <div class="alert alert-danger" role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ GroupCtrl.error }}
+      </div>
     </div>
   </div>
 </div>

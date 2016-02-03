@@ -26,6 +26,7 @@ var dependencies = [
   'angular',
   'angular-route',
   'angular-sanitize',
+  'angular-marked',
   'ui-select',
   'lodash',
   'moment'

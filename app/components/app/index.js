@@ -44,7 +44,7 @@ export default angular.module('app', [ngRoute, 'ui.select', navbar, home, deed, 
         })
         .when('/g/:group', {
           controller: 'GroupCtrl',
-          controllerAs: 'group',
+          controllerAs: 'GroupCtrl',
           template: groupTpl
         })
         .when('/u/:user', {
