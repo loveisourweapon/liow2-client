@@ -14,16 +14,7 @@ $navbar-default-border: $gray-border;
 @import 'ui-select/src/common';
 
 // Component stylesheets
+@import './base';
 @import './navbar';
 @import './home';
 @import './footer';
-
-body {
-  padding-top: $navbar-height;
-}
-
-.jumbotron {
-  background-position: center;
-  background-size: cover;
-  height: 40vw;
-}
