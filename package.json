@@ -39,6 +39,7 @@
     "lodash": "^4.1.0",
     "moment": "^2.11.1",
     "morgan": "^1.6.1",
+    "satellizer": "^0.13.4",
     "swig": "^1.4.2",
     "ui-select": "https://github.com/angular-ui/ui-select/archive/v0.13.2.tar.gz"
   },

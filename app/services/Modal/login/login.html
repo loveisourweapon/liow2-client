@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          ng-click="Login.$uibModalInstance.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+  <h4 class="modal-title">
+    Login
+  </h4>
+</div><!-- .modal-header -->
+
+<div class="modal-body">
+  <p>
+    <button ng-click="Login.authenticateFacebook()"
+            class="btn btn-facebook btn-block">
+      <i class="fa fa-fw fa-facebook-official"></i>
+      Sign in with Facebook
+    </button>
+  </p>
+
+  <hr>
+
+  <p>Email and password login coming soon, for now please just use Facebook sign in.</p>
+
+  <form ng-submit="Login.authenticateEmail(Login.email, Login.password)">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-fw fa-at"></i></div>
+        <input type="text"
+               class="form-control"
+               id="email"
+               name="email"
+               ng-model="Login.email"
+               placeholder="Email"
+               disabled>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-fw fa-key"></i></div>
+        <input type="password"
+               class="form-control"
+               id="password"
+               name="password"
+               ng-model="Login.password"
+               placeholder="Password"
+               disabled>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" disabled>Login</button>
+  </form>
+</div><!-- .modal-body -->

@@ -13,3 +13,7 @@ body {
   height: 40vw;
   margin: 0;
 }
+
+.btn-facebook {
+  @include button-variant(white, #3b5998, #335190);
+}

@@ -38,4 +38,15 @@ nav#liow-navbar {
       box-shadow: none;
     }
   }
+
+  a.user-dropdown {
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    > img {
+      width: 40px;
+      height: 40px;
+      border: 1px solid;
+    }
+  }
 }

@@ -1,13 +1,20 @@
 const MIN_QUERY_LENGTH = 3;
 
 export default class NavbarCtrl {
-  constructor($location, Group, Modal) {
-    Object.assign(this, { $location, Group, Modal });
+  constructor($location, User, Group, Modal) {
+    Object.assign(this, { $location, User, Group, Modal });
 
     this.groups = [];
     this.group = null;
   }
 
+  /**
+   * Refresh list of groups using search query
+   *
+   * @param {string} query
+   *
+   * @returns {Promise|boolean}
+   */
   refreshGroups(query) {
     this.groups = [];
 
@@ -22,10 +29,15 @@ export default class NavbarCtrl {
       });
   }
 
+  /**
+   * Redirect to the selected group homepage
+   *
+   * @param {object} item
+   */
   selectGroup(item) {
     this.group = null;
     this.$location.path(`/g/${item.urlName}`);
   }
 }
 
-NavbarCtrl.$inject = ['$location', 'Group', 'Modal'];
+NavbarCtrl.$inject = ['$location', 'User', 'Group', 'Modal'];

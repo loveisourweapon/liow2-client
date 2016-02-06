@@ -3,6 +3,7 @@ import angular from 'angular';
 // Module dependencies
 import ngSanitize from 'angular-sanitize';
 import 'ui-select'; // Not browserified
+import User from '../../services/User';
 import Group from '../../services/Group';
 import Modal from '../../services/Modal';
 
@@ -10,7 +11,7 @@ import Modal from '../../services/Modal';
 import NavbarCtrl from './NavbarCtrl';
 import navbarTpl from './navbar.html';
 
-export default angular.module('app.components.navbar', [ngSanitize, 'ui.select', Group, Modal])
+export default angular.module('app.components.navbar', [ngSanitize, 'ui.select', User, Group, Modal])
   .directive('navbar', () => {
     return {
       restrict: 'E',

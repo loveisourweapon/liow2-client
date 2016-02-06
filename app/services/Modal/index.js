@@ -1,9 +1,12 @@
 import angular from 'angular';
-import uibs from 'angular-ui-bootstrap';
 
-// Test modal
-import TestCtrl from './test/TestCtrl';
-import testTpl from './test/test.html';
+// Module dependencies
+import uibs from 'angular-ui-bootstrap';
+import User from '../../services/User';
+
+// Login modal
+import LoginCtrl from './login/LoginCtrl';
+import loginTpl from './login/login.html';
 
 class Modal {
   constructor($uibModal, $q) {
@@ -11,23 +14,22 @@ class Modal {
   }
 
   /**
-   * Test opening a modal
+   * Open the login modal
    *
    * @returns {Promise}
    */
-  openTest() {
+  openLogin() {
     return this.$uibModal.open({
-      controller: TestCtrl,
-      controllerAs: 'Test',
-      template: testTpl,
-      size: 'md',
-      resolve: {}
+      controller: LoginCtrl,
+      controllerAs: 'Login',
+      template: loginTpl,
+      size: 'sm'
     }).result;
   }
 }
 Modal.$inject = ['$uibModal', '$q'];
 
-export default angular.module('app.services.Modal', [uibs])
+export default angular.module('app.services.Modal', [uibs, User])
   .service('Modal', Modal)
   .name;
 
