@@ -9,11 +9,14 @@ export default angular.module('app.components.jumbotron', [])
     return {
       restrict: 'E',
       scope: {
-        image: '@'
+        image: '@',
+        background: '@',
+        title: '@',
+        text: '@'
       },
       bindToController: true,
       controller: JumbotronCtrl,
-      controllerAs: 'jumbotron',
+      controllerAs: 'JumbotronCtrl',
       template: jumbotronTpl
     };
   })

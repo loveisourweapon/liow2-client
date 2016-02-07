@@ -24,13 +24,15 @@ var manifestFile = 'public/assets/rev-manifest.json';
 
 var dependencies = [
   'angular',
+  'angular-marked',
   'angular-route',
   'angular-sanitize',
-  'angular-marked',
   'angular-ui-bootstrap',
-  'ui-select',
   'lodash',
-  'moment'
+  'moment',
+  'satellizer',
+  'seedrandom',
+  'ui-select'
 ];
 
 /*

@@ -1,0 +1,29 @@
+.jumbotron {
+  background-position: center;
+  background-size: cover;
+  height: 35vw;
+  margin: 0;
+  color: white;
+
+  .jumbotron-image {
+    margin-top: 8%;
+    width: 15%;
+    float: left;
+
+    img {
+      width: 200px;
+      border: 2px solid;
+    }
+  }
+
+  .jumbotron-title {
+    float: right;
+    width: 80%;
+    margin-top: 11%;
+  }
+
+  .jumbotron-text {
+    float: right;
+    width: 80%;
+  }
+}

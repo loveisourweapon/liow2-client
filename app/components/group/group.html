@@ -1,9 +1,24 @@
-<jumbotron image="/images/header.jpg"></jumbotron>
-<div class="container">
+<jumbotron image="/images/group.png"
+           background="{{ GroupCtrl.jumbotronBackground }}"
+           title="{{ GroupCtrl.group.name }}"
+           text="12,001 acts of love"></jumbotron>
+<div class="container container-pad">
   <div class="row">
-    <div class="col-xs-12" ng-hide="GroupCtrl.loading || GroupCtrl.error">
-      <h1>Welcome to {{ GroupCtrl.group.name }}</h1>
-      <div marked="GroupCtrl.group.welcomeMessage"></div>
+    <div ng-hide="GroupCtrl.loading || GroupCtrl.error">
+      <div class="col-xs-9">
+        <div marked="GroupCtrl.group.welcomeMessage"></div>
+      </div>
+      <div class="col-xs-3">
+        <p>
+          <button type="button"
+                  class="btn btn-primary btn-block"
+                  ng-click="GroupCtrl.Modal.openLogin()">
+            <i class="fa fa-fw fa-users"></i>
+            <span ng-hide="GroupCtrl.User.isAuthenticated()">Login &amp; </span>
+            Join us
+          </button>
+        </p>
+      </div>
     </div>
 
     <div class="col-xs-12" ng-show="GroupCtrl.loading">

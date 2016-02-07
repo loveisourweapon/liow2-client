@@ -1,6 +1,12 @@
+import seedrandom from 'seedrandom';
+
+const NUM_IMAGES = 6;
+
 export default class GroupCtrl {
-  constructor($routeParams, Group) {
-    Object.assign(this, { Group });
+  constructor($routeParams, User, Group, Modal) {
+    Object.assign(this, { User, Group, Modal });
+
+    this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
 
     this.loadGroup($routeParams.group);
   }
@@ -24,4 +30,4 @@ export default class GroupCtrl {
   }
 }
 
-GroupCtrl.$inject = ['$routeParams', 'Group'];
+GroupCtrl.$inject = ['$routeParams', 'User', 'Group', 'Modal'];
