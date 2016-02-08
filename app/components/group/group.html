@@ -7,7 +7,21 @@
   <div class="row">
     <div ng-hide="GroupCtrl.loading || GroupCtrl.error">
       <div class="col-xs-9">
-        <blockquote marked="GroupCtrl.Group.current.welcomeMessage"></blockquote>
+        <blockquote marked="GroupCtrl.Group.current.welcomeMessage"
+                    ng-show="GroupCtrl.Group.current.welcomeMessage"></blockquote>
+
+        <div ng-hide="GroupCtrl.Group.current.welcomeMessage">
+          <h2>
+            The Love is our Weapon Campaign is a youth movement that exists to
+            change cities through the love of Jesus by doing strategic practical
+            acts of love.
+          </h2>
+          <p>
+            Thousands of people, doing thousands of acts of love, bringing
+            change, value, healing and hope throughout cities and communities
+            everywhere.
+          </p>
+        </div>
       </div>
       <div class="col-xs-3">
         <p>
