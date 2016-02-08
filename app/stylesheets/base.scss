@@ -8,9 +8,15 @@ body {
 }
 
 .container-pad {
-  padding: 40px 0 50px;
+  padding-top: 40px;
+  padding-bottom: 50px;
 }
 
 .btn-facebook {
   @include button-variant(white, #3b5998, #335190);
 }
+
+// Utility margin/padding classes
+.m-none { margin: 0; }
+.m-t-none { margin-top: 0; }
+.m-b-none { margin-bottom: 0; }

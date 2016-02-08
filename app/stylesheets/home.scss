@@ -3,7 +3,8 @@
 .Home__Welcome2 {
   background: #de2b2b;
   color: white;
-  min-height: 730px;
+  min-height: 55vw;
+  max-height: 730px;
   position: relative;
 
   .row > div {
@@ -18,14 +19,31 @@
     position: absolute;
     right: 0;
     bottom: -22px;
+    max-width: 70%;
   }
 
   ol {
-    padding-top: 200px;
+    margin-top: 10vw;
     font-size: large;
+    width: 30%;
+    list-style-type: none;
 
     li {
-      margin: 30px;
+      margin: 30px 30px 30px 0;
+      counter-increment: steps-counter;
+
+      &:before {
+        content: counter(steps-counter);
+        color: $brand-primary;
+        background: white;
+        display: inline-block;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        margin-right: 8px;
+        border-radius: 13px;
+      }
     }
   }
 }

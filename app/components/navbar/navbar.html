@@ -10,7 +10,10 @@
 
       <a class="navbar-brand" href="/">
         <img alt="Love is our Weapon" src="/images/logo-navbar.png">
-        Love is our Weapon
+        <div class="navbar-brand-label">
+          <span class="text-primary">80,900</span><br>
+          <small>acts of love</small>
+        </div>
       </a>
     </div>
 
@@ -39,9 +42,15 @@
 
     <div class="collapse navbar-collapse" id="liow-navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Campaign</a></li>
-        <li><a href="#">Updates</a></li>
-        <li><a href="#">Comments <span class="badge">6</span></a></li>
+        <li ng-show="NavbarCtrl.User.isAuthenticated()">
+          <a href="#">Campaign</a>
+        </li>
+        <li ng-show="NavbarCtrl.User.isAuthenticated()">
+          <a href="#">Updates</a>
+        </li>
+        <li ng-show="NavbarCtrl.User.isAuthenticated()">
+          <a href="#">Comments <span class="badge">6</span></a>
+        </li>
         <li class="dropdown">
           <a class="dropdown-toggle user-dropdown"
              data-toggle="dropdown"
