@@ -12,8 +12,19 @@
 </div><!-- .modal-header -->
 
 <div class="modal-body">
+  <div ng-if="Login.joinGroup !== null">
+    <p>
+      <switch id="joinGroup"
+              name="joinGroup"
+              ng-model="Login.joinGroup"
+              class="m-r-xs"></switch>
+      Join {{ Login.Group.current.name }}
+    </p>
+    <hr>
+  </div>
+
   <p>
-    <button ng-click="Login.authenticateFacebook()"
+    <button ng-click="Login.authenticateFacebook(Login.joinGroup)"
             class="btn btn-facebook btn-block">
       <i class="fa fa-fw fa-facebook-official"></i>
       Sign in with Facebook

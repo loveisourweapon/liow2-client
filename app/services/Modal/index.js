@@ -2,7 +2,10 @@ import angular from 'angular';
 
 // Module dependencies
 import uibs from 'angular-ui-bootstrap';
+import 'angular-ui-switch'; // Not browserified
+import ngRoute from 'angular-route';
 import User from '../../services/User';
+import Group from '../../services/Group';
 
 // Login modal
 import LoginCtrl from './login/LoginCtrl';
@@ -29,7 +32,7 @@ class Modal {
 }
 Modal.$inject = ['$uibModal', '$q'];
 
-export default angular.module('app.services.Modal', [uibs, User])
+export default angular.module('app.services.Modal', [uibs, 'uiSwitch', ngRoute, User, Group])
   .service('Modal', Modal)
   .name;
 

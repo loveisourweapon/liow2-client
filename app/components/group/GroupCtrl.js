@@ -6,6 +6,7 @@ export default class GroupCtrl {
   constructor($routeParams, User, Group, Modal) {
     Object.assign(this, { User, Group, Modal });
 
+    // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
 
     this.loadGroup($routeParams.group);
@@ -20,11 +21,10 @@ export default class GroupCtrl {
     this.loading = true;
     this.Group
       .findOne({ urlName })
-      .then((group) => {
-        this.group = group;
-      })
-      .catch((error) => {
+      .then(group => this.Group.current = group)
+      .catch(error => {
         this.error = error.message;
+        this.Group.current = null;
       })
       .then(() => this.loading = false);
   }

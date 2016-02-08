@@ -18,10 +18,12 @@ class User {
   /**
    * Authenticate user with Facebook
    *
+   * @param {object} [userData={}]
+   *
    * @returns {Promise}
    */
-  authenticateFacebook() {
-    return this.$auth.authenticate('facebook')
+  authenticateFacebook(userData = {}) {
+    return this.$auth.authenticate('facebook', userData)
       .then(response => {
         this.$auth.setToken(response.data.token);
         this.loadCurrent();

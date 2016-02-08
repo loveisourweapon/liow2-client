@@ -28,6 +28,7 @@ var dependencies = [
   'angular-route',
   'angular-sanitize',
   'angular-ui-bootstrap',
+  'angular-ui-switch',
   'lodash',
   'moment',
   'satellizer',

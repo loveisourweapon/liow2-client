@@ -1,12 +1,13 @@
 <jumbotron image="/images/group.png"
            background="{{ GroupCtrl.jumbotronBackground }}"
-           title="{{ GroupCtrl.group.name }}"
+           title="{{ GroupCtrl.Group.current.name }}"
            text="12,001 acts of love"></jumbotron>
+
 <div class="container container-pad">
   <div class="row">
     <div ng-hide="GroupCtrl.loading || GroupCtrl.error">
       <div class="col-xs-9">
-        <div marked="GroupCtrl.group.welcomeMessage"></div>
+        <blockquote marked="GroupCtrl.Group.current.welcomeMessage"></blockquote>
       </div>
       <div class="col-xs-3">
         <p>

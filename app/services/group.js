@@ -2,6 +2,8 @@ import _ from 'lodash';
 import angular from 'angular';
 import config from '../../config';
 
+let currentGroup = null;
+
 class Group {
   constructor($http) {
     Object.assign(this, { $http });
@@ -55,6 +57,24 @@ class Group {
     params = _.merge({ query }, params);
 
     return this.find(params);
+  }
+
+  /**
+   * Set the current group
+   *
+   * @param {object|null} group
+   */
+  set current(group) {
+    currentGroup = group;
+  }
+
+  /**
+   * Get the current group
+   *
+   * @returns {object|null}
+   */
+  get current() {
+    return currentGroup;
   }
 }
 Group.$inject = ['$http'];
