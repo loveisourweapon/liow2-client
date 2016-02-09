@@ -13,6 +13,8 @@ $navbar-default-border: $gray-border;
 @import './bootstrap';
 @import 'ui-select/src/common';
 @import 'angular-ui-switch/angular-ui-switch';
+@import 'medium-editor/dist/css/medium-editor';
+@import 'medium-editor/dist/css/themes/default';
 
 // Component stylesheets
 @import './base';

@@ -17,30 +17,30 @@
       </a>
     </div>
 
-    <div class="navbar-divider navbar-left"></div>
-
-    <form class="navbar-form navbar-left" id="group-search" role="search">
-      <div class="form-group">
-        <label class="input-group">
-          <div class="input-group-addon"><i class="fa fa-search"></i></div>
-          <ui-select ng-model="NavbarCtrl.group"
-                     on-select="NavbarCtrl.selectGroup($item)"
-                     append-to-body="false">
-            <ui-select-match placeholder="Find a group...">
-              {{ $select.selected.name }}
-            </ui-select-match>
-            <ui-select-choices repeat="group in NavbarCtrl.groups"
-                               position="down"
-                               refresh="NavbarCtrl.refreshGroups($select.search)"
-                               refresh-delay="200">
-              <div ng-bind-html="group.name | highlight:$select.search"></div>
-            </ui-select-choices>
-          </ui-select>
-        </label>
-      </div>
-    </form>
-
     <div class="collapse navbar-collapse" id="liow-navbar-collapse">
+      <div class="navbar-divider navbar-left"></div>
+
+      <form class="navbar-form navbar-left" id="group-search" role="search">
+        <div class="form-group">
+          <label class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <ui-select ng-model="NavbarCtrl.group"
+                       on-select="NavbarCtrl.selectGroup($item)"
+                       append-to-body="false">
+              <ui-select-match placeholder="Find a group...">
+                {{ $select.selected.name }}
+              </ui-select-match>
+              <ui-select-choices repeat="group in NavbarCtrl.groups"
+                                 position="down"
+                                 refresh="NavbarCtrl.refreshGroups($select.search)"
+                                 refresh-delay="200">
+                <div ng-bind-html="group.name | highlight:$select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </label>
+        </div>
+      </form>
+
       <ul class="nav navbar-nav navbar-right">
         <li ng-show="NavbarCtrl.User.isAuthenticated()">
           <a href="#">Campaign</a>
@@ -77,6 +77,12 @@
               <a ng-click="NavbarCtrl.Modal.openLogin()" href>
                 <i class="fa fa-fw fa-sign-in"></i>
                 Login
+              </a>
+            </li>
+            <li ng-hide="NavbarCtrl.User.isAuthenticated()">
+              <a ng-click="NavbarCtrl.Modal.openGroupEdit('create')" href>
+                <i class="fa fa-fw fa-pencil-square-o"></i>
+                Sign up
               </a>
             </li>
           </ul>

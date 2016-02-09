@@ -44,7 +44,8 @@ var dependencies = [
 gulp.task('vendor', ['clean'], function() {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+    'node_modules/medium-editor/dist/js/medium-editor.min.js'
   ]).pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(concat({ path: 'vendor.js', cwd: '.' }))
       .pipe(rev())

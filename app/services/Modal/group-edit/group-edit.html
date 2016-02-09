@@ -1,0 +1,164 @@
+<div class="modal-header">
+  <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          ng-click="GroupEdit.$uibModalInstance.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+  <h4 class="modal-title">
+    {{ GroupEdit.action | capitalize }} Group
+  </h4>
+</div><!-- .modal-header -->
+
+<div class="modal-body">
+  <div class="alert alert-danger" ng-show="GroupEdit.error && !GroupEdit.error.errors">
+    <p>
+      <i class="fa fa-fw fa-exclamation-triangle"></i>
+      Failed sending request. Please try again or contact us about it.
+    </p>
+  </div>
+
+  <form name="groupEdit"
+        class="form-horizontal"
+        ng-submit="GroupEdit.save(GroupEdit.group)"
+        ng-if="GroupEdit.User.isAuthenticated()">
+    <span ng-init="GroupEdit.form = groupEdit"></span>
+    <div class="form-group"
+         ng-class="{ 'has-error': GroupEdit.error.errors.name || GroupEdit.error.errors.urlName }">
+      <label for="name"
+             class="col-xs-3 control-label">
+        Name
+      </label>
+      <div class="col-xs-9">
+        <input type="text"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Group name..."
+               ng-model="GroupEdit.group.name"
+               required
+               autofocus>
+        <span class="help-block"
+              ng-hide="GroupEdit.error.errors.name || GroupEdit.error.errors.urlName">
+          https://loveisourweapon.com/g/{{ (GroupEdit.group.name | kebabCase) || '...' }}
+        </span>
+        <span class="help-block"
+              ng-show="GroupEdit.error.errors.name"
+              ng-repeat="error in GroupEdit.error.errors.name">
+          {{ error.message }}
+        </span>
+        <span class="help-block"
+              ng-show="GroupEdit.error.errors.urlName"
+              ng-repeat="error in GroupEdit.error.errors.urlName">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': GroupEdit.error.errors.logo }">
+      <label for="logo"
+             class="col-xs-3 control-label">
+        Logo
+      </label>
+      <div class="col-xs-9">
+        <input type="text"
+               class="form-control"
+               id="logo"
+               name="logo"
+               placeholder="Image upload coming soon..."
+               ng-model="GroupEdit.group.logo"
+               disabled>
+        <span class="help-block"
+              ng-hide="GroupEdit.error.errors.logo">
+          Ideally 500px x 500px
+        </span>
+        <span class="help-block"
+              ng-show="GroupEdit.error.errors.logo"
+              ng-repeat="error in GroupEdit.error.errors.logo">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': GroupEdit.error.errors.coverImage }">
+      <label for="coverImage"
+             class="col-xs-3 control-label">
+        Cover Image
+      </label>
+      <div class="col-xs-9">
+        <input type="text"
+               class="form-control"
+               id="coverImage"
+               name="coverImage"
+               placeholder="Image upload coming soon..."
+               ng-model="GroupEdit.group.coverImage"
+               disabled>
+        <span class="help-block"
+              ng-hide="GroupEdit.error.errors.coverImage">
+          Ideally 1280px x 580px
+        </span>
+        <span class="help-block"
+              ng-show="GroupEdit.error.errors.coverImage"
+              ng-repeat="error in GroupEdit.error.errors.coverImage">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': GroupEdit.error.errors.welcomeMessage }">
+      <label for="welcomeMessage"
+             class="col-xs-3 control-label">
+        Intro Message
+      </label>
+      <div class="col-xs-9">
+        <div class="well well-sm medium-editor m-none">
+          <textarea id="welcomeMessage"></textarea>
+        </div>
+        <span class="help-block"
+              ng-hide="GroupEdit.error.errors.welcomeMessage">
+          Select text to add links, bold, italics, etc.
+        </span>
+        <span class="help-block"
+              ng-show="GroupEdit.error.errors.welcomeMessage"
+              ng-repeat="error in GroupEdit.error.errors.welcomeMessage">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <button type="submit" hidden></button>
+  </form>
+
+  <div class="container-fluid"
+       ng-if="!GroupEdit.User.isAuthenticated()">
+    <div class="row">
+      <div class="col-xs-12">
+        <button type="button"
+                class="btn btn-primary m-r-sm"
+                ng-click="GroupEdit.openLoginModal()">
+          Login
+        </button>
+        Please login to setup a new group
+      </div>
+    </div>
+  </div>
+</div><!-- .modal-body -->
+
+<div class="modal-footer">
+  <button type="button"
+          class="btn btn-default"
+          ng-click="GroupEdit.$uibModalInstance.dismiss()">
+    Cancel
+  </button>
+  <button type="button"
+          class="btn btn-primary"
+          ng-click="GroupEdit.save(GroupEdit.group)"
+          ng-disabled="!GroupEdit.User.isAuthenticated() || GroupEdit.saving || GroupEdit.form.$invalid">
+    <i class="fa fa-cog fa-spin" ng-show="GroupEdit.saving"></i>
+    {{ GroupEdit.action | capitalize }}
+  </button>
+</div><!-- .modal-footer -->

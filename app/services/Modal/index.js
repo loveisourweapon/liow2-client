@@ -4,12 +4,17 @@ import angular from 'angular';
 import uibs from 'angular-ui-bootstrap';
 import 'angular-ui-switch'; // Not browserified
 import ngRoute from 'angular-route';
+import lodashFilters from '../../filters/lodash';
 import User from '../../services/User';
 import Group from '../../services/Group';
 
 // Login modal
 import LoginCtrl from './login/LoginCtrl';
 import loginTpl from './login/login.html';
+
+// Group edit modal
+import GroupEditCtrl from './group-edit/GroupEditCtrl';
+import groupEditTpl from './group-edit/group-edit.html';
 
 class Modal {
   constructor($uibModal, $q) {
@@ -29,10 +34,29 @@ class Modal {
       size: 'sm'
     }).result;
   }
+
+  /**
+   * Open the group edit modal
+   *
+   * @param {string} [action='edit']
+   *
+   * @returns {Promise}
+   */
+  openGroupEdit(action = 'edit') {
+    return this.$uibModal.open({
+      controller: GroupEditCtrl,
+      controllerAs: 'GroupEdit',
+      template: groupEditTpl,
+      size: 'md',
+      resolve: {
+        action: this.$q.resolve(action)
+      }
+    }).result;
+  }
 }
 Modal.$inject = ['$uibModal', '$q'];
 
-export default angular.module('app.services.Modal', [uibs, 'uiSwitch', ngRoute, User, Group])
+export default angular.module('app.services.Modal', [uibs, 'uiSwitch', ngRoute, lodashFilters, User, Group])
   .service('Modal', Modal)
   .name;
 

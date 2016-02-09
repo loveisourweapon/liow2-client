@@ -38,11 +38,13 @@
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.0",
     "lodash": "^4.1.0",
+    "medium-editor": "^5.14.1",
     "moment": "^2.11.1",
     "morgan": "^1.6.1",
     "satellizer": "^0.13.4",
     "seedrandom": "^2.4.2",
     "swig": "^1.4.2",
+    "to-markdown": "^2.0.1",
     "ui-select": "https://github.com/angular-ui/ui-select/archive/v0.13.2.tar.gz"
   },
   "devDependencies": {

@@ -60,6 +60,17 @@ class Group {
   }
 
   /**
+   * Create a new group
+   *
+   * @param {object} group
+   *
+   * @returns {HttpPromise}
+   */
+  create(group) {
+    return this.$http.post(this.baseUrl, group);
+  }
+
+  /**
    * Set the current group
    *
    * @param {object|null} group

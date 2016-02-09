@@ -20,7 +20,9 @@
             Login
           </button>
           &nbsp;&nbsp; or &nbsp;&nbsp;
-          <button type="button" class="btn btn-default">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="WelcomeCtrl.Modal.openGroupEdit('create')">
             Sign up
           </button>
         </p>
@@ -53,7 +55,7 @@
         <img src="images/welcome-laptop.png">
         <ol>
           <li>Sign up</li>
-          <li>Join a group</li>
+          <li>Join or start a group</li>
           <li>Start changing your world!</li>
         </ol>
       </div>
