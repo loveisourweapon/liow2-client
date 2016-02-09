@@ -1,18 +1,10 @@
 var del = require('del');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var rev = require('gulp-rev');
-var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
-var minifyCss = require('gulp-minify-css');
-var sass = require('gulp-sass');
-var concat = require('gulp-concat');
-var plumber = require('gulp-plumber');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
-var babelify = require('babelify');
-var partialify = require('partialify');
 var minifyify = require('minifyify');
 var uglify = require('gulp-uglify');
 
@@ -47,7 +39,7 @@ gulp.task('vendor', ['clean'], function() {
     'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
     'node_modules/medium-editor/dist/js/medium-editor.min.js'
   ]).pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(concat({ path: 'vendor.js', cwd: '.' }))
+      .pipe(require('gulp-concat')({ path: 'vendor.js', cwd: '.' }))
       .pipe(rev())
     .pipe(sourcemaps.write('../assets'))
     .pipe(gulp.dest(jsDir))
@@ -66,6 +58,7 @@ gulp.task('browserify-vendor', function() {
   return browserify({ debug: true })
     .require(dependencies)
     .plugin('minifyify', { map: sourceMap, output: sourceMap })
+    .transform(require('browserify-css'), { global: true }) // ui-select bundles CSS
     .bundle()
     .pipe(source('vendor.bundle.js'))
     .pipe(buffer())
@@ -89,8 +82,8 @@ gulp.task('browserify', ['clean-app'], function() {
 
   return browserify('app/components/app', { debug: true })
     .external(dependencies)
-    .transform(partialify)
-    .transform(babelify.configure({ presets: ['es2015'], plugins: ['transform-object-assign'] }))
+    .transform(require('partialify'))
+    .transform(require('babelify').configure({ presets: ['es2015'], plugins: ['transform-object-assign'] }))
     .plugin('minifyify', { map: sourceMap, output: sourceMap })
     .bundle()
     .on('error', swallowError)
@@ -113,12 +106,12 @@ gulp.task('browserify', ['clean-app'], function() {
  */
 gulp.task('styles', ['clean-styles'], function() {
   return gulp.src('app/stylesheets/main.scss', { base: 'app/stylesheets' })
-    .pipe(plumber())
+    .pipe(require('gulp-plumber')())
     .pipe(sourcemaps.init())
-      .pipe(sass({ includePaths: ['node_modules'] }))
+      .pipe(require('gulp-sass')({ includePaths: ['node_modules'] }))
       .on('error', swallowError)
-      .pipe(autoprefixer())
-      .pipe(minifyCss())
+      .pipe(require('gulp-autoprefixer')())
+      .pipe(require('gulp-minify-css')())
       .pipe(rev())
     .pipe(sourcemaps.write('../assets'))
     .pipe(gulp.dest(cssDir))
@@ -173,6 +166,6 @@ gulp.task('build', ['clean', 'fonts', 'styles', 'vendor', 'browserify-vendor', '
 gulp.task('default', ['build', 'watch']);
 
 function swallowError(error) {
-  gutil.log(error.message, error.stack);
+  require('gulp-util').log(error.message, error.stack);
   this.emit('end');
 }

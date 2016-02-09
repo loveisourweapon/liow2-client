@@ -2,7 +2,7 @@ import angular from 'angular';
 
 // Module dependencies
 import ngRoute from 'angular-route';
-import 'ui-select'; // Not browserified
+import uiSelect from 'ui-select';
 import navbar from '../navbar';
 
 // Router dependencies
@@ -15,7 +15,7 @@ import { user, userTpl } from '../user';
 import AppCtrl from './AppCtrl';
 import appTpl from './app.html';
 
-export default angular.module('app', [ngRoute, 'ui.select', navbar, home, deed, group, user])
+export default angular.module('app', [ngRoute, uiSelect, navbar, home, deed, group, user])
   .directive('app', () => {
     return {
       restrict: 'E',
@@ -61,3 +61,23 @@ export default angular.module('app', [ngRoute, 'ui.select', navbar, home, deed, 
     }
   ])
   .name;
+
+// Temporary workaround for adding classes to broken ui-select directives under angular 1.5.0
+angular.module(uiSelect).config(['$provide', $provide => {
+  function decorateDirectiveWithClass(directive, className) {
+    $provide.decorator(directive, ['$delegate', $delegate => {
+      let directive = $delegate[0],
+        templateUrl = directive.templateUrl;
+
+      directive.templateUrl = tElement => {
+        tElement.addClass(className);
+        return templateUrl(tElement);
+      };
+
+      return $delegate;
+    }]);
+  }
+
+  decorateDirectiveWithClass('uiSelectChoicesDirective', 'ui-select-choices');
+  decorateDirectiveWithClass('uiSelectMatchDirective', 'ui-select-match');
+}]);
