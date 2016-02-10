@@ -5,19 +5,14 @@ import JumbotronCtrl from './JumbotronCtrl';
 import jumbotronTpl from './jumbotron.html';
 
 export default angular.module('app.components.jumbotron', [])
-  .directive('jumbotron', () => {
-    return {
-      restrict: 'E',
-      scope: {
-        image: '@',
-        background: '@',
-        title: '@',
-        text: '@'
-      },
-      bindToController: true,
-      controller: JumbotronCtrl,
-      controllerAs: 'JumbotronCtrl',
-      template: jumbotronTpl
-    };
+  .component('jumbotron', {
+    controller: JumbotronCtrl,
+    template: jumbotronTpl,
+    bindings: {
+      image: '@',
+      background: '@',
+      title: '@',
+      text: '@'
+    }
   })
   .name;

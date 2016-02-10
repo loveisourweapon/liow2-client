@@ -24,9 +24,7 @@ export default class NavbarCtrl {
 
     return this.Group
       .search(query, { fields: '_id,name,urlName' })
-      .then((response) => {
-        this.groups = response.data;
-      });
+      .then(response => this.groups = response.data);
   }
 
   /**

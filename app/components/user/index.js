@@ -3,6 +3,7 @@ import angular from 'angular';
 // Module dependencies
 import jumbotron from '../jumbotron';
 
+// Component dependencies
 import UserCtrl from './UserCtrl';
 import template from './user.html';
 export let userTpl = template;

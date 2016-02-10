@@ -60,6 +60,7 @@ class Deed {
     return currentDeed;
   }
 }
+
 Deed.$inject = ['$http'];
 
 export default angular.module('app.services.Deed', [])

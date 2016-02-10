@@ -3,5 +3,3 @@ export default class AppCtrl {
     this.date = Date.now();
   }
 }
-
-AppCtrl.$inject = [];

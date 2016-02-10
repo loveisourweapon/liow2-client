@@ -1,20 +1,20 @@
-<videotron video-url="DeedCtrl.Deed.current.videoUrl"></videotron>
+<videotron video-url="$ctrl.Deed.current.videoUrl"></videotron>
 
 <div class="container container-pad">
   <div class="row">
-    <div ng-hide="DeedCtrl.loading || DeedCtrl.error">
+    <div ng-hide="$ctrl.loading || $ctrl.error">
       <div class="col-sm-3 col-sm-push-9">
         <p>
           <button type="button"
                   class="btn btn-primary btn-block btn-lg"
-                  ng-if="DeedCtrl.User.isAuthenticated()">
+                  ng-if="$ctrl.User.isAuthenticated()">
             <img src="/images/logo-invert.png" class="img-responsive img-btn">
             Done
           </button>
           <button type="button"
                   class="btn btn-primary btn-block btn-lg"
-                  ng-click="DeedCtrl.Modal.openLogin()"
-                  ng-if="!DeedCtrl.User.isAuthenticated()">
+                  ng-click="$ctrl.Modal.openLogin()"
+                  ng-if="!$ctrl.User.isAuthenticated()">
             <i class="fa fa-fw fa-user"></i>
             Login
           </button>
@@ -25,26 +25,26 @@
         <div class="deed-header m-b-md">
           <img src="/images/deed.png" class="img-responsive img-circle pull-left m-r-sm">
           <h1 class="m-none">
-            {{ DeedCtrl.Deed.current.title }}
+            {{ $ctrl.Deed.current.title }}
           </h1>
           <p class="m-none">
             <span class='label label-primary'>12,001</span> acts of love
           </p>
         </div>
-        <div marked="DeedCtrl.Deed.current.content"></div>
+        <div marked="$ctrl.Deed.current.content"></div>
       </div>
     </div>
 
-    <div class="col-xs-12" ng-show="DeedCtrl.loading">
+    <div class="col-xs-12" ng-show="$ctrl.loading">
       <p class="text-center">
         <i class="fa fa-cog fa-5x fa-spin"></i>
       </p>
     </div>
 
-    <div class="col-xs-12" ng-show="DeedCtrl.error">
+    <div class="col-xs-12" ng-show="$ctrl.error">
       <div class="alert alert-danger" role="alert">
         <i class="fa fa-exclamation-triangle"></i>
-        {{ DeedCtrl.error }}
+        {{ $ctrl.error }}
       </div>
     </div>
   </div>

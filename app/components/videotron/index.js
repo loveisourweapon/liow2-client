@@ -2,7 +2,7 @@ import angular from 'angular';
 
 // Load and initialise the YouTube iframe API
 import youtubeIframe from 'youtube-iframe';
-youtubeIframe.load();
+youtubeIframe.load(() => void 0);
 
 // Module dependencies
 import angularYoutube from 'angular-youtube-embed';

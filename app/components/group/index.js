@@ -7,6 +7,7 @@ import Group from '../../services/Group';
 import Modal from '../../services/Modal';
 import jumbotron from '../jumbotron';
 
+// Component dependencies
 import GroupCtrl from './GroupCtrl';
 import template from './group.html';
 export let groupTpl = template;

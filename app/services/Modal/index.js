@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 // Module dependencies
@@ -19,6 +20,11 @@ import groupEditTpl from './group-edit/group-edit.html';
 class Modal {
   constructor($uibModal, $q) {
     Object.assign(this, { $uibModal, $q });
+
+    this.defaults = {
+      controllerAs: '$ctrl',
+      size: 'md'
+    };
   }
 
   /**
@@ -27,12 +33,11 @@ class Modal {
    * @returns {Promise}
    */
   openLogin() {
-    return this.$uibModal.open({
+    return this.$uibModal.open(_.defaults({
       controller: LoginCtrl,
-      controllerAs: 'Login',
       template: loginTpl,
       size: 'sm'
-    }).result;
+    }, this.defaults)).result;
   }
 
   /**
@@ -43,17 +48,16 @@ class Modal {
    * @returns {Promise}
    */
   openGroupEdit(action = 'edit') {
-    return this.$uibModal.open({
+    return this.$uibModal.open(_.defaults({
       controller: GroupEditCtrl,
-      controllerAs: 'GroupEdit',
       template: groupEditTpl,
-      size: 'md',
       resolve: {
         action: this.$q.resolve(action)
       }
-    }).result;
+    }, this.defaults)).result;
   }
 }
+
 Modal.$inject = ['$uibModal', '$q'];
 
 export default angular.module('app.services.Modal', [uibs, 'uiSwitch', ngRoute, lodashFilters, User, Group])
@@ -61,7 +65,7 @@ export default angular.module('app.services.Modal', [uibs, 'uiSwitch', ngRoute, 
   .name;
 
 // Fixes to UI Bootstrap Modal
-angular.module(uibs).directive('uibModalWindow', ['$window', ($window) => {
+angular.module(uibs).directive('uibModalWindow', ['$window', $window => {
   return {
     priority: 1,
     link: (scope, element) => {

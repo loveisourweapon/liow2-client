@@ -24,15 +24,15 @@
         <div class="form-group">
           <label class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <ui-select ng-model="NavbarCtrl.group"
-                       on-select="NavbarCtrl.selectGroup($item)"
+            <ui-select ng-model="$ctrl.group"
+                       on-select="$ctrl.selectGroup($item)"
                        append-to-body="false">
               <ui-select-match placeholder="Find a group...">
                 {{ $select.selected.name }}
               </ui-select-match>
-              <ui-select-choices repeat="group in NavbarCtrl.groups"
+              <ui-select-choices repeat="group in $ctrl.groups"
                                  position="down"
-                                 refresh="NavbarCtrl.refreshGroups($select.search)"
+                                 refresh="$ctrl.refreshGroups($select.search)"
                                  refresh-delay="200">
                 <div ng-bind-html="group.name | highlight:$select.search"></div>
               </ui-select-choices>
@@ -42,13 +42,13 @@
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show="NavbarCtrl.User.isAuthenticated()">
+        <li ng-show="$ctrl.User.isAuthenticated()">
           <a href="#">Campaign</a>
         </li>
-        <li ng-show="NavbarCtrl.User.isAuthenticated()">
+        <li ng-show="$ctrl.User.isAuthenticated()">
           <a href="#">Updates</a>
         </li>
-        <li ng-show="NavbarCtrl.User.isAuthenticated()">
+        <li ng-show="$ctrl.User.isAuthenticated()">
           <a href="#">Comments <span class="badge">6</span></a>
         </li>
         <li class="dropdown">
@@ -58,31 +58,31 @@
              aria-haspopup="true"
              aria-expanded="false"
              href>
-            <img ng-src="{{ NavbarCtrl.User.current.picture || 'images/user.png' }}"
+            <img ng-src="{{ $ctrl.User.current.picture || 'images/user.png' }}"
                  class="img-circle">
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li class="dropdown-header"
-                ng-show="NavbarCtrl.User.isAuthenticated()">
-              {{ NavbarCtrl.User.current.name }}
+                ng-show="$ctrl.User.isAuthenticated()">
+              {{ $ctrl.User.current.name }}
             </li>
-            <li ng-show="NavbarCtrl.User.isAuthenticated()">
-              <a ng-click="NavbarCtrl.User.logout()" href>
+            <li ng-show="$ctrl.User.isAuthenticated()">
+              <a ng-click="$ctrl.User.logout()" href>
                 <i class="fa fa-fw fa-sign-out"></i>
                 Logout
               </a>
             </li>
-            <li ng-hide="NavbarCtrl.User.isAuthenticated()">
-              <a ng-click="NavbarCtrl.Modal.openLogin()" href>
+            <li ng-hide="$ctrl.User.isAuthenticated()">
+              <a ng-click="$ctrl.Modal.openLogin()" href>
                 <i class="fa fa-fw fa-sign-in"></i>
                 Login
               </a>
             </li>
-            <li ng-hide="NavbarCtrl.User.isAuthenticated()">
-              <a ng-click="NavbarCtrl.Modal.openGroupEdit('create')" href>
+            <li ng-hide="$ctrl.User.isAuthenticated()">
+              <a ng-click="$ctrl.Modal.openGroupEdit('create')" href>
                 <i class="fa fa-fw fa-pencil-square-o"></i>
-                Sign up
+                Group sign up
               </a>
             </li>
           </ul>

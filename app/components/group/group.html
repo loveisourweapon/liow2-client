@@ -1,16 +1,16 @@
 <jumbotron image="/images/group.png"
-           background="{{ GroupCtrl.jumbotronBackground }}"
-           title="{{ GroupCtrl.Group.current.name }}"
+           background="{{ $ctrl.jumbotronBackground }}"
+           title="{{ $ctrl.Group.current.name }}"
            text="<span class='label label-primary'>12,001</span> acts of love"></jumbotron>
 
 <div class="container container-pad">
   <div class="row">
-    <div ng-hide="GroupCtrl.loading || GroupCtrl.error">
+    <div ng-hide="$ctrl.loading || $ctrl.error">
       <div class="col-xs-9">
-        <blockquote marked="GroupCtrl.Group.current.welcomeMessage"
-                    ng-show="GroupCtrl.Group.current.welcomeMessage"></blockquote>
+        <blockquote marked="$ctrl.Group.current.welcomeMessage"
+                    ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
 
-        <div ng-hide="GroupCtrl.Group.current.welcomeMessage">
+        <div ng-hide="$ctrl.Group.current.welcomeMessage">
           <h2>
             The Love is our Weapon Campaign is a youth movement that exists to
             change cities through the love of Jesus by doing strategic practical
@@ -27,25 +27,25 @@
         <p>
           <button type="button"
                   class="btn btn-primary btn-block btn-lg"
-                  ng-click="GroupCtrl.Modal.openLogin()">
+                  ng-click="$ctrl.User.isAuthenticated() ? $ctrl.addUserToGroup() : $ctrl.Modal.openLogin()">
             <i class="fa fa-fw fa-users"></i>
-            <span ng-hide="GroupCtrl.User.isAuthenticated()">Login &amp; </span>
+            <span ng-hide="$ctrl.User.isAuthenticated()">Login &amp; </span>
             Join us
           </button>
         </p>
       </div>
     </div>
 
-    <div class="col-xs-12" ng-show="GroupCtrl.loading">
+    <div class="col-xs-12" ng-show="$ctrl.loading">
       <p class="text-center">
         <i class="fa fa-cog fa-5x fa-spin"></i>
       </p>
     </div>
 
-    <div class="col-xs-12" ng-show="GroupCtrl.error">
+    <div class="col-xs-12" ng-show="$ctrl.error">
       <div class="alert alert-danger" role="alert">
         <i class="fa fa-exclamation-triangle"></i>
-        {{ GroupCtrl.error }}
+        {{ $ctrl.error }}
       </div>
     </div>
   </div>

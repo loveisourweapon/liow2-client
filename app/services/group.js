@@ -86,6 +86,7 @@ class Group {
     return currentGroup;
   }
 }
+
 Group.$inject = ['$http'];
 
 export default angular.module('app.services.Group', [])

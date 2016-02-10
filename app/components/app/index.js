@@ -16,15 +16,9 @@ import AppCtrl from './AppCtrl';
 import appTpl from './app.html';
 
 export default angular.module('app', [ngRoute, uiSelect, navbar, home, deed, group, user])
-  .directive('app', () => {
-    return {
-      restrict: 'E',
-      scope: {},
-      bindToController: true,
-      controller: AppCtrl,
-      controllerAs: 'app',
-      template: appTpl
-    };
+  .component('app', {
+    controller: AppCtrl,
+    template: appTpl
   })
   .config([
     '$routeProvider',
@@ -33,23 +27,21 @@ export default angular.module('app', [ngRoute, uiSelect, navbar, home, deed, gro
     ($routeProvider, $locationProvider, uiSelectConfig) => {
       $routeProvider
         .when('/', {
-          controller: 'HomeCtrl',
-          controllerAs: 'Home',
           template: homeTpl
         })
         .when('/d/:deed', {
           controller: 'DeedCtrl',
-          controllerAs: 'DeedCtrl',
+          controllerAs: '$ctrl',
           template: deedTpl
         })
         .when('/g/:group', {
           controller: 'GroupCtrl',
-          controllerAs: 'GroupCtrl',
+          controllerAs: '$ctrl',
           template: groupTpl
         })
         .when('/u/:user', {
           controller: 'UserCtrl',
-          controllerAs: 'User',
+          controllerAs: '$ctrl',
           template: userTpl
         })
         .otherwise('/');

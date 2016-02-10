@@ -5,5 +5,3 @@ export default class JumbotronCtrl {
     };
   }
 }
-
-JumbotronCtrl.$inject = [];

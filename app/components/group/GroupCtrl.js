@@ -28,6 +28,13 @@ export default class GroupCtrl {
       })
       .then(() => this.loading = false);
   }
+
+  /**
+   * Add the current logged in user to this group
+   */
+  addUserToGroup() {
+    console.log(`Add user '${this.User.current.name}' to group '${this.Group.current.name}'`);
+  }
 }
 
 GroupCtrl.$inject = ['$routeParams', 'User', 'Group', 'Modal'];

@@ -92,10 +92,11 @@ class User {
     return currentUser;
   }
 }
+
 User.$inject = ['$auth', '$http'];
 
 export default angular.module('app.services.User', [satellizer])
-  .config(['$authProvider', ($authProvider) => {
+  .config(['$authProvider', $authProvider => {
     const BASE_URL = 'http://loveisourweapon.local:3000';
 
     $authProvider.loginUrl = `${BASE_URL}/auth/login`;

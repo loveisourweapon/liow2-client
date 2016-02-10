@@ -3,7 +3,7 @@
           class="close"
           data-dismiss="modal"
           aria-label="Close"
-          ng-click="Login.$uibModalInstance.dismiss()">
+          ng-click="$ctrl.$uibModalInstance.dismiss()">
     <span aria-hidden="true"><i class="fa fa-times"></i></span>
   </button>
   <h4 class="modal-title">
@@ -12,19 +12,19 @@
 </div><!-- .modal-header -->
 
 <div class="modal-body">
-  <div ng-if="Login.joinGroup !== null">
+  <div ng-if="$ctrl.joinGroup !== null">
     <p>
       <switch id="joinGroup"
               name="joinGroup"
-              ng-model="Login.joinGroup"
+              ng-model="$ctrl.joinGroup"
               class="m-r-xs"></switch>
-      Join {{ Login.Group.current.name }}
+      Join {{ $ctrl.Group.current.name }}
     </p>
     <hr>
   </div>
 
   <p>
-    <button ng-click="Login.authenticateFacebook(Login.joinGroup)"
+    <button ng-click="$ctrl.authenticateFacebook($ctrl.joinGroup)"
             class="btn btn-facebook btn-block">
       <i class="fa fa-fw fa-facebook-official"></i>
       Sign in with Facebook
@@ -35,7 +35,7 @@
 
   <p>Email and password login coming soon, for now please just use Facebook sign in.</p>
 
-  <form ng-submit="Login.authenticateEmail(Login.email, Login.password)">
+  <form ng-submit="$ctrl.authenticateEmail($ctrl.email, $ctrl.password)">
     <div class="form-group">
       <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-fw fa-at"></i></div>
@@ -43,7 +43,7 @@
                class="form-control"
                id="email"
                name="email"
-               ng-model="Login.email"
+               ng-model="$ctrl.email"
                placeholder="Email"
                disabled>
       </div>
@@ -55,7 +55,7 @@
                class="form-control"
                id="password"
                name="password"
-               ng-model="Login.password"
+               ng-model="$ctrl.password"
                placeholder="Password"
                disabled>
       </div>

@@ -12,14 +12,8 @@ import NavbarCtrl from './NavbarCtrl';
 import navbarTpl from './navbar.html';
 
 export default angular.module('app.components.navbar', [ngSanitize, uiSelect, User, Group, Modal])
-  .directive('navbar', () => {
-    return {
-      restrict: 'E',
-      scope: {},
-      bindToController: true,
-      controller: NavbarCtrl,
-      controllerAs: 'NavbarCtrl',
-      template: navbarTpl
-    };
+  .component('navbar', {
+    controller: NavbarCtrl,
+    template: navbarTpl
   })
   .name;
