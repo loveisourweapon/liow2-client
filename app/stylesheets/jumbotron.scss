@@ -1,14 +1,33 @@
 .jumbotron {
   background-position: center;
   background-size: cover;
-  height: 35vw;
   margin: 0;
   color: white;
 
+  &:not(.videotron) {
+    height: 35vw;
+  }
+
+  &.videotron {
+    background: $gray-darker;
+
+    .container {
+      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+        width: 80vw;
+      }
+      @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+        width: 70vw;
+      }
+      @media (min-width: $screen-lg) {
+        width: 60vw;
+      }
+    }
+  }
+
   .jumbotron-image {
-    margin-top: 8%;
-    width: 15%;
     float: left;
+    width: 15%;
+    margin-top: 8%;
 
     img {
       width: 200px;

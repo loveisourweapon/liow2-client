@@ -39,7 +39,7 @@ export default angular.module('app', [ngRoute, uiSelect, navbar, home, deed, gro
         })
         .when('/d/:deed', {
           controller: 'DeedCtrl',
-          controllerAs: 'Deed',
+          controllerAs: 'DeedCtrl',
           template: deedTpl
         })
         .when('/g/:group', {

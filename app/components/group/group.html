@@ -1,7 +1,7 @@
 <jumbotron image="/images/group.png"
            background="{{ GroupCtrl.jumbotronBackground }}"
            title="{{ GroupCtrl.Group.current.name }}"
-           text="12,001 acts of love"></jumbotron>
+           text="<span class='label label-primary'>12,001</span> acts of love"></jumbotron>
 
 <div class="container container-pad">
   <div class="row">
@@ -26,7 +26,7 @@
       <div class="col-xs-3">
         <p>
           <button type="button"
-                  class="btn btn-primary btn-block"
+                  class="btn btn-primary btn-block btn-lg"
                   ng-click="GroupCtrl.Modal.openLogin()">
             <i class="fa fa-fw fa-users"></i>
             <span ng-hide="GroupCtrl.User.isAuthenticated()">Login &amp; </span>

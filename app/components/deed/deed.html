@@ -1,10 +1,51 @@
-<jumbotron background="/images/header.jpg"></jumbotron>
-<div class="container">
+<videotron video-url="DeedCtrl.Deed.current.videoUrl"></videotron>
+
+<div class="container container-pad">
   <div class="row">
-    <div class="col-xs-12">
-      <h1>{{ Deed.name }}</h1>
-      <p>This is a Deed Page!</p>
-      <p>Though it's just a placeholder for now...</p>
+    <div ng-hide="DeedCtrl.loading || DeedCtrl.error">
+      <div class="col-sm-3 col-sm-push-9">
+        <p>
+          <button type="button"
+                  class="btn btn-primary btn-block btn-lg"
+                  ng-if="DeedCtrl.User.isAuthenticated()">
+            <img src="/images/logo-invert.png" class="img-responsive img-btn">
+            Done
+          </button>
+          <button type="button"
+                  class="btn btn-primary btn-block btn-lg"
+                  ng-click="DeedCtrl.Modal.openLogin()"
+                  ng-if="!DeedCtrl.User.isAuthenticated()">
+            <i class="fa fa-fw fa-user"></i>
+            Login
+          </button>
+        </p>
+      </div>
+
+      <div class="col-sm-9 col-sm-pull-3">
+        <div class="deed-header m-b-md">
+          <img src="/images/deed.png" class="img-responsive img-circle pull-left m-r-sm">
+          <h1 class="m-none">
+            {{ DeedCtrl.Deed.current.title }}
+          </h1>
+          <p class="m-none">
+            <span class='label label-primary'>12,001</span> acts of love
+          </p>
+        </div>
+        <div marked="DeedCtrl.Deed.current.content"></div>
+      </div>
+    </div>
+
+    <div class="col-xs-12" ng-show="DeedCtrl.loading">
+      <p class="text-center">
+        <i class="fa fa-cog fa-5x fa-spin"></i>
+      </p>
+    </div>
+
+    <div class="col-xs-12" ng-show="DeedCtrl.error">
+      <div class="alert alert-danger" role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ DeedCtrl.error }}
+      </div>
     </div>
   </div>
 </div>

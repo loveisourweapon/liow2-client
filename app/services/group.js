@@ -32,16 +32,14 @@ class Group {
   findOne(params) {
     return new Promise((resolve, reject) => {
       this.find(params)
-        .then((response) => {
+        .then(response => {
           if (response.data.length === 1) {
             resolve(response.data[0]);
           } else {
             reject(new Error('Group not found'));
           }
         })
-        .catch(() => {
-          reject(new Error('Failed connecting to server'));
-        });
+        .catch(() => reject(new Error('Failed connecting to server')));
     });
   }
 

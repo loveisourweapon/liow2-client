@@ -21,11 +21,13 @@ var dependencies = [
   'angular-sanitize',
   'angular-ui-bootstrap',
   'angular-ui-switch',
+  'angular-youtube-embed',
   'lodash',
   'moment',
   'satellizer',
   'seedrandom',
-  'ui-select'
+  'ui-select',
+  'youtube-iframe'
 ];
 
 /*

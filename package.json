@@ -33,6 +33,7 @@
     "angular-sanitize": "^1.5.0",
     "angular-ui-bootstrap": "^1.1.2",
     "angular-ui-switch": "^0.1.1",
+    "angular-youtube-embed": "^1.1.1",
     "bootstrap-sass": "^3.3.6",
     "express": "^4.13.4",
     "font-awesome": "^4.5.0",
@@ -45,7 +46,8 @@
     "seedrandom": "^2.4.2",
     "swig": "^1.4.2",
     "to-markdown": "^2.0.1",
-    "ui-select": "^0.14.2"
+    "ui-select": "^0.14.2",
+    "youtube-iframe": "^1.0.2"
   },
   "devDependencies": {
     "babel-plugin-transform-object-assign": "^6.5.0",

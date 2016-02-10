@@ -17,7 +17,9 @@ $navbar-default-border: $gray-border;
 
 // Component stylesheets
 @import './base';
-@import './navbar';
 @import './jumbotron';
+@import './medium-editor';
+@import './navbar';
 @import './home';
+@import './deed';
 @import './footer';

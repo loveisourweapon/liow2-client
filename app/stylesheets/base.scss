@@ -20,37 +20,14 @@ body {
   vertical-align: middle;
 }
 
-.no-resize { resize: none; }
-
-
-/**
- * Medium editor
- */
-.medium-editor {
-  background: $input-bg;
-  color: $input-color;
-  border-color: $input-border;
-
-  > *:focus {
-    outline: none;
-  }
-
-  [id^='medium-editor'] {
-    min-height: 50px;
-
-    > p:last-child {
-      margin: 0;
-    }
-  }
-
-  .medium-editor-placeholder:after {
-    font-style: normal;
-    color: $input-color-placeholder;
-  }
+.no-resize {
+  resize: none;
 }
 
-.medium-editor-toolbar li button:hover {
-  color: $brand-primary;
+.img-btn {
+  width: 25px;
+  display: inline;
+  vertical-align: text-bottom;
 }
 
 
