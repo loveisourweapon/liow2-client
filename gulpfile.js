@@ -26,6 +26,7 @@ var dependencies = [
   'moment',
   'satellizer',
   'seedrandom',
+  'showdown',
   'ui-select',
   'youtube-iframe'
 ];

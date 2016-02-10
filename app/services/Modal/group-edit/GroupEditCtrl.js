@@ -1,13 +1,20 @@
 import _ from 'lodash';
 import toMarkdown from 'to-markdown';
+import showdown from 'showdown';
+let converter = new showdown.Converter();
 
 export default class GroupEditCtrl {
-  constructor($uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action) {
-    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action });
+  constructor($uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action, group) {
+    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action, group });
 
     this.loading = false;
     this.error = null;
-    this.resetFields();
+
+    if (this.group) {
+      this.group.welcomeMessage = converter.makeHtml(this.group.welcomeMessage);
+    } else {
+      this.resetFields();
+    }
 
     if (_.isObject(this.User.current)) {
       this.setupMediumEditor();
@@ -79,7 +86,7 @@ export default class GroupEditCtrl {
     this.saving = true;
     this.error = null;
     this.Group
-      .create(group)
+      .save(group)
       .then(response => {
         this.Group.current = response.data;
         this.$location.path(`/g/${response.data.urlName}`);
@@ -90,4 +97,4 @@ export default class GroupEditCtrl {
   }
 }
 
-GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'User', 'Group', 'Modal', 'action'];
+GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'User', 'Group', 'Modal', 'action', 'group'];

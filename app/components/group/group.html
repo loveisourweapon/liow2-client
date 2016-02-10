@@ -24,15 +24,20 @@
         </div>
       </div>
       <div class="col-xs-3">
-        <p>
-          <button type="button"
-                  class="btn btn-primary btn-block btn-lg"
-                  ng-click="$ctrl.User.isAuthenticated() ? $ctrl.addUserToGroup() : $ctrl.Modal.openLogin()">
-            <i class="fa fa-fw fa-users"></i>
-            <span ng-hide="$ctrl.User.isAuthenticated()">Login &amp; </span>
-            Join us
-          </button>
-        </p>
+        <button type="button"
+                class="btn btn-primary btn-block btn-lg"
+                ng-click="$ctrl.User.isAuthenticated() ? $ctrl.addUserToGroup() : $ctrl.Modal.openLogin()">
+          <i class="fa fa-fw fa-users"></i>
+          <span ng-hide="$ctrl.User.isAuthenticated()">Login &amp; </span>
+          Join us
+        </button>
+        <button type="button"
+                class="btn btn-default btn-block"
+                ng-click="$ctrl.Modal.openGroupEdit('update', $ctrl.Group.current)"
+                ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
+          <i class="fa fa-fw fa-edit"></i>
+          Update group
+        </button>
       </div>
     </div>
 

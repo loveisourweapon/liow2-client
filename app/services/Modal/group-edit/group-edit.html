@@ -116,7 +116,8 @@
       </label>
       <div class="col-xs-9">
         <div class="well well-sm medium-editor m-none">
-          <textarea id="welcomeMessage"></textarea>
+          <textarea id="welcomeMessage"
+                    ng-model="$ctrl.group.welcomeMessage"></textarea>
         </div>
         <span class="help-block"
               ng-hide="$ctrl.error.errors.welcomeMessage">

@@ -43,16 +43,18 @@ class Modal {
   /**
    * Open the group edit modal
    *
-   * @param {string} [action='edit']
+   * @param {string} [action='create']
+   * @param {object} [group=null]
    *
    * @returns {Promise}
    */
-  openGroupEdit(action = 'edit') {
+  openGroupEdit(action = 'create', group = null) {
     return this.$uibModal.open(_.defaults({
       controller: GroupEditCtrl,
       template: groupEditTpl,
       resolve: {
-        action: this.$q.resolve(action)
+        action: this.$q.resolve(action),
+        group: this.$q.resolve(angular.copy(group))
       }
     }, this.defaults)).result;
   }

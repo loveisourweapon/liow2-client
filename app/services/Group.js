@@ -58,14 +58,30 @@ class Group {
   }
 
   /**
-   * Create a new group
+   * Save a new or existing group
    *
    * @param {object} group
    *
    * @returns {HttpPromise}
    */
-  create(group) {
-    return this.$http.post(this.baseUrl, group);
+  save(group) {
+    if (_.has(group, '_id')) {
+      return this.$http.put(`${this.baseUrl}/${group._id}`, group);
+    } else {
+      return this.$http.post(this.baseUrl, group);
+    }
+  }
+
+  /**
+   * Check if a user is an admin of a group
+   *
+   * @param {object} group
+   * @param {object} user
+   *
+   * @returns {boolean}
+   */
+  isAdmin(group, user) {
+    return _.has(group, 'admins') && _.has(user, '_id') && group.admins.indexOf(user._id) > -1;
   }
 
   /**
