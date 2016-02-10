@@ -20,8 +20,6 @@ export default class GroupEditCtrl {
   resetFields() {
     this.group = {
       name: '',
-      owner: _.isObject(this.User.current) ? this.User.current._id : null,
-      country: _.isObject(this.User.current) && _.has(this.User.current, 'country') ? this.User.current.country._id : null,
       logo: '',
       coverImage: '',
       welcomeMessage: ''
@@ -68,10 +66,7 @@ export default class GroupEditCtrl {
     this.Modal
       .openLogin()
       .then(() => this.User.loadCurrent())
-      .then(() => {
-        this.resetFields();
-        this.setupMediumEditor();
-      })
+      .then(() => this.setupMediumEditor())
       .catch((err) => null);
   }
 
@@ -86,6 +81,7 @@ export default class GroupEditCtrl {
     this.Group
       .create(group)
       .then(response => {
+        this.Group.current = response.data;
         this.$location.path(`/g/${response.data.urlName}`);
         this.$uibModalInstance.close();
       })
