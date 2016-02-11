@@ -65,6 +65,7 @@
           <ul class="dropdown-menu">
             <li class="dropdown-header"
                 ng-show="$ctrl.User.isAuthenticated()">
+              <i class="fa fa-fw fa-user"></i>
               {{ $ctrl.User.current.name }}
             </li>
             <li ng-show="$ctrl.User.isAuthenticated()">
@@ -77,6 +78,18 @@
               <a ng-click="$ctrl.Modal.openLogin()" href>
                 <i class="fa fa-fw fa-sign-in"></i>
                 Login
+              </a>
+            </li>
+            <li class="divider" ng-show="$ctrl.User.isAuthenticated()" role="separator"></li>
+            <li class="dropdown-header"
+                ng-show="$ctrl.User.isAuthenticated()">
+              <i class="fa fa-fw fa-users"></i>
+              Groups
+            </li>
+            <li ng-repeat="group in $ctrl.User.current.groups"
+                ng-show="$ctrl.User.isAuthenticated()">
+              <a ng-href="/g/{{ group.urlName }}">
+                {{ group.name }}
               </a>
             </li>
             <li>

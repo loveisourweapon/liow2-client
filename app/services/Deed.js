@@ -4,8 +4,8 @@ import config from '../../config';
 let currentDeed = null;
 
 class Deed {
-  constructor($http) {
-    Object.assign(this, { $http });
+  constructor($http, $q) {
+    Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/deeds`;
   }
@@ -29,7 +29,7 @@ class Deed {
    * @returns {Promise}
    */
   findOne(params) {
-    return new Promise((resolve, reject) => {
+    return this.$q((resolve, reject) => {
       this.find(params)
         .then(response => {
           if (response.data.length === 1) {
@@ -61,7 +61,7 @@ class Deed {
   }
 }
 
-Deed.$inject = ['$http'];
+Deed.$inject = ['$http', '$q'];
 
 export default angular.module('app.services.Deed', [])
   .service('Deed', Deed)

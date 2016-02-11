@@ -5,8 +5,8 @@ import config from '../../config';
 let currentGroup = null;
 
 class Group {
-  constructor($http) {
-    Object.assign(this, { $http });
+  constructor($http, $q) {
+    Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/groups`;
   }
@@ -30,7 +30,7 @@ class Group {
    * @returns {Promise}
    */
   findOne(params) {
-    return new Promise((resolve, reject) => {
+    return this.$q((resolve, reject) => {
       this.find(params)
         .then(response => {
           if (response.data.length === 1) {
@@ -103,7 +103,7 @@ class Group {
   }
 }
 
-Group.$inject = ['$http'];
+Group.$inject = ['$http', '$q'];
 
 export default angular.module('app.services.Group', [])
   .service('Group', Group)

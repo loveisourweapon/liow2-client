@@ -7,8 +7,8 @@ import satellizer from 'satellizer';
 let currentUser = null;
 
 class User {
-  constructor($auth, $http) {
-    Object.assign(this, { $auth, $http });
+  constructor($auth, $http, $q, Group) {
+    Object.assign(this, { $auth, $http, $q, Group });
 
     this.baseUrl = `${config.serverUrl}/users`;
 
@@ -41,7 +41,7 @@ class User {
    */
   authenticateEmail(email, password) {
     if (!email || !password) {
-      return Promise.reject('Email and/or password not provided');
+      return this.$q.reject('Email and/or password not provided');
     }
 
     return this.$auth.login({ email, password })
@@ -77,10 +77,18 @@ class User {
    */
   loadCurrent() {
     if (!this.isAuthenticated()) {
-      return Promise.reject('Not logged in')
+      return this.$q.reject('Not logged in')
     }
 
-    return this.$http.get(`${this.baseUrl}/me`).then(response => currentUser = response.data);
+    return this.$http.get(`${this.baseUrl}/me`)
+      .then(response => {
+        currentUser = response.data;
+
+        // If user is a part of one group, set it as the current group
+        if (currentUser.groups.length === 1) {
+          this.Group.current = currentUser.groups[0];
+        }
+      });
   }
 
   /**
@@ -93,7 +101,7 @@ class User {
   }
 }
 
-User.$inject = ['$auth', '$http'];
+User.$inject = ['$auth', '$http', '$q', 'Group'];
 
 export default angular.module('app.services.User', [satellizer])
   .config(['$authProvider', $authProvider => {
