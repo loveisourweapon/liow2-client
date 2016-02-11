@@ -97,13 +97,11 @@ User.$inject = ['$auth', '$http'];
 
 export default angular.module('app.services.User', [satellizer])
   .config(['$authProvider', $authProvider => {
-    const BASE_URL = 'http://loveisourweapon.local:3000';
-
-    $authProvider.loginUrl = `${BASE_URL}/auth/login`;
-    $authProvider.signupUrl = `${BASE_URL}/auth/signup`;
+    $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
+    $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
     $authProvider.facebook({
-      clientId: '1432544943734958',
-      url: `${BASE_URL}/auth/facebook`
+      clientId: config.facebookClientId,
+      url: `${config.serverUrl}/auth/facebook`
     });
   }])
   .service('User', User)
