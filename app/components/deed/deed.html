@@ -7,8 +7,11 @@
         <p>
           <button type="button"
                   class="btn btn-primary btn-block btn-lg"
-                  ng-if="$ctrl.User.isAuthenticated()">
-            <img src="/images/logo-invert.png" class="img-responsive img-btn">
+                  ng-click="$ctrl.done($ctrl.Deed.current, $ctrl.Group.current)"
+                  ng-if="$ctrl.User.isAuthenticated()"
+                  ng-disabled="$ctrl.doing">
+            <img src="/images/logo-invert.png" class="img-responsive img-btn" ng-hide="$ctrl.doing">
+            <i class="fa fa-cog fa-lg fa-spin" ng-show="$ctrl.doing"></i>
             Done
           </button>
           <button type="button"
