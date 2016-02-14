@@ -62,6 +62,15 @@ class User {
   }
 
   /**
+   * Check if the current user is a member of a group
+   *
+   * @param {object} group
+   */
+  isMemberOfGroup(group) {
+    return _.has(currentUser, 'groups') && _.some(currentUser.groups, userGroup => userGroup._id === group._id);
+  }
+
+  /**
    * Logout the current user
    *
    * @returns {Promise}
