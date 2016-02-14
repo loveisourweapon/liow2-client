@@ -13,11 +13,11 @@ class Deed {
   /**
    * Find deeds by params
    *
-   * @param {object} params
+   * @param {object} [params={}]
    *
    * @returns {HttpPromise}
    */
-  find(params) {
+  find(params = {}) {
     return this.$http.get(this.baseUrl, { params });
   }
 
@@ -40,6 +40,18 @@ class Deed {
         })
         .catch(() => reject(new Error('Failed connecting to server')));
     });
+  }
+
+  /**
+   * Get a deed by ID
+   *
+   * @param {string} deedId
+   * @param {object} [params={}]
+   *
+   * @returns {HttpPromise}
+   */
+  get(deedId, params = {}) {
+    return this.$http.get(`${this.baseUrl}/${deedId}`, { params });
   }
 
   /**

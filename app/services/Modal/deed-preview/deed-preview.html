@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          ng-click="$ctrl.$uibModalInstance.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+  <h4 class="modal-title">
+    Preview Deed
+  </h4>
+</div><!-- .modal-header -->
+
+<div class="modal-body">
+  <div class="col-xs-12" ng-hide="$ctrl.loading || $ctrl.error">
+    <div class="embed-responsive embed-responsive-16by9"
+         ng-show="$ctrl.deed.videoUrl">
+      <youtube-video video-url="$ctrl.deed.videoUrl"
+                     class="embed-responsive-item"></youtube-video>
+    </div>
+
+    <div class="deed-header m-b-md">
+      <img src="/images/deed.png" class="img-responsive img-circle pull-left m-r-sm">
+      <h1 class="m-none">
+        {{ $ctrl.deed.title }}
+      </h1>
+      <p class="m-none">
+        <span class='label label-primary'>12,001</span> acts of love
+      </p>
+    </div>
+
+    <div marked="$ctrl.deed.content"></div>
+  </div>
+
+  <div class="col-xs-12" ng-show="$ctrl.loading">
+    <p class="text-center">
+      <i class="fa fa-cog fa-5x fa-spin"></i>
+    </p>
+  </div>
+
+  <div class="col-xs-12" ng-show="$ctrl.error">
+    <uib-alert type="danger">
+      <i class="fa fa-exclamation-triangle"></i>
+      {{ $ctrl.error }}
+    </uib-alert>
+  </div>
+</div><!-- .modal-body -->
+
+<div class="modal-footer">
+  <button type="button"
+          class="btn btn-default"
+          ng-click="$ctrl.$uibModalInstance.dismiss()">
+    Close
+  </button>
+</div><!-- .modal-footer -->

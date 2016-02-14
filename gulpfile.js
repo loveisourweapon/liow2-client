@@ -16,6 +16,7 @@ var manifestFile = 'public/assets/rev-manifest.json';
 
 var dependencies = [
   'angular',
+  'angular-dragula',
   'angular-marked',
   'angular-route',
   'angular-sanitize',
@@ -27,8 +28,7 @@ var dependencies = [
   'satellizer',
   'seedrandom',
   'showdown',
-  'ui-select',
-  'youtube-iframe'
+  'ui-select'
 ];
 
 /*

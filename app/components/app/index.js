@@ -59,7 +59,7 @@ angular.module(uiSelect).config(['$provide', $provide => {
   function decorateDirectiveWithClass(directive, className) {
     $provide.decorator(directive, ['$delegate', $delegate => {
       let directive = $delegate[0],
-        templateUrl = directive.templateUrl;
+          templateUrl = directive.templateUrl;
 
       directive.templateUrl = tElement => {
         tElement.addClass(className);

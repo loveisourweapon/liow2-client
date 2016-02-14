@@ -7,6 +7,16 @@
   <div class="row">
     <div ng-hide="$ctrl.loading || $ctrl.error">
       <div class="col-xs-9">
+        <uib-alert type="info"
+                   ng-show="$ctrl.showCampaignAlert"
+                   close="$ctrl.showCampaignAlert = false">
+          You haven't got an active campaign, would you like to set one up now?
+          <button class="btn btn-info m-l-sm p-xs"
+                  ng-click="$ctrl.Modal.openCampaignEdit('setup', $ctrl.Group.current)">
+            Setup Campaign
+          </button>
+        </uib-alert>
+
         <blockquote marked="$ctrl.Group.current.welcomeMessage"
                     ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
 
@@ -48,10 +58,10 @@
     </div>
 
     <div class="col-xs-12" ng-show="$ctrl.error">
-      <div class="alert alert-danger" role="alert">
+      <uib-alert type="danger">
         <i class="fa fa-exclamation-triangle"></i>
         {{ $ctrl.error }}
-      </div>
+      </uib-alert>
     </div>
   </div>
 </div>

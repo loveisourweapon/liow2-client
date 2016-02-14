@@ -7,7 +7,6 @@ export default class GroupEditCtrl {
   constructor($uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action, group) {
     Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action, group });
 
-    this.loading = false;
     this.error = null;
 
     if (this.group) {
@@ -70,8 +69,7 @@ export default class GroupEditCtrl {
    * Prompt user to login, then reset the form fields and setup the MediumEditor
    */
   openLoginModal() {
-    this.Modal
-      .openLogin()
+    this.Modal.openLogin()
       .then(() => this.User.loadCurrent())
       .then(() => this.setupMediumEditor())
       .catch((err) => null);
@@ -85,8 +83,7 @@ export default class GroupEditCtrl {
   save(group) {
     this.saving = true;
     this.error = null;
-    this.Group
-      .save(group)
+    this.Group.save(group)
       .then(response => {
         this.Group.current = response.data;
         this.$location.path(`/g/${response.data.urlName}`);

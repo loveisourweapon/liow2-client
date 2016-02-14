@@ -14,11 +14,11 @@ class Group {
   /**
    * Find groups by params
    *
-   * @param {object} params
+   * @param {object} [params={}]
    *
    * @returns {HttpPromise}
    */
-  find(params) {
+  find(params = {}) {
     return this.$http.get(this.baseUrl, { params });
   }
 

@@ -12,12 +12,10 @@
 </div><!-- .modal-header -->
 
 <div class="modal-body">
-  <div class="alert alert-danger" ng-show="$ctrl.error && !$ctrl.error.errors">
-    <p>
-      <i class="fa fa-fw fa-exclamation-triangle"></i>
-      Failed sending request. Please try again or contact us about it.
-    </p>
-  </div>
+  <uib-alert type="danger" ng-show="$ctrl.error && !$ctrl.error.errors">
+    <i class="fa fa-fw fa-exclamation-triangle"></i>
+    Failed sending request. Please try again or contact us about it.
+  </uib-alert>
 
   <form name="groupEdit"
         class="form-horizontal"

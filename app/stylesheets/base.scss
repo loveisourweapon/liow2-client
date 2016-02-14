@@ -12,24 +12,39 @@ body {
   padding-bottom: 50px;
 }
 
-.btn-facebook {
-  @include button-variant(white, #3b5998, #335190);
-}
-
-.switch {
-  vertical-align: middle;
-}
-
 .no-resize {
   resize: none;
 }
 
+/**
+ * Buttons
+ */
+.btn-facebook {
+  @include button-variant(white, #3b5998, #335190);
+}
 .img-btn {
   width: 25px;
   display: inline;
   vertical-align: text-bottom;
 }
 
+/**
+ * angular-ui-switch
+ */
+.switch {
+  vertical-align: middle;
+}
+
+/**
+ * Dragula
+ */
+ul.list-group[dragula] {
+  min-height: 200px;
+}
+.gu-mirror {
+  background: $state-info-bg;
+  border-radius: $border-radius-base;
+}
 
 /**
  * Utility margin/padding classes
@@ -72,3 +87,7 @@ body {
 .m-b-sm { margin-bottom: 10px; }
 .m-b-md { margin-bottom: 20px; }
 .m-b-lg { margin-bottom: 30px; }
+
+// Padding
+.p-none { padding: 0 !important; }
+.p-xs { padding: 2px 6px; }
