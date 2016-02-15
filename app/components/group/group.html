@@ -47,6 +47,13 @@
         </button>
         <button type="button"
                 class="btn btn-default btn-block"
+                ng-click="$ctrl.setupCampaign($ctrl.Group.current)"
+                ng-if="$ctrl.showCampaignAlert">
+          <i class="fa fa-fw fa-bullhorn"></i>
+          Setup campaign
+        </button>
+        <button type="button"
+                class="btn btn-default btn-block"
                 ng-click="$ctrl.Modal.openGroupEdit('update', $ctrl.Group.current)"
                 ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
           <i class="fa fa-fw fa-edit"></i>

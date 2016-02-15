@@ -8,7 +8,7 @@ export default class GroupCtrl {
 
     // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
-    this.campaigns = null;
+    this.campaign = null;
 
     this.loadGroup($routeParams.group);
   }
@@ -24,7 +24,7 @@ export default class GroupCtrl {
       .findOne({ urlName })
       .then(group => {
         this.Group.current = group;
-        this.loadCampaigns(group);
+        this.loadCampaign(group);
       })
       .catch(error => {
         this.error = error.message;
@@ -38,27 +38,27 @@ export default class GroupCtrl {
    *
    * @param {object} group
    */
-  loadCampaigns(group) {
-    this.Campaign.find({ group: group._id, active: true })
+  loadCampaign(group) {
+    this.Campaign.findOne({ group: group._id, active: true })
+      .catch(() => ({ data: null }))
       .then(response => {
-        this.campaigns = response.data;
-        this.showCampaignAlert = this.setCampaignAlert(this.campaigns, this.Group.current, this.User.current);
-      })
-      .catch(error => this.error = error.message);
+        this.campaign = response.data;
+        this.showCampaignAlert = this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
+      });
   }
 
   /**
    * Show hint to setup a campaign if logged in as admin of group with no active campaign
    *
-   * @param {array}  campaigns
+   * @param {object} campaign
    * @param {object} group
    * @param {object} user
    *
    * @returns {boolean}
    */
-  setCampaignAlert(campaigns, group, user) {
+  setCampaignAlert(campaign, group, user) {
     return (
-      _.isEmpty(campaigns) &&
+      _.isNull(campaign) &&
       _.has(group, 'admins') &&
       _.has(user, '_id') &&
       group.admins.indexOf(user._id) !== -1
@@ -74,7 +74,7 @@ export default class GroupCtrl {
   addUserToGroup(user, group) {
     this.User.update(user, { groups: group._id })
       .then(response => this.Alertify.success('Joined group'))
-      .catch(err => null);
+      .catch(error => null);
   }
 
   /**
@@ -84,8 +84,8 @@ export default class GroupCtrl {
    */
   setupCampaign(group) {
     this.Modal.openCampaignEdit('setup', group)
-      .then(() => this.loadCampaigns(group))
-      .catch(err => null);
+      .then(() => this.loadCampaign(group))
+      .catch(error => null);
   }
 }
 

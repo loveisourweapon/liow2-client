@@ -2,8 +2,8 @@ import angular from 'angular';
 import config from '../../config';
 
 class Campaign {
-  constructor($http) {
-    Object.assign(this, { $http });
+  constructor($http, $q) {
+    Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/campaigns`;
   }
@@ -17,6 +17,27 @@ class Campaign {
    */
   find(params = {}) {
     return this.$http.get(this.baseUrl, { params });
+  }
+
+  /**
+   * Find a single campaign by params
+   *
+   * @param {object} params
+   *
+   * @returns {Promise}
+   */
+  findOne(params) {
+    return this.$q((resolve, reject) => {
+      this.find(params)
+        .then(response => {
+          if (response.data.length === 1) {
+            resolve(response.data[0]);
+          } else {
+            reject(new Error('Campaign not found'));
+          }
+        })
+        .catch(() => reject(new Error('Failed connecting to server')));
+    });
   }
 
   /**
@@ -35,7 +56,7 @@ class Campaign {
   }
 }
 
-Campaign.$inject = ['$http'];
+Campaign.$inject = ['$http', '$q'];
 
 export default angular.module('app.services.Campaign', [])
   .service('Campaign', Campaign)
