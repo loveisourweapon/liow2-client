@@ -22,8 +22,7 @@ export default class NavbarCtrl {
       return false;
     }
 
-    return this.Group
-      .search(query, { fields: '_id,name,urlName' })
+    return this.Group.search(query, { fields: '_id,name,urlName' })
       .then(response => this.groups = response.data);
   }
 
@@ -35,6 +34,16 @@ export default class NavbarCtrl {
   selectGroup(item) {
     this.group = null;
     this.$location.path(`/g/${item.urlName}`);
+  }
+
+  /**
+   * Set the current user's group, redirect to group homepage
+   *
+   * @param {object} group
+   */
+  setUserGroup(group) {
+    this.User.group = group;
+    this.selectGroup(group);
   }
 }
 

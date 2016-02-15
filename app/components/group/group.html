@@ -12,7 +12,7 @@
                    close="$ctrl.showCampaignAlert = false">
           You haven't got an active campaign, would you like to set one up now?
           <button class="btn btn-info m-l-sm p-xs"
-                  ng-click="$ctrl.Modal.openCampaignEdit('setup', $ctrl.Group.current)">
+                  ng-click="$ctrl.setupCampaign($ctrl.Group.current)">
             Setup Campaign
           </button>
         </uib-alert>

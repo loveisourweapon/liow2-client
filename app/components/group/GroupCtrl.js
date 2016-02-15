@@ -76,6 +76,17 @@ export default class GroupCtrl {
       .then(response => this.Alertify.success('Joined group'))
       .catch(err => null);
   }
+
+  /**
+   * Setup a campaign for the current group
+   *
+   * @param {group} group
+   */
+  setupCampaign(group) {
+    this.Modal.openCampaignEdit('setup', group)
+      .then(() => this.loadCampaigns(group))
+      .catch(err => null);
+  }
 }
 
 GroupCtrl.$inject = ['$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Modal'];

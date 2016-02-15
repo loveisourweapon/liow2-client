@@ -5,6 +5,7 @@ import config from '../../config';
 import satellizer from 'satellizer';
 
 let currentUser = null;
+let currentGroup = null;
 
 class User {
   constructor($auth, $http, $q, Group) {
@@ -97,9 +98,9 @@ class User {
       .then(response => {
         currentUser = response.data;
 
-        // If user is a part of one group, set it as the current group
-        if (currentUser.groups.length === 1) {
-          this.Group.current = currentUser.groups[0];
+        // Set the current group as the users first group
+        if (currentUser.groups.length) {
+          currentGroup = currentUser.groups[0];
         }
       });
   }
@@ -127,6 +128,24 @@ class User {
    */
   get current() {
     return currentUser;
+  }
+
+  /**
+   * Set the current group of the logged in user
+   *
+   * @param {object|null} group
+   */
+  set group(group) {
+    currentGroup = group;
+  }
+
+  /**
+   * Get the current group of the logged in user
+   *
+   * @returns {object|null}
+   */
+  get group() {
+    return currentGroup;
   }
 }
 
