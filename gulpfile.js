@@ -15,6 +15,7 @@ var assetsDir = 'public/assets';
 var manifestFile = 'public/assets/rev-manifest.json';
 
 var dependencies = [
+  'alertify.js',
   'angular',
   'angular-dragula',
   'angular-marked',

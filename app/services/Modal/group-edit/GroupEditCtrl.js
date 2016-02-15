@@ -4,8 +4,8 @@ import showdown from 'showdown';
 let converter = new showdown.Converter();
 
 export default class GroupEditCtrl {
-  constructor($uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action, group) {
-    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, User, Group, Modal, action, group });
+  constructor($uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group) {
+    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group });
 
     this.error = null;
 
@@ -86,12 +86,15 @@ export default class GroupEditCtrl {
     this.Group.save(group)
       .then(response => {
         this.Group.current = response.data;
+        this.User.loadCurrent();
+
         this.$location.path(`/g/${response.data.urlName}`);
         this.$uibModalInstance.close();
+        this.Alertify.success(`${_.capitalize(this.action)}d group`);
       })
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);
   }
 }
 
-GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'User', 'Group', 'Modal', 'action', 'group'];
+GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'Alertify', 'User', 'Group', 'Modal', 'action', 'group'];

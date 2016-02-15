@@ -1,0 +1,38 @@
+/**
+ * Buttons
+ */
+.btn-facebook {
+  @include button-variant(white, #3b5998, #335190);
+}
+.img-btn {
+  width: 25px;
+  display: inline;
+  vertical-align: text-bottom;
+}
+
+/**
+ * angular-ui-switch
+ */
+.switch {
+  vertical-align: middle;
+}
+
+/**
+ * Dragula
+ */
+ul.list-group[dragula] {
+  min-height: 200px;
+}
+.gu-mirror {
+  background: $state-info-bg;
+  border-radius: $border-radius-base;
+}
+
+/**
+ * alertify.js
+ */
+.alertify-logs.top.right {
+  top: $navbar-height;
+  right: 10px;
+  z-index: 10000;
+}

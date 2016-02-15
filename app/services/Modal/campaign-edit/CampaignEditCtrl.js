@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 export default class CampaignEditCtrl {
-  constructor($uibModalInstance, Campaign, Deed, Modal, action, group, campaign) {
-    Object.assign(this, { $uibModalInstance, Campaign, Deed, Modal, action, group, campaign });
+  constructor($uibModalInstance, Alertify, Campaign, Deed, Modal, action, group, campaign) {
+    Object.assign(this, { $uibModalInstance, Alertify, Campaign, Deed, Modal, action, group, campaign });
 
     this.error = null;
     this.deeds = [];
@@ -35,7 +35,10 @@ export default class CampaignEditCtrl {
     this.saving = true;
     this.error = null;
     this.Campaign.save(toSave)
-      .then(() => this.$uibModalInstance.close())
+      .then(() => {
+        this.$uibModalInstance.close();
+        this.Alertify.success('Setup campaign');
+      })
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);
   }
@@ -53,4 +56,4 @@ export default class CampaignEditCtrl {
   }
 }
 
-CampaignEditCtrl.$inject = ['$uibModalInstance', 'Campaign', 'Deed', 'Modal', 'action', 'group', 'campaign'];
+CampaignEditCtrl.$inject = ['$uibModalInstance', 'Alertify', 'Campaign', 'Deed', 'Modal', 'action', 'group', 'campaign'];

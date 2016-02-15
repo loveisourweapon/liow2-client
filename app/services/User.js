@@ -67,7 +67,11 @@ class User {
    * @param {object} group
    */
   isMemberOfGroup(group) {
-    return _.has(currentUser, 'groups') && _.some(currentUser.groups, userGroup => userGroup._id === group._id);
+    return (
+      _.has(currentUser, 'groups') &&
+      _.has(group, '_id') &&
+      _.some(currentUser.groups, userGroup => userGroup._id === group._id)
+    );
   }
 
   /**
@@ -97,6 +101,22 @@ class User {
         if (currentUser.groups.length === 1) {
           this.Group.current = currentUser.groups[0];
         }
+      });
+  }
+
+  /**
+   * Update an existing user
+   *
+   * @param {object} user
+   * @param {object} changes
+   *
+   * @returns {Promise}
+   */
+  update(user, changes) {
+    return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
+      .then(response => {
+        this.loadCurrent();
+        return response;
       });
   }
 

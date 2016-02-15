@@ -3,8 +3,8 @@ import seedrandom from 'seedrandom';
 const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
-  constructor($routeParams, User, Group, Campaign, Modal) {
-    Object.assign(this, { User, Group, Campaign, Modal });
+  constructor($routeParams, Alertify, User, Group, Campaign, Modal) {
+    Object.assign(this, { Alertify, User, Group, Campaign, Modal });
 
     // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
@@ -25,7 +25,6 @@ export default class GroupCtrl {
       .then(group => {
         this.Group.current = group;
         this.loadCampaigns(group);
-        this.showCampaignAlert = this.setCampaignAlert(group, this.User.current);
       })
       .catch(error => {
         this.error = error.message;
@@ -41,20 +40,25 @@ export default class GroupCtrl {
    */
   loadCampaigns(group) {
     this.Campaign.find({ group: group._id, active: true })
-      .then(campaigns => this.campaigns = campaigns)
+      .then(response => {
+        this.campaigns = response.data;
+        this.showCampaignAlert = this.setCampaignAlert(this.campaigns, this.Group.current, this.User.current);
+      })
       .catch(error => this.error = error.message);
   }
 
   /**
    * Show hint to setup a campaign if logged in as admin of group with no active campaign
    *
+   * @param {array}  campaigns
    * @param {object} group
-   * @param {user} user
+   * @param {object} user
    *
    * @returns {boolean}
    */
-  setCampaignAlert(group, user) {
+  setCampaignAlert(campaigns, group, user) {
     return (
+      _.isEmpty(campaigns) &&
       _.has(group, 'admins') &&
       _.has(user, '_id') &&
       group.admins.indexOf(user._id) !== -1
@@ -63,10 +67,15 @@ export default class GroupCtrl {
 
   /**
    * Add the current logged in user to this group
+   *
+   * @param {object} user
+   * @param {object} group
    */
-  addUserToGroup() {
-    console.log(`Add user '${this.User.current.name}' to group '${this.Group.current.name}'`);
+  addUserToGroup(user, group) {
+    this.User.update(user, { groups: group._id })
+      .then(response => this.Alertify.success('Joined group'))
+      .catch(err => null);
   }
 }
 
-GroupCtrl.$inject = ['$routeParams', 'User', 'Group', 'Campaign', 'Modal'];
+GroupCtrl.$inject = ['$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Modal'];

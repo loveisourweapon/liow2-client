@@ -9,6 +9,7 @@ import angularMarked from 'angular-marked';
 import angularYoutube from 'angular-youtube-embed';
 import 'angular-ui-switch'; // Not browserified
 import lodashFilters from '../../filters/lodash';
+import Alertify from '../../services/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
