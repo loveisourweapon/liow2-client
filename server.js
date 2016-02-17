@@ -1,14 +1,24 @@
-var config = require('./config');
+var _ = require('lodash');
 var http = require('http');
 var path = require('path');
 var logger = require('morgan');
 var express = require('express');
 var app = express();
 
+// Get config and look for environment variable overrides
+var config = _.mapValues(require('./config'), (value, key) => {
+  var envVar = process.env[_.replace(_.upperCase(key), /\s/g, '_')];
+  if (envVar) {
+    return envVar;
+  }
+
+  return value;
+});
+
 var swig = require('swig');
 var fs = require('fs');
 var revManifestFile = 'public/assets/rev-manifest.json';
-swig.setFilter('revManifest', (input) => {
+swig.setFilter('revManifest', input => {
   var revManifest = JSON.parse(fs.readFileSync(revManifestFile, 'utf8'));
 
   return revManifest[input] || input;
