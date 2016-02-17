@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import angular from 'angular';
-import config from '../../config';
+
+// Module dependencies
+import config from '../config';
 
 let currentGroup = null;
 
 class Group {
-  constructor($http, $q) {
+  constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/groups`;
@@ -103,8 +105,8 @@ class Group {
   }
 }
 
-Group.$inject = ['$http', '$q'];
+Group.$inject = ['$http', '$q', 'config'];
 
-export default angular.module('app.services.Group', [])
+export default angular.module('app.services.Group', [config])
   .service('Group', Group)
   .name;

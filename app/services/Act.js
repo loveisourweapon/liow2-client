@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import angular from 'angular';
-import config from '../../config';
+
+// Module dependencies
+import config from '../config';
 
 class Act {
-  constructor($http) {
+  constructor($http, config) {
     Object.assign(this, { $http });
 
     this.baseUrl = `${config.serverUrl}/acts`;
@@ -25,8 +27,8 @@ class Act {
   }
 }
 
-Act.$inject = ['$http'];
+Act.$inject = ['$http', 'CONFIG'];
 
-export default angular.module('app.services.Act', [])
+export default angular.module('app.services.Act', [config])
   .service('Act', Act)
   .name;

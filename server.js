@@ -1,3 +1,4 @@
+var config = require('./config');
 var http = require('http');
 var path = require('path');
 var logger = require('morgan');
@@ -18,6 +19,9 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var router = express.Router();
+router.get('/config.js', (req, res) => {
+  res.type('.js').send('var LIOW_CONFIG = ' + JSON.stringify(config));
+});
 router.get('*', (req, res) => {
   res.send(swig.renderFile('views/index.html'));
 });

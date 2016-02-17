@@ -1,8 +1,10 @@
 import angular from 'angular';
-import config from '../../config';
+
+// Module dependencies
+import config from '../config';
 
 class Campaign {
-  constructor($http, $q) {
+  constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/campaigns`;
@@ -56,8 +58,8 @@ class Campaign {
   }
 }
 
-Campaign.$inject = ['$http', '$q'];
+Campaign.$inject = ['$http', '$q', 'config'];
 
-export default angular.module('app.services.Campaign', [])
+export default angular.module('app.services.Campaign', [config])
   .service('Campaign', Campaign)
   .name;

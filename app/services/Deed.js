@@ -1,10 +1,12 @@
 import angular from 'angular';
-import config from '../../config';
+
+// Module dependencies
+import config from '../config';
 
 let currentDeed = null;
 
 class Deed {
-  constructor($http, $q) {
+  constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/deeds`;
@@ -73,8 +75,8 @@ class Deed {
   }
 }
 
-Deed.$inject = ['$http', '$q'];
+Deed.$inject = ['$http', '$q', 'config'];
 
-export default angular.module('app.services.Deed', [])
+export default angular.module('app.services.Deed', [config])
   .service('Deed', Deed)
   .name;

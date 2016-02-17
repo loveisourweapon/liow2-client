@@ -1,14 +1,14 @@
 import angular from 'angular';
-import config from '../../config';
 
 // Module dependencies
+import config from '../config';
 import satellizer from 'satellizer';
 
 let currentUser = null;
 let currentGroup = null;
 
 class User {
-  constructor($auth, $http, $q, Group) {
+  constructor($auth, $http, $q, config, Group) {
     Object.assign(this, { $auth, $http, $q, Group });
 
     this.baseUrl = `${config.serverUrl}/users`;
@@ -149,10 +149,10 @@ class User {
   }
 }
 
-User.$inject = ['$auth', '$http', '$q', 'Group'];
+User.$inject = ['$auth', '$http', '$q', 'config', 'Group'];
 
-export default angular.module('app.services.User', [satellizer])
-  .config(['$authProvider', $authProvider => {
+export default angular.module('app.services.User', [satellizer, config])
+  .config(['$authProvider', 'config', ($authProvider, config) => {
     $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
     $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
     $authProvider.facebook({
