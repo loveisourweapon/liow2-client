@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 export default class LoginCtrl {
-  constructor($uibModalInstance, $routeParams, User, Group) {
-    Object.assign(this, { $uibModalInstance, $routeParams, User, Group });
+  constructor($uibModalInstance, $routeParams, Alertify, User, Group) {
+    Object.assign(this, { $uibModalInstance, $routeParams, Alertify, User, Group });
 
     this.joinGroup = null;
     if (_.has($routeParams, 'group')) {
@@ -21,7 +21,12 @@ export default class LoginCtrl {
       userData.group = this.Group.current._id;
     }
 
-    this.User.authenticateFacebook(userData).then(() => this.$uibModalInstance.close());
+    this.User.authenticateFacebook(userData)
+      .then(() => {
+        this.$uibModalInstance.close();
+        this.Alertify.success('Signed in');
+      })
+      .catch(() => this.Alertify.error('Failed signing in'));
   }
 
   /**
@@ -31,8 +36,13 @@ export default class LoginCtrl {
    * @param {string} password
    */
   authenticateEmail(email, password) {
-    this.User.authenticateEmail().then(() => this.$uibModalInstance.close());
+    this.User.authenticateEmail(email, password)
+      .then(() => {
+        this.$uibModalInstance.close();
+        this.Alertify.success('Signed in');
+      })
+      .catch(() => this.Alertify.error('Failed signing in'));
   }
 }
 
-LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'User', 'Group'];
+LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group'];

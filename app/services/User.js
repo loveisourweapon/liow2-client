@@ -28,8 +28,9 @@ class User {
       .then(response => {
         this.$auth.setToken(response.data.token);
         this.loadCurrent();
-      })
-      .catch(err => console.log('authenticateFacebook failed', err));
+
+        return response;
+      });
   }
 
   /**
@@ -49,8 +50,9 @@ class User {
       .then(response => {
         this.$auth.setToken(response.data.token);
         this.loadCurrent();
-      })
-      .catch(err => console.log('authenticateEmail failed', err));
+
+        return response;
+      });
   }
 
   /**
