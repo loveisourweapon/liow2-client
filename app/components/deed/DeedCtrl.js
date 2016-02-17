@@ -1,6 +1,6 @@
 export default class DeedCtrl {
-  constructor($routeParams, User, Group, Deed, Act, Modal) {
-    Object.assign(this, { User, Group, Deed, Act, Modal });
+  constructor($routeParams, Alertify, User, Group, Deed, Act, Modal) {
+    Object.assign(this, { Alertify, User, Group, Deed, Act, Modal });
 
     this.loadDeed($routeParams.deed);
   }
@@ -34,10 +34,14 @@ export default class DeedCtrl {
   done(deed, group = null) {
     this.doing = true;
     this.Act.done(deed, group)
-      .then(response => console.log('DONE!', response))
-      .catch(error => console.log('ERROR!', error))
+      .then(() => {
+        this.Act.count();
+        this.Act.count({ deed: deed._id });
+        this.Alertify.success('Deed done!');
+      })
+      .catch(() => this.Alertify.error('Failed registering deed'))
       .then(() => this.doing = false);
   }
 }
 
-DeedCtrl.$inject = ['$routeParams', 'User', 'Group', 'Deed', 'Act', 'Modal'];
+DeedCtrl.$inject = ['$routeParams', 'Alertify', 'User', 'Group', 'Deed', 'Act', 'Modal'];
