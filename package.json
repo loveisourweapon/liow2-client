@@ -5,8 +5,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "babel-node server.js",
-    "watch": "nodemon --exec babel-node -- server.js",
+    "start": "./node_modules/.bin/babel-node server.js",
+    "watch": "nodemon --exec ./node_modules/.bin/babel-node -- server.js",
     "test": "mocha"
   },
   "repository": {
@@ -36,11 +36,12 @@
     "angular-ui-bootstrap": "^1.1.2",
     "angular-ui-switch": "^0.1.1",
     "angular-youtube-embed": "^1.1.1",
+    "babel-cli": "^6.5.1",
     "bootstrap-sass": "^3.3.6",
     "express": "^4.13.4",
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.0",
-    "lodash": "^4.3.0",
+    "lodash": "^4.4.0",
     "medium-editor": "^5.14.2",
     "moment": "^2.11.2",
     "morgan": "^1.6.1",
