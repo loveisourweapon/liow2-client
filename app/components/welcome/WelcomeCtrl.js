@@ -1,7 +1,13 @@
 export default class WelcomeCtrl {
-  constructor(Modal) {
-    Object.assign(this, { Modal });
+  constructor(User, Group, Act, Modal) {
+    Object.assign(this, { Act, Modal });
+
+    Group.find({ count: true })
+      .then(response => this.numberOfGroups = Number(response.data));
+
+    User.find({ count: true })
+      .then(response => this.numberOfUsers = Number(response.data));
   }
 }
 
-WelcomeCtrl.$inject = ['Modal'];
+WelcomeCtrl.$inject = ['User', 'Group', 'Act', 'Modal'];

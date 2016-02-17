@@ -85,6 +85,17 @@ class User {
   }
 
   /**
+   * Find users by params
+   *
+   * @param {object} [params={}]
+   *
+   * @returns {HttpPromise}
+   */
+  find(params = {}) {
+    return this.$http.get(this.baseUrl, { params });
+  }
+
+  /**
    * Get the current user from the server
    *
    * @returns {Promise}

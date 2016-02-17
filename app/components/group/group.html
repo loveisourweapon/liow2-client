@@ -1,7 +1,11 @@
 <jumbotron image="/images/group.png"
            background="{{ $ctrl.jumbotronBackground }}"
            title="{{ $ctrl.Group.current.name }}"
-           text="<span class='label label-primary'>12,001</span> acts of love"></jumbotron>
+           text="
+             <span class='label label-primary m-r-sm'>
+               {{ $ctrl.Act.counters[$ctrl.Group.current._id] | number }}
+             </span> acts of love
+           "></jumbotron>
 
 <div class="container container-pad">
   <div class="row">

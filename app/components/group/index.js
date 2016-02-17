@@ -6,6 +6,7 @@ import Alertify from '../../services/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
+import Act from '../../services/Act';
 import Modal from '../../services/Modal';
 import jumbotron from '../jumbotron';
 
@@ -20,6 +21,7 @@ export let group = angular.module('app.components.group', [
   User,
   Group,
   Campaign,
+  Act,
   Modal,
   jumbotron
 ])

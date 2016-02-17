@@ -5,13 +5,21 @@ import ngSanitize from 'angular-sanitize';
 import uiSelect from 'ui-select';
 import User from '../../services/User';
 import Group from '../../services/Group';
+import Act from '../../services/Act';
 import Modal from '../../services/Modal';
 
 // Component dependencies
 import NavbarCtrl from './NavbarCtrl';
 import navbarTpl from './navbar.html';
 
-export default angular.module('app.components.navbar', [ngSanitize, uiSelect, User, Group, Modal])
+export default angular.module('app.components.navbar', [
+  ngSanitize,
+  uiSelect,
+  User,
+  Group,
+  Act,
+  Modal
+])
   .component('navbar', {
     controller: NavbarCtrl,
     template: navbarTpl

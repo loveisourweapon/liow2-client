@@ -31,7 +31,10 @@
             {{ $ctrl.Deed.current.title }}
           </h1>
           <p class="m-none">
-            <span class='label label-primary'>12,001</span> acts of love
+            <span class="label label-primary m-r-xs">
+              {{ $ctrl.Act.counters[$ctrl.Deed.current._id] | number }}
+            </span>
+            acts of love
           </p>
         </div>
         <div marked="$ctrl.Deed.current.content"></div>

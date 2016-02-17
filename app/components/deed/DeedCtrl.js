@@ -14,7 +14,10 @@ export default class DeedCtrl {
     this.loading = true;
     this.Deed
       .findOne({ urlTitle })
-      .then(deed => this.Deed.current = deed)
+      .then(deed => {
+        this.Deed.current = deed;
+        this.Act.count({ deed: deed._id });
+      })
       .catch(error => {
         this.error = error.message;
         this.Deed.current = null;

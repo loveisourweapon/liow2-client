@@ -29,15 +29,30 @@
       </div>
 
       <div class="col-sm-3">
-        <h1 class="text-primary m-b-none">80,900</h1>
+        <h1 class="text-primary m-b-none">
+          <span ng-show="$ctrl.Act.counters.global">
+            {{ $ctrl.Act.counters.global | number }}
+          </span>
+          <span ng-hide="$ctrl.Act.counters.global">&nbsp;</span>
+        </h1>
         <h4 class="m-none">acts of love</h4>
         <p class="m-t-none">done around the world</p>
 
-        <h1 class="text-primary m-b-none">125</h1>
-        <h4 class="m-none">ministries</h4>
+        <h1 class="text-primary m-b-none">
+          <span ng-show="$ctrl.numberOfGroups">
+            {{ $ctrl.numberOfGroups | number }}
+          </span>
+          <span ng-hide="$ctrl.numberOfGroups">&nbsp;</span>
+        </h1>
+        <h4 class="m-none">groups</h4>
         <p class="m-t-none">serving together</p>
 
-        <h1 class="text-primary m-b-none">65,000</h1>
+        <h1 class="text-primary m-b-none">
+          <span ng-show="$ctrl.numberOfUsers">
+            {{ $ctrl.numberOfUsers | number }}
+          </span>
+          <span ng-hide="$ctrl.numberOfUsers">&nbsp;</span>
+        </h1>
         <h4 class="m-none">individuals</h4>
         <p class="m-t-none">causing change</p>
       </div>

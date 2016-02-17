@@ -3,8 +3,8 @@ import seedrandom from 'seedrandom';
 const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
-  constructor($routeParams, Alertify, User, Group, Campaign, Modal) {
-    Object.assign(this, { Alertify, User, Group, Campaign, Modal });
+  constructor($routeParams, Alertify, User, Group, Campaign, Act, Modal) {
+    Object.assign(this, { Alertify, User, Group, Campaign, Act, Modal });
 
     // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
@@ -24,6 +24,7 @@ export default class GroupCtrl {
       .findOne({ urlName })
       .then(group => {
         this.Group.current = group;
+        this.Act.count({ group: group._id });
         this.loadCampaign(group);
       })
       .catch(error => {
@@ -43,6 +44,7 @@ export default class GroupCtrl {
       .catch(() => ({ data: null }))
       .then(response => {
         this.campaign = response.data;
+        if (this.campaign) this.Act.count({ campaign: this.campaign._id });
         this.showCampaignAlert = this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
       });
   }
@@ -89,4 +91,4 @@ export default class GroupCtrl {
   }
 }
 
-GroupCtrl.$inject = ['$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Modal'];
+GroupCtrl.$inject = ['$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Modal'];
