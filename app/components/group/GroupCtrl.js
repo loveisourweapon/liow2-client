@@ -75,7 +75,10 @@ export default class GroupCtrl {
    */
   addUserToGroup(user, group) {
     this.User.update(user, { groups: group._id })
-      .then(response => this.Alertify.success('Joined group'))
+      .then(() => {
+        this.User.group = group;
+        this.Alertify.success('Joined group');
+      })
       .catch(error => null);
   }
 

@@ -28,9 +28,7 @@ class User {
     return this.$auth.authenticate('facebook', userData)
       .then(response => {
         this.$auth.setToken(response.data.token);
-        this.loadCurrent();
-
-        return response;
+        return this.loadCurrent();
       });
   }
 
@@ -50,9 +48,7 @@ class User {
     return this.$auth.login({ email, password })
       .then(response => {
         this.$auth.setToken(response.data.token);
-        this.loadCurrent();
-
-        return response;
+        return this.loadCurrent();
       });
   }
 
@@ -119,6 +115,8 @@ class User {
         if (currentUser.groups.length) {
           currentGroup = currentUser.groups[0];
         }
+
+        return response;
       });
   }
 
@@ -132,10 +130,7 @@ class User {
    */
   update(user, changes) {
     return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
-      .then(response => {
-        this.loadCurrent();
-        return response;
-      });
+      .then(response => this.loadCurrent());
   }
 
   /**

@@ -23,6 +23,10 @@ export default class LoginCtrl {
 
     this.User.authenticateFacebook(userData)
       .then(() => {
+        if (joinGroup) {
+          this.User.group = this.Group.current;
+        }
+
         this.$uibModalInstance.close();
         this.Alertify.success('Signed in');
       })

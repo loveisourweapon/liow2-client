@@ -3,12 +3,13 @@ import angular from 'angular';
 
 // Module dependencies
 import config from '../config';
+import User from './User';
 
 let currentGroup = null;
 
 class Group {
-  constructor($http, $q, config) {
-    Object.assign(this, { $http, $q });
+  constructor($http, $q, config, User) {
+    Object.assign(this, { $http, $q, User });
 
     this.baseUrl = `${config.serverUrl}/groups`;
   }
@@ -93,6 +94,11 @@ class Group {
    */
   set current(group) {
     currentGroup = group;
+
+    // If the current user is a member of this group, make it their active group
+    if (this.User.current && _.find(this.User.current.groups, ['id', group._id])) {
+      this.User.group = group;
+    }
   }
 
   /**
@@ -105,8 +111,8 @@ class Group {
   }
 }
 
-Group.$inject = ['$http', '$q', 'config'];
+Group.$inject = ['$http', '$q', 'config', 'User'];
 
-export default angular.module('app.services.Group', [config])
+export default angular.module('app.services.Group', [config, User])
   .service('Group', Group)
   .name;
