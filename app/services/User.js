@@ -3,13 +3,14 @@ import angular from 'angular';
 // Module dependencies
 import config from '../config';
 import satellizer from 'satellizer';
+import Alertify from './Alertify';
 
 let currentUser = null;
 let currentGroup = null;
 
 class User {
-  constructor($auth, $http, $q, config, Group) {
-    Object.assign(this, { $auth, $http, $q, Group });
+  constructor($auth, $http, $q, config, Alertify) {
+    Object.assign(this, { $auth, $http, $q, Alertify });
 
     this.baseUrl = `${config.serverUrl}/users`;
 
@@ -83,7 +84,10 @@ class User {
    * @returns {Promise}
    */
   logout() {
-    return this.$auth.logout().then(() => currentUser = null);
+    return this.$auth.logout().then(() => {
+      currentUser = null;
+      this.Alertify.success('Logged out');
+    });
   }
 
   /**
@@ -162,9 +166,13 @@ class User {
   }
 }
 
-User.$inject = ['$auth', '$http', '$q', 'config', 'Group'];
+User.$inject = ['$auth', '$http', '$q', 'config', 'Alertify'];
 
-export default angular.module('app.services.User', [satellizer, config])
+export default angular.module('app.services.User', [
+  config,
+  satellizer,
+  Alertify
+])
   .config(['$authProvider', 'config', ($authProvider, config) => {
     $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
     $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
