@@ -1,7 +1,8 @@
 export default class UserCtrl {
-  constructor($routeParams) {
+  constructor($rootScope, $routeParams) {
     this.name = $routeParams.user;
+    $rootScope.title = this.name;
   }
 }
 
-UserCtrl.$inject = ['$routeParams'];
+UserCtrl.$inject = ['$rootScope', '$routeParams'];

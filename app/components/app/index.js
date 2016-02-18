@@ -15,7 +15,15 @@ import { user, userTpl } from '../user';
 import AppCtrl from './AppCtrl';
 import appTpl from './app.html';
 
-export default angular.module('app', [ngRoute, uiSelect, navbar, home, deed, group, user])
+export default angular.module('app', [
+  ngRoute,
+  uiSelect,
+  navbar,
+  home,
+  deed,
+  group,
+  user
+])
   .component('app', {
     controller: AppCtrl,
     template: appTpl
@@ -27,6 +35,8 @@ export default angular.module('app', [ngRoute, uiSelect, navbar, home, deed, gro
     ($routeProvider, $locationProvider, uiSelectConfig) => {
       $routeProvider
         .when('/', {
+          controller: 'HomeCtrl',
+          controllerAs: '$ctrl',
           template: homeTpl
         })
         .when('/d/:deed', {

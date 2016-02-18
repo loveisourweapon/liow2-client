@@ -1,8 +1,9 @@
 export default class DeedCtrl {
-  constructor($routeParams, Alertify, User, Group, Deed, Act, Modal) {
+  constructor($rootScope, $routeParams, Alertify, User, Group, Deed, Act, Modal) {
     Object.assign(this, { Alertify, User, Group, Deed, Act, Modal });
 
-    this.loadDeed($routeParams.deed);
+    this.loadDeed($routeParams.deed)
+      .then(() => $rootScope.title = this.Deed.current ? this.Deed.current.title : null);
   }
 
   /**
@@ -12,7 +13,7 @@ export default class DeedCtrl {
    */
   loadDeed(urlTitle) {
     this.loading = true;
-    this.Deed
+    return this.Deed
       .findOne({ urlTitle })
       .then(deed => {
         this.Deed.current = deed;
@@ -44,4 +45,4 @@ export default class DeedCtrl {
   }
 }
 
-DeedCtrl.$inject = ['$routeParams', 'Alertify', 'User', 'Group', 'Deed', 'Act', 'Modal'];
+DeedCtrl.$inject = ['$rootScope', '$routeParams', 'Alertify', 'User', 'Group', 'Deed', 'Act', 'Modal'];
