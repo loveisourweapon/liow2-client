@@ -2,9 +2,16 @@
   background: $gray-lighter;
   padding: $padding-large-horizontal;
   border-radius: $border-radius-large;
+  overflow: auto;
 
   > img {
     width: 60px;
     border: 1px solid;
+  }
+
+  > h1,
+  > p {
+    float: right;
+    width: calc(100% - 70px);
   }
 }
