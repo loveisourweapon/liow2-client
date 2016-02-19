@@ -1,4 +1,17 @@
-.Home__Welcome1 {}
+.Home__Welcome1 {
+  .col-sm-3 {
+    @media (max-width: $screen-xs-max) {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid $gray-lighter;
+    }
+
+    @media (min-width: $screen-md-min) {
+      padding-left: 40px;
+    }
+  }
+}
 
 .Home__Welcome2 {
   background: #de2b2b;
@@ -20,13 +33,20 @@
     right: 0;
     bottom: -22px;
     max-width: 70%;
+
+    @media (max-width: $screen-xs-max) {
+      opacity: 0.7;
+      bottom: -5vw;
+    }
   }
 
   ol {
     margin-top: 10vw;
+    margin-bottom: 10vw;
     font-size: large;
     width: 30%;
     list-style-type: none;
+    position: relative;
 
     li {
       margin: 30px 30px 30px 0;
@@ -44,6 +64,11 @@
         margin-right: 8px;
         border-radius: 13px;
       }
+    }
+
+    @media (max-width: $screen-xs-max) {
+      width: 100%;
+      text-shadow: 0 0 2px $gray-darker;
     }
   }
 }

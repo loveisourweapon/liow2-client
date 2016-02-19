@@ -6,6 +6,10 @@
 
   &:not(.videotron) {
     height: 35vw;
+
+    @media (max-width: $screen-xs-max) {
+      height: 45vw;
+    }
   }
 
   &.videotron {
