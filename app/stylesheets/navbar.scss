@@ -33,7 +33,13 @@ nav#liow-navbar {
   }
 
   #group-search {
-    margin-top: 14px;
+    border-top: none;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    @media (min-width: $screen-sm-min) {
+      margin-top: 14px;
+    }
 
     .input-group {
       margin: 0;
