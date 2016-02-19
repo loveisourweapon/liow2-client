@@ -2,7 +2,7 @@
            background="{{ $ctrl.jumbotronBackground }}"
            title="{{ $ctrl.Group.current.name }}"
            text="
-             <span class='label label-primary m-r-sm'>
+             <span class='f-lg'>
                {{ $ctrl.Act.counters[$ctrl.Group.current._id] | number }}
              </span> acts of love
            "></jumbotron>
@@ -10,35 +10,7 @@
 <div class="container container-pad">
   <div class="row">
     <div ng-hide="$ctrl.loading || $ctrl.error">
-      <div class="col-sm-9">
-        <uib-alert type="info"
-                   ng-show="$ctrl.showCampaignAlert"
-                   close="$ctrl.showCampaignAlert = false">
-          You haven't got an active campaign, would you like to set one up now?
-          <button class="btn btn-info m-l-sm p-xs"
-                  ng-click="$ctrl.setupCampaign($ctrl.Group.current)">
-            Setup Campaign
-          </button>
-        </uib-alert>
-
-        <blockquote marked="$ctrl.Group.current.welcomeMessage"
-                    ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
-
-        <div ng-hide="$ctrl.Group.current.welcomeMessage">
-          <h2>
-            The Love is our Weapon Campaign is a youth movement that exists to
-            change cities through the love of Jesus by doing strategic practical
-            acts of love.
-          </h2>
-          <p>
-            Thousands of people, doing thousands of acts of love, bringing
-            change, value, healing and hope throughout cities and communities
-            everywhere.
-          </p>
-        </div>
-      </div>
-
-      <div class="col-sm-3">
+      <div class="col-sm-3 col-sm-push-9 m-b-lg">
         <div class="well well-sm"
              ng-if="$ctrl.User.isMemberOfGroup($ctrl.Group.current) && $ctrl.campaign !== null">
           <h5 class="text-center">
@@ -132,6 +104,34 @@
           <i class="fa fa-fw fa-edit"></i>
           Update group
         </button>
+      </div>
+
+      <div class="col-sm-9 col-sm-pull-3">
+        <uib-alert type="info"
+                   ng-show="$ctrl.showCampaignAlert"
+                   close="$ctrl.showCampaignAlert = false">
+          You haven't got an active campaign, would you like to set one up now?&nbsp;
+          <button class="btn btn-info m-t-xs p-xs"
+                  ng-click="$ctrl.setupCampaign($ctrl.Group.current)">
+            Setup Campaign
+          </button>
+        </uib-alert>
+
+        <blockquote marked="$ctrl.Group.current.welcomeMessage"
+                    ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
+
+        <div ng-hide="$ctrl.Group.current.welcomeMessage">
+          <h2>
+            The Love is our Weapon Campaign is a youth movement that exists to
+            change cities through the love of Jesus by doing strategic practical
+            acts of love.
+          </h2>
+          <p>
+            Thousands of people, doing thousands of acts of love, bringing
+            change, value, healing and hope throughout cities and communities
+            everywhere.
+          </p>
+        </div>
       </div>
     </div>
 
