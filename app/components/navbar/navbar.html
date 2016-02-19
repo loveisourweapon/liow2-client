@@ -42,14 +42,11 @@
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show="$ctrl.User.isAuthenticated()">
-          <a href="#">Campaign</a>
-        </li>
-        <li ng-show="$ctrl.User.isAuthenticated()">
-          <a href="#">Updates</a>
-        </li>
-        <li ng-show="$ctrl.User.isAuthenticated()">
-          <a href="#">Comments <span class="badge">6</span></a>
+        <li ng-show="$ctrl.User.isAuthenticated() && $ctrl.User.group">
+          <a ng-href="/g/{{ $ctrl.User.group.urlName }}"
+             title="{{ $ctrl.User.group.name }}">
+            Campaign
+          </a>
         </li>
         <li class="dropdown">
           <a class="dropdown-toggle user-dropdown"
