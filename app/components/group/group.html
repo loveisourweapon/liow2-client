@@ -41,7 +41,16 @@
       <div class="col-sm-3">
         <div class="well well-sm"
              ng-if="$ctrl.User.isMemberOfGroup($ctrl.Group.current) && $ctrl.campaign !== null">
-          <h5 class="text-center">Current Campaign</h5>
+          <h5 class="text-center">
+            Current Campaign
+            <br>
+            <small>
+              <span class='label label-default m-r-xs'>
+                {{ $ctrl.Act.counters[$ctrl.campaign._id] | number }}
+              </span>
+              acts of love
+            </small>
+          </h5>
 
           <!-- TODO: move buttons to a directive -->
           <!-- Show buttons with publish/unpublish menu for admins -->
