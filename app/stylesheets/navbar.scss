@@ -48,11 +48,19 @@ nav#liow-navbar {
       height: 30px;
       background: #eee;
       color: #555;
-      font-weight: normal;
       box-shadow: none;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 30px;
+      padding: 0 12px;
+
+      .text-muted {
+        color: #999;
+      }
 
       @media (min-width: $screen-sm-min) {
         width: 200px;
+        font-size: 14px;
       }
     }
   }
