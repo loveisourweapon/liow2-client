@@ -62,7 +62,6 @@ gulp.task('browserify-vendor', function() {
   return browserify({ debug: true })
     .require(dependencies)
     .plugin('minifyify', { map: sourceMap, output: sourceMap })
-    .transform(require('browserify-css'), { global: true }) // ui-select bundles CSS
     .bundle()
     .pipe(source('vendor.bundle.js'))
     .pipe(buffer())

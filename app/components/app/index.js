@@ -63,23 +63,3 @@ export default angular.module('app', [
     }
   ])
   .name;
-
-// Temporary workaround for adding classes to broken ui-select directives under angular 1.5.0
-angular.module(uiSelect).config(['$provide', $provide => {
-  function decorateDirectiveWithClass(directive, className) {
-    $provide.decorator(directive, ['$delegate', $delegate => {
-      let directive = $delegate[0],
-          templateUrl = directive.templateUrl;
-
-      directive.templateUrl = tElement => {
-        tElement.addClass(className);
-        return templateUrl(tElement);
-      };
-
-      return $delegate;
-    }]);
-  }
-
-  decorateDirectiveWithClass('uiSelectChoicesDirective', 'ui-select-choices');
-  decorateDirectiveWithClass('uiSelectMatchDirective', 'ui-select-match');
-}]);
