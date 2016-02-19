@@ -4,6 +4,9 @@
 .btn-facebook {
   @include button-variant(white, #3b5998, #335190);
 }
+.btn-inline {
+  vertical-align: baseline;
+}
 .img-btn {
   width: 25px;
   display: inline;
