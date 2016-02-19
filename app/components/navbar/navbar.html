@@ -44,6 +44,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li ng-show="$ctrl.User.isAuthenticated() && $ctrl.User.group">
           <a ng-href="/g/{{ $ctrl.User.group.urlName }}"
+             ng-click="$ctrl.collapseMenu()"
              title="{{ $ctrl.User.group.name }}">
             Campaign
           </a>
@@ -66,13 +67,13 @@
               {{ $ctrl.User.current.name }}
             </li>
             <li ng-show="$ctrl.User.isAuthenticated()">
-              <a ng-click="$ctrl.User.logout()" href>
+              <a ng-click="$ctrl.User.logout() && $ctrl.collapseMenu()" href>
                 <i class="fa fa-fw fa-sign-out"></i>
                 Logout
               </a>
             </li>
             <li ng-hide="$ctrl.User.isAuthenticated()">
-              <a ng-click="$ctrl.Modal.openLogin()" href>
+              <a ng-click="$ctrl.Modal.openLogin() && $ctrl.collapseMenu()" href>
                 <i class="fa fa-fw fa-sign-in"></i>
                 Login
               </a>
@@ -91,7 +92,7 @@
               </a>
             </li>
             <li>
-              <a ng-click="$ctrl.Modal.openGroupEdit()" href>
+              <a ng-click="$ctrl.Modal.openGroupEdit() && $ctrl.collapseMenu()" href>
                 <i class="fa fa-fw fa-pencil-square-o"></i>
                 Group sign up
               </a>

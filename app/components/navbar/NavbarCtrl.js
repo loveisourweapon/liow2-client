@@ -1,3 +1,5 @@
+/* global $ */
+
 const MIN_QUERY_LENGTH = 3;
 
 export default class NavbarCtrl {
@@ -36,6 +38,7 @@ export default class NavbarCtrl {
   selectGroup(item) {
     this.group = null;
     this.$location.path(`/g/${item.urlName}`);
+    this.collapseMenu();
   }
 
   /**
@@ -46,6 +49,14 @@ export default class NavbarCtrl {
   setUserGroup(group) {
     this.User.group = group;
     this.selectGroup(group);
+  }
+
+  /**
+   * Call the jQuery .collapse method
+   * TODO: should be in directive?
+   */
+  collapseMenu() {
+    $('#liow-navbar-collapse').collapse('hide');
   }
 }
 
