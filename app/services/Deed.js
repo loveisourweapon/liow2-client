@@ -45,6 +45,20 @@ class Deed {
   }
 
   /**
+   * Search for deeds with a search query and optional params
+   *
+   * @param {string} query
+   * @param {object} params
+   *
+   * @returns {HttpPromise}
+   */
+  search(query, params) {
+    params = _.merge({ query }, params);
+
+    return this.find(params);
+  }
+
+  /**
    * Get a deed by ID
    *
    * @param {string} deedId

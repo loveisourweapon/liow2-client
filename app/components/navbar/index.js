@@ -5,6 +5,7 @@ import ngSanitize from 'angular-sanitize';
 import uiSelect from 'ui-select';
 import User from '../../services/User';
 import Group from '../../services/Group';
+import Deed from '../../services/Deed';
 import Act from '../../services/Act';
 import Modal from '../../services/Modal';
 
@@ -17,6 +18,7 @@ export default angular.module('app.components.navbar', [
   uiSelect,
   User,
   Group,
+  Deed,
   Act,
   Modal
 ])

@@ -3,41 +3,55 @@
 const MIN_QUERY_LENGTH = 3;
 
 export default class NavbarCtrl {
-  constructor($location, User, Group, Act, Modal) {
-    Object.assign(this, { $location, User, Group, Act, Modal });
+  constructor($location, $q, User, Group, Deed, Act, Modal) {
+    Object.assign(this, { $location, $q, User, Group, Deed, Act, Modal });
 
-    this.groups = [];
-    this.group = null;
+    this.choices = [];
+    this.selected = null;
 
     this.Act.count();
   }
 
   /**
-   * Refresh list of groups using search query
+   * Refresh list of groups and deeds using search query
    *
    * @param {string} query
    *
    * @returns {Promise|boolean}
    */
-  refreshGroups(query) {
-    this.groups = [];
+  refreshChoices(query) {
+    this.choices = [];
 
     if (query.length < MIN_QUERY_LENGTH) {
       return false;
     }
 
-    return this.Group.search(query, { fields: '_id,name,urlName' })
-      .then(response => this.groups = response.data);
+    return this.$q.all([
+      this.Group.search(query, { fields: '_id,name,urlName' }),
+      this.Deed.search(query, { fields: '_id,title,urlTitle' })
+    ])
+      .then(responses => this.choices = responses[0].data.concat(responses[1].data));
   }
 
   /**
-   * Redirect to the selected group homepage
+   * Group list of choices
+   *
+   * @param {object} item
+   *
+   * @returns {string}
+   */
+  groupChoices(item) {
+    return item.urlName ? 'Groups' : 'Deeds';
+  }
+
+  /**
+   * Redirect to the selected group or deed page
    *
    * @param {object} item
    */
-  selectGroup(item) {
-    this.group = null;
-    this.$location.path(`/g/${item.urlName}`);
+  select(item) {
+    this.selected = null;
+    this.$location.path(item.urlName ? `/g/${item.urlName}` : `/d/${item.urlTitle}`);
     this.collapseMenu();
   }
 
@@ -48,7 +62,7 @@ export default class NavbarCtrl {
    */
   setUserGroup(group) {
     this.User.group = group;
-    this.selectGroup(group);
+    this.select(group);
   }
 
   /**
@@ -60,4 +74,4 @@ export default class NavbarCtrl {
   }
 }
 
-NavbarCtrl.$inject = ['$location', 'User', 'Group', 'Act', 'Modal'];
+NavbarCtrl.$inject = ['$location', '$q', 'User', 'Group', 'Deed', 'Act', 'Modal'];

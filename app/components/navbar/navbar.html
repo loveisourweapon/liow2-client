@@ -24,17 +24,18 @@
         <div class="form-group">
           <label class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <ui-select ng-model="$ctrl.group"
-                       on-select="$ctrl.selectGroup($item)"
+            <ui-select ng-model="$ctrl.selected"
+                       on-select="$ctrl.select($item)"
                        append-to-body="false">
-              <ui-select-match placeholder="Find a group...">
-                {{ $select.selected.name }}
+              <ui-select-match placeholder="Find a group or deed...">
+                {{ $select.selected.name || $select.selected.title }}
               </ui-select-match>
-              <ui-select-choices repeat="group in $ctrl.groups"
-                                 position="down"
-                                 refresh="$ctrl.refreshGroups($select.search)"
-                                 refresh-delay="200">
-                <div ng-bind-html="group.name | highlight:$select.search"></div>
+              <ui-select-choices repeat="choice in $ctrl.choices"
+                                 group-by="$ctrl.groupChoices"
+                                 refresh="$ctrl.refreshChoices($select.search)"
+                                 refresh-delay="200"
+                                 position="down">
+                <div ng-bind-html="(choice.name || choice.title) | highlight:$select.search"></div>
               </ui-select-choices>
             </ui-select>
           </label>
