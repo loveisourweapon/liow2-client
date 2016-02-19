@@ -22,8 +22,12 @@ import GroupEditCtrl from './group-edit/GroupEditCtrl';
 import groupEditTpl from './group-edit/group-edit.html';
 import CampaignEditCtrl from './campaign-edit/CampaignEditCtrl';
 import campaignEditTpl from './campaign-edit/campaign-edit.html';
-import DeedPreviewCtrl from './deed-preview/DeedPreview';
+import DeedPreviewCtrl from './deed-preview/DeedPreviewCtrl';
 import deedPreviewTpl from './deed-preview/deed-preview.html';
+import AlertCtrl from './alert/AlertCtrl';
+import alertTpl from './alert/alert.html';
+import ConfirmCtrl from './confirm/ConfirmCtrl';
+import confirmTpl from './confirm/confirm.html';
 
 class Modal {
   constructor($uibModal, $q) {
@@ -101,6 +105,46 @@ class Modal {
       template: deedPreviewTpl,
       resolve: {
         deedId: this.$q.resolve(deedId)
+      }
+    }, this.defaults)).result;
+  }
+
+  /**
+   * Open an alert modal
+   *
+   * @param {string} message
+   * @param {string} [title='']
+   *
+   * @returns {Promise}
+   */
+  openAlert(message, title = '') {
+    return this.$uibModal.open(_.defaults({
+      controller: AlertCtrl,
+      template: alertTpl,
+      size: 'sm',
+      resolve: {
+        message: this.$q.resolve(message),
+        title: this.$q.resolve(title)
+      }
+    }, this.defaults)).result;
+  }
+
+  /**
+   * Open a confirm modal
+   *
+   * @param {string} message
+   * @param {string} [title='']
+   *
+   * @returns {Promise}
+   */
+  openConfirm(message, title = '') {
+    return this.$uibModal.open(_.defaults({
+      controller: ConfirmCtrl,
+      template: confirmTpl,
+      size: 'sm',
+      resolve: {
+        message: this.$q.resolve(message),
+        title: this.$q.resolve(title)
       }
     }, this.defaults)).result;
   }

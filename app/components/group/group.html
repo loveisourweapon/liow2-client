@@ -93,7 +93,7 @@
         <button type="button"
                 class="btn btn-default btn-block"
                 ng-click="$ctrl.setupCampaign($ctrl.Group.current)"
-                ng-show="$ctrl.showCampaignAlert">
+                ng-if="$ctrl.showCampaignAlert">
           <i class="fa fa-fw fa-bullhorn"></i>
           Setup campaign
         </button>
@@ -103,6 +103,13 @@
                 ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
           <i class="fa fa-fw fa-edit"></i>
           Update group
+        </button>
+        <button type="button"
+                class="btn btn-default btn-block"
+                ng-click="$ctrl.leaveGroup($ctrl.User.current, $ctrl.Group.current)"
+                ng-if="$ctrl.User.isMemberOfGroup($ctrl.Group.current)">
+          <i class="fa fa-fw fa-sign-out"></i>
+          Leave group
         </button>
       </div>
 

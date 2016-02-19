@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import seedrandom from 'seedrandom';
+import jsonpatch from 'fast-json-patch';
 
 const NUM_IMAGES = 6;
 
@@ -36,8 +37,8 @@ export default class GroupCtrl {
         this.Act.count({ group: group._id });
         this.loadCampaign(group);
       })
-      .catch(error => {
-        this.error = error.message;
+      .catch(err => {
+        this.err = err.message;
         this.Group.current = null;
       })
       .then(() => this.loading = false);
@@ -99,23 +100,53 @@ export default class GroupCtrl {
    * @param {object} group
    */
   addUserToGroup(user, group) {
-    this.User.update(user, { groups: group._id })
-      .then(() => {
-        this.User.group = group;
-        this.Alertify.success('Joined group');
-      })
-      .catch(error => null);
+    let observer = jsonpatch.observe(user);
+    user.groups.splice(user.groups.push(group._id));
+    this.User.update(user, jsonpatch.generate(observer))
+      .then(() => this.Alertify.success('Joined group'))
+      .catch(err => null);
   }
 
   /**
    * Setup a campaign for the current group
    *
-   * @param {group} group
+   * @param {object} group
    */
   setupCampaign(group) {
     this.Modal.openCampaignEdit('setup', group)
       .then(() => this.loadCampaign(group))
-      .catch(error => null);
+      .catch(err => null);
+  }
+
+  /**
+   * Remove the user from the group
+   *
+   * @param {object} user
+   * @param {object} group
+   */
+  leaveGroup(user, group) {
+    if (group.owner === user._id) {
+      return this.Modal.openAlert(`
+        <p>You are the current owner of <strong>${group.name}</strong>.</p>
+        <p>You'll need to make someone else the owner before leaving.</p>
+      `);
+    } else if (this.Group.isAdmin(group, user)) {
+      return this.Modal.openAlert(`
+        <p>You are currently an admin of <strong>${group.name}</strong>.</p>
+        <p>You'll need to remove yourself as an admin before leaving.</p>
+      `);
+    } else {
+      return this.Modal.openConfirm(`
+        <p>Are you sure you want to leave this group?</p>
+      `)
+        .then(() => {
+          let observer = jsonpatch.observe(user);
+          user.groups.splice(user.groups.indexOf(group._id));
+          return this.User.update(user, jsonpatch.generate(observer))
+            .then(() => this.Alertify.success('Left group'));
+        })
+        .catch(err => null);
+    }
   }
 }
 

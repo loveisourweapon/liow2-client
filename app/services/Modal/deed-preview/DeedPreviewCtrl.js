@@ -1,4 +1,4 @@
-export default class DeedPreview {
+export default class DeedPreviewCtrl {
   constructor($uibModalInstance, Deed, deedId) {
     Object.assign(this, { $uibModalInstance, Deed });
 
@@ -21,4 +21,4 @@ export default class DeedPreview {
   }
 }
 
-DeedPreview.$inject = ['$uibModalInstance', 'Deed', 'deedId'];
+DeedPreviewCtrl.$inject = ['$uibModalInstance', 'Deed', 'deedId'];
