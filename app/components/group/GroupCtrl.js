@@ -4,7 +4,7 @@ import seedrandom from 'seedrandom';
 const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
-  constructor($rootScope, $routeParams, Alertify, User, Group, Campaign, Act, Modal) {
+  constructor($rootScope, $scope, $routeParams, Alertify, User, Group, Campaign, Act, Modal) {
     Object.assign(this, { Alertify, User, Group, Campaign, Act, Modal });
 
     // Set a random jumbotron background image seeded by the group name
@@ -13,6 +13,13 @@ export default class GroupCtrl {
 
     this.loadGroup($routeParams.group)
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
+
+    let loginOff = this.User.on('login', user => this.setCampaignAlert(this.campaign, this.Group.current, user));
+    let logoutOff = this.User.on('logout', () => this.setCampaignAlert(this.campaign, this.Group.current, null));
+    $scope.$on('$destroy', () => {
+      loginOff();
+      logoutOff();
+    });
   }
 
   /**
@@ -50,7 +57,7 @@ export default class GroupCtrl {
           this.Act.count({ campaign: this.campaign._id });
           this.currentDeed = _.findLast(this.campaign.deeds, { published: true });
         }
-        this.showCampaignAlert = this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
+        this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
       });
   }
 
@@ -77,7 +84,7 @@ export default class GroupCtrl {
    * @returns {boolean}
    */
   setCampaignAlert(campaign, group, user) {
-    return (
+    this.showCampaignAlert = (
       _.isNull(campaign) &&
       _.has(group, 'admins') &&
       _.has(user, '_id') &&
@@ -112,4 +119,4 @@ export default class GroupCtrl {
   }
 }
 
-GroupCtrl.$inject = ['$rootScope', '$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Modal'];
+GroupCtrl.$inject = ['$rootScope', '$scope', '$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Modal'];

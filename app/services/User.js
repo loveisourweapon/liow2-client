@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import angular from 'angular';
+import uuid from 'uuid';
 
 // Module dependencies
 import config from '../config';
@@ -7,6 +9,7 @@ import Alertify from './Alertify';
 
 let currentUser = null;
 let currentGroup = null;
+let listeners = {};
 
 class User {
   constructor($auth, $http, $q, config, Alertify) {
@@ -15,6 +18,35 @@ class User {
     this.baseUrl = `${config.serverUrl}/users`;
 
     this.loadCurrent().catch(() => null);
+  }
+
+  /**
+   * Subscribe to a User update
+   *
+   * @param {string}   key
+   * @param {function} callback
+   *
+   * @returns {Function}
+   */
+  on(key, callback) {
+    let id = uuid.v4();
+    listeners[id] = { key, callback };
+
+    return () => delete listeners[id];
+  }
+
+  /**
+   * Publish a User update
+   *
+   * @param {string} key
+   * @param {*}      [data=null]
+   */
+  pub(key, data = null) {
+    _.forOwn(listeners, listener => {
+      if (listener.key === key) {
+        listener.callback(data);
+      }
+    });
   }
 
   /**
@@ -80,10 +112,12 @@ class User {
    * @returns {Promise}
    */
   logout() {
-    return this.$auth.logout().then(() => {
-      currentUser = null;
-      this.Alertify.success('Logged out');
-    });
+    return this.$auth.logout()
+      .then(() => {
+        currentUser = null;
+        this.pub('logout');
+        this.Alertify.success('Logged out');
+      });
   }
 
   /**
@@ -110,6 +144,7 @@ class User {
     return this.$http.get(`${this.baseUrl}/me`)
       .then(response => {
         currentUser = response.data;
+        this.pub('login', currentUser);
 
         // Set the current group as the users first group
         if (currentUser.groups.length) {
