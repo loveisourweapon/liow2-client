@@ -45,12 +45,15 @@ nav#liow-navbar {
 
     .form-control {
       border-radius: 0 15px 15px 0;
-      width: 200px;
       height: 30px;
       background: #eee;
       color: #555;
       font-weight: normal;
       box-shadow: none;
+
+      @media (min-width: $screen-sm-min) {
+        width: 200px;
+      }
     }
   }
 
