@@ -10,14 +10,14 @@
 <div class="container container-pad">
   <div class="row">
     <div ng-hide="$ctrl.loading || $ctrl.error">
-      <div class="col-sm-3 col-sm-push-9 m-b-lg">
+      <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
         <div class="well well-sm"
              ng-if="$ctrl.User.isMemberOfGroup($ctrl.Group.current) && $ctrl.campaign !== null">
           <h5 class="text-center">
             Current Campaign
             <br>
             <small>
-              <span class='label label-default m-r-xs'>
+              <span class='f-lg'>
                 {{ $ctrl.Act.counters[$ctrl.campaign._id] | number }}
               </span>
               acts of love
@@ -106,7 +106,7 @@
         </button>
       </div>
 
-      <div class="col-sm-9 col-sm-pull-3">
+      <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
         <uib-alert type="info"
                    ng-show="$ctrl.showCampaignAlert"
                    close="$ctrl.showCampaignAlert = false">
