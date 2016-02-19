@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import seedrandom from 'seedrandom';
 
 const NUM_IMAGES = 6;
@@ -42,12 +43,28 @@ export default class GroupCtrl {
    */
   loadCampaign(group) {
     this.Campaign.findOne({ group: group._id, active: true })
-      .catch(() => ({ data: null }))
-      .then(response => {
-        this.campaign = response.data;
-        if (this.campaign) this.Act.count({ campaign: this.campaign._id });
+      .catch(() => null)
+      .then(campaign => {
+        this.campaign = campaign;
+        if (this.campaign) {
+          this.Act.count({ campaign: this.campaign._id });
+          this.currentDeed = _.findLast(this.campaign.deeds, { published: true });
+        }
         this.showCampaignAlert = this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
       });
+  }
+
+  /**
+   * Set a deed as published/unpublished for a campaign
+   *
+   * @param {object}  campaign
+   * @param {object}  deed
+   * @param {boolean} [published=true]
+   */
+  setPublished(campaign, deed, published = true) {
+    this.Campaign.setPublished(campaign, deed, published)
+      .then(() => this.loadCampaign(this.Group.current))
+      .catch(err => null);
   }
 
   /**

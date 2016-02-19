@@ -56,6 +56,20 @@ class Campaign {
       return this.$http.post(this.baseUrl, campaign);
     }
   }
+
+  /**
+   * Set a deed as published/unpublished for a campaign
+   * TODO: should we use JSON patch?
+   *
+   * @param {object}  campaign
+   * @param {object}  deed
+   * @param {boolean} [published=true]
+   */
+  setPublished(campaign, deed, published = true) {
+    let action = published ? 'post' : 'delete';
+
+    return this.$http[action](`${this.baseUrl}/${campaign._id}/deeds/${deed._id}/published`);
+  }
 }
 
 Campaign.$inject = ['$http', '$q', 'config'];

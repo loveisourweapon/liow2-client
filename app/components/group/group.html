@@ -39,6 +39,66 @@
       </div>
 
       <div class="col-sm-3">
+        <div class="well well-sm"
+             ng-if="$ctrl.User.isMemberOfGroup($ctrl.Group.current) && $ctrl.campaign !== null">
+          <h5 class="text-center">Current Campaign</h5>
+
+          <!-- TODO: move buttons to a directive -->
+          <!-- Show buttons with publish/unpublish menu for admins -->
+          <div class="btn-group btn-block"
+               ng-repeat="item in $ctrl.campaign.deeds"
+               ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
+            <a class="btn col-sm-10"
+               ng-class="{
+                 'btn-primary': item.published,
+                 'btn-default': !item.published,
+                 'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
+               }"
+               ng-href="/d/{{ item.deed.urlTitle }}">
+              {{ item.deed.title }}
+            </a>
+            <button type="button"
+                    class="btn dropdown-toggle col-sm-2"
+                    ng-class="{
+                      'btn-primary': item.published,
+                      'btn-default': !item.published,
+                      'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
+                    }"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li ng-hide="item.published">
+                <a ng-click="$ctrl.setPublished($ctrl.campaign, item.deed, true)" href>
+                  <i class="fa fa-fw fa-thumbs-up"></i>
+                  Publish
+                </a>
+              </li>
+              <li ng-show="item.published">
+                <a ng-click="$ctrl.setPublished($ctrl.campaign, item.deed, false)" href>
+                  <i class="fa fa-fw fa-thumbs-down"></i>
+                  Unpublish
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Show a normal button for non-admins -->
+          <a class="btn btn-block"
+             ng-repeat="item in $ctrl.campaign.deeds"
+             ng-href="/d/{{ item.deed.urlTitle }}"
+             ng-class="{
+               'btn-primary': item.published,
+               'btn-default': !item.published,
+               'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
+             }"
+             ng-if="!$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
+            {{ item.deed.title }}
+          </a>
+        </div>
         <button type="button"
                 class="btn btn-primary btn-block btn-lg"
                 ng-click="$ctrl.User.isAuthenticated() ?
