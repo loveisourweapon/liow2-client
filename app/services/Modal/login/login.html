@@ -25,8 +25,10 @@
 
   <p>
     <button ng-click="$ctrl.authenticateFacebook($ctrl.joinGroup)"
-            class="btn btn-facebook btn-block">
-      <i class="fa fa-fw fa-facebook-official"></i>
+            class="btn btn-facebook btn-block"
+            ng-disabled="$ctrl.loggingIn">
+      <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.loggingIn"></i>
+      <i class="fa fa-fw fa-facebook-official" ng-hide="$ctrl.loggingIn"></i>
       Sign in with Facebook
     </button>
   </p>

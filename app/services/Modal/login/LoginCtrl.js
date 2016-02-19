@@ -21,6 +21,7 @@ export default class LoginCtrl {
       userData.group = this.Group.current._id;
     }
 
+    this.loggingIn = true;
     this.User.authenticateFacebook(userData)
       .then(() => {
         if (joinGroup) {
@@ -30,7 +31,8 @@ export default class LoginCtrl {
         this.$uibModalInstance.close();
         this.Alertify.success('Signed in');
       })
-      .catch(() => this.Alertify.error('Failed signing in'));
+      .catch(() => this.Alertify.error('Failed signing in'))
+      .then(() => this.loggingIn = false);
   }
 
   /**
@@ -40,12 +42,14 @@ export default class LoginCtrl {
    * @param {string} password
    */
   authenticateEmail(email, password) {
+    this.loggingIn = true;
     this.User.authenticateEmail(email, password)
       .then(() => {
         this.$uibModalInstance.close();
         this.Alertify.success('Signed in');
       })
-      .catch(() => this.Alertify.error('Failed signing in'));
+      .catch(() => this.Alertify.error('Failed signing in'))
+      .then(() => this.loggingIn = false);
   }
 }
 
