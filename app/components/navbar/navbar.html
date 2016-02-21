@@ -8,11 +8,17 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="/">
-        <img alt="Love is our Weapon" src="/images/logo-navbar.png">
+      <a class="navbar-brand"
+         ng-click="$ctrl.collapseMenu()"
+         title="Love is our Weapon"
+         href="/">
+        <img src="/images/logo-navbar.png"
+             alt="Love is our Weapon">
         <div class="navbar-brand-label">
-          <span class="text-primary">{{ $ctrl.Act.counters.global | number }}</span><br>
-          <small>acts of love</small>
+          <span class="text-primary">
+            {{ $ctrl.Act.counters.global | number }}
+          </span>
+          <br><small>acts of love</small>
         </div>
       </a>
     </div>
