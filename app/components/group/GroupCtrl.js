@@ -71,8 +71,7 @@ export default class GroupCtrl {
    */
   setPublished(campaign, deed, published = true) {
     this.Campaign.setPublished(campaign, deed, published)
-      .then(() => this.loadCampaign(this.Group.current))
-      .catch(err => null);
+      .then(response => this.loadCampaign(this.Group.current));
   }
 
   /**

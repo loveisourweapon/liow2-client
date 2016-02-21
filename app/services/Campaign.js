@@ -1,4 +1,5 @@
 import angular from 'angular';
+import jsonpatch from 'fast-json-patch';
 
 // Module dependencies
 import config from '../config';
@@ -59,16 +60,20 @@ class Campaign {
 
   /**
    * Set a deed as published/unpublished for a campaign
-   * TODO: should we use JSON patch?
    *
    * @param {object}  campaign
    * @param {object}  deed
    * @param {boolean} [published=true]
+   *
+   * @returns {HttpPromise}
    */
   setPublished(campaign, deed, published = true) {
-    let action = published ? 'post' : 'delete';
+    let observer = jsonpatch.observe(campaign);
+    let campaignDeed = _.find(campaign.deeds, { deed : { _id : deed._id } });
+    campaignDeed.published = published;
 
-    return this.$http[action](`${this.baseUrl}/${campaign._id}/deeds/${deed._id}/published`);
+    return this.$http.patch(`${this.baseUrl}/${campaign._id}`, jsonpatch.generate(observer))
+      .catch(() => campaignDeed.published = !published);
   }
 }
 
