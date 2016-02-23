@@ -40,7 +40,7 @@ export default class GroupEditCtrl {
   setupMediumEditor() {
     this.$timeout(() => {
       this.editor = new MediumEditor(document.querySelectorAll('#welcomeMessage'), {
-        placeholder: { text: 'Enter a welcome message...' },
+        placeholder: { text: 'Enter a welcome message...', hideOnClick: false },
         toolbar: { buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'] },
         autoLink: true
       });

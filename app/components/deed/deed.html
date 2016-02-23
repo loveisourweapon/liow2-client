@@ -3,25 +3,31 @@
 <div class="container container-pad">
   <div class="row">
     <div ng-hide="$ctrl.loading || $ctrl.error">
-      <div class="col-sm-3 col-sm-push-9">
-        <p>
-          <button type="button"
-                  class="btn btn-primary btn-block btn-lg"
-                  ng-click="$ctrl.done($ctrl.Deed.current, $ctrl.User.group)"
-                  ng-if="$ctrl.User.isAuthenticated()"
-                  ng-disabled="$ctrl.doing">
-            <img src="/images/logo-invert.png" class="img-responsive img-btn" ng-hide="$ctrl.doing">
-            <i class="fa fa-cog fa-lg fa-spin" ng-show="$ctrl.doing"></i>
-            Done
-          </button>
-          <button type="button"
-                  class="btn btn-primary btn-block btn-lg"
-                  ng-click="$ctrl.Modal.openLogin()"
-                  ng-if="!$ctrl.User.isAuthenticated()">
-            <i class="fa fa-fw fa-user"></i>
-            Login
-          </button>
-        </p>
+      <div class="col-sm-3 col-sm-push-9 m-b-sm">
+        <button type="button"
+                class="btn btn-primary btn-block btn-lg"
+                ng-click="$ctrl.done($ctrl.Deed.current, $ctrl.User.group)"
+                ng-if="$ctrl.User.isAuthenticated()"
+                ng-disabled="$ctrl.doing">
+          <img src="/images/logo-invert.png" class="img-responsive img-btn" ng-hide="$ctrl.doing">
+          <i class="fa fa-cog fa-lg fa-spin" ng-show="$ctrl.doing"></i>
+          Done
+        </button>
+        <button type="button"
+                class="btn btn-primary btn-block"
+                ng-click="$ctrl.Modal.openCommentEdit('Leave a Testimony for ', $ctrl.Deed.current)"
+                ng-if="$ctrl.User.isAuthenticated()">
+          <i class="fa fa-fw fa-comment"></i>
+          Leave a Testimony
+        </button>
+
+        <button type="button"
+                class="btn btn-primary btn-block btn-lg"
+                ng-click="$ctrl.Modal.openLogin()"
+                ng-if="!$ctrl.User.isAuthenticated()">
+          <i class="fa fa-fw fa-user"></i>
+          Login
+        </button>
       </div>
 
       <div class="col-sm-9 col-sm-pull-3">

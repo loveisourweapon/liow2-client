@@ -14,6 +14,7 @@ import User from '../../services/User';
 import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
 import Deed from '../../services/Deed';
+import Comment from '../../services/Comment';
 
 // Modal controllers & templates
 import LoginCtrl from './login/LoginCtrl';
@@ -24,6 +25,8 @@ import CampaignEditCtrl from './campaign-edit/CampaignEditCtrl';
 import campaignEditTpl from './campaign-edit/campaign-edit.html';
 import DeedPreviewCtrl from './deed-preview/DeedPreviewCtrl';
 import deedPreviewTpl from './deed-preview/deed-preview.html';
+import CommentEditCtrl from './comment/CommentEditCtrl';
+import commentEditTpl from './comment/comment-edit.html';
 import AlertCtrl from './alert/AlertCtrl';
 import alertTpl from './alert/alert.html';
 import ConfirmCtrl from './confirm/ConfirmCtrl';
@@ -110,6 +113,27 @@ class Modal {
   }
 
   /**
+   * Open the comment edit modal
+   *
+   * @param {string} [title='New Comment']
+   * @param {object} target
+   * @param {object} [comment=null]
+   *
+   * @returns {Promise}
+   */
+  openCommentEdit(title = 'New Comment', target, comment = null) {
+    return this.$uibModal.open(_.defaults({
+      controller: CommentEditCtrl,
+      template: commentEditTpl,
+      resolve: {
+        title: this.$q.resolve(title),
+        target: this.$q.resolve(target),
+        comment: this.$q.resolve(comment)
+      }
+    }, this.defaults)).result;
+  }
+
+  /**
    * Open an alert modal
    *
    * @param {string} message
@@ -163,7 +187,8 @@ export default angular.module('app.services.Modal', [
   User,
   Group,
   Campaign,
-  Deed
+  Deed,
+  Comment
 ])
   .service('Modal', Modal)
   .name;
