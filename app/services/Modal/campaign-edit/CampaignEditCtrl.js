@@ -2,14 +2,16 @@ import _ from 'lodash';
 
 export default class CampaignEditCtrl {
   constructor($uibModalInstance, Alertify, Campaign, Deed, Modal, action, group, campaign) {
-    Object.assign(this, { $uibModalInstance, Alertify, Campaign, Deed, Modal, action, group, campaign });
+    Object.assign(this, { $uibModalInstance, Alertify, Campaign, Deed, Modal, action, group });
 
     this.error = null;
     this.deeds = [];
 
     this.loadDeeds();
-    if (!this.campaign) {
+    if (!campaign) {
       this.resetFields();
+    } else {
+      this.campaign = _.cloneDeep(campaign);
     }
   }
 
@@ -29,15 +31,15 @@ export default class CampaignEditCtrl {
    * @param {object} campaign
    */
   save(campaign) {
-    let toSave = angular.copy(campaign);
-    toSave.deeds = _.map(toSave.deeds, deed => ({ deed: deed._id }));
+    let toSave = _.cloneDeep(campaign);
+    _.forEach(toSave.deeds, item => item.deed = item.deed._id);
 
     this.saving = true;
     this.error = null;
     this.Campaign.save(toSave)
       .then(() => {
         this.$uibModalInstance.close();
-        this.Alertify.success('Setup campaign');
+        this.Alertify.success(`${_.capitalize(this.action)}d campaign`);
       })
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);
@@ -50,7 +52,11 @@ export default class CampaignEditCtrl {
   loadDeeds() {
     this.loading = true;
     this.Deed.find({ fields: '_id,title' })
-      .then(response => this.deeds = response.data)
+      .then(response => this.deeds = _.differenceBy(
+        _.map(response.data, deed => ({ deed })),
+        this.campaign.deeds,
+        'deed._id'
+      ))
       .catch(response => this.error = response.data.error)
       .then(() => this.loading = false)
   }

@@ -107,12 +107,14 @@ export default class GroupCtrl {
   }
 
   /**
-   * Setup a campaign for the current group
+   * Create or edit a campaign for the current group
    *
+   * @oaram {string} [action='create']
    * @param {object} group
+   * @param {object} [campaign=null]
    */
-  setupCampaign(group) {
-    this.Modal.openCampaignEdit('setup', group)
+  editCampaign(action = 'create', group, campaign = null) {
+    this.Modal.openCampaignEdit(action, group, campaign)
       .then(() => this.loadCampaign(group))
       .catch(err => null);
   }

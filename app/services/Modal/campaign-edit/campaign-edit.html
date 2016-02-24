@@ -42,13 +42,13 @@
             dragula="'bag-deeds'"
             dragula-model="$ctrl.deeds">
           <li class="list-group-item"
-              ng-repeat="deed in $ctrl.deeds track by deed._id">
+              ng-repeat="item in $ctrl.deeds track by item.deed._id">
             <button type="button"
                     class="btn btn-link p-none pull-right"
-                    ng-click="$ctrl.Modal.openDeedPreview(deed._id)">
+                    ng-click="$ctrl.Modal.openDeedPreview(item.deed._id)">
               <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
             </button>
-            {{ deed.title }}
+            {{ item.deed.title }}
           </li>
         </ul>
       </div>
@@ -59,13 +59,13 @@
             dragula="'bag-deeds'"
             dragula-model="$ctrl.campaign.deeds">
           <li class="list-group-item"
-              ng-repeat="deed in $ctrl.campaign.deeds track by deed._id">
+              ng-repeat="item in $ctrl.campaign.deeds track by item.deed._id">
             <button type="button"
                     class="btn btn-link p-none pull-right"
-                    ng-click="$ctrl.Modal.openDeedPreview(deed._id)">
+                    ng-click="$ctrl.Modal.openDeedPreview(item.deed._id)">
               <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
             </button>
-            {{ deed.title }}
+            {{ item.deed.title }}
           </li>
         </ul>
       </div>

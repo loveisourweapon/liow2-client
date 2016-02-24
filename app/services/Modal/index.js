@@ -77,13 +77,13 @@ class Modal {
   /**
    * Open the campaign edit modal
    *
-   * @param {string} [action='setup']
+   * @param {string} [action='create']
    * @param {object} group
    * @param {object} [campaign=null]
    *
    * @returns {Promise}
    */
-  openCampaignEdit(action = 'setup', group, campaign = null) {
+  openCampaignEdit(action = 'create', group, campaign = null) {
     return this.$uibModal.open(_.defaults({
       controller: CampaignEditCtrl,
       template: campaignEditTpl,

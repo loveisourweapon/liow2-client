@@ -66,6 +66,15 @@
               </li>
             </ul>
           </div>
+          <div ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
+            <hr>
+            <button type="button"
+                    class="btn btn-default btn-block"
+                    ng-click="$ctrl.editCampaign('update', $ctrl.Group.current, $ctrl.campaign)">
+              <i class="fa fa-fw fa-edit"></i>
+              Update campaign
+            </button>
+          </div>
 
           <!-- Show a normal button for non-admins -->
           <a class="btn btn-block"
@@ -92,7 +101,7 @@
         </button>
         <button type="button"
                 class="btn btn-default btn-block"
-                ng-click="$ctrl.setupCampaign($ctrl.Group.current)"
+                ng-click="$ctrl.editCampaign('create', $ctrl.Group.current)"
                 ng-if="$ctrl.showCampaignAlert">
           <i class="fa fa-fw fa-bullhorn"></i>
           Setup campaign
@@ -119,7 +128,7 @@
                    close="$ctrl.showCampaignAlert = false">
           You haven't got an active campaign, would you like to set one up now?&nbsp;
           <button class="btn btn-info btn-inline m-t-xs p-xs"
-                  ng-click="$ctrl.setupCampaign($ctrl.Group.current)">
+                  ng-click="$ctrl.editCampaign('create', $ctrl.Group.current)">
             Setup Campaign
           </button>
         </uib-alert>
