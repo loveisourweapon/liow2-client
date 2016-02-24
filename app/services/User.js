@@ -158,8 +158,8 @@ class User {
   /**
    * Update an existing user
    *
-   * @param {object} user
-   * @param {object} changes
+   * @param {object}   user
+   * @param {object[]} changes
    *
    * @returns {Promise}
    */

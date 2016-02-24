@@ -63,18 +63,6 @@ export default class GroupCtrl {
   }
 
   /**
-   * Set a deed as published/unpublished for a campaign
-   *
-   * @param {object}  campaign
-   * @param {object}  deed
-   * @param {boolean} [published=true]
-   */
-  setPublished(campaign, deed, published = true) {
-    this.Campaign.setPublished(campaign, deed, published)
-      .then(response => this.loadCampaign(this.Group.current));
-  }
-
-  /**
    * Show hint to setup a campaign if logged in as admin of group with no active campaign
    *
    * @param {object} campaign
@@ -93,20 +81,6 @@ export default class GroupCtrl {
   }
 
   /**
-   * Add the current logged in user to this group
-   *
-   * @param {object} user
-   * @param {object} group
-   */
-  addUserToGroup(user, group) {
-    let observer = jsonpatch.observe(user);
-    user.groups.splice(user.groups.push(group._id));
-    this.User.update(user, jsonpatch.generate(observer))
-      .then(() => this.Alertify.success('Joined group'))
-      .catch(err => null);
-  }
-
-  /**
    * Create or edit a campaign for the current group
    *
    * @oaram {string} [action='create']
@@ -117,6 +91,58 @@ export default class GroupCtrl {
     this.Modal.openCampaignEdit(action, group, campaign)
       .then(() => this.loadCampaign(group))
       .catch(err => null);
+  }
+
+  /**
+   * Finish the current campaign
+   *
+   * @param {object} campaign
+   */
+  finishCampaign(campaign) {
+    this.Modal.openConfirm('<p>Are you sure you want to finish this campaign?</p>')
+      .then(() => {
+        let observer = jsonpatch.observe(campaign);
+        campaign.active = false;
+        campaign.dateEnd = new Date();
+        return this.Campaign.update(campaign, jsonpatch.generate(observer));
+      })
+      .then(() => this.Alertify.success('Finished campaign'))
+      .then(() => this.loadCampaign(this.Group.current))
+      .catch(() => campaign.active = true);
+  }
+
+  /**
+   * Set a deed as published/unpublished for a campaign
+   *
+   * @param {object}  campaign
+   * @param {object}  deed
+   * @param {boolean} [published=true]
+   */
+  setPublished(campaign, deed, published = true) {
+    let observer = jsonpatch.observe(campaign);
+    let campaignDeed = _.find(campaign.deeds, { deed : { _id : deed._id } });
+    campaignDeed.published = published;
+    this.Campaign.update(campaign, jsonpatch.generate(observer))
+      .then(() => this.Alertify.success(
+        `${published ? 'Published' : 'Unpublished'} deed <strong>${campaignDeed.deed.title}</strong>`
+      ))
+      .then(() => this.loadCampaign(this.Group.current))
+      .catch(() => campaignDeed.published = !published);
+  }
+
+  /**
+   * Add the current logged in user to this group
+   *
+   * @param {object} user
+   * @param {object} group
+   */
+  joinGroup(user, group) {
+    let observer = jsonpatch.observe(user);
+    user.groups.push(group._id);
+    this.User.update(user, jsonpatch.generate(observer))
+      .then(() => this.Alertify.success(`Joined group <strong>${group.name}</strong>`))
+      .then(() => this.User.group = group)
+      .catch(() => user.groups.splice(user.groups.indexOf(groups._id)));
   }
 
   /**
@@ -137,16 +163,14 @@ export default class GroupCtrl {
         <p>You'll need to remove yourself as an admin before leaving.</p>
       `);
     } else {
-      return this.Modal.openConfirm(`
-        <p>Are you sure you want to leave this group?</p>
-      `)
+      return this.Modal.openConfirm(`<p>Are you sure you want to leave <strong>${group.name}</strong>?</p>`)
         .then(() => {
           let observer = jsonpatch.observe(user);
           user.groups.splice(user.groups.indexOf(group._id));
-          return this.User.update(user, jsonpatch.generate(observer))
-            .then(() => this.Alertify.success('Left group'));
+          return this.User.update(user, jsonpatch.generate(observer));
         })
-        .catch(err => null);
+        .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
+        .catch(() => user.groups.push(group));
     }
   }
 }

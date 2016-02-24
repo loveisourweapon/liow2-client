@@ -74,6 +74,12 @@
               <i class="fa fa-fw fa-edit"></i>
               Update campaign
             </button>
+            <button type="button"
+                    class="btn btn-default btn-block"
+                    ng-click="$ctrl.finishCampaign($ctrl.campaign)">
+              <i class="fa fa-fw fa-flag-checkered"></i>
+              Finish campaign
+            </button>
           </div>
 
           <!-- Show a normal button for non-admins -->
@@ -92,7 +98,7 @@
         <button type="button"
                 class="btn btn-primary btn-block btn-lg"
                 ng-click="$ctrl.User.isAuthenticated() ?
-                  $ctrl.addUserToGroup($ctrl.User.current, $ctrl.Group.current) :
+                  $ctrl.joinGroup($ctrl.User.current, $ctrl.Group.current) :
                   $ctrl.Modal.openLogin()"
                 ng-if="!$ctrl.User.isMemberOfGroup($ctrl.Group.current)">
           <i class="fa fa-fw fa-users"></i>

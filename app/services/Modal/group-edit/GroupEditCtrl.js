@@ -90,7 +90,7 @@ export default class GroupEditCtrl {
 
         this.$location.path(`/g/${response.data.urlName}`);
         this.$uibModalInstance.close();
-        this.Alertify.success(`${_.capitalize(this.action)}d group`);
+        this.Alertify.success(`${_.capitalize(this.action)}d group <strong>${this.Group.current.name}</strong>`);
       })
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);

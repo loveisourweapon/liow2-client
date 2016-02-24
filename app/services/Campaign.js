@@ -59,21 +59,15 @@ class Campaign {
   }
 
   /**
-   * Set a deed as published/unpublished for a campaign
+   * Update an existing campaign
    *
-   * @param {object}  campaign
-   * @param {object}  deed
-   * @param {boolean} [published=true]
+   * @param {object}   campaign
+   * @param {object[]} changes
    *
    * @returns {HttpPromise}
    */
-  setPublished(campaign, deed, published = true) {
-    let observer = jsonpatch.observe(campaign);
-    let campaignDeed = _.find(campaign.deeds, { deed : { _id : deed._id } });
-    campaignDeed.published = published;
-
-    return this.$http.patch(`${this.baseUrl}/${campaign._id}`, jsonpatch.generate(observer))
-      .catch(() => campaignDeed.published = !published);
+  update(campaign, changes) {
+    return this.$http.patch(`${this.baseUrl}/${campaign._id}`, changes);
   }
 }
 
