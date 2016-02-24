@@ -84,7 +84,7 @@ class Group {
    * @returns {boolean}
    */
   isAdmin(group, user) {
-    return _.has(group, 'admins') && _.has(user, '_id') && group.admins.indexOf(user._id) > -1;
+    return _.has(group, 'admins') && _.has(user, '_id') && ~group.admins.indexOf(user._id);
   }
 
   /**

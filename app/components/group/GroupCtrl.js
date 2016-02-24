@@ -88,7 +88,7 @@ export default class GroupCtrl {
       _.isNull(campaign) &&
       _.has(group, 'admins') &&
       _.has(user, '_id') &&
-      group.admins.indexOf(user._id) !== -1
+      ~group.admins.indexOf(user._id)
     );
   }
 
