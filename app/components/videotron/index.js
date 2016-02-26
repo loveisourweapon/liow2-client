@@ -10,8 +10,8 @@ export default angular.module('app.components.videotron', [angularYoutube])
   .component('videotron', {
     template: videotronTpl,
     bindings: {
-      videoId: '=',
-      videoUrl: '='
+      videoId: '<',
+      videoUrl: '<'
     }
   })
   .name;
