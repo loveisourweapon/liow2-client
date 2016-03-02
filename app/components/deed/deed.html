@@ -15,7 +15,7 @@
         </button>
         <button type="button"
                 class="btn btn-primary btn-block"
-                ng-click="$ctrl.Modal.openCommentEdit('Leave a Testimony for ', $ctrl.Deed.current)"
+                ng-click="$ctrl.Modal.openCommentEdit('Leave a Testimony for ', $ctrl.Deed.current, $ctrl.User.group)"
                 ng-if="$ctrl.User.isAuthenticated()">
           <i class="fa fa-fw fa-comment"></i>
           Leave a Testimony

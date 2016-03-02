@@ -24,11 +24,11 @@ class Comment {
       case _.has(comment.target, 'deed'):
         url = `/deeds/${comment.target.deed}${url}`;
         break;
-      case _.has(comment.target, 'user'):
-        url = `/users/${comment.target.user}${url}`;
-        break;
       case _.has(comment.target, 'group'):
         url = `/groups/${comment.target.group}${url}`;
+        break;
+      case _.has(comment.target, 'comment'):
+        url = `/comments/${comment.target.comment}${url}`;
         break;
       case _.has(comment.target, 'act'):
         url = `/acts/${comment.target.acts}${url}`;

@@ -117,17 +117,19 @@ class Modal {
    *
    * @param {string} [title='New Comment']
    * @param {object} target
+   * @param {object} [group=null]
    * @param {object} [comment=null]
    *
    * @returns {Promise}
    */
-  openCommentEdit(title = 'New Comment', target, comment = null) {
+  openCommentEdit(title = 'New Comment', target, group = null, comment = null) {
     return this.$uibModal.open(_.defaults({
       controller: CommentEditCtrl,
       template: commentEditTpl,
       resolve: {
         title: this.$q.resolve(title),
         target: this.$q.resolve(target),
+        group: this.$q.resolve(group),
         comment: this.$q.resolve(comment)
       }
     }, this.defaults)).result;

@@ -4,11 +4,11 @@ import showdown from 'showdown';
 let converter = new showdown.Converter();
 
 export default class CommentEditCtrl {
-  constructor($uibModalInstance, $scope, $timeout, Alertify, Comment, title, target, comment) {
+  constructor($uibModalInstance, $scope, $timeout, Alertify, Comment, title, target, group, comment) {
     Object.assign(this, { $uibModalInstance, $scope, $timeout, Alertify, Comment, title, target, comment });
 
     if (!this.comment) {
-      this.resetFields(this.target);
+      this.resetFields(this.target, group);
     }
 
     this.setupMediumEditor();
@@ -17,20 +17,21 @@ export default class CommentEditCtrl {
   /**
    * Reset all form fields to defaults
    */
-  resetFields(target) {
+  resetFields(target, group) {
     this.comment = {
-      content: { text: '' }
+      content: { text: '' },
+      group: group ? group._id : null
     };
 
     switch(true) {
       case _.has(target, 'title'):
         this.comment.target = { deed: target._id };
         break;
-      case _.has(target, 'email'):
-        this.comment.target = { user: target._id };
-        break;
       case _.has(target, 'name'):
         this.comment.target = { group: target._id };
+        break;
+      case _.has(target, 'text') || _.has(target, 'image'):
+        this.comment.target = { comment: target._id };
         break;
       default:
         this.comment.target = { act: target._id };
@@ -91,4 +92,4 @@ export default class CommentEditCtrl {
   }
 }
 
-CommentEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', 'Alertify', 'Comment', 'title', 'target', 'comment'];
+CommentEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', 'Alertify', 'Comment', 'title', 'target', 'group', 'comment'];
