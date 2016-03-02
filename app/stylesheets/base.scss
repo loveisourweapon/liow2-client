@@ -1,5 +1,6 @@
 body {
   padding-top: $navbar-height;
+  margin-top: 0 !important;
 
   > .ui-select-bootstrap.open,
   > .dropdown-menu {

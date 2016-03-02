@@ -29,7 +29,7 @@
           <div class="btn-group btn-block"
                ng-repeat="item in $ctrl.campaign.deeds"
                ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
-            <a class="btn col-sm-10"
+            <a class="btn col-xs-10"
                ng-class="{
                  'btn-primary': item.published,
                  'btn-default': !item.published,
@@ -39,7 +39,7 @@
               {{ item.deed.title }}
             </a>
             <button type="button"
-                    class="btn dropdown-toggle col-sm-2"
+                    class="btn dropdown-toggle col-xs-2"
                     ng-class="{
                       'btn-primary': item.published,
                       'btn-default': !item.published,

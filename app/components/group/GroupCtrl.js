@@ -45,7 +45,7 @@ export default class GroupCtrl {
   }
 
   /**
-   * Load all active campaigns
+   * Load the active campaign
    *
    * @param {object} group
    */
