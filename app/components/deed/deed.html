@@ -15,7 +15,7 @@
         </button>
         <button type="button"
                 class="btn btn-primary btn-block"
-                ng-click="$ctrl.Modal.openCommentEdit('Leave a Testimony for ', $ctrl.Deed.current, $ctrl.User.group)"
+                ng-click="$ctrl.testimony($ctrl.Deed.current, $ctrl.User.group)"
                 ng-if="$ctrl.User.isAuthenticated()">
           <i class="fa fa-fw fa-comment"></i>
           Leave a Testimony
@@ -43,7 +43,22 @@
             acts of love
           </p>
         </div>
+
         <div marked="$ctrl.Deed.current.content"></div>
+
+        <div ng-show="$ctrl.User.isAuthenticated()">
+          <hr>
+
+          <h3>Activity Feed</h3>
+
+          <feed feed-items="$ctrl.feedItems"
+                ng-hide="$ctrl.feedItems === null"></feed>
+
+          <p class="text-center"
+             ng-show="$ctrl.feedItems === null">
+            <i class="fa fa-cog fa-5x fa-spin"></i>
+          </p>
+        </div>
       </div>
     </div>
 

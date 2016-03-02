@@ -1,6 +1,6 @@
 <div class="feed-wrapper">
   <div class="feed-item clearfix"
-       ng-repeat="item in $ctrl.feedItems">
+       ng-repeat="item in $ctrl.feedItems track by item._id">
     <div class="feed-item-type">
       <span class="fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x text-primary"></i>
