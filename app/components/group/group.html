@@ -154,6 +154,20 @@
             everywhere.
           </p>
         </div>
+
+        <div ng-show="$ctrl.User.isAuthenticated()">
+          <hr>
+
+          <h3>Activity Feed</h3>
+
+          <feed feed-items="$ctrl.feedItems"
+                ng-hide="$ctrl.feedItems === null"></feed>
+
+          <p class="text-center"
+             ng-show="$ctrl.feedItems === null">
+            <i class="fa fa-cog fa-5x fa-spin"></i>
+          </p>
+        </div>
       </div>
     </div>
 

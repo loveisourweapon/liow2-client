@@ -7,8 +7,10 @@ import User from '../../services/User';
 import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
 import Act from '../../services/Act';
+import Feed from '../../services/Feed';
 import Modal from '../../services/Modal';
 import jumbotron from '../jumbotron';
+import feed from '../feed';
 
 // Component dependencies
 import GroupCtrl from './GroupCtrl';
@@ -22,8 +24,10 @@ export let group = angular.module('app.components.group', [
   Group,
   Campaign,
   Act,
+  Feed,
   Modal,
-  jumbotron
+  jumbotron,
+  feed
 ])
   .controller('GroupCtrl', GroupCtrl)
   .name;

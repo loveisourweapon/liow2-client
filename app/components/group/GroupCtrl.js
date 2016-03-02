@@ -5,12 +5,13 @@ import jsonpatch from 'fast-json-patch';
 const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
-  constructor($rootScope, $scope, $routeParams, Alertify, User, Group, Campaign, Act, Modal) {
-    Object.assign(this, { Alertify, User, Group, Campaign, Act, Modal });
+  constructor($rootScope, $scope, $routeParams, Alertify, User, Group, Campaign, Act, Feed, Modal) {
+    Object.assign(this, { Alertify, User, Group, Campaign, Act, Feed, Modal });
 
     // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
     this.campaign = null;
+    this.feedItems = null;
 
     this.loadGroup($routeParams.group)
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
@@ -36,6 +37,7 @@ export default class GroupCtrl {
         this.Group.current = group;
         this.Act.count({ group: group._id });
         this.loadCampaign(group);
+        this.loadFeed(group);
       })
       .catch(err => {
         this.err = err.message;
@@ -60,6 +62,20 @@ export default class GroupCtrl {
         }
         this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
       });
+  }
+
+  /**
+   * Load feed items
+   *
+   * @param {object} group
+   */
+  loadFeed(group) {
+    if (!this.User.isAuthenticated()) {
+      return this.feed = [];
+    }
+
+    this.Feed.find({ group: group._id })
+      .then(response => this.feedItems = response.data);
   }
 
   /**
@@ -175,4 +191,4 @@ export default class GroupCtrl {
   }
 }
 
-GroupCtrl.$inject = ['$rootScope', '$scope', '$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Modal'];
+GroupCtrl.$inject = ['$rootScope', '$scope', '$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Feed', 'Modal'];

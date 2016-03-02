@@ -1,0 +1,50 @@
+<div class="feed-wrapper">
+  <div class="feed-item clearfix"
+       ng-repeat="item in $ctrl.feedItems">
+    <div class="feed-item-type">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+        <i class="fa fa-stack-1x fa-inverse"
+           ng-class="{
+             'fa-heart': item.act,
+             'fa-quote-right': item.comment
+           }"></i>
+      </span>
+    </div>
+
+    <div class="feed-item-image">
+      <img ng-src="{{ item.user.picture || 'images/user.png' }}"
+           class="img-circle">
+    </div>
+
+    <div class="feed-item-content">
+      <h6 class="m-t-none">
+        <a ng-href="/u/{{ item.user._id }}">{{ item.user.firstName }}</a>
+        from
+        <a ng-href="/g/{{ item.group.urlName }}">{{ item.group.name }}</a>
+
+        <span ng-if="item.act">did the act of love</span>
+        <span ng-if="item.comment">left a testimony on</span>
+
+        <a ng-href="/d/{{ item.target.deed.urlTitle }}">{{ item.target.deed.title }}</a>
+      </h6>
+
+      <div marked="item.comment.content.text"
+           class="feed-item-comment"
+           ng-show="item.comment.content.text"></div>
+
+      <p class="small m-b-none">
+        <a href>
+          {{ item.created | fromNow }}
+        </a>
+        &middot;
+        {{ item.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="feed-item"
+       ng-show="$ctrl.feedItems.length === 0">
+    No feed items to show.
+  </div>
+</div>
