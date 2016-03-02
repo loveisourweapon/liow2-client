@@ -3,6 +3,7 @@ export default class DeedCtrl {
     Object.assign(this, { Alertify, User, Group, Deed, Act, Feed, Modal });
 
     this.feedItems = null;
+    this.activeTab = 0;
 
     this.loadDeed($routeParams.deed)
       .then(() => $rootScope.title = this.Deed.current ? this.Deed.current.title : null);
@@ -57,6 +58,7 @@ export default class DeedCtrl {
         this.Act.count({ deed: deed._id });
         this.loadFeed(deed);
         this.Alertify.success('Deed done!');
+        this.activeTab = 1;
       })
       .catch(() => this.Alertify.error('Failed registering deed'))
       .then(() => this.doing = false);
@@ -70,7 +72,10 @@ export default class DeedCtrl {
    */
   testimony(deed, group = null) {
     this.Modal.openCommentEdit('Leave a Testimony for ', deed, group)
-      .then(() => this.loadFeed(deed))
+      .then(() => {
+        this.loadFeed(deed);
+        this.activeTab = 1;
+      })
       .catch(() => null);
   }
 }

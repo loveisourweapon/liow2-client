@@ -44,21 +44,23 @@
           </p>
         </div>
 
-        <div marked="$ctrl.Deed.current.content"></div>
+        <uib-tabset active="$ctrl.activeTab"
+                    type="pills">
+          <uib-tab heading="Devotional">
+            <div marked="$ctrl.Deed.current.content"></div>
+          </uib-tab>
 
-        <div ng-show="$ctrl.User.isAuthenticated()">
-          <hr>
+          <uib-tab heading="Activity Feed"
+                   disable="!$ctrl.User.isAuthenticated()">
+            <feed feed-items="$ctrl.feedItems"
+                  ng-hide="$ctrl.feedItems === null"></feed>
 
-          <h3>Activity Feed</h3>
-
-          <feed feed-items="$ctrl.feedItems"
-                ng-hide="$ctrl.feedItems === null"></feed>
-
-          <p class="text-center"
-             ng-show="$ctrl.feedItems === null">
-            <i class="fa fa-cog fa-5x fa-spin"></i>
-          </p>
-        </div>
+            <p class="text-center"
+               ng-show="$ctrl.feedItems === null">
+              <i class="fa fa-cog fa-5x fa-spin"></i>
+            </p>
+          </uib-tab>
+        </uib-tabset>
       </div>
     </div>
 

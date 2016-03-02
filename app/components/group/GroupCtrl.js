@@ -10,6 +10,7 @@ export default class GroupCtrl {
 
     // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
+    this.activeTab = 0;
     this.campaign = null;
     this.feedItems = null;
 
@@ -35,6 +36,7 @@ export default class GroupCtrl {
       .findOne({ urlName })
       .then(group => {
         this.Group.current = group;
+        if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
         this.Act.count({ group: group._id });
         this.loadCampaign(group);
         this.loadFeed(group);
@@ -158,6 +160,7 @@ export default class GroupCtrl {
     this.User.update(user, jsonpatch.generate(observer))
       .then(() => this.Alertify.success(`Joined group <strong>${group.name}</strong>`))
       .then(() => this.User.group = group)
+      .then(() => this.activeTab = 1)
       .catch(() => user.groups.splice(user.groups.indexOf(groups._id)));
   }
 
@@ -186,6 +189,7 @@ export default class GroupCtrl {
           return this.User.update(user, jsonpatch.generate(observer));
         })
         .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
+        .then(() => this.activeTab = 0)
         .catch(() => user.groups.push(group));
     }
   }

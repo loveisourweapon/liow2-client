@@ -139,35 +139,37 @@
           </button>
         </uib-alert>
 
-        <blockquote marked="$ctrl.Group.current.welcomeMessage"
-                    ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
+        <uib-tabset active="$ctrl.activeTab"
+                    type="pills">
+          <uib-tab heading="Welcome Message">
+            <blockquote marked="$ctrl.Group.current.welcomeMessage"
+                        ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
 
-        <div ng-hide="$ctrl.Group.current.welcomeMessage">
-          <h2>
-            The Love is our Weapon Campaign is a youth movement that exists to
-            change cities through the love of Jesus by doing strategic practical
-            acts of love.
-          </h2>
-          <p>
-            Thousands of people, doing thousands of acts of love, bringing
-            change, value, healing and hope throughout cities and communities
-            everywhere.
-          </p>
-        </div>
+            <div ng-hide="$ctrl.Group.current.welcomeMessage">
+              <h2>
+                The Love is our Weapon Campaign is a youth movement that exists to
+                change cities through the love of Jesus by doing strategic practical
+                acts of love.
+              </h2>
+              <p>
+                Thousands of people, doing thousands of acts of love, bringing
+                change, value, healing and hope throughout cities and communities
+                everywhere.
+              </p>
+            </div>
+          </uib-tab>
 
-        <div ng-show="$ctrl.User.isAuthenticated()">
-          <hr>
+          <uib-tab heading="Activity Feed"
+                   disable="!$ctrl.User.isAuthenticated()">
+            <feed feed-items="$ctrl.feedItems"
+                  ng-hide="$ctrl.feedItems === null"></feed>
 
-          <h3>Activity Feed</h3>
-
-          <feed feed-items="$ctrl.feedItems"
-                ng-hide="$ctrl.feedItems === null"></feed>
-
-          <p class="text-center"
-             ng-show="$ctrl.feedItems === null">
-            <i class="fa fa-cog fa-5x fa-spin"></i>
-          </p>
-        </div>
+            <p class="text-center"
+               ng-show="$ctrl.feedItems === null">
+              <i class="fa fa-cog fa-5x fa-spin"></i>
+            </p>
+          </uib-tab>
+        </uib-tabset>
       </div>
     </div>
 

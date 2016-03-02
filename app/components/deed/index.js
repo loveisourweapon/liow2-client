@@ -2,6 +2,7 @@ import angular from 'angular';
 
 // Module dependencies
 import angularMarked from 'angular-marked';
+import uibs from 'angular-ui-bootstrap';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Deed from '../../services/Deed';
@@ -18,6 +19,7 @@ export let deedTpl = template;
 
 export let deed = angular.module('app.components.deed', [
   angularMarked,
+  uibs,
   User,
   Group,
   Deed,
