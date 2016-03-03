@@ -46,12 +46,21 @@
 
         <uib-tabset active="$ctrl.activeTab"
                     type="pills">
-          <uib-tab heading="Devotional">
+          <uib-tab>
+            <uib-tab-heading>
+              <i class="fa fa-fw fa-book"></i>
+              Devotional
+            </uib-tab-heading>
+
             <div marked="$ctrl.Deed.current.content"></div>
           </uib-tab>
 
-          <uib-tab heading="Activity Feed"
-                   disable="!$ctrl.User.isAuthenticated()">
+          <uib-tab disable="!$ctrl.User.isAuthenticated()">
+            <uib-tab-heading>
+              <i class="fa fa-fw fa-list"></i>
+              Activity Feed
+            </uib-tab-heading>
+
             <feed feed-items="$ctrl.feedItems"
                   ng-hide="$ctrl.feedItems === null"></feed>
 

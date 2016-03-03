@@ -17,12 +17,15 @@ export default class GroupCtrl {
     this.loadGroup($routeParams.group)
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
 
-    let loginOff = this.User.on('login', user => this.setCampaignAlert(this.campaign, this.Group.current, user));
-    let logoutOff = this.User.on('logout', () => this.setCampaignAlert(this.campaign, this.Group.current, null));
-    $scope.$on('$destroy', () => {
-      loginOff();
-      logoutOff();
+    let loginOff = this.User.on('login', user => {
+      this.setCampaignAlert(this.campaign, this.Group.current, user);
+      if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
     });
+    let logoutOff = this.User.on('logout', () => {
+      this.setCampaignAlert(this.campaign, this.Group.current, null);
+      this.activeTab = 0;
+    });
+    $scope.$on('$destroy', () => loginOff() && logoutOff());
   }
 
   /**

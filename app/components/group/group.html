@@ -141,7 +141,12 @@
 
         <uib-tabset active="$ctrl.activeTab"
                     type="pills">
-          <uib-tab heading="Welcome Message">
+          <uib-tab>
+            <uib-tab-heading>
+              <i class="fa fa-fw fa-comment"></i>
+              Welcome Message
+            </uib-tab-heading>
+
             <blockquote marked="$ctrl.Group.current.welcomeMessage"
                         ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
 
@@ -159,8 +164,12 @@
             </div>
           </uib-tab>
 
-          <uib-tab heading="Activity Feed"
-                   disable="!$ctrl.User.isAuthenticated()">
+          <uib-tab disable="!$ctrl.User.isAuthenticated()">
+            <uib-tab-heading>
+              <i class="fa fa-fw fa-list"></i>
+              Activity Feed
+            </uib-tab-heading>
+
             <feed feed-items="$ctrl.feedItems"
                   ng-hide="$ctrl.feedItems === null"></feed>
 
