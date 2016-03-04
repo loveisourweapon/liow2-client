@@ -1,11 +1,15 @@
 import _ from 'lodash';
 import angular from 'angular';
 import uuid from 'uuid';
+import seedrandom from 'seedrandom';
 
 // Module dependencies
 import config from '../config';
 import satellizer from 'satellizer';
 import Alertify from './Alertify';
+
+const NUM_IMAGES = 12;
+var defaultImagesDict = {};
 
 let currentUser = null;
 let currentGroup = null;
@@ -166,6 +170,23 @@ class User {
   update(user, changes) {
     return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
       .then(response => this.loadCurrent());
+  }
+
+  /**
+   * Get a default user image seeded by userId
+   *
+   * @param {string} userId
+   *
+   * @returns {string}
+   */
+  getDefaultUserImage(userId) {
+    if (!userId) { return `/images/user0.png`; }
+
+    if (!_.has(defaultImagesDict, userId)) {
+      defaultImagesDict[userId] = Math.floor(seedrandom(userId)() * NUM_IMAGES);
+    }
+
+    return `/images/user${defaultImagesDict[userId]}.png`;
   }
 
   /**

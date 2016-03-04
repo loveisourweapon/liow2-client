@@ -63,7 +63,7 @@
              aria-haspopup="true"
              aria-expanded="false"
              href>
-            <img ng-src="{{ $ctrl.User.current.picture || 'images/user.png' }}"
+            <img ng-src="{{ $ctrl.User.current.picture || $ctrl.User.getDefaultUserImage($ctrl.User.current._id) }}"
                  class="img-circle">
             <span class="caret"></span>
           </a>

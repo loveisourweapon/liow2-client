@@ -1,5 +1,7 @@
 export default class FeedCtrl {
-  constructor() {}
+  constructor(User) {
+    Object.assign(this, { User });
+  }
 }
 
-FeedCtrl.$inject = [];
+FeedCtrl.$inject = ['User'];

@@ -13,35 +13,35 @@
     </div>
 
     <div class="feed-item-image">
-      <img ng-src="{{ item.user.picture || 'images/user.png' }}"
+      <img ng-src="{{ ::item.user.picture || $ctrl.User.getDefaultUserImage(item.user._id) }}"
            class="img-circle">
     </div>
 
     <div class="feed-item-content">
       <h6 class="m-t-none">
-        <a href>{{ item.user.firstName }}</a>
+        <a href>{{ ::item.user.firstName }}</a>
 
-        <span ng-if="item.group">
+        <span ng-if="::item.group">
           from
-          <a ng-href="/g/{{ item.group.urlName }}">{{ item.group.name }}</a>
+          <a ng-href="/g/{{ ::item.group.urlName }}">{{ ::item.group.name }}</a>
         </span>
 
-        <span ng-if="item.act">did the act of love</span>
-        <span ng-if="item.comment">left a testimony on</span>
+        <span ng-if="::item.act">did the act of love</span>
+        <span ng-if="::item.comment">left a testimony on</span>
 
-        <a ng-href="/d/{{ item.target.deed.urlTitle }}">{{ item.target.deed.title }}</a>
+        <a ng-href="/d/{{ ::item.target.deed.urlTitle }}">{{ ::item.target.deed.title }}</a>
       </h6>
 
-      <div marked="item.comment.content.text"
+      <div marked="::item.comment.content.text"
            class="feed-item-comment"
            ng-if="item.comment.content.text"></div>
 
       <p class="small m-b-none">
         <a href>
-          {{ item.created | fromNow }}
+          {{ ::item.created | fromNow }}
         </a>
         &middot;
-        {{ item.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}
+        {{ ::item.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}
       </p>
     </div>
   </div>
