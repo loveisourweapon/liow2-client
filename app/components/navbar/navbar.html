@@ -49,6 +49,13 @@
       </form>
 
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a ng-href="/global"
+             ng-click="$ctrl.collapseMenu()"
+             title="Global Activity Feed">
+            Global
+          </a>
+        </li>
         <li ng-show="$ctrl.User.isAuthenticated() && $ctrl.User.group">
           <a ng-href="/g/{{ $ctrl.User.group.urlName }}"
              ng-click="$ctrl.collapseMenu()"

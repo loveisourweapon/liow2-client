@@ -7,6 +7,7 @@ import navbar from '../navbar';
 
 // Router dependencies
 import { home, homeTpl } from '../home';
+import { globalFeed, globalFeedTpl } from '../global-feed';
 import { deed, deedTpl } from '../deed';
 import { group, groupTpl } from '../group';
 
@@ -19,6 +20,7 @@ export default angular.module('app', [
   uiSelect,
   navbar,
   home,
+  globalFeed,
   deed,
   group
 ])
@@ -36,6 +38,11 @@ export default angular.module('app', [
           controller: 'HomeCtrl',
           controllerAs: '$ctrl',
           template: homeTpl
+        })
+        .when('/global', {
+          controller: 'GlobalFeedCtrl',
+          controllerAs: '$ctrl',
+          template: globalFeedTpl
         })
         .when('/d/:deed', {
           controller: 'DeedCtrl',
