@@ -9,7 +9,6 @@ import navbar from '../navbar';
 import { home, homeTpl } from '../home';
 import { deed, deedTpl } from '../deed';
 import { group, groupTpl } from '../group';
-import { user, userTpl } from '../user';
 
 // Component dependencies
 import AppCtrl from './AppCtrl';
@@ -21,8 +20,7 @@ export default angular.module('app', [
   navbar,
   home,
   deed,
-  group,
-  user
+  group
 ])
   .component('app', {
     controller: AppCtrl,
@@ -48,11 +46,6 @@ export default angular.module('app', [
           controller: 'GroupCtrl',
           controllerAs: '$ctrl',
           template: groupTpl
-        })
-        .when('/u/:user', {
-          controller: 'UserCtrl',
-          controllerAs: '$ctrl',
-          template: userTpl
         })
         .otherwise('/');
 
