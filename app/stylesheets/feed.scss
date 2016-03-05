@@ -19,6 +19,11 @@
     padding: 10px;
     margin-bottom: 10px;
 
+    &.feed-item-narrow {
+      width: 80px;
+      margin-left: calc(50% - 40px);
+    }
+
     .feed-item-type {
       position: absolute;
       right: -7px;

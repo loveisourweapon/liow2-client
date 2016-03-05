@@ -3,18 +3,25 @@
 <div class="container container-pad">
   <div class="row">
     <div class="col-xs-12">
+      <span class="pull-right">
+        <button type="button"
+                ng-click="$ctrl.loadFeed({ after: $ctrl.feedItems[0].created })"
+                ng-disabled="$ctrl.loading || $ctrl.feedItems === null"
+                class="btn btn-link">
+          <i class="fa fa-refresh fa-lg"
+             ng-class="{ 'fa-spin': $ctrl.loading }"></i>
+        </button>
+      </span>
+
       <h3 class="m-t-none m-b-md">
         <i class="fa fa-fw fa-list"></i>
         Global Activity Feed
       </h3>
 
       <feed feed-items="$ctrl.feedItems"
+            loading="$ctrl.loading"
+            load-more="$ctrl.loadFeed({ before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created })"
             ng-hide="$ctrl.feedItems === null"></feed>
-
-      <p class="text-center"
-         ng-show="$ctrl.feedItems === null">
-        <i class="fa fa-cog fa-5x fa-spin"></i>
-      </p>
     </div>
   </div>
 </div>

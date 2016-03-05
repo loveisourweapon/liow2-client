@@ -52,6 +52,11 @@
       "from": "angular-dragula@latest",
       "resolved": "https://registry.npmjs.org/angular-dragula/-/angular-dragula-1.2.6.tgz"
     },
+    "angular-inview": {
+      "version": "1.5.6",
+      "from": "angular-inview@latest",
+      "resolved": "https://registry.npmjs.org/angular-inview/-/angular-inview-1.5.6.tgz"
+    },
     "angular-marked": {
       "version": "1.0.1",
       "from": "angular-marked@>=1.0.1 <2.0.0",

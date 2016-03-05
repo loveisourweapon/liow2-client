@@ -24,6 +24,7 @@ var dependencies = [
   'angular-ui-bootstrap',
   'angular-ui-switch',
   'angular-youtube-embed',
+  'angular-inview',
   'lodash',
   'moment',
   'satellizer',

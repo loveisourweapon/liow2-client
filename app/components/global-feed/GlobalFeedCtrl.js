@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default class GlobalFeedCtrl {
   constructor($rootScope, Feed) {
     Object.assign(this, { Feed });
@@ -10,10 +12,23 @@ export default class GlobalFeedCtrl {
 
   /**
    * Load feed items
+   *
+   * @param {object} [params={}]
    */
-  loadFeed() {
-    this.Feed.find()
-      .then(response => this.feedItems = response.data);
+  loadFeed(params = {}) {
+    this.loading = true;
+    this.Feed.find(params)
+      .then(response => {
+        if (_.has(params, 'before')) {
+          this.feedItems = this.feedItems.concat(response.data);
+        } else if (_.has(params, 'after')) {
+          this.feedItems = response.data.concat(this.feedItems);
+        } else {
+          this.feedItems = response.data;
+        }
+      })
+      .catch(() => null)
+      .then(() => this.loading = false);
   }
 }
 
