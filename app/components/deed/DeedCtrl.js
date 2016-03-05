@@ -34,14 +34,22 @@ export default class DeedCtrl {
    * Load feed items
    *
    * @param {object} deed
+   * @param {object} [params={}]
    */
-  loadFeed(deed) {
-    if (!this.User.isAuthenticated()) {
-      return this.feed = [];
-    }
-
-    this.Feed.find({ 'target.deed': deed._id })
-      .then(response => this.feedItems = response.data);
+  loadFeed(deed, params = {}) {
+    this.loadingFeed = true;
+    this.Feed.find(_.merge({ 'target.deed': deed._id }, params))
+      .then(response => {
+        if (_.has(params, 'before')) {
+          this.feedItems = this.feedItems.concat(response.data);
+        } else if (_.has(params, 'after')) {
+          this.feedItems = response.data.concat(this.feedItems);
+        } else {
+          this.feedItems = response.data;
+        }
+      })
+      .catch(() => null)
+      .then(() => this.loadingFeed = false);
   }
 
   /**

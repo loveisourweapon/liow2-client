@@ -73,14 +73,22 @@ export default class GroupCtrl {
    * Load feed items
    *
    * @param {object} group
+   * @param {object} [params={}]
    */
-  loadFeed(group) {
-    if (!this.User.isAuthenticated()) {
-      return this.feed = [];
-    }
-
-    this.Feed.find({ group: group._id })
-      .then(response => this.feedItems = response.data);
+  loadFeed(group, params = {}) {
+    this.loadingFeed = true;
+    this.Feed.find(_.merge({ group: group._id }, params))
+      .then(response => {
+        if (_.has(params, 'before')) {
+          this.feedItems = this.feedItems.concat(response.data);
+        } else if (_.has(params, 'after')) {
+          this.feedItems = response.data.concat(this.feedItems);
+        } else {
+          this.feedItems = response.data;
+        }
+      })
+      .catch(() => null)
+      .then(() => this.loadingFeed = false);
   }
 
   /**
