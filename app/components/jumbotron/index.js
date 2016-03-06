@@ -9,10 +9,10 @@ export default angular.module('app.components.jumbotron', [])
     controller: JumbotronCtrl,
     template: jumbotronTpl,
     bindings: {
-      image: '<',
-      background: '<',
-      title: '<',
-      text: '@'
+      jumboImage: '<',
+      jumboBackground: '<',
+      jumboTitle: '<',
+      jumboText: '@'
     }
   })
   .name;

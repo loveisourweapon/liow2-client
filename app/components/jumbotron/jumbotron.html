@@ -1,13 +1,13 @@
 <div class="jumbotron"
      ng-style="$ctrl.styles">
   <div class="container">
-    <div class="jumbotron-image" ng-if="$ctrl.image">
-      <img ng-src="{{ $ctrl.image }}" class="img-responsive img-circle">
+    <div class="jumbotron-image" ng-if="$ctrl.jumboImage">
+      <img ng-src="{{ $ctrl.jumboImage }}" class="img-responsive img-circle">
     </div>
     <h1 class="jumbotron-title"
-        ng-bind-html="$ctrl.title"></h1>
+        ng-bind-html="$ctrl.jumboTitle"></h1>
     <p class="jumbotron-text"
-       ng-if="$ctrl.text"
-       ng-bind-html="$ctrl.text"></p>
+       ng-if="$ctrl.jumboText"
+       ng-bind-html="$ctrl.jumboText"></p>
   </div>
 </div>
