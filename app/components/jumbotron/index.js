@@ -12,7 +12,8 @@ export default angular.module('app.components.jumbotron', [])
       jumboImage: '<',
       jumboBackground: '<',
       jumboTitle: '<',
-      jumboText: '@'
+      jumboText: '@',
+      jumboClasses: '@'
     }
   })
   .name;

@@ -101,13 +101,25 @@ class User {
    * Check if the current user is a member of a group
    *
    * @param {object} group
+   *
+   * @returns {boolean}
    */
   isMemberOfGroup(group) {
     return (
       _.has(currentUser, 'groups') &&
-      _.has(group, '_id') &&
-      _.some(currentUser.groups, userGroup => userGroup._id === group._id)
+      _.some(currentUser.groups, userGroup => userGroup._id === (_.has(group, '_id') ? group._id : group))
     );
+  }
+
+  /**
+   * Check if the current user has a common group
+   *
+   * @param {object[]} groups
+   *
+   * @returns {boolean}
+   */
+  hasCommonGroup(groups) {
+    return _.some(groups, this.isMemberOfGroup);
   }
 
   /**
@@ -133,6 +145,18 @@ class User {
    */
   find(params = {}) {
     return this.$http.get(this.baseUrl, { params });
+  }
+
+  /**
+   * Find a single user by Id
+   *
+   * @param {string} userId
+   * @param {object} [params={}]
+   *
+   * @returns {HttpPromise}
+   */
+  findById(userId, params) {
+    return this.$http.get(`${this.baseUrl}/${userId}`, { params });
   }
 
   /**

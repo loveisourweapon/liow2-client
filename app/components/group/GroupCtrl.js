@@ -32,11 +32,12 @@ export default class GroupCtrl {
    * Load a group by it's urlName
    *
    * @param {string} urlName
+   *
+   * @returns {Promise}
    */
   loadGroup(urlName) {
     this.loading = true;
-    return this.Group
-      .findOne({ urlName })
+    return this.Group.findOne({ urlName })
       .then(group => {
         this.Group.current = group;
         if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
@@ -45,7 +46,7 @@ export default class GroupCtrl {
         this.loadFeed(group);
       })
       .catch(err => {
-        this.err = err.message;
+        this.error = err.message;
         this.Group.current = null;
       })
       .then(() => this.loading = false);

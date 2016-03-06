@@ -10,6 +10,7 @@ import { home, homeTpl } from '../home';
 import { globalFeed, globalFeedTpl } from '../global-feed';
 import { deed, deedTpl } from '../deed';
 import { group, groupTpl } from '../group';
+import { user, userTpl } from '../user';
 
 // Component dependencies
 import AppCtrl from './AppCtrl';
@@ -22,7 +23,8 @@ export default angular.module('app', [
   home,
   globalFeed,
   deed,
-  group
+  group,
+  user
 ])
   .component('app', {
     controller: AppCtrl,
@@ -53,6 +55,11 @@ export default angular.module('app', [
           controller: 'GroupCtrl',
           controllerAs: '$ctrl',
           template: groupTpl
+        })
+        .when('/u/:user', {
+          controller: 'UserCtrl',
+          controllerAs: '$ctrl',
+          template: userTpl
         })
         .otherwise('/');
 

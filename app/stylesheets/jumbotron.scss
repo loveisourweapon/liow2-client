@@ -3,16 +3,14 @@
   background-size: cover;
   margin: 0;
   color: white;
+  height: 45vw;
 
-  &:not(.videotron) {
+  @media (min-width: $screen-sm-min) {
     height: 35vw;
-
-    @media (max-width: $screen-xs-max) {
-      height: 45vw;
-    }
   }
 
   &.videotron {
+    height: auto;
     background: $gray-darker;
 
     .container {
@@ -25,6 +23,17 @@
       @media (min-width: $screen-lg) {
         width: 60vw;
       }
+    }
+  }
+
+  &.jumbotron-small {
+    height: auto;
+
+    .jumbotron-image {
+      margin: 0;
+    }
+    .jumbotron-title {
+      margin-top: 1%;
     }
   }
 

@@ -75,10 +75,12 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li class="dropdown-header"
-                ng-show="$ctrl.User.isAuthenticated()">
-              <i class="fa fa-fw fa-user"></i>
-              {{ $ctrl.User.current.name }}
+            <li ng-show="$ctrl.User.isAuthenticated()">
+              <a ng-href="/u/{{ $ctrl.User.current._id }}"
+                 ng-click="$ctrl.collapseMenu()">
+                <i class="fa fa-fw fa-user"></i>
+                {{ $ctrl.User.current.name }}
+              </a>
             </li>
             <li ng-show="$ctrl.User.isAuthenticated()">
               <a ng-click="$ctrl.User.logout() && $ctrl.collapseMenu()" href>

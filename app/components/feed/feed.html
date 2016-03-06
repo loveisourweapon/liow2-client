@@ -21,7 +21,7 @@
 
     <div class="feed-item-content">
       <h6 class="m-t-none">
-        <a href>{{ ::item.user.firstName }}</a>
+        <a ng-href="/u/{{ ::item.user._id }}">{{ ::item.user.firstName }}</a>
 
         <span ng-if="::item.group">
           from

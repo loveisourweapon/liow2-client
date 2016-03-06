@@ -1,10 +1,47 @@
-<jumbotron background="'/images/header.jpg'"></jumbotron>
-<div class="container">
+<jumbotron jumbo-image="$ctrl.user.picture || $ctrl.User.getDefaultUserImage(item.user._id)"
+           jumbo-background="::$ctrl.jumbotronBackground"
+           jumbo-title="::$ctrl.user.name"
+           jumbo-text="
+             <span class='f-lg'>
+               {{ $ctrl.Act.counters[$ctrl.user._id] | number }}
+             </span> acts of love
+           "
+           jumbo-classes="jumbotron-small"></jumbotron>
+
+<div class="container container-pad">
   <div class="row">
-    <div class="col-xs-12">
-      <h1>Hello, {{ $ctrl.name }}</h1>
-      <p>This is a User Homepage!</p>
-      <p>Though it's just a placeholder for now...</p>
+    <div ng-hide="$ctrl.loading || $ctrl.error">
+      <div class="col-xs-12">
+        <div class="clearfix m-b-sm">
+          <span class="pull-right">
+            <button type="button"
+                    ng-click="$ctrl.loadFeed($ctrl.user, { after: $ctrl.feedItems[0].created })"
+                    ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
+                    class="btn btn-link">
+              <i class="fa fa-refresh fa-lg"
+                 ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
+            </button>
+          </span>
+        </div>
+
+        <feed feed-items="$ctrl.feedItems"
+              loading="$ctrl.loadingFeed"
+              load-more="$ctrl.loadFeed($ctrl.user, { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created })"
+              ng-hide="$ctrl.feedItems === null"></feed>
+      </div>
+    </div>
+
+    <div class="col-xs-12" ng-show="$ctrl.loading">
+      <p class="text-center">
+        <i class="fa fa-cog fa-5x fa-spin"></i>
+      </p>
+    </div>
+
+    <div class="col-xs-12" ng-show="$ctrl.error">
+      <uib-alert type="danger">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ $ctrl.error }}
+      </uib-alert>
     </div>
   </div>
 </div>
