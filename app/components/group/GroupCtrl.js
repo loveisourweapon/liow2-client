@@ -18,7 +18,7 @@ export default class GroupCtrl {
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
 
     let loginOff = this.User.on('login', user => {
-      this.loadFeed(this.Group.current);
+      if (this.Group.current) this.loadFeed(this.Group.current);
       this.setCampaignAlert(this.campaign, this.Group.current, user);
       if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
     });

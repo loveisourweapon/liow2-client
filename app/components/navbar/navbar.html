@@ -100,7 +100,7 @@
               <i class="fa fa-fw fa-users"></i>
               Groups
             </li>
-            <li ng-repeat="group in $ctrl.User.current.groups"
+            <li ng-repeat="group in $ctrl.User.current.groups track by group._id"
                 ng-show="$ctrl.User.isAuthenticated()"
                 ng-class="{ 'active': $ctrl.User.group._id === group._id }">
               <a ng-click="$ctrl.setUserGroup(group)" href>

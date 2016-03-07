@@ -1,0 +1,55 @@
+<div class="container container-pad">
+  <div class="row">
+    <div class="col-sm-4 col-sm-push-8 m-b-lg">
+      <h3 class="m-t-none m-b-md">
+        <i class="fa fa-users"></i>
+        Groups
+      </h3>
+      <div class="list-group group-list">
+        <a class="list-group-item clearfix"
+           ng-repeat="group in $ctrl.User.current.groups track by group._id"
+           ng-href="/g/{{ ::group.urlName }}">
+          <div class="group-list-img">
+            <img ng-src="{{ ::group.logo || '/images/group.png' }}"
+                 class="img-circle">
+          </div>
+          <div class="group-list-content">
+            <h4 class="m-none">{{ ::group.name }}</h4>
+            <p class="m-b-none">
+              <span class='f-lg'>
+                {{ $ctrl.Act.counters[group._id] | number }}
+              </span> acts of love
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-sm-8 col-sm-pull-4">
+      <span class="pull-right">
+          <button type="button"
+                  ng-click="$ctrl.loadFeed($ctrl.User.current, { after: $ctrl.feedItems[0].created })"
+                  ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
+                  class="btn btn-link">
+            <i class="fa fa-refresh fa-lg"
+               ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
+          </button>
+        </span>
+
+      <h3 class="m-t-none m-b-md">
+        <i class="fa fa-fw fa-list"></i>
+        Activity Feed
+      </h3>
+
+      <feed feed-items="$ctrl.feedItems"
+            loading="$ctrl.loadingFeed"
+            load-more="$ctrl.loadFeed($ctrl.User.current, { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created })"
+            ng-hide="$ctrl.feedItems === null"></feed>
+
+      <p class="text-center"
+         ng-show="$ctrl.feedItems === null">
+        <i class="fa fa-cog fa-5x fa-spin"></i>
+      </p>
+    </div>
+  </div>
+</div>

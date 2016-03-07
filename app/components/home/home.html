@@ -1,3 +1,5 @@
 <jumbotron jumbo-background="'/images/header.jpg'"></jumbotron>
 
-<welcome></welcome>
+<welcome ng-hide="$ctrl.User.isAuthenticated()"></welcome>
+
+<home-feed ng-show="$ctrl.User.isAuthenticated()"></home-feed>
