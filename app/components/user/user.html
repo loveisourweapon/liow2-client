@@ -12,22 +12,30 @@
   <div class="row">
     <div ng-hide="$ctrl.loading || $ctrl.error">
       <div class="col-xs-12">
-        <div class="clearfix m-b-sm">
-          <span class="pull-right">
-            <button type="button"
-                    ng-click="$ctrl.loadFeed($ctrl.user, { after: $ctrl.feedItems[0].created })"
-                    ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
-                    class="btn btn-link">
-              <i class="fa fa-refresh fa-lg"
-                 ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
-            </button>
-          </span>
-        </div>
+        <span class="pull-right">
+          <button type="button"
+                  ng-click="$ctrl.loadFeed($ctrl.user, { after: $ctrl.feedItems[0].created })"
+                  ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
+                  ng-show="$ctrl.User.isAuthenticated()"
+                  class="btn btn-link">
+            <i class="fa fa-refresh fa-lg"
+               ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
+          </button>
+        </span>
+
+        <h3 class="m-t-none m-b-md">
+          <i class="fa fa-fw fa-list"></i>
+          Activity Feed
+        </h3>
 
         <feed feed-items="$ctrl.feedItems"
               loading="$ctrl.loadingFeed"
               load-more="$ctrl.loadFeed($ctrl.user, { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created })"
-              ng-hide="$ctrl.feedItems === null"></feed>
+              ng-hide="$ctrl.feedItems === null || !$ctrl.User.isAuthenticated()"></feed>
+
+        <p ng-hide="$ctrl.User.isAuthenticated()">
+          You must <a ng-click="$ctrl.Modal.openLogin()" href>login</a> to see {{ $ctrl.user.firstName }}'s Activity Feed.
+        </p>
       </div>
     </div>
 

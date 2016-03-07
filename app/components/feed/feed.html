@@ -21,7 +21,11 @@
 
     <div class="feed-item-content">
       <h6 class="m-t-none">
-        <a ng-href="/u/{{ ::item.user._id }}">{{ ::item.user.firstName }}</a>
+        <a ng-href="/u/{{ ::item.user._id }}"
+           ng-show="$ctrl.User.isMemberOfGroup(item.group)">
+          {{ ::item.user.firstName }}
+        </a>
+        <span ng-hide="$ctrl.User.isMemberOfGroup(item.group)">Someone</span>
 
         <span ng-if="::item.group">
           from

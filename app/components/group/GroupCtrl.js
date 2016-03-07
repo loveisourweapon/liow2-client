@@ -18,10 +18,12 @@ export default class GroupCtrl {
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
 
     let loginOff = this.User.on('login', user => {
+      this.loadFeed(this.Group.current);
       this.setCampaignAlert(this.campaign, this.Group.current, user);
       if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
     });
     let logoutOff = this.User.on('logout', () => {
+      this.feedItems = null;
       this.setCampaignAlert(this.campaign, this.Group.current, null);
       this.activeTab = 0;
     });
@@ -43,7 +45,7 @@ export default class GroupCtrl {
         if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
         this.Act.count({ group: group._id });
         this.loadCampaign(group);
-        this.loadFeed(group);
+        if (this.User.isAuthenticated()) this.loadFeed(group);
       })
       .catch(err => {
         this.error = err.message;

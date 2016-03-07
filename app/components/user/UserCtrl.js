@@ -3,8 +3,8 @@ import seedrandom from 'seedrandom';
 const NUM_IMAGES = 6;
 
 export default class UserCtrl {
-  constructor($rootScope, $routeParams, User, Act, Feed) {
-    Object.assign(this, { User, Act, Feed });
+  constructor($rootScope, $scope, $routeParams, User, Act, Feed, Modal) {
+    Object.assign(this, { User, Act, Feed, Modal });
 
     // Set a random jumbotron background image seeded by the user ID
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.user)() * NUM_IMAGES)}.jpg`;
@@ -15,6 +15,10 @@ export default class UserCtrl {
         this.user.firstName + (this.user.lastName ? ` ${this.user.lastName}` : '') :
         null
       );
+
+    let loginOff = this.User.on('login', () => this.loadFeed(this.user));
+    let logoutOff = this.User.on('logout', () => this.feedItems = null);
+    $scope.$on('$destroy', () => loginOff() && logoutOff());
   }
 
   /**
@@ -30,7 +34,7 @@ export default class UserCtrl {
       .then(response => {
         this.user = response.data;
         this.Act.count({ user: this.user._id });
-        this.loadFeed(this.user);
+        if (this.User.isAuthenticated()) this.loadFeed(this.user);
       })
       .catch(() => {
         this.error = 'User not found';
@@ -62,4 +66,4 @@ export default class UserCtrl {
   }
 }
 
-UserCtrl.$inject = ['$rootScope', '$routeParams', 'User', 'Act', 'Feed'];
+UserCtrl.$inject = ['$rootScope', '$scope', '$routeParams', 'User', 'Act', 'Feed', 'Modal'];
