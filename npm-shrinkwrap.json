@@ -73,9 +73,9 @@
       "resolved": "https://registry.npmjs.org/angular-sanitize/-/angular-sanitize-1.5.0.tgz"
     },
     "angular-ui-bootstrap": {
-      "version": "1.2.1",
+      "version": "1.2.4",
       "from": "angular-ui-bootstrap@latest",
-      "resolved": "https://registry.npmjs.org/angular-ui-bootstrap/-/angular-ui-bootstrap-1.2.1.tgz"
+      "resolved": "https://registry.npmjs.org/angular-ui-bootstrap/-/angular-ui-bootstrap-1.2.4.tgz"
     },
     "angular-ui-switch": {
       "version": "0.1.1",
@@ -256,24 +256,24 @@
       "resolved": "https://registry.npmjs.org/aws4/-/aws4-1.2.1.tgz"
     },
     "babel-cli": {
-      "version": "6.6.4",
+      "version": "6.6.5",
       "from": "babel-cli@latest",
-      "resolved": "https://registry.npmjs.org/babel-cli/-/babel-cli-6.6.4.tgz",
+      "resolved": "https://registry.npmjs.org/babel-cli/-/babel-cli-6.6.5.tgz",
       "dependencies": {
         "babel-code-frame": {
-          "version": "6.6.0",
-          "from": "babel-code-frame@>=6.6.0 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-code-frame/-/babel-code-frame-6.6.0.tgz"
+          "version": "6.6.5",
+          "from": "babel-code-frame@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-code-frame/-/babel-code-frame-6.6.5.tgz"
         },
         "babel-core": {
-          "version": "6.6.4",
-          "from": "babel-core@>=6.6.4 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-core/-/babel-core-6.6.4.tgz"
+          "version": "6.6.5",
+          "from": "babel-core@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-core/-/babel-core-6.6.5.tgz"
         },
         "babel-generator": {
-          "version": "6.6.4",
-          "from": "babel-generator@>=6.6.4 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-generator/-/babel-generator-6.6.4.tgz"
+          "version": "6.6.5",
+          "from": "babel-generator@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-generator/-/babel-generator-6.6.5.tgz"
         },
         "babel-helpers": {
           "version": "6.6.0",
@@ -281,34 +281,34 @@
           "resolved": "https://registry.npmjs.org/babel-helpers/-/babel-helpers-6.6.0.tgz"
         },
         "babel-messages": {
-          "version": "6.6.0",
-          "from": "babel-messages@>=6.6.0 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-messages/-/babel-messages-6.6.0.tgz"
+          "version": "6.6.5",
+          "from": "babel-messages@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-messages/-/babel-messages-6.6.5.tgz"
         },
         "babel-register": {
-          "version": "6.6.0",
-          "from": "babel-register@>=6.6.0 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-register/-/babel-register-6.6.0.tgz"
+          "version": "6.6.5",
+          "from": "babel-register@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-register/-/babel-register-6.6.5.tgz"
         },
         "babel-template": {
-          "version": "6.6.4",
-          "from": "babel-template@>=6.6.4 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-template/-/babel-template-6.6.4.tgz"
+          "version": "6.6.5",
+          "from": "babel-template@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-template/-/babel-template-6.6.5.tgz"
         },
         "babel-traverse": {
-          "version": "6.6.4",
-          "from": "babel-traverse@>=6.6.4 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-traverse/-/babel-traverse-6.6.4.tgz"
+          "version": "6.6.5",
+          "from": "babel-traverse@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-traverse/-/babel-traverse-6.6.5.tgz"
         },
         "babel-types": {
-          "version": "6.6.4",
-          "from": "babel-types@>=6.6.4 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-types/-/babel-types-6.6.4.tgz"
+          "version": "6.6.5",
+          "from": "babel-types@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babel-types/-/babel-types-6.6.5.tgz"
         },
         "babylon": {
-          "version": "6.6.4",
-          "from": "babylon@>=6.6.4 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babylon/-/babylon-6.6.4.tgz"
+          "version": "6.6.5",
+          "from": "babylon@>=6.6.5 <7.0.0",
+          "resolved": "https://registry.npmjs.org/babylon/-/babylon-6.6.5.tgz"
         },
         "core-js": {
           "version": "2.1.3",
@@ -3268,9 +3268,9 @@
       "resolved": "https://registry.npmjs.org/module-deps/-/module-deps-4.0.5.tgz"
     },
     "moment": {
-      "version": "2.11.2",
-      "from": "moment@>=2.11.2 <3.0.0",
-      "resolved": "https://registry.npmjs.org/moment/-/moment-2.11.2.tgz"
+      "version": "2.12.0",
+      "from": "moment@latest",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.12.0.tgz"
     },
     "morgan": {
       "version": "1.7.0",
@@ -4231,9 +4231,9 @@
       "resolved": "https://registry.npmjs.org/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz"
     },
     "ui-select": {
-      "version": "0.14.7",
-      "from": "ui-select@>=0.14.7 <0.15.0",
-      "resolved": "https://registry.npmjs.org/ui-select/-/ui-select-0.14.7.tgz"
+      "version": "0.14.10",
+      "from": "ui-select@latest",
+      "resolved": "https://registry.npmjs.org/ui-select/-/ui-select-0.14.10.tgz"
     },
     "uid-number": {
       "version": "0.0.5",
