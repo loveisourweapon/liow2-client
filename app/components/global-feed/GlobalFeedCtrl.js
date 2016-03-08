@@ -17,7 +17,7 @@ export default class GlobalFeedCtrl {
    */
   loadFeed(params = {}) {
     this.loading = true;
-    this.Feed.find(params)
+    this.Feed.find(_.merge({ 'target.group': 'null' }, params))
       .then(response => {
         if (_.has(params, 'before')) {
           this.feedItems = this.feedItems.concat(response.data);
