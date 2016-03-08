@@ -9,7 +9,8 @@
         <i class="fa fa-stack-1x fa-inverse"
            ng-class="{
              'fa-heart': item.act,
-             'fa-quote-right': item.comment
+             'fa-quote-right': item.comment && item.target.deed,
+             'fa-bullhorn': item.comment && item.target.group
            }"></i>
       </span>
     </div>
@@ -27,20 +28,25 @@
         </a>
         <span ng-hide="$ctrl.User.isMemberOfGroup(item.group)">Someone</span>
 
-        <span ng-if="::item.group">
+        <span ng-if="::item.group && !item.target.group">
           from
           <a ng-href="/g/{{ ::item.group.urlName }}">{{ ::item.group.name }}</a>
         </span>
 
         <span ng-if="::item.act">did the act of love</span>
-        <span ng-if="::item.comment">left a testimony on</span>
+        <span ng-if="::item.comment && item.target.deed">left a testimony on</span>
+        <span ng-if="::item.comment && item.target.group">wrote a message to</span>
 
-        <a ng-href="/d/{{ ::item.target.deed.urlTitle }}">{{ ::item.target.deed.title }}</a>
+        <a ng-href="/d/{{ ::item.target.deed.urlTitle }}"
+           ng-if="::item.target.deed">{{ ::item.target.deed.title }}</a>
+
+        <a ng-href="/g/{{ ::item.target.group.urlName }}"
+           ng-if="::item.target.group">{{ ::item.target.group.name }}</a>
       </h6>
 
       <div marked="::item.comment.content.text"
            class="feed-item-comment"
-           ng-if="item.comment.content.text"></div>
+           ng-if="::item.comment.content.text"></div>
 
       <p class="small m-b-none">
         <a href>
