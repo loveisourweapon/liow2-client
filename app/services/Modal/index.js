@@ -19,6 +19,8 @@ import Comment from '../../services/Comment';
 // Modal controllers & templates
 import LoginCtrl from './login/LoginCtrl';
 import loginTpl from './login/login.html';
+import SignupCtrl from './signup/SignupCtrl';
+import signupTpl from './signup/signup.html';
 import GroupEditCtrl from './group-edit/GroupEditCtrl';
 import groupEditTpl from './group-edit/group-edit.html';
 import CampaignEditCtrl from './campaign-edit/CampaignEditCtrl';
@@ -52,6 +54,18 @@ class Modal {
       controller: LoginCtrl,
       template: loginTpl,
       size: 'sm'
+    }, this.defaults)).result;
+  }
+
+  /**
+   * Open the sign up modal
+   *
+   * @returns {Promise}
+   */
+  openSignup() {
+    return this.$uibModal.open(_.defaults({
+      controller: SignupCtrl,
+      template: signupTpl
     }, this.defaults)).result;
   }
 

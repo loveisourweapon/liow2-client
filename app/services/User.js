@@ -78,7 +78,7 @@ class User {
    */
   authenticateEmail(email, password) {
     if (!email || !password) {
-      return this.$q.reject('Email and/or password not provided');
+      return this.$q.reject({ data: { message: 'Email and/or password not provided' } });
     }
 
     return this.$auth.login({ email, password })
@@ -181,6 +181,21 @@ class User {
 
         return response;
       });
+  }
+
+  /**
+   * Save a new or existing user
+   *
+   * @param {object} user
+   *
+   * @returns {HttpPromise}
+   */
+  save(user) {
+    if (_.has(user, '_id')) {
+      return this.$http.put(`${this.baseUrl}/${user._id}`, user);
+    } else {
+      return this.$http.post(this.baseUrl, user);
+    }
   }
 
   /**

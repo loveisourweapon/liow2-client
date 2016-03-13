@@ -26,8 +26,8 @@ export default class GroupEditCtrl {
   resetFields() {
     this.group = {
       name: '',
-      logo: '',
-      coverImage: '',
+      logo: undefined,
+      coverImage: undefined,
       welcomeMessage: ''
     };
   }

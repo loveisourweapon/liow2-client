@@ -1,0 +1,165 @@
+<div class="modal-header">
+  <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          ng-click="$ctrl.$uibModalInstance.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+  <h4 class="modal-title">
+    Sign up
+  </h4>
+</div><!-- .modal-header -->
+
+<div class="modal-body">
+  <div ng-if="$ctrl.joinGroup !== null">
+    <p>
+      <switch id="joinGroup"
+              name="joinGroup"
+              ng-model="$ctrl.joinGroup"
+              class="m-r-xs"></switch>
+      Join {{ $ctrl.Group.current.name }}
+    </p>
+    <hr>
+  </div>
+
+  <p>
+    <button ng-click="$ctrl.authenticateFacebook($ctrl.joinGroup)"
+            class="btn btn-facebook btn-block"
+            ng-disabled="$ctrl.saving">
+      <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.saving"></i>
+      <i class="fa fa-fw fa-facebook-official" ng-hide="$ctrl.saving"></i>
+      Sign up with Facebook
+    </button>
+  </p>
+
+  <hr>
+
+  <form name="userEdit"
+        class="form-horizontal"
+        ng-submit="$ctrl.save($ctrl.user, $ctrl.joinGroup)">
+    <span ng-init="$ctrl.form = userEdit"></span>
+
+    <uib-alert type="danger"
+               ng-show="$ctrl.error && !$ctrl.error.errors">
+      <i class="fa fa-fw fa-exclamation-triangle"></i>
+      Failed sending request. Please try again or
+      <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
+    </uib-alert>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': $ctrl.error.errors.email }">
+      <label for="email"
+             class="col-xs-3 control-label">
+        Email
+      </label>
+      <div class="col-xs-8">
+        <input type="email"
+               class="form-control"
+               id="email"
+               name="email"
+               placeholder="Email address..."
+               ng-model="$ctrl.user.email"
+               required
+               autofocus>
+        <span class="help-block"
+              ng-show="!$ctrl.error.errors.email && $ctrl.form.email.$submitted && $ctrl.form.email.$invalid">
+          Please enter a valid email address.
+        </span>
+        <span class="help-block"
+              ng-show="$ctrl.error.errors.email"
+              ng-repeat="error in $ctrl.error.errors.email">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="firstName"
+             class="col-xs-3 control-label">
+        Name
+      </label>
+      <div class="col-xs-4">
+        <input type="text"
+               class="form-control"
+               id="firstName"
+               name="firstName"
+               placeholder="First..."
+               ng-model="$ctrl.user.firstName"
+               required>
+      </div>
+      <div class="col-xs-4">
+        <input type="text"
+               class="form-control"
+               id="lastName"
+               name="lastName"
+               placeholder="Last..."
+               ng-model="$ctrl.user.lastName">
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': $ctrl.error.errors.password }">
+      <label for="password"
+             class="col-xs-3 control-label">
+        Password
+      </label>
+      <div class="col-xs-8">
+        <input type="password"
+               class="form-control"
+               id="password"
+               name="password"
+               placeholder="Enter a password..."
+               ng-model="$ctrl.user.password"
+               required>
+        <span class="help-block"
+              ng-show="$ctrl.error.errors.password"
+              ng-repeat="error in $ctrl.error.errors.password">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': $ctrl.error.errors.picture }">
+      <label for="picture"
+             class="col-xs-3 control-label">
+        Picture
+      </label>
+      <div class="col-xs-8">
+        <input type="text"
+               class="form-control"
+               id="picture"
+               name="picture"
+               placeholder="Image upload coming soon..."
+               ng-model="$ctrl.user.picture"
+               disabled>
+        <span class="help-block"
+              ng-hide="$ctrl.error.errors.picture">
+          Ideally 200px x 200px
+        </span>
+        <span class="help-block"
+              ng-show="$ctrl.error.errors.picture"
+              ng-repeat="error in $ctrl.error.errors.picture">
+          {{ error.message }}
+        </span>
+      </div>
+    </div>
+
+    <!--<div class="g-recaptcha" data-sitekey="6LcbfcASAAAAADdqFypLWAOMD5Tp21hNsYhxmmM_"></div>-->
+
+    <button type="submit"
+            class="btn btn-primary btn-block"
+            ng-disabled="$ctrl.form.$pristine || $ctrl.saving">
+      <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.saving"></i>
+      Sign up
+    </button>
+  </form>
+
+  <hr>
+
+  <p>
+    Already have an account?
+    <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openLogin()" href>Login now</a>
+  </p>
+</div><!-- .modal-body -->

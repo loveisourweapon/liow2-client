@@ -25,8 +25,13 @@ export default class HomeFeedCtrl {
    * @param {object} [params={}]
    */
   loadFeed(user, params = {}) {
+    let data = { user: user._id };
+    if (user.groups.length) {
+      data.group = _.map(user.groups, '_id').join(',')
+    }
+
     this.loading = true;
-    this.Feed.find(_.merge({ user: user._id, group: _.map(user.groups, '_id').join(',') }, params))
+    this.Feed.find(data, params)
       .then(response => {
         if (_.has(params, 'before')) {
           this.feedItems = this.feedItems.concat(response.data);

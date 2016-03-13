@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
 export default class LoginCtrl {
-  constructor($uibModalInstance, $routeParams, Alertify, User, Group) {
-    Object.assign(this, { $uibModalInstance, $routeParams, Alertify, User, Group });
+  constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal) {
+    Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal });
 
+    this.error = null;
     this.joinGroup = null;
     if (_.has($routeParams, 'group')) {
       this.joinGroup = true;
@@ -13,7 +14,7 @@ export default class LoginCtrl {
   /**
    * Authenticate user with Facebook
    *
-   * @param {boolean} joinGroup
+   * @param {boolean|null} joinGroup
    */
   authenticateFacebook(joinGroup) {
     let userData = {};
@@ -44,13 +45,21 @@ export default class LoginCtrl {
   authenticateEmail(email, password) {
     this.loggingIn = true;
     this.User.authenticateEmail(email, password)
-      .then(() => {
+      .then(response => {
         this.$uibModalInstance.close();
-        this.Alertify.success('Signed in');
+        this.Alertify.success('Signed in' + (!response.data.confirmed ? '. Please confirm your email address' : ''));
       })
-      .catch(() => this.Alertify.error('Failed signing in'))
+      .catch(response => this.error = response.data.message)
       .then(() => this.loggingIn = false);
+  }
+
+  /**
+   * Close this modal and open the signup modal
+   */
+  openSignup(joinGroup) {
+    this.$uibModalInstance.dismiss();
+    this.Modal.openSignup();
   }
 }
 
-LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group'];
+LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal'];

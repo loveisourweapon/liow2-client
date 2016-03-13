@@ -94,6 +94,12 @@
                 Login
               </a>
             </li>
+            <li ng-hide="$ctrl.User.isAuthenticated()">
+              <a ng-click="$ctrl.Modal.openSignup() && $ctrl.collapseMenu()" href>
+                <i class="fa fa-fw fa-pencil-square-o"></i>
+                Sign up
+              </a>
+            </li>
             <li class="divider" ng-show="$ctrl.User.isAuthenticated()" role="separator"></li>
             <li class="dropdown-header"
                 ng-show="$ctrl.User.isAuthenticated()">
