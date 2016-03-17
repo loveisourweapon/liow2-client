@@ -7,7 +7,8 @@
   "scripts": {
     "start": "./node_modules/.bin/babel-node server.js",
     "watch": "nodemon --exec ./node_modules/.bin/babel-node -- server.js",
-    "test": "mocha"
+    "test": "mocha",
+    "preversion": "./node_modules/.bin/gulp build && git add --all public/"
   },
   "repository": {
     "type": "git",
@@ -63,6 +64,7 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-cli": "^1.2.1",
     "gulp-concat": "^2.6.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-plumber": "^1.1.0",
