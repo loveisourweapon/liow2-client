@@ -6,7 +6,7 @@ import feed from '../feed';
 
 // Component dependencies
 import GlobalFeedCtrl from './GlobalFeedCtrl';
-import template from './global-feed.html';
+import template from './globalFeed.html';
 export let globalFeedTpl = template;
 
 export let globalFeed = angular.module('app.components.globalFeed', [
