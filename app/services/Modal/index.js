@@ -21,6 +21,8 @@ import LoginCtrl from './login/LoginCtrl';
 import loginTpl from './login/login.html';
 import SignupCtrl from './signup/SignupCtrl';
 import signupTpl from './signup/signup.html';
+import ForgotPasswordCtrl from './forgot-password/ForgotPasswordCtrl';
+import forgotPasswordTpl from './forgot-password/forgotPassword.html';
 import GroupEditCtrl from './group-edit/GroupEditCtrl';
 import groupEditTpl from './group-edit/groupEdit.html';
 import CampaignEditCtrl from './campaign-edit/CampaignEditCtrl';
@@ -66,6 +68,19 @@ class Modal {
     return this.$uibModal.open(_.defaults({
       controller: SignupCtrl,
       template: signupTpl
+    }, this.defaults)).result;
+  }
+
+  /**
+   * Open the forgot password modal
+   *
+   * @returns {Promise}
+   */
+  openForgotPassword() {
+    return this.$uibModal.open(_.defaults({
+      controller: ForgotPasswordCtrl,
+      template: forgotPasswordTpl,
+      size: 'sm'
     }, this.defaults)).result;
   }
 

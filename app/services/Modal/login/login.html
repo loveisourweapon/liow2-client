@@ -39,8 +39,15 @@
     <uib-alert type="danger"
                class="p-sm"
                ng-show="$ctrl.error">
-      <i class="fa fa-exclamation-triangle"></i>
+      <i class="fa fa-fw fa-exclamation-triangle"></i>
       {{ $ctrl.error }}
+      <span ng-show="$ctrl.error.indexOf('Please confirm') === 0">
+        <i class="fa fa-fw fa-blank"></i>
+        <a ng-click="$ctrl.sendConfirmEmail($ctrl.email)" href>
+          Re-send confirmation email?
+          <i ng-show="$ctrl.sending" class="fa fa-cog fa-spin"></i>
+        </a>
+      </span>
     </uib-alert>
 
     <div class="form-group">
@@ -70,6 +77,11 @@
                ng-model="$ctrl.password"
                placeholder="Password">
       </div>
+      <span class="help-block">
+        <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openForgotPassword()" href>
+          Forgot your password?
+        </a>
+      </span>
     </div>
 
     <button type="submit"

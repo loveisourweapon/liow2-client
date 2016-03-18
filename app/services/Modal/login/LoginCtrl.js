@@ -60,6 +60,17 @@ export default class LoginCtrl {
     this.$uibModalInstance.dismiss();
     this.Modal.openSignup();
   }
+
+  /**
+   * Send confirm email address email
+   */
+  sendConfirmEmail(email) {
+    this.sending = true;
+    this.User.sendConfirmEmail(email)
+      .then(() => this.Alertify.success(`Sent confirmation email to <strong>${email}</strong>`))
+      .catch(() => this.Alertify.error('Failed sending confirmation email'))
+      .then(() => this.sending = false);
+  }
 }
 
 LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal'];

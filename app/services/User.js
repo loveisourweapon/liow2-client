@@ -20,6 +20,7 @@ class User {
     Object.assign(this, { $auth, $http, $q, Alertify });
 
     this.baseUrl = `${config.serverUrl}/users`;
+    this.authUrl = `${config.serverUrl}/auth`;
 
     this.loadCurrent().catch(() => null);
   }
@@ -209,6 +210,28 @@ class User {
   update(user, changes) {
     return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
       .then(response => this.loadCurrent());
+  }
+
+  /**
+   * Send forgot password email
+   *
+   * @param {string} email
+   *
+   * @returns {HttpPromise}
+   */
+  sendForgotPassword(email) {
+    return this.$http.get(`${this.authUrl}/forgot`, { params: { email } });
+  }
+
+  /**
+   * Send confirm email address email
+   *
+   * @param {string} email
+   *
+   * @returns {HttpPromise}
+   */
+  sendConfirmEmail(email) {
+    return this.$http.get(`${this.authUrl}/confirm`, { params: { email } });
   }
 
   /**
