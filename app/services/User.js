@@ -235,6 +235,17 @@ class User {
   }
 
   /**
+   * Confirm email address with token
+   *
+   * @param {string} token
+   *
+   * @returns {HttpPromise}
+   */
+  confirmEmail(token) {
+    return this.$http.post(`${this.authUrl}/confirm`, { token });
+  }
+
+  /**
    * Get a default user image seeded by userId
    *
    * @param {string} userId

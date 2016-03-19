@@ -11,6 +11,7 @@ import { globalFeed, globalFeedTpl } from '../global-feed';
 import { deed, deedTpl } from '../deed';
 import { group, groupTpl } from '../group';
 import { user, userTpl } from '../user';
+import { confirmEmail, confirmEmailTpl } from '../confirm-email';
 
 // Component dependencies
 import AppCtrl from './AppCtrl';
@@ -24,7 +25,8 @@ export default angular.module('app', [
   globalFeed,
   deed,
   group,
-  user
+  user,
+  confirmEmail
 ])
   .component('app', {
     controller: AppCtrl,
@@ -60,6 +62,11 @@ export default angular.module('app', [
           controller: 'UserCtrl',
           controllerAs: '$ctrl',
           template: userTpl
+        })
+        .when('/confirm/:token', {
+          controller: 'ConfirmEmailCtrl',
+          controllerAs: '$ctrl',
+          template: confirmEmailTpl
         })
         .otherwise('/');
 
