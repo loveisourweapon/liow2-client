@@ -21,8 +21,9 @@
 
   <form name="groupEdit"
         class="form-horizontal"
-        ng-submit="$ctrl.save($ctrl.group)"
-        ng-if="$ctrl.User.isAuthenticated()">
+        ng-submit="$ctrl.form.$valid && $ctrl.save($ctrl.group)"
+        ng-if="$ctrl.User.isAuthenticated()"
+        novalidate>
     <span ng-init="$ctrl.form = groupEdit"></span>
     <div class="form-group"
          ng-class="{ 'has-error': $ctrl.error.errors.name || $ctrl.error.errors.urlName }">

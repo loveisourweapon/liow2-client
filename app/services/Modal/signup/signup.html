@@ -37,7 +37,8 @@
 
   <form name="userEdit"
         class="form-horizontal"
-        ng-submit="$ctrl.save($ctrl.user, $ctrl.joinGroup)">
+        ng-submit="$ctrl.form.$valid && $ctrl.save($ctrl.user, $ctrl.joinGroup)"
+        novalidate>
     <span ng-init="$ctrl.form = userEdit"></span>
 
     <uib-alert type="danger"
@@ -48,7 +49,7 @@
     </uib-alert>
 
     <div class="form-group"
-         ng-class="{ 'has-error': $ctrl.error.errors.email }">
+         ng-class="{ 'has-error': $ctrl.error.errors.email || ($ctrl.form.$submitted && $ctrl.form.email.$invalid) }">
       <label for="email"
              class="col-xs-3 control-label">
         Email
@@ -63,7 +64,7 @@
                required
                autofocus>
         <span class="help-block"
-              ng-show="!$ctrl.error.errors.email && $ctrl.form.email.$submitted && $ctrl.form.email.$invalid">
+              ng-show="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.email.$error.email">
           Please enter a valid email address.
         </span>
         <span class="help-block"
@@ -74,7 +75,8 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group"
+    ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.firstName.$invalid }">
       <label for="firstName"
              class="col-xs-3 control-label">
         Name
@@ -96,10 +98,14 @@
                placeholder="Last..."
                ng-model="$ctrl.user.lastName">
       </div>
+      <span class="help-block col-xs-8 col-xs-push-3"
+            ng-show="$ctrl.form.$submitted && $ctrl.form.firstName.$error.required">
+        First name is required.
+      </span>
     </div>
 
     <div class="form-group"
-         ng-class="{ 'has-error': $ctrl.error.errors.password }">
+         ng-class="{ 'has-error': $ctrl.error.errors.password || ($ctrl.form.$submitted && $ctrl.form.password.$invalid) }">
       <label for="password"
              class="col-xs-3 control-label">
         Password
@@ -111,7 +117,16 @@
                name="password"
                placeholder="Enter a password..."
                ng-model="$ctrl.user.password"
-               required>
+               required
+               minlength="8">
+        <span class="help-block"
+              ng-show="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.required">
+          Password is required.
+        </span>
+        <span class="help-block"
+              ng-show="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.minlength">
+          Password must be at least 8 characters.
+        </span>
         <span class="help-block"
               ng-show="$ctrl.error.errors.password"
               ng-repeat="error in $ctrl.error.errors.password">
