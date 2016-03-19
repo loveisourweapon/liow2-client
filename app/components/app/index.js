@@ -12,6 +12,7 @@ import { deed, deedTpl } from '../deed';
 import { group, groupTpl } from '../group';
 import { user, userTpl } from '../user';
 import { confirmEmail, confirmEmailTpl } from '../confirm-email';
+import { resetPassword, resetPasswordTpl } from '../reset-password';
 
 // Component dependencies
 import AppCtrl from './AppCtrl';
@@ -26,7 +27,8 @@ export default angular.module('app', [
   deed,
   group,
   user,
-  confirmEmail
+  confirmEmail,
+  resetPassword
 ])
   .component('app', {
     controller: AppCtrl,
@@ -67,6 +69,11 @@ export default angular.module('app', [
           controller: 'ConfirmEmailCtrl',
           controllerAs: '$ctrl',
           template: confirmEmailTpl
+        })
+        .when('/reset/:token', {
+          controller: 'ResetPasswordCtrl',
+          controllerAs: '$ctrl',
+          template: resetPasswordTpl
         })
         .otherwise('/');
 

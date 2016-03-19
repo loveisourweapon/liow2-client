@@ -1,5 +1,7 @@
 export default class ConfirmEmailCtrl {
-  constructor($routeParams, $location, Alertify, User) {
+  constructor($rootScope, $routeParams, $location, Alertify, User) {
+    $rootScope.title = 'Confirming Email Address';
+
     User.confirmEmail($routeParams.token)
       .then(() => Alertify.success('Confirmed email address'))
       .catch(() => Alertify.error('Failed confirming email address'))
@@ -7,4 +9,4 @@ export default class ConfirmEmailCtrl {
   }
 }
 
-ConfirmEmailCtrl.$inject = ['$routeParams', '$location', 'Alertify', 'User'];
+ConfirmEmailCtrl.$inject = ['$rootScope', '$routeParams', '$location', 'Alertify', 'User'];

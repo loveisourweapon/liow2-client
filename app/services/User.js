@@ -224,6 +224,18 @@ class User {
   }
 
   /**
+   * Reset user's password
+   *
+   * @param {string} password
+   * @param {string} token
+   *
+   * @returns {HttpPromise}
+   */
+  resetPassword(password, token) {
+    return this.$http.post(`${this.authUrl}/reset`, { password, token });
+  }
+
+  /**
    * Send confirm email address email
    *
    * @param {string} email
