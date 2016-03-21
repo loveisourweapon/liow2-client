@@ -9,6 +9,7 @@ import angularMarked from 'angular-marked';
 import angularYoutube from 'angular-youtube-embed';
 import 'angular-ui-switch'; // Not browserified
 import lodashFilters from '../../filters/lodash';
+import directives from '../../directives';
 import Alertify from '../../services/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
@@ -74,13 +75,18 @@ class Modal {
   /**
    * Open the forgot password modal
    *
+   * @param {string|null} [email=null]
+   *
    * @returns {Promise}
    */
-  openForgotPassword() {
+  openForgotPassword(email = null) {
     return this.$uibModal.open(_.defaults({
       controller: ForgotPasswordCtrl,
       template: forgotPasswordTpl,
-      size: 'sm'
+      size: 'sm',
+      resolve: {
+        email: this.$q.resolve(email)
+      }
     }, this.defaults)).result;
   }
 
@@ -215,6 +221,8 @@ export default angular.module('app.services.Modal', [
   angularYoutube,
   'uiSwitch',
   lodashFilters,
+  directives,
+  Alertify,
   User,
   Group,
   Campaign,

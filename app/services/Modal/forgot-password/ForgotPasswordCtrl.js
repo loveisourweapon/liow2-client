@@ -1,6 +1,9 @@
 export default class ForgotPasswordCtrl {
-  constructor($uibModalInstance, Alertify, User) {
-    Object.assign(this, { $uibModalInstance, Alertify, User });
+  constructor($uibModalInstance, $timeout, Alertify, User, email) {
+    Object.assign(this, { $uibModalInstance, Alertify, User, email });
+
+    // If email passed in, set the form field $dirty
+    $timeout(() => email && this.form.email.$setDirty());
   }
 
   /**
@@ -20,4 +23,4 @@ export default class ForgotPasswordCtrl {
   }
 }
 
-ForgotPasswordCtrl.$inject = ['$uibModalInstance', 'Alertify', 'User'];
+ForgotPasswordCtrl.$inject = ['$uibModalInstance', '$timeout', 'Alertify', 'User', 'email'];

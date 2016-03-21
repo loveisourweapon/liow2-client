@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import angular from 'angular';
 
 export default angular.module('app.directives', [])
@@ -12,4 +13,17 @@ export default angular.module('app.directives', [])
       }
     };
   })
+  .directive('autofocus', ['$timeout', ($timeout) => {
+    return {
+      restrict: 'A',
+      link: (scope, elm) => {
+        $timeout(() => {
+          let element = _.head(elm);
+
+          element.focus();
+          _.isFunction(element.select) && element.select();
+        })
+      }
+    }
+  }])
   .name;

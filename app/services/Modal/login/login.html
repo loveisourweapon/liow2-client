@@ -78,7 +78,7 @@
                placeholder="Password">
       </div>
       <span class="help-block">
-        <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openForgotPassword()" href>
+        <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openForgotPassword($ctrl.email)" href>
           Forgot your password?
         </a>
       </span>
