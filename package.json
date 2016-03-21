@@ -7,6 +7,7 @@
   "scripts": {
     "start": "./node_modules/.bin/babel-node server.js",
     "watch": "nodemon --exec ./node_modules/.bin/babel-node -- server.js",
+    "clean": "./node_modules/.bin/gulp clean && git checkout -- public/",
     "test": "mocha",
     "preversion": "./node_modules/.bin/gulp build && git add --all public/"
   },
