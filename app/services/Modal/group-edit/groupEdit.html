@@ -163,6 +163,23 @@
       </div>
     </div>
 
+    <hr ng-hide="$ctrl.group._id">
+
+    <div class="form-group"
+         ng-hide="$ctrl.group._id">
+      <div class="col-xs-9 col-xs-push-3">
+        <p>
+          <switch id="setupCampaign"
+                  name="setupCampaign"
+                  ng-model="$ctrl.setupCampaign"
+                  class="m-r-xs"></switch>
+          <span ng-click="$ctrl.setupCampaign = !$ctrl.setupCampaign">
+            Setup your first campaign now?
+          </span>
+        </p>
+      </div>
+    </div>
+
     <button type="submit" hidden></button>
   </form>
 

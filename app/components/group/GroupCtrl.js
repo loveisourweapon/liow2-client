@@ -5,8 +5,8 @@ import jsonpatch from 'fast-json-patch';
 const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
-  constructor($rootScope, $scope, $routeParams, Alertify, User, Group, Campaign, Act, Feed, Modal) {
-    Object.assign(this, { Alertify, User, Group, Campaign, Act, Feed, Modal });
+  constructor($rootScope, $scope, $routeParams, $location, Alertify, User, Group, Campaign, Act, Feed, Modal) {
+    Object.assign(this, { $location, Alertify, User, Group, Campaign, Act, Feed, Modal });
 
     // Set a random jumbotron background image seeded by the group name
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
@@ -67,7 +67,14 @@ export default class GroupCtrl {
         if (this.campaign) {
           this.Act.count({ campaign: this.campaign._id });
           this.currentDeed = _.findLast(this.campaign.deeds, { published: true });
+          this.$location.search('setupCampaign', null);
+        } else {
+          if (_.has(this.$location.search(), 'setupCampaign')) {
+            this.editCampaign('create', this.Group.current)
+              .then(() => this.$location.search('setupCampaign', null));
+          }
         }
+
         this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
       });
   }
@@ -118,9 +125,11 @@ export default class GroupCtrl {
    * @oaram {string} [action='create']
    * @param {object} group
    * @param {object} [campaign=null]
+   *
+   * @returns {Promise}
    */
   editCampaign(action = 'create', group, campaign = null) {
-    this.Modal.openCampaignEdit(action, group, campaign)
+    return this.Modal.openCampaignEdit(action, group, campaign)
       .then(() => this.loadCampaign(group))
       .catch(err => null);
   }
@@ -209,4 +218,4 @@ export default class GroupCtrl {
   }
 }
 
-GroupCtrl.$inject = ['$rootScope', '$scope', '$routeParams', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Feed', 'Modal'];
+GroupCtrl.$inject = ['$rootScope', '$scope', '$routeParams', '$location', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Feed', 'Modal'];

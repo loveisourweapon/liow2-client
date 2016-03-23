@@ -8,6 +8,7 @@ export default class GroupEditCtrl {
     Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users });
 
     this.error = null;
+    this.setupCampaign = this.group ? false : true;
 
     if (this.group) {
       this.group.welcomeMessage = converter.makeHtml(this.group.welcomeMessage);
@@ -94,6 +95,10 @@ export default class GroupEditCtrl {
         this.$location.path(`/g/${response.data.urlName}`);
         this.$uibModalInstance.close();
         this.Alertify.success(`${_.capitalize(this.action)}d group <strong>${this.Group.current.name}</strong>`);
+
+        if (this.setupCampaign) {
+          this.$location.search('setupCampaign', true);
+        }
       })
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);
