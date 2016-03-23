@@ -3,8 +3,10 @@ import angular from 'angular';
 
 // Module dependencies
 import ngRoute from 'angular-route';
+import ngSanitize from 'angular-sanitize';
 import angularDragula from 'angular-dragula';
 import uibs from 'angular-ui-bootstrap';
+import uiSelect from 'ui-select';
 import angularMarked from 'angular-marked';
 import angularYoutube from 'angular-youtube-embed';
 import 'angular-ui-switch'; // Not browserified
@@ -38,8 +40,8 @@ import ConfirmCtrl from './confirm/ConfirmCtrl';
 import confirmTpl from './confirm/confirm.html';
 
 class Modal {
-  constructor($uibModal, $q) {
-    Object.assign(this, { $uibModal, $q });
+  constructor($uibModal, $q, User) {
+    Object.assign(this, { $uibModal, $q, User });
 
     this.defaults = {
       controllerAs: '$ctrl',
@@ -104,7 +106,8 @@ class Modal {
       template: groupEditTpl,
       resolve: {
         action: this.$q.resolve(action),
-        group: this.$q.resolve(angular.copy(group))
+        group: this.$q.resolve(angular.copy(group)),
+        users: group ? this.User.find({ groups: group._id }).then(response => response.data) : null
       }
     }, this.defaults)).result;
   }
@@ -211,12 +214,14 @@ class Modal {
   }
 }
 
-Modal.$inject = ['$uibModal', '$q'];
+Modal.$inject = ['$uibModal', '$q', 'User'];
 
 export default angular.module('app.services.Modal', [
   ngRoute,
+  ngSanitize,
   angularDragula(angular),
   uibs,
+  uiSelect,
   angularMarked,
   angularYoutube,
   'uiSwitch',

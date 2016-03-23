@@ -4,8 +4,8 @@ import showdown from 'showdown';
 let converter = new showdown.Converter();
 
 export default class GroupEditCtrl {
-  constructor($uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group) {
-    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group });
+  constructor($uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users) {
+    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users });
 
     this.error = null;
 
@@ -24,10 +24,13 @@ export default class GroupEditCtrl {
    * Reset all form fields to defaults
    */
   resetFields() {
+    this.users = [this.User.current];
+
     this.group = {
       name: '',
       logo: undefined,
       coverImage: undefined,
+      admins: [this.User.current._id],
       welcomeMessage: ''
     };
   }
@@ -97,4 +100,4 @@ export default class GroupEditCtrl {
   }
 }
 
-GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'Alertify', 'User', 'Group', 'Modal', 'action', 'group'];
+GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'Alertify', 'User', 'Group', 'Modal', 'action', 'group', 'users'];
