@@ -32,7 +32,8 @@
 
       <div class="col-sm-9 col-sm-pull-3">
         <div class="deed-header m-b-md">
-          <img src="/images/deed.png" class="img-responsive img-circle pull-left m-t-xxs m-r-sm">
+          <img ng-src="{{ $ctrl.Deed.current.logo || '/images/deed.png' }}"
+               class="img-responsive img-circle pull-left m-t-xxs m-r-sm">
           <h1 class="m-none">
             {{ $ctrl.Deed.current.title }}
           </h1>
