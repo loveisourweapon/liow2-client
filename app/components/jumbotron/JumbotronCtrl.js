@@ -1,7 +1,7 @@
 export default class JumbotronCtrl {
   constructor() {
     this.styles = {
-      'background-image': `url(${this.jumboBackground})`
+      'background-image': `url(${this.background})`
     };
   }
 }

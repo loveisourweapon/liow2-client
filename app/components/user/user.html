@@ -1,12 +1,14 @@
 <jumbotron jumbo-image="$ctrl.user.picture || $ctrl.User.getDefaultUserImage(item.user._id)"
            jumbo-background="::$ctrl.jumbotronBackground"
-           jumbo-title="::$ctrl.user.name"
-           jumbo-text="
-             <span class='f-lg'>
-               {{ $ctrl.Act.counters[$ctrl.user._id] | number }}
-             </span> acts of love
-           "
-           jumbo-classes="jumbotron-small"></jumbotron>
+           jumbo-classes="jumbotron-small">
+  <jumbo-title>{{ ::$ctrl.user.name }}</jumbo-title>
+  <jumbo-text>
+    <span class="f-lg">
+      {{ $ctrl.Act.counters[$ctrl.user._id] | number }}
+    </span>
+    acts of love
+  </jumbo-text>
+</jumbotron>
 
 <div class="container container-pad">
   <div class="row">

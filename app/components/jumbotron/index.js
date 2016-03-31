@@ -8,12 +8,15 @@ export default angular.module('app.components.jumbotron', [])
   .component('jumbotron', {
     controller: JumbotronCtrl,
     template: jumbotronTpl,
+    transclude: {
+      content: '?jumboContent',
+      title: '?jumboTitle',
+      text: '?jumboText'
+    },
     bindings: {
-      jumboImage: '<',
-      jumboBackground: '<',
-      jumboTitle: '<',
-      jumboText: '@',
-      jumboClasses: '@'
+      image: '<jumboImage',
+      background: '<jumboBackground',
+      classes: '@jumboClasses'
     }
   })
   .name;
