@@ -52,62 +52,31 @@
       </div>
 
       <div class="col-sm-9 col-sm-pull-3">
-        <div class="deed-header m-b-md">
-          <img ng-src="{{ $ctrl.Deed.current.logo || '/images/deed.png' }}"
-               class="img-responsive img-circle pull-left m-t-xxs m-r-sm">
-          <h1 class="m-none">
-            {{ $ctrl.Deed.current.title }}
-          </h1>
-          <p class="m-none">
-            <span class="f-lg">
-              {{ $ctrl.Act.counters[$ctrl.Deed.current._id] | number }}
-            </span>
-            acts of love
-          </p>
-        </div>
+        <span class="pull-right">
+          <button type="button"
+                  ng-click="$ctrl.loadFeed($ctrl.Deed.current, { after: $ctrl.feedItems[0].created })"
+                  ng-show="$ctrl.activeTab === 1"
+                  ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
+                  class="btn btn-link">
+            <i class="fa fa-refresh fa-lg"
+               ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
+          </button>
+        </span>
 
-        <uib-tabset active="$ctrl.activeTab"
-                    type="pills">
-          <span class="pull-right">
-            <button type="button"
-                    ng-click="$ctrl.loadFeed($ctrl.Deed.current, { after: $ctrl.feedItems[0].created })"
-                    ng-show="$ctrl.activeTab === 1"
-                    ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
-                    class="btn btn-link">
-              <i class="fa fa-refresh fa-lg"
-                 ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
-            </button>
-          </span>
+        <div marked="$ctrl.Deed.current.content" class="m-b-md"></div>
 
-          <uib-tab>
-            <uib-tab-heading>
-              <i class="fa fa-fw fa-book"></i>
-              Devotional
-            </uib-tab-heading>
+        <feed feed-items="$ctrl.feedItems"
+              loading="$ctrl.loadingFeed"
+              load-more="$ctrl.loadFeed(
+                $ctrl.Deed.current,
+                { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created }
+              )"
+              ng-hide="$ctrl.feedItems === null"></feed>
 
-            <div marked="$ctrl.Deed.current.content"></div>
-          </uib-tab>
-
-          <uib-tab>
-            <uib-tab-heading>
-              <i class="fa fa-fw fa-list"></i>
-              Activity Feed
-            </uib-tab-heading>
-
-            <feed feed-items="$ctrl.feedItems"
-                  loading="$ctrl.loadingFeed"
-                  load-more="$ctrl.loadFeed(
-                    $ctrl.Deed.current,
-                    { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created }
-                  )"
-                  ng-hide="$ctrl.feedItems === null"></feed>
-
-            <p class="text-center"
-               ng-show="$ctrl.feedItems === null">
-              <i class="fa fa-cog fa-5x fa-spin"></i>
-            </p>
-          </uib-tab>
-        </uib-tabset>
+        <p class="text-center"
+           ng-show="$ctrl.feedItems === null">
+          <i class="fa fa-cog fa-5x fa-spin"></i>
+        </p>
       </div>
     </div>
 
