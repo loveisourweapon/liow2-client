@@ -1,17 +1,38 @@
 .deed-header {
-  background: $gray-lighter;
-  padding: $padding-large-horizontal;
-  border-radius: $border-radius-large;
-  overflow: auto;
-
   > img {
-    width: 60px;
+    width: 40px;
     border: 1px solid;
+
+    @media (min-width: $screen-sm-min) {
+      width: 60px;
+    }
   }
 
-  > h1,
-  > p {
-    float: right;
-    width: calc(100% - 70px);
+  > h1 {
+    font-size: 32px;
+    margin-top: 21px;
+
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      font-size: 55px;
+      margin-top: 16px;
+    }
+    @media (min-width: $screen-md-min) {
+      font-size: 63px;
+      margin-top: 10px;
+    }
+  }
+
+  > h2 {
+    font-size: 18px;
+    margin-top: 30px;
+
+    @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      font-size: 30px;
+      margin-top: 34px;
+    }
+    @media (min-width: $screen-md-min) {
+      font-size: 34px;
+      margin-top: 31px;
+    }
   }
 }

@@ -1,4 +1,25 @@
-<videotron video-url="$ctrl.Deed.current.videoUrl"></videotron>
+<jumbotron jumbo-classes="videotron">
+  <jumbo-content>
+    <div class="embed-responsive embed-responsive-16by9">
+      <youtube-video ng-if="$ctrl.Deed.current.videoUrl"
+                     video-url="$ctrl.Deed.current.videoUrl"
+                     class="embed-responsive-item"></youtube-video>
+    </div>
+
+    <div class="deed-header">
+      <img ng-src="{{ $ctrl.Deed.current.logo || '/images/deed.png' }}"
+           class="img-responsive img-circle pull-left m-t-md m-r-sm">
+
+      <h2 class="text-uppercase pull-left m-b-none">
+        {{ $ctrl.Deed.current.title }}
+      </h2>
+
+      <h1 class="pull-right text-right m-b-none">
+        {{ $ctrl.Act.counters[$ctrl.Deed.current._id] | number }}
+      </h1>
+    </div>
+  </jumbo-content>
+</jumbotron>
 
 <div class="container container-pad">
   <div class="row">
