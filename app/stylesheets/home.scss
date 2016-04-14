@@ -1,3 +1,21 @@
+.Home__Header {
+  h1 {
+    font-size: 35px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 40px;
+    }
+  }
+
+  p {
+    font-size: 19px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 22px;
+    }
+  }
+}
+
 .Home__Welcome1 {
   .col-sm-3 {
     @media (max-width: $screen-xs-max) {

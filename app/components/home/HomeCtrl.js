@@ -1,9 +1,9 @@
 export default class HomeCtrl {
-  constructor($rootScope, User) {
-    Object.assign(this, { User });
+  constructor($rootScope, User, Modal) {
+    Object.assign(this, { User, Modal });
 
     $rootScope.title = null;
   }
 }
 
-HomeCtrl.$inject = ['$rootScope', 'User'];
+HomeCtrl.$inject = ['$rootScope', 'User', 'Modal'];
