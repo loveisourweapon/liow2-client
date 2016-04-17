@@ -1,4 +1,29 @@
-<div class="Home__Welcome1">
+<div class="Home__SignupLogin">
+  <div class="container container-pad-sm text-center">
+    <div class="row">
+      <div class="col-xs-12">
+        <h3>Start changing your world today!</h3>
+        <p>Sign up or login to join the Global Campaign or your local group campaign.</p>
+        <p>
+          <br>
+          <button type="button"
+                  class="btn btn-primary"
+                  ng-click="$ctrl.Modal.openSignup()">
+            Sign up
+          </button>
+          &nbsp;&nbsp; or &nbsp;&nbsp;
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="$ctrl.Modal.openLogin()">
+            Login
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div><!-- .Home__SignupLogin -->
+
+<div class="Home__Welcome">
   <div class="container container-pad">
     <div class="row">
       <div class="col-sm-9">
@@ -12,18 +37,12 @@
           change, value, healing and hope throughout cities and communities
           everywhere.
         </p>
-        <p class="text-center">
-          <br>
+        <p>
+          <br><br><br>
           <button type="button"
-                  class="btn btn-primary btn-lg"
-                  ng-click="$ctrl.Modal.openLogin()">
-            Login
-          </button>
-          &nbsp;&nbsp; or &nbsp;&nbsp;
-          <button type="button"
-                  class="btn btn-default btn-lg"
+                  class="btn btn-primary"
                   ng-click="$ctrl.Modal.openGroupEdit()">
-            Group sign up
+            Start a Campaign for your Group!
           </button>
         </p>
       </div>
@@ -58,9 +77,9 @@
       </div>
     </div>
   </div>
-</div><!-- .Home__Welcome1 -->
+</div><!-- .Home__Welcome -->
 
-<div class="Home__Welcome2">
+<div class="Home__HowTo">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
@@ -69,45 +88,37 @@
         </h2>
         <img src="images/welcome-laptop.png">
         <ol>
-          <li>Sign up</li>
-          <li>Join or start a group</li>
+          <li>
+            Sign up<br>
+            <small>
+              All you have to do is enter your details and login to
+              join a campaign!
+            </small>
+          </li>
+          <li>Join or Start a Campaign</li>
           <li>Start changing your world!</li>
         </ol>
       </div>
     </div>
   </div>
-</div><!-- .Home__Welcome2 -->
+</div><!-- .Home__HowTo -->
 
-<div class="Home__Welcome3">
-  <div class="container">
+<div class="Home__Spacer"></div>
+
+<div class="Home__Footer">
+  <div class="container container-pad text-center">
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="text-center">
-          Here’s how Love is Our Weapon can help you.
-        </h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <h3>Title 1</h3>
+        <h1>Love is our Weapon</h1>
         <p>
-          After the Sabbath, as the first light of the new week dawned, Mary Magdalene and the other Mary came to keep vigil at the tomb. Suddenly the earth reeled and rocked under their feet as God’s angel came down from heaven, came right up to where they were standing. He rolled back the stone and then sat on it. Shafts of lightning blazed from him. His garments shimmered snow-white. The guards at the tomb were scared to death. They were so frightened, they couldn’t move.
-        </p>
-        <h3>Title 2</h3>
-        <p>
-          The women, deep in wonder and full of joy, lost no time in leaving the tomb. They ran to tell the disciples. Then Jesus met them, stopping them in their tracks. “Good morning!” he said. They fell to their knees, embraced his feet, and worshiped him. Jesus said, “You’re holding on to me for dear life! Don’t be frightened like that. Go tell my brothers that they are to go to Galilee, and that I’ll meet them there.”
-        </p>
-      </div>
-      <div class="col-sm-6">
-        <h3>Title 3</h3>
-        <p>
-          Meanwhile, the guards had scattered, but a few of them went into the city and told the high priests everything that had happened. They called a meeting of the religious leaders and came up with a plan: They took a large sum of money and gave it to the soldiers, bribing them to say, “His disciples came in the night and stole the body while we were sleeping.” They assured them, “If the governor hears about your sleeping on duty, we will make sure you don’t get blamed.” The soldiers took the bribe and did as they were told. That story, cooked up in the Jewish High Council, is still going around.
-        </p>
-        <h3>Title 4</h3>
-        <p>
-          Jesus, undeterred, went right ahead and gave his charge: “God authorized and commanded me to commission you: Go out and train everyone you meet, far and near, in this way of life, marking them by baptism in the threefold name: Father, Son, and Holy Spirit. Then instruct them in the practice of all I have commanded you. I’ll be with you as you do this, day after day after day, right up to the end of the age.”
+          <br><br><br>
+          <button type="button"
+                  class="btn btn-primary"
+                  ng-click="$ctrl.Modal.openGroupEdit()">
+            Start a Campaign
+          </button>
         </p>
       </div>
     </div>
   </div>
-</div>
+</div><!-- .Home__Footer -->
