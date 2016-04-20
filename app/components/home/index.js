@@ -7,6 +7,7 @@ import Act from '../../services/Act';
 import Modal from '../../services/Modal';
 import jumbotron from '../jumbotron';
 import feed from '../feed';
+import deedList from '../deed-list';
 
 // Component dependencies
 import HomeCtrl from './HomeCtrl';
@@ -23,7 +24,8 @@ export let home = angular.module('app.components.home', [
   Act,
   Modal,
   jumbotron,
-  feed
+  feed,
+  deedList
 ])
   .controller('HomeCtrl', HomeCtrl)
   .component('welcome', {
