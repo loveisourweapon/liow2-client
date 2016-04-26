@@ -6,14 +6,16 @@ import Act from '../../services/Act';
 
 // Component dependencies
 import DeedListCtrl from './DeedListCtrl';
-import deedListTpl from './deedList.html';
 
 export default angular.module('app.components.deedList', [
   Deed,
   Act
 ])
   .component('deedList', {
+    bindings: {
+      'layout': '@'
+    },
     controller: DeedListCtrl,
-    template: deedListTpl
+    template: '<ng-include src="$ctrl.getTemplateName()" />'
   })
   .name;

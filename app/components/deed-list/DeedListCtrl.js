@@ -1,7 +1,11 @@
 import _ from 'lodash';
 
+// Include template files
+import templateHorizontal from './deedListHorizontal.html';
+import templateVertical from './deedListVertical.html';
+
 export default class DeedListCtrl {
-  constructor($location, Deed, Act) {
+  constructor($location, $templateCache, Deed, Act) {
     Object.assign(this, { $location, Deed, Act });
 
     this.loading = true;
@@ -13,7 +17,21 @@ export default class DeedListCtrl {
       })
       .catch(() => null)
       .then(() => this.loading = false);
+
+    $templateCache.put('deedListHorizontal.html', templateHorizontal);
+    $templateCache.put('deedListVertical.html', templateVertical);
+  }
+
+  /**
+   * Get the name of the template
+   *
+   * @returns {string}
+   */
+  getTemplateName() {
+    return this.layout === 'vertical' ?
+      'deedListVertical.html' :
+      'deedListHorizontal.html';
   }
 }
 
-DeedListCtrl.$inject = ['$location', 'Deed', 'Act'];
+DeedListCtrl.$inject = ['$location', '$templateCache', 'Deed', 'Act'];

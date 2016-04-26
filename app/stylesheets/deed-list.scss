@@ -1,4 +1,4 @@
-deed-list > .container {
+deed-list:not([layout=vertical]) > ng-include > div {
   .deed-wrapper {
     float: left;
     width: calc(100% / 3);
@@ -81,6 +81,58 @@ deed-list > .container {
 
         @media (min-width: $screen-sm-min) {
           font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+deed-list[layout=vertical] > ng-include > div {
+  .deed-wrapper {
+    overflow: auto;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+
+    &.deed-current {
+      background: $gray-lighter;
+    }
+
+    &:hover {
+      background: $gray-dark;
+      color: white;
+    }
+
+    .deed-image {
+      float: left;
+
+      img {
+        width: 40px;
+        border: 1px solid;
+      }
+    }
+
+    .deed-text {
+      float: right;
+      width: calc(100% - 50px);
+
+      .deed-title {
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .deed-count {
+        color: $brand-primary;
+        font-weight: bold;
+      }
+
+      .deed-subtext {
+        font-weight: 200;
+        font-size: 11px;
+
+        @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+          display: block;
         }
       }
     }
