@@ -34,13 +34,6 @@
           <i class="fa fa-cog fa-lg fa-spin" ng-show="$ctrl.doing"></i>
           Done
         </button>
-        <button type="button"
-                class="btn btn-primary btn-block"
-                ng-click="$ctrl.testimony($ctrl.Deed.current, $ctrl.User.group)"
-                ng-if="$ctrl.User.isAuthenticated()">
-          <i class="fa fa-fw fa-comment"></i>
-          Leave a Testimony
-        </button>
 
         <button type="button"
                 class="btn btn-primary btn-block btn-lg"
@@ -54,18 +47,22 @@
       </div>
 
       <div class="col-sm-9 col-sm-pull-3">
-        <span class="pull-right">
+        <h2 class="m-t-none">Devotional</h2>
+        <div marked="$ctrl.Deed.current.content" class="m-b-md"></div>
+
+        <comment-form deed="$ctrl.Deed.current"
+                      on-save="$ctrl.loadFeed($ctrl.Deed.current)"
+                      placeholder="Leave a testimony..."></comment-form>
+
+        <p class="text-right">
           <button type="button"
                   ng-click="$ctrl.loadFeed($ctrl.Deed.current, { after: $ctrl.feedItems[0].created })"
-                  ng-show="$ctrl.activeTab === 1"
                   ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
                   class="btn btn-link">
             <i class="fa fa-refresh fa-lg"
                ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
           </button>
-        </span>
-
-        <div marked="$ctrl.Deed.current.content" class="m-b-md"></div>
+        </p>
 
         <feed feed-items="$ctrl.feedItems"
               loading="$ctrl.loadingFeed"

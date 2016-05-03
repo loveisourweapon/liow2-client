@@ -1,0 +1,15 @@
+<form ng-submit="$ctrl.save($ctrl.newComment)">
+  <div class="form-group">
+    <div class="well well-sm medium-editor m-none">
+      <textarea id="comment"
+                ng-model="$ctrl.newComment.content.text"></textarea>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary pull-left m-t-xs"
+            ng-disabled="!$ctrl.newComment.content.text">
+      <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.saving"></i>
+      Save
+    </button>
+  </div>
+</form>

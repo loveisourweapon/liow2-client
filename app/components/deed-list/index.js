@@ -13,7 +13,7 @@ export default angular.module('app.components.deedList', [
 ])
   .component('deedList', {
     bindings: {
-      'layout': '@'
+      layout: '@'
     },
     controller: DeedListCtrl,
     template: '<ng-include src="$ctrl.getTemplateName()" />'

@@ -13,6 +13,7 @@ import Modal from '../../services/Modal';
 import jumbotron from '../jumbotron';
 import feed from '../feed';
 import deedList from '../deed-list';
+import commentForm from '../comment-form';
 
 // Component dependencies
 import DeedCtrl from './DeedCtrl';
@@ -31,7 +32,8 @@ export let deed = angular.module('app.components.deed', [
   Modal,
   jumbotron,
   feed,
-  deedList
+  deedList,
+  commentForm
 ])
   .controller('DeedCtrl', DeedCtrl)
   .name;
