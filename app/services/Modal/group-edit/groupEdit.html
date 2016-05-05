@@ -187,12 +187,20 @@
        ng-if="!$ctrl.User.isAuthenticated()">
     <div class="row">
       <div class="col-xs-12">
-        <button type="button"
-                class="btn btn-primary m-r-sm"
-                ng-click="$ctrl.openLoginModal()">
-          Login
-        </button>
-        Please login to setup a new group
+        <p>Please sign up or login to setup a new group</p>
+        <p>
+          <button type="button"
+                  class="btn btn-primary"
+                  ng-click="$ctrl.openModal('signup')">
+            Sign up
+          </button>
+          &nbsp;&nbsp; or &nbsp;&nbsp;
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="$ctrl.openModal('login')">
+            Login
+          </button>
+        </p>
       </div>
     </div>
   </div>

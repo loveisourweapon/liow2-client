@@ -49,25 +49,35 @@ class Modal {
   /**
    * Open the login modal
    *
+   * @param {boolean} [canSwitch=true]
+   *
    * @returns {Promise}
    */
-  openLogin() {
+  openLogin(canSwitch = true) {
     return this.$uibModal.open(_.defaults({
       controller: LoginCtrl,
       template: loginTpl,
-      size: 'sm'
+      size: 'sm',
+      resolve: {
+        canSwitch: this.$q.resolve(canSwitch)
+      }
     }, this.defaults)).result;
   }
 
   /**
    * Open the sign up modal
    *
+   * @param {boolean} [canSwitch=true]
+   *
    * @returns {Promise}
    */
-  openSignup() {
+  openSignup(canSwitch = true) {
     return this.$uibModal.open(_.defaults({
       controller: SignupCtrl,
-      template: signupTpl
+      template: signupTpl,
+      resolve: {
+        canSwitch: this.$q.resolve(canSwitch)
+      }
     }, this.defaults)).result;
   }
 

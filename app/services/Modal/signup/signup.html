@@ -169,10 +169,11 @@
     </button>
   </form>
 
-  <hr>
-
-  <p>
-    Already have an account?
-    <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openLogin()" href>Login now</a>
-  </p>
+  <div ng-show="$ctrl.canSwitch">
+    <hr>
+    <p>
+      Already have an account?
+      <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openLogin()" href>Login now</a>
+    </p>
+  </div>
 </div><!-- .modal-body -->

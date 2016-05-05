@@ -12,11 +12,11 @@ export default class GroupEditCtrl {
 
     if (this.group) {
       this.group.welcomeMessage = converter.makeHtml(this.group.welcomeMessage);
-    } else {
+    } else if (this.User.current) {
       this.resetFields();
     }
 
-    if (_.isObject(this.User.current)) {
+    if (this.User.current) {
       this.setupMediumEditor();
     }
   }
@@ -71,12 +71,15 @@ export default class GroupEditCtrl {
 
   /**
    * Prompt user to login, then reset the form fields and setup the MediumEditor
+   *
+   * @param {string} type
    */
-  openLoginModal() {
-    this.Modal.openLogin()
+  openModal(type) {
+    this.Modal[type === 'login' ? 'openLogin' : 'openSignup'](false)
       .then(() => this.User.loadCurrent())
+      .then(() => this.resetFields())
       .then(() => this.setupMediumEditor())
-      .catch((err) => null);
+      .catch(() => null);
   }
 
   /**

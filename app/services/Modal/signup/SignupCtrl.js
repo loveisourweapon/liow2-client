@@ -1,6 +1,6 @@
 export default class SignupCtrl {
-  constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal) {
-    Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal });
+  constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal, canSwitch) {
+    Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal, canSwitch });
 
     this.error = null;
     this.joinGroup = null;
@@ -63,19 +63,18 @@ export default class SignupCtrl {
     this.saving = true;
     this.error = null;
     this.User.save(user)
-      .then(response => {
+      .then(() => {
         if (joinGroup) {
           this.User.group = this.Group.current;
         }
 
-        this.$uibModalInstance.close();
         this.Alertify.success('Signed up. Please confirm your email address');
-
         return this.User.authenticateEmail(user.email, user.password);
       })
+      .then(() => this.$uibModalInstance.close())
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);
   }
 }
 
-SignupCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal'];
+SignupCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal', 'canSwitch'];

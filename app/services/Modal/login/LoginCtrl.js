@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 export default class LoginCtrl {
-  constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal) {
-    Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal });
+  constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal, canSwitch) {
+    Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal, canSwitch });
 
     this.error = null;
     this.joinGroup = null;
@@ -54,14 +54,6 @@ export default class LoginCtrl {
   }
 
   /**
-   * Close this modal and open the signup modal
-   */
-  openSignup(joinGroup) {
-    this.$uibModalInstance.dismiss();
-    this.Modal.openSignup();
-  }
-
-  /**
    * Send confirm email address email
    */
   sendConfirmEmail(email) {
@@ -73,4 +65,4 @@ export default class LoginCtrl {
   }
 }
 
-LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal'];
+LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal', 'canSwitch'];
