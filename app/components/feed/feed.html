@@ -23,10 +23,10 @@
     <div class="feed-item-content">
       <h6 class="m-t-none">
         <a ng-href="/u/{{ ::item.user._id }}"
-           ng-show="$ctrl.User.isMemberOfGroup(item.group)">
+           ng-show="$ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group)">
           {{ ::item.user.firstName }}
         </a>
-        <span ng-hide="$ctrl.User.isMemberOfGroup(item.group)">Someone</span>
+        <span ng-hide="$ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group)">Someone</span>
 
         <span ng-if="::item.group && !item.target.group">
           from

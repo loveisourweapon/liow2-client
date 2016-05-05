@@ -99,6 +99,17 @@ class User {
   }
 
   /**
+   * Check if the user is the currently logged in user
+   *
+   * @param {object} user
+   *
+   * @returns {boolean}
+   */
+  isLoggedInUser(user) {
+    return currentUser && currentUser._id === user._id;
+  }
+
+  /**
    * Check if the current user is a member of a group
    *
    * @param {object} group
