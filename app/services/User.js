@@ -132,6 +132,7 @@ class User {
     return this.$auth.logout()
       .then(() => {
         currentUser = null;
+        currentGroup = null;
         this.pub('logout');
         this.Alertify.success('Logged out');
       });
