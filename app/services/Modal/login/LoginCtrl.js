@@ -39,13 +39,18 @@ export default class LoginCtrl {
   /**
    * Authenticate user with email and password
    *
-   * @param {string} email
-   * @param {string} password
+   * @param {string}       email
+   * @param {string}       password
+   * @param {boolean|null} joinGroup
    */
-  authenticateEmail(email, password) {
+  authenticateEmail(email, password, joinGroup) {
     this.loggingIn = true;
-    this.User.authenticateEmail(email, password)
+    this.User.authenticateEmail(email, password, joinGroup ? this.Group.current : null)
       .then(response => {
+        if (joinGroup) {
+          this.User.group = this.Group.current;
+        }
+
         this.$uibModalInstance.close();
         this.Alertify.success('Signed in' + (!response.data.confirmed ? '. Please confirm your email address' : ''));
       })

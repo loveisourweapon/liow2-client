@@ -74,15 +74,21 @@ class User {
    *
    * @param {string} email
    * @param {string} password
+   * @param {object} [group=null]
    *
    * @returns {Promise}
    */
-  authenticateEmail(email, password) {
+  authenticateEmail(email, password, group = null) {
     if (!email || !password) {
       return this.$q.reject({ data: { message: 'Email and/or password not provided' } });
     }
 
-    return this.$auth.login({ email, password })
+    let userData = { email, password };
+    if (_.has(group, '_id')) {
+      userData.group = group._id;
+    }
+
+    return this.$auth.login(userData)
       .then(response => {
         this.$auth.setToken(response.data.token);
         return this.loadCurrent();
