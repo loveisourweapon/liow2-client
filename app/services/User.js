@@ -26,35 +26,6 @@ class User {
   }
 
   /**
-   * Subscribe to a User update
-   *
-   * @param {string}   key
-   * @param {function} callback
-   *
-   * @returns {Function}
-   */
-  on(key, callback) {
-    let id = uuid.v4();
-    listeners[id] = { key, callback };
-
-    return () => delete listeners[id];
-  }
-
-  /**
-   * Publish a User update
-   *
-   * @param {string} key
-   * @param {*}      [data=null]
-   */
-  pub(key, data = null) {
-    _.forOwn(listeners, listener => {
-      if (listener.key === key) {
-        listener.callback(data);
-      }
-    });
-  }
-
-  /**
    * Authenticate user with Facebook
    *
    * @param {object} [userData={}]
@@ -93,6 +64,96 @@ class User {
         this.$auth.setToken(response.data.token);
         return this.loadCurrent();
       });
+  }
+
+  /**
+   * Logout the current user
+   *
+   * @returns {Promise}
+   */
+  logout() {
+    return this.$auth.logout()
+      .then(() => {
+        currentUser = null;
+        currentGroup = null;
+        this.pub('logout');
+        this.Alertify.success('Logged out');
+      });
+  }
+
+  /**
+   * Get the current user from the server
+   *
+   * @returns {Promise}
+   */
+  loadCurrent() {
+    if (!this.isAuthenticated()) {
+      return this.$q.reject('Not logged in')
+    }
+
+    return this.$http.get(`${this.baseUrl}/me`)
+      .then(response => {
+        currentUser = response.data;
+        this.pub('login', currentUser);
+
+        // Set the current group as the users first group
+        if (currentUser.groups.length) {
+          currentGroup = currentUser.groups[0];
+        }
+
+        return response;
+      });
+  }
+
+  /**
+   * Find users by params
+   *
+   * @param {object} [params={}]
+   *
+   * @returns {HttpPromise}
+   */
+  find(params = {}) {
+    return this.$http.get(this.baseUrl, { params });
+  }
+
+  /**
+   * Find a single user by Id
+   *
+   * @param {string} userId
+   * @param {object} [params={}]
+   *
+   * @returns {HttpPromise}
+   */
+  findById(userId, params) {
+    return this.$http.get(`${this.baseUrl}/${userId}`, { params });
+  }
+
+  /**
+   * Save a new or existing user
+   *
+   * @param {object} user
+   *
+   * @returns {HttpPromise}
+   */
+  save(user) {
+    if (_.has(user, '_id')) {
+      return this.$http.put(`${this.baseUrl}/${user._id}`, user);
+    } else {
+      return this.$http.post(this.baseUrl, user);
+    }
+  }
+
+  /**
+   * Update an existing user
+   *
+   * @param {object}   user
+   * @param {object[]} changes
+   *
+   * @returns {Promise}
+   */
+  update(user, changes) {
+    return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
+      .then(response => this.loadCurrent());
   }
 
   /**
@@ -138,96 +199,6 @@ class User {
    */
   hasCommonGroup(groups) {
     return _.some(groups, this.isMemberOfGroup);
-  }
-
-  /**
-   * Logout the current user
-   *
-   * @returns {Promise}
-   */
-  logout() {
-    return this.$auth.logout()
-      .then(() => {
-        currentUser = null;
-        currentGroup = null;
-        this.pub('logout');
-        this.Alertify.success('Logged out');
-      });
-  }
-
-  /**
-   * Find users by params
-   *
-   * @param {object} [params={}]
-   *
-   * @returns {HttpPromise}
-   */
-  find(params = {}) {
-    return this.$http.get(this.baseUrl, { params });
-  }
-
-  /**
-   * Find a single user by Id
-   *
-   * @param {string} userId
-   * @param {object} [params={}]
-   *
-   * @returns {HttpPromise}
-   */
-  findById(userId, params) {
-    return this.$http.get(`${this.baseUrl}/${userId}`, { params });
-  }
-
-  /**
-   * Get the current user from the server
-   *
-   * @returns {Promise}
-   */
-  loadCurrent() {
-    if (!this.isAuthenticated()) {
-      return this.$q.reject('Not logged in')
-    }
-
-    return this.$http.get(`${this.baseUrl}/me`)
-      .then(response => {
-        currentUser = response.data;
-        this.pub('login', currentUser);
-
-        // Set the current group as the users first group
-        if (currentUser.groups.length) {
-          currentGroup = currentUser.groups[0];
-        }
-
-        return response;
-      });
-  }
-
-  /**
-   * Save a new or existing user
-   *
-   * @param {object} user
-   *
-   * @returns {HttpPromise}
-   */
-  save(user) {
-    if (_.has(user, '_id')) {
-      return this.$http.put(`${this.baseUrl}/${user._id}`, user);
-    } else {
-      return this.$http.post(this.baseUrl, user);
-    }
-  }
-
-  /**
-   * Update an existing user
-   *
-   * @param {object}   user
-   * @param {object[]} changes
-   *
-   * @returns {Promise}
-   */
-  update(user, changes) {
-    return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
-      .then(response => this.loadCurrent());
   }
 
   /**
@@ -290,6 +261,35 @@ class User {
     }
 
     return `/images/user${defaultImagesDict[userId]}.png`;
+  }
+
+  /**
+   * Subscribe to a User update
+   *
+   * @param {string}   key
+   * @param {function} callback
+   *
+   * @returns {function}
+   */
+  on(key, callback) {
+    let id = uuid.v4();
+    listeners[id] = { key, callback };
+
+    return () => delete listeners[id];
+  }
+
+  /**
+   * Publish a User update
+   *
+   * @param {string} key
+   * @param {*}      [data=null]
+   */
+  pub(key, data = null) {
+    _.forOwn(listeners, listener => {
+      if (listener.key === key) {
+        listener.callback(data);
+      }
+    });
   }
 
   /**
