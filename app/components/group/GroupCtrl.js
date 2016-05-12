@@ -12,18 +12,17 @@ export default class GroupCtrl {
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.group)() * NUM_IMAGES)}.jpg`;
     this.activeTab = 0;
     this.campaign = null;
-    this.feedItems = null;
 
     this.loadGroup($routeParams.group)
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
 
     let loginOff = this.User.on('login', user => {
-      if (this.Group.current) this.loadFeed(this.Group.current);
+      this.Feed.update({ refresh: true });
       this.setCampaignAlert(this.campaign, this.Group.current, user);
       if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
     });
     let logoutOff = this.User.on('logout', () => {
-      this.feedItems = null;
+      this.Feed.update({ clear: true });
       this.setCampaignAlert(this.campaign, this.Group.current, null);
       this.activeTab = 0;
     });
@@ -45,7 +44,7 @@ export default class GroupCtrl {
         if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
         this.Act.count({ group: group._id });
         this.loadCampaign(group);
-        if (this.User.isAuthenticated()) this.loadFeed(group);
+        if (this.User.isAuthenticated()) this.Feed.update({ refresh: true });
       })
       .catch(err => {
         this.error = err.message;
@@ -77,28 +76,6 @@ export default class GroupCtrl {
 
         this.setCampaignAlert(this.campaign, this.Group.current, this.User.current);
       });
-  }
-
-  /**
-   * Load feed items
-   *
-   * @param {object} group
-   * @param {object} [params={}]
-   */
-  loadFeed(group, params = {}) {
-    this.loadingFeed = true;
-    this.Feed.find(_.merge({ group: group._id }, params))
-      .then(response => {
-        if (_.has(params, 'before')) {
-          this.feedItems = this.feedItems.concat(response.data);
-        } else if (_.has(params, 'after')) {
-          this.feedItems = response.data.concat(this.feedItems);
-        } else {
-          this.feedItems = response.data;
-        }
-      })
-      .catch(() => null)
-      .then(() => this.loadingFeed = false);
   }
 
   /**

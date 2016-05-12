@@ -8,7 +8,6 @@ export default class UserCtrl {
 
     // Set a random jumbotron background image seeded by the user ID
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.user)() * NUM_IMAGES)}.jpg`;
-    this.feedItems = null;
 
     this.loadUser($routeParams.user)
       .then(() => $rootScope.title = this.user ?
@@ -16,8 +15,8 @@ export default class UserCtrl {
         null
       );
 
-    let loginOff = this.User.on('login', () => this.loadFeed(this.user));
-    let logoutOff = this.User.on('logout', () => this.feedItems = null);
+    let loginOff = this.User.on('login', () => this.Feed.update({ refresh: true }));
+    let logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
     $scope.$on('$destroy', () => loginOff() && logoutOff());
   }
 
@@ -34,35 +33,13 @@ export default class UserCtrl {
       .then(response => {
         this.user = response.data;
         this.Act.count({ user: this.user._id });
-        if (this.User.isAuthenticated()) this.loadFeed(this.user);
+        if (this.User.isAuthenticated()) this.Feed.update(true);
       })
       .catch(() => {
         this.error = 'User not found';
         this.user = null;
       })
       .then(() => this.loading = false);
-  }
-
-  /**
-   * Load feed items
-   *
-   * @param {object} user
-   * @param {object} [params={}]
-   */
-  loadFeed(user, params = {}) {
-    this.loadingFeed = true;
-    this.Feed.find(_.merge({ user: user._id }, params))
-      .then(response => {
-        if (_.has(params, 'before')) {
-          this.feedItems = this.feedItems.concat(response.data);
-        } else if (_.has(params, 'after')) {
-          this.feedItems = response.data.concat(this.feedItems);
-        } else {
-          this.feedItems = response.data;
-        }
-      })
-      .catch(() => null)
-      .then(() => this.loadingFeed = false);
   }
 }
 

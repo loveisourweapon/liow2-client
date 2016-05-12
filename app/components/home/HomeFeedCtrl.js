@@ -2,47 +2,30 @@ import _ from 'lodash';
 
 export default class HomeFeedCtrl {
   constructor($scope, User, Act, Feed) {
-    Object.assign(this, { User, Act, Feed });
+    Object.assign(this, { User, Act });
 
-    this.feedItems = null;
     if (this.User.isAuthenticated() && this.User.current) {
-      this.loadFeed(this.User.current);
+      Feed.update({ refresh: true });
       this.countAllGroupActs(this.User.current.groups);
     }
 
     let loginOff = this.User.on('login', user => {
-      this.loadFeed(user);
+      Feed.update({ refresh: true });
       this.countAllGroupActs(user.groups);
     });
-    let logoutOff = this.User.on('logout', () => this.feedItems = null);
+    let logoutOff = this.User.on('logout', () => Feed.update({ clear: true }));
     $scope.$on('$destroy', () => loginOff() && logoutOff());
   }
 
   /**
-   * Load feed items
+   * Create a comma-separated list of group ID's
    *
-   * @param {object} user
-   * @param {object} [params={}]
+   * @param {object[]} groups
+   *
+   * @returns {string|null}
    */
-  loadFeed(user, params = {}) {
-    let data = { user: user._id };
-    if (user.groups.length) {
-      data.group = _.map(user.groups, '_id').join(',');
-    }
-
-    this.loading = true;
-    this.Feed.find(_.merge(data, params))
-      .then(response => {
-        if (_.has(params, 'before')) {
-          this.feedItems = this.feedItems.concat(response.data);
-        } else if (_.has(params, 'after')) {
-          this.feedItems = response.data.concat(this.feedItems);
-        } else {
-          this.feedItems = response.data;
-        }
-      })
-      .catch(() => null)
-      .then(() => this.loading = false);
+  listGroupIds(groups) {
+    return (groups && groups.length) ? _.map(groups, '_id').join(',') : null;
   }
 
   /**

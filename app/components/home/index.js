@@ -4,6 +4,7 @@ import angular from 'angular';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Act from '../../services/Act';
+import Feed from '../../services/Feed';
 import Modal from '../../services/Modal';
 import jumbotron from '../jumbotron';
 import feed from '../feed';
@@ -22,6 +23,7 @@ export let home = angular.module('app.components.home', [
   User,
   Group,
   Act,
+  Feed,
   Modal,
   jumbotron,
   feed,

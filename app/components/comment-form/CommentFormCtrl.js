@@ -2,8 +2,8 @@ import _ from 'lodash';
 import toMarkdown from 'to-markdown';
 
 export default class CommentFormCtrl {
-  constructor($scope, $timeout, Alertify, User, Comment) {
-    Object.assign(this, { $scope, $timeout, Alertify, User, Comment });
+  constructor($scope, $timeout, Alertify, User, Comment, Feed) {
+    Object.assign(this, { $scope, $timeout, Alertify, User, Comment, Feed });
 
     this.newComment = {
       content: { text: '' }
@@ -44,13 +44,13 @@ export default class CommentFormCtrl {
 
     this.saving = true;
     this.Comment.save(comment)
-      .then(() => this.Alertify.success('Comment saved'))
-      .catch(() => null)
       .then(() => {
-        this.saving = false;
+        this.Alertify.success('Comment saved');
+        this.Feed.update();
         this.$timeout(() => this.editor.setContent(''));
-        this.onSave();
-      });
+      })
+      .catch(() => this.Alertify.success('Failed saving comment'))
+      .then(() => this.saving = false);
   }
 
   /**
@@ -91,4 +91,4 @@ export default class CommentFormCtrl {
   }
 }
 
-CommentFormCtrl.$inject = ['$scope', '$timeout', 'Alertify', 'User', 'Comment'];
+CommentFormCtrl.$inject = ['$scope', '$timeout', 'Alertify', 'User', 'Comment', 'Feed'];

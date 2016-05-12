@@ -143,17 +143,6 @@
 
         <uib-tabset active="$ctrl.activeTab"
                     type="pills">
-          <span class="pull-right">
-            <button type="button"
-                    ng-click="$ctrl.loadFeed($ctrl.Group.current, { after: $ctrl.feedItems[0].created })"
-                    ng-show="$ctrl.activeTab === 1 && $ctrl.User.isAuthenticated()"
-                    ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
-                    class="btn btn-link">
-              <i class="fa fa-refresh fa-lg"
-                 ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
-            </button>
-          </span>
-
           <uib-tab>
             <uib-tab-heading>
               <i class="fa fa-fw fa-commenting"></i>
@@ -183,21 +172,12 @@
               Activity Feed
             </uib-tab-heading>
 
-            <feed feed-items="$ctrl.feedItems"
-                  loading="$ctrl.loadingFeed"
-                  load-more="$ctrl.loadFeed(
-                    $ctrl.Group.current,
-                    { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created }
-                  )"
-                  ng-hide="$ctrl.feedItems === null || !$ctrl.User.isAuthenticated()"></feed>
+            <feed criteria="{ group: $ctrl.Group.current._id }"
+                  ng-show="$ctrl.User.isAuthenticated()"></feed>
 
             <p ng-hide="$ctrl.User.isAuthenticated()">
-              You must <a ng-click="$ctrl.Modal.openLogin()" href>login</a> to see {{ $ctrl.Group.current.name }}'s Activity Feed.
-            </p>
-
-            <p class="text-center"
-               ng-show="$ctrl.feedItems === null && $ctrl.User.isAuthenticated()">
-              <i class="fa fa-cog fa-5x fa-spin"></i>
+              You must <a ng-click="$ctrl.Modal.openLogin()" href>login</a>
+              to see {{ $ctrl.Group.current.name }}'s Activity Feed.
             </p>
           </uib-tab>
         </uib-tabset>

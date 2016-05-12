@@ -51,31 +51,9 @@
         <div marked="$ctrl.Deed.current.content" class="m-b-md"></div>
 
         <comment-form deed="$ctrl.Deed.current"
-                      on-save="$ctrl.loadFeed($ctrl.Deed.current)"
                       placeholder="Leave a testimony..."></comment-form>
 
-        <p class="text-right">
-          <button type="button"
-                  ng-click="$ctrl.loadFeed($ctrl.Deed.current, { after: $ctrl.feedItems[0].created })"
-                  ng-disabled="$ctrl.loadingFeed || $ctrl.feedItems === null"
-                  class="btn btn-link">
-            <i class="fa fa-refresh fa-lg"
-               ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
-          </button>
-        </p>
-
-        <feed feed-items="$ctrl.feedItems"
-              loading="$ctrl.loadingFeed"
-              load-more="$ctrl.loadFeed(
-                $ctrl.Deed.current,
-                { before: $ctrl.feedItems[$ctrl.feedItems.length - 1].created }
-              )"
-              ng-hide="$ctrl.feedItems === null"></feed>
-
-        <p class="text-center"
-           ng-show="$ctrl.feedItems === null">
-          <i class="fa fa-cog fa-5x fa-spin"></i>
-        </p>
+        <feed criteria="{ 'target.deed': $ctrl.Deed.current._id }"></feed>
       </div>
     </div>
 
