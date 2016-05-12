@@ -1,6 +1,6 @@
 <div class="feed-refresh-button">
   <button type="button"
-          ng-click="$ctrl.loadFeed({ after: $ctrl.feedItems[0].created })"
+          ng-click="$ctrl.loadFeed({ after: $ctrl.feedItems[0]._id })"
           ng-disabled="$ctrl.loading || $ctrl.feedItems === null"
           class="btn btn-link">
     <i class="fa fa-refresh fa-lg"

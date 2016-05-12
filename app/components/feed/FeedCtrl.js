@@ -13,7 +13,7 @@ export default class FeedCtrl {
         if (options.clear) return;
       }
 
-      this.loadFeed(this.feedItems ? { after: this.feedItems[0].created } : {});
+      this.loadFeed(this.feedItems ? { after: this.feedItems[0]._id } : {});
     });
 
     $scope.$on('$destroy', feedUpdateOff);
@@ -49,7 +49,7 @@ export default class FeedCtrl {
   onInView($inView, $index) {
     if ($index === this.feedItems.length - 1 && $inView) {
       this.loadFeed({
-        before: this.feedItems[this.feedItems.length - 1].created
+        before: this.feedItems[this.feedItems.length - 1]._id
       });
     }
   }
