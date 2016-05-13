@@ -35,10 +35,18 @@ export default angular.module('app', [
     template: appTpl
   })
   .config([
+    '$compileProvider',
+    '$httpProvider',
     '$routeProvider',
     '$locationProvider',
     'uiSelectConfig',
-    ($routeProvider, $locationProvider, uiSelectConfig) => {
+    (
+      $compileProvider,
+      $httpProvider,
+      $routeProvider,
+      $locationProvider,
+      uiSelectConfig
+    ) => {
       $routeProvider
         .when('/', {
           controller: 'HomeCtrl',
@@ -77,6 +85,8 @@ export default angular.module('app', [
         })
         .otherwise('/');
 
+      $compileProvider.debugInfoEnabled(false);
+      $httpProvider.useApplyAsync(true);
       $locationProvider.html5Mode(true);
 
       uiSelectConfig.theme = 'bootstrap';
