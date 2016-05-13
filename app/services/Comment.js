@@ -5,6 +5,7 @@ import angular from 'angular';
 import config from '../config';
 
 class Comment {
+  /* @ngInject */
   constructor($http, config) {
     Object.assign(this, { $http });
 
@@ -38,8 +39,6 @@ class Comment {
     return this.$http[method](`${this.baseUrl}${url}`, comment);
   }
 }
-
-Comment.$inject = ['$http', 'config'];
 
 export default angular.module('si.services.Comment', [
   config

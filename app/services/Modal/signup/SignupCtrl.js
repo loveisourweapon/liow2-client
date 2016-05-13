@@ -1,4 +1,5 @@
 export default class SignupCtrl {
+  /* @ngInject */
   constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal, canSwitch) {
     Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal, canSwitch });
 
@@ -76,5 +77,3 @@ export default class SignupCtrl {
       .then(() => this.saving = false);
   }
 }
-
-SignupCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal', 'canSwitch'];

@@ -3,6 +3,7 @@ import seedrandom from 'seedrandom';
 const NUM_IMAGES = 6;
 
 export default class UserCtrl {
+  /* @ngInject */
   constructor($rootScope, $scope, $routeParams, User, Act, Feed, Modal) {
     Object.assign(this, { User, Act, Feed, Modal });
 
@@ -42,5 +43,3 @@ export default class UserCtrl {
       .then(() => this.loading = false);
   }
 }
-
-UserCtrl.$inject = ['$rootScope', '$scope', '$routeParams', 'User', 'Act', 'Feed', 'Modal'];

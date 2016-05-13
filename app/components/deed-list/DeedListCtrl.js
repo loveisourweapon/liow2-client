@@ -5,6 +5,7 @@ import templateHorizontal from './deedListHorizontal.html';
 import templateVertical from './deedListVertical.html';
 
 export default class DeedListCtrl {
+  /* @ngInject */
   constructor($location, $templateCache, Deed, Act) {
     Object.assign(this, { $location, Deed, Act });
 
@@ -33,5 +34,3 @@ export default class DeedListCtrl {
       'deedListHorizontal.html';
   }
 }
-
-DeedListCtrl.$inject = ['$location', '$templateCache', 'Deed', 'Act'];

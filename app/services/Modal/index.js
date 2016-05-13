@@ -37,6 +37,7 @@ import ConfirmCtrl from './confirm/ConfirmCtrl';
 import confirmTpl from './confirm/confirm.html';
 
 class Modal {
+  /* @ngInject */
   constructor($uibModal, $q, User) {
     Object.assign(this, { $uibModal, $q, User });
 
@@ -198,8 +199,6 @@ class Modal {
   }
 }
 
-Modal.$inject = ['$uibModal', '$q', 'User'];
-
 export default angular.module('app.services.Modal', [
   ngRoute,
   ngSanitize,
@@ -222,7 +221,7 @@ export default angular.module('app.services.Modal', [
 
 // Fixes to UI Bootstrap Modal
 angular.module(uibs)
-  .directive('uibModalWindow', ['$window', $window => {
+  .directive('uibModalWindow', /* @ngInject */ $window => {
     return {
       priority: 1,
       link: (scope, element) => {
@@ -242,4 +241,4 @@ angular.module(uibs)
         }
       }
     }
-  }]);
+  });

@@ -8,6 +8,7 @@ import User from './User';
 let currentGroup = null;
 
 class Group {
+  /* @ngInject */
   constructor($http, $q, config, User) {
     Object.assign(this, { $http, $q, User });
 
@@ -111,8 +112,9 @@ class Group {
   }
 }
 
-Group.$inject = ['$http', '$q', 'config', 'User'];
-
-export default angular.module('app.services.Group', [config, User])
+export default angular.module('app.services.Group', [
+  config,
+  User
+])
   .service('Group', Group)
   .name;

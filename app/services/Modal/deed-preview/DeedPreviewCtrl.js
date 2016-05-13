@@ -1,4 +1,5 @@
 export default class DeedPreviewCtrl {
+  /* @ngInject */
   constructor($uibModalInstance, Deed, deedId) {
     Object.assign(this, { $uibModalInstance, Deed });
 
@@ -20,5 +21,3 @@ export default class DeedPreviewCtrl {
       .then(() => this.loading = false);
   }
 }
-
-DeedPreviewCtrl.$inject = ['$uibModalInstance', 'Deed', 'deedId'];

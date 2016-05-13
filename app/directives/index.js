@@ -13,7 +13,7 @@ export default angular.module('app.directives', [])
       }
     };
   })
-  .directive('autofocus', ['$timeout', ($timeout) => {
+  .directive('autofocus', /* @ngInject */ $timeout => {
     return {
       restrict: 'A',
       link: (scope, elm) => {
@@ -25,5 +25,5 @@ export default angular.module('app.directives', [])
         })
       }
     }
-  }])
+  })
   .name;

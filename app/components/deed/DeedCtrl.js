@@ -1,4 +1,5 @@
 export default class DeedCtrl {
+  /* @ngInject */
   constructor($rootScope, $routeParams, Alertify, User, Group, Deed, Act, Feed, Modal) {
     Object.assign(this, { Alertify, User, Group, Deed, Act, Feed, Modal });
 
@@ -46,5 +47,3 @@ export default class DeedCtrl {
       .then(() => this.doing = false);
   }
 }
-
-DeedCtrl.$inject = ['$rootScope', '$routeParams', 'Alertify', 'User', 'Group', 'Deed', 'Act', 'Feed', 'Modal'];

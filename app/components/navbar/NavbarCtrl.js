@@ -3,6 +3,7 @@
 const MIN_QUERY_LENGTH = 3;
 
 export default class NavbarCtrl {
+  /* @ngInject */
   constructor($location, $q, User, Group, Deed, Act, Modal) {
     Object.assign(this, { $location, $q, User, Group, Deed, Act, Modal });
 
@@ -73,5 +74,3 @@ export default class NavbarCtrl {
     $('#liow-navbar-collapse').collapse('hide');
   }
 }
-
-NavbarCtrl.$inject = ['$location', '$q', 'User', 'Group', 'Deed', 'Act', 'Modal'];

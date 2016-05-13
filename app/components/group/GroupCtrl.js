@@ -5,6 +5,7 @@ import jsonpatch from 'fast-json-patch';
 const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
+  /* @ngInject */
   constructor($rootScope, $scope, $routeParams, $location, Alertify, User, Group, Campaign, Act, Feed, Modal) {
     Object.assign(this, { $location, Alertify, User, Group, Campaign, Act, Feed, Modal });
 
@@ -194,5 +195,3 @@ export default class GroupCtrl {
     }
   }
 }
-
-GroupCtrl.$inject = ['$rootScope', '$scope', '$routeParams', '$location', 'Alertify', 'User', 'Group', 'Campaign', 'Act', 'Feed', 'Modal'];

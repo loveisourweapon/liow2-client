@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export default class LoginCtrl {
+  /* @ngInject */
   constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal, canSwitch) {
     Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal, canSwitch });
 
@@ -69,5 +70,3 @@ export default class LoginCtrl {
       .then(() => this.sending = false);
   }
 }
-
-LoginCtrl.$inject = ['$uibModalInstance', '$routeParams', 'Alertify', 'User', 'Group', 'Modal', 'canSwitch'];

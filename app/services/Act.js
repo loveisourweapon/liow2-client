@@ -5,6 +5,7 @@ import angular from 'angular';
 import config from '../config';
 
 class Act {
+  /* @ngInject */
   constructor($http, config) {
     Object.assign(this, { $http });
 
@@ -52,8 +53,8 @@ class Act {
   }
 }
 
-Act.$inject = ['$http', 'config'];
-
-export default angular.module('app.services.Act', [config])
+export default angular.module('app.services.Act', [
+  config
+])
   .service('Act', Act)
   .name;

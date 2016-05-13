@@ -5,7 +5,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
-var minifyify = require('minifyify');
 var uglify = require('gulp-uglify');
 
 var jsDir = 'public/js';
@@ -58,11 +57,8 @@ gulp.task('vendor', ['clean'], function() {
  |--------------------------------------------------------------------------
  */
 gulp.task('browserify-vendor', function() {
-  var sourceMap = assetsDir + '/vendor.js.map';
-
   return browserify({ debug: true })
     .require(dependencies)
-    .plugin('minifyify', { map: sourceMap, output: sourceMap })
     .bundle()
     .pipe(source('vendor.bundle.js'))
     .pipe(buffer())
@@ -82,18 +78,16 @@ gulp.task('browserify-vendor', function() {
  |--------------------------------------------------------------------------
  */
 gulp.task('browserify', ['clean-app'], function() {
-  var sourceMap = assetsDir + '/app.js.map';
-
   return browserify('app/components/app', { debug: true })
     .external(dependencies)
     .transform(require('partialify'))
     .transform(require('babelify').configure({ presets: ['es2015'], plugins: ['transform-object-assign'] }))
-    .plugin('minifyify', { map: sourceMap, output: sourceMap })
     .bundle()
     .on('error', swallowError)
     .pipe(source('app.bundle.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(require('gulp-ng-annotate')())
       .pipe(uglify())
       .on('error', swallowError)
       .pipe(rev())

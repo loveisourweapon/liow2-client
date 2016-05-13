@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export default class FeedCtrl {
+  /* @ngInject */
   constructor($scope, User, Feed) {
     Object.assign(this, { User, Feed });
 
@@ -54,5 +55,3 @@ export default class FeedCtrl {
     }
   }
 }
-
-FeedCtrl.$inject = ['$scope', 'User', 'Feed'];

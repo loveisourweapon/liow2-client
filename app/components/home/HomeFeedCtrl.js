@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export default class HomeFeedCtrl {
+  /* @ngInject */
   constructor($scope, User, Act, Feed) {
     Object.assign(this, { User, Act });
 
@@ -37,5 +38,3 @@ export default class HomeFeedCtrl {
     _.each(groups, group => this.Act.count({ group: group._id }));
   }
 }
-
-HomeFeedCtrl.$inject = ['$scope', 'User', 'Act', 'Feed'];

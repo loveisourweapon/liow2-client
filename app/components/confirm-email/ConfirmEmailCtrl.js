@@ -1,4 +1,5 @@
 export default class ConfirmEmailCtrl {
+  /* @ngInject */
   constructor($rootScope, $routeParams, $location, Alertify, User) {
     $rootScope.title = 'Confirming Email Address';
 
@@ -8,5 +9,3 @@ export default class ConfirmEmailCtrl {
       .then(() => $location.url('/'));
   }
 }
-
-ConfirmEmailCtrl.$inject = ['$rootScope', '$routeParams', '$location', 'Alertify', 'User'];

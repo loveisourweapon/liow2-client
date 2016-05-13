@@ -1,10 +1,10 @@
 import angular from 'angular';
-import jsonpatch from 'fast-json-patch';
 
 // Module dependencies
 import config from '../config';
 
 class Campaign {
+  /* @ngInject */
   constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
 
@@ -71,8 +71,8 @@ class Campaign {
   }
 }
 
-Campaign.$inject = ['$http', '$q', 'config'];
-
-export default angular.module('app.services.Campaign', [config])
+export default angular.module('app.services.Campaign', [
+  config
+])
   .service('Campaign', Campaign)
   .name;

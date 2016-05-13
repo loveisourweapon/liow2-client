@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export default class CampaignEditCtrl {
+  /* @ngInject */
   constructor($uibModalInstance, Alertify, Campaign, Deed, Modal, action, group, campaign) {
     Object.assign(this, { $uibModalInstance, Alertify, Campaign, Deed, Modal, action, group });
 
@@ -61,5 +62,3 @@ export default class CampaignEditCtrl {
       .then(() => this.loading = false)
   }
 }
-
-CampaignEditCtrl.$inject = ['$uibModalInstance', 'Alertify', 'Campaign', 'Deed', 'Modal', 'action', 'group', 'campaign'];

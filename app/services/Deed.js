@@ -6,6 +6,7 @@ import config from '../config';
 let currentDeed = null;
 
 class Deed {
+  /* @ngInject */
   constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
 
@@ -89,8 +90,8 @@ class Deed {
   }
 }
 
-Deed.$inject = ['$http', '$q', 'config'];
-
-export default angular.module('app.services.Deed', [config])
+export default angular.module('app.services.Deed', [
+  config
+])
   .service('Deed', Deed)
   .name;

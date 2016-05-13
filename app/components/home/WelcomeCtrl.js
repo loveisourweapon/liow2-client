@@ -1,4 +1,5 @@
 export default class WelcomeCtrl {
+  /* @ngInject */
   constructor(User, Group, Act, Modal) {
     Object.assign(this, { Act, Modal });
 
@@ -9,5 +10,3 @@ export default class WelcomeCtrl {
       .then(response => this.numberOfUsers = Number(response.data));
   }
 }
-
-WelcomeCtrl.$inject = ['User', 'Group', 'Act', 'Modal'];

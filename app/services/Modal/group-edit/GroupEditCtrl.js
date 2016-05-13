@@ -4,6 +4,7 @@ import showdown from 'showdown';
 let converter = new showdown.Converter();
 
 export default class GroupEditCtrl {
+  /* @ngInject */
   constructor($uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users) {
     Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users });
 
@@ -107,5 +108,3 @@ export default class GroupEditCtrl {
       .then(() => this.saving = false);
   }
 }
-
-GroupEditCtrl.$inject = ['$uibModalInstance', '$scope', '$timeout', '$location', 'Alertify', 'User', 'Group', 'Modal', 'action', 'group', 'users'];

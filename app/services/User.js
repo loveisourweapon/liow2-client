@@ -16,6 +16,7 @@ let currentGroup = null;
 let listeners = {};
 
 class User {
+  /* @ngInject */
   constructor($auth, $http, $q, config, Alertify) {
     Object.assign(this, { $auth, $http, $q, Alertify });
 
@@ -320,20 +321,18 @@ class User {
   }
 }
 
-User.$inject = ['$auth', '$http', '$q', 'config', 'Alertify'];
-
 export default angular.module('app.services.User', [
   config,
   satellizer,
   Alertify
 ])
-  .config(['$authProvider', 'config', ($authProvider, config) => {
+  .config(/* @ngInject */($authProvider, config) => {
     $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
     $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
     $authProvider.facebook({
       clientId: config.facebookClientId,
       url: `${config.serverUrl}/auth/facebook`
     });
-  }])
+  })
   .service('User', User)
   .name;

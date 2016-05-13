@@ -9,6 +9,7 @@ const FEED_UPDATE_DELAY = 80;
 let listeners = {};
 
 class Feed {
+  /* @ngInject */
   constructor($http, $timeout, config) {
     Object.assign(this, { $http, $timeout });
 
@@ -51,8 +52,6 @@ class Feed {
     }, FEED_UPDATE_DELAY);
   }
 }
-
-Feed.$inject = ['$http', '$timeout', 'config'];
 
 export default angular.module('app.services.Feed', [
   config

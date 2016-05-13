@@ -1,4 +1,5 @@
 export default class ForgotPasswordCtrl {
+  /* @ngInject */
   constructor($uibModalInstance, $timeout, Alertify, User, email) {
     Object.assign(this, { $uibModalInstance, Alertify, User, email });
 
@@ -22,5 +23,3 @@ export default class ForgotPasswordCtrl {
       .then(() => this.sending = false);
   }
 }
-
-ForgotPasswordCtrl.$inject = ['$uibModalInstance', '$timeout', 'Alertify', 'User', 'email'];

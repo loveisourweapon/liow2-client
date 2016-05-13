@@ -2,6 +2,7 @@ import _ from 'lodash';
 import toMarkdown from 'to-markdown';
 
 export default class CommentFormCtrl {
+  /* @ngInject */
   constructor($scope, $timeout, Alertify, User, Comment, Feed) {
     Object.assign(this, { $scope, $timeout, Alertify, User, Comment, Feed });
 
@@ -90,5 +91,3 @@ export default class CommentFormCtrl {
     });
   }
 }
-
-CommentFormCtrl.$inject = ['$scope', '$timeout', 'Alertify', 'User', 'Comment', 'Feed'];

@@ -1,4 +1,5 @@
 export default class ResetPasswordCtrl {
+  /* @ngInject */
   constructor($rootScope, $routeParams, $location, Alertify, User, Modal) {
     Object.assign(this, { $routeParams, $location, Alertify, User, Modal });
 
@@ -19,5 +20,3 @@ export default class ResetPasswordCtrl {
       .then(() => this.Modal.openLogin() && this.$location.url('/'));
   }
 }
-
-ResetPasswordCtrl.$inject = ['$rootScope', '$routeParams', '$location', 'Alertify', 'User', 'Modal'];
