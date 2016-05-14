@@ -1,8 +1,7 @@
 <form ng-submit="$ctrl.save($ctrl.newComment)">
   <div class="form-group">
     <div class="well well-sm medium-editor m-none">
-      <textarea id="comment"
-                ng-model="$ctrl.newComment.content.text"></textarea>
+      <textarea ng-model="$ctrl.newComment.content.text"></textarea>
     </div>
 
     <button type="submit"

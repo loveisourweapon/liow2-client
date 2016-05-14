@@ -1,4 +1,4 @@
-<div class="modal-header" ng-if="$ctrl.title">
+<div class="modal-header" ng-if="::$ctrl.title">
   <button type="button"
           class="close"
           data-dismiss="modal"
@@ -7,12 +7,12 @@
     <span aria-hidden="true"><i class="fa fa-times"></i></span>
   </button>
   <h4 class="modal-title">
-    {{ $ctrl.title }}
+    {{ ::$ctrl.title }}
   </h4>
 </div><!-- .modal-header -->
 
 <div class="modal-body">
-  <div class="col-xs-12" ng-bind-html="$ctrl.message"></div>
+  <div class="col-xs-12" ng-bind-html="::$ctrl.message"></div>
 </div><!-- .modal-body -->
 
 <div class="modal-footer">

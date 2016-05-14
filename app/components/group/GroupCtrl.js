@@ -6,7 +6,7 @@ const NUM_IMAGES = 6;
 
 export default class GroupCtrl {
   /* @ngInject */
-  constructor($rootScope, $scope, $routeParams, $location, Alertify, User, Group, Campaign, Act, Feed, Modal) {
+  constructor($rootScope, $routeParams, $location, Alertify, User, Group, Campaign, Act, Feed, Modal) {
     Object.assign(this, { $location, Alertify, User, Group, Campaign, Act, Feed, Modal });
 
     // Set a random jumbotron background image seeded by the group name
@@ -17,17 +17,24 @@ export default class GroupCtrl {
     this.loadGroup($routeParams.group)
       .then(() => $rootScope.title = this.Group.current ? this.Group.current.name : null);
 
-    let loginOff = this.User.on('login', user => {
+    this.loginOff = this.User.on('login', user => {
       this.Feed.update({ refresh: true });
       this.setCampaignAlert(this.campaign, this.Group.current, user);
       if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
     });
-    let logoutOff = this.User.on('logout', () => {
+    this.logoutOff = this.User.on('logout', () => {
       this.Feed.update({ clear: true });
       this.setCampaignAlert(this.campaign, this.Group.current, null);
       this.activeTab = 0;
     });
-    $scope.$on('$destroy', () => loginOff() && logoutOff());
+  }
+
+  /**
+   * Scope is being destroyed
+   */
+  $onDestroy() {
+    this.loginOff();
+    this.logoutOff();
   }
 
   /**

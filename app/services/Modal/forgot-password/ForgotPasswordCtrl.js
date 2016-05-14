@@ -4,7 +4,7 @@ export default class ForgotPasswordCtrl {
     Object.assign(this, { $uibModalInstance, Alertify, User, email });
 
     // If email passed in, set the form field $dirty
-    $timeout(() => email && this.form.email.$setDirty());
+    $timeout(() => this.email && this.form.email.$setDirty());
   }
 
   /**

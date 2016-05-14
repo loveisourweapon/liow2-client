@@ -7,7 +7,7 @@
     <span aria-hidden="true"><i class="fa fa-times"></i></span>
   </button>
   <h4 class="modal-title">
-    {{ $ctrl.action | capitalize }} Group
+    {{ ::$ctrl.action | capitalize }} Group
   </h4>
 </div><!-- .modal-header -->
 
@@ -217,6 +217,6 @@
           ng-click="$ctrl.save($ctrl.group)"
           ng-disabled="!$ctrl.User.isAuthenticated() || $ctrl.saving || $ctrl.form.$invalid">
     <i class="fa fa-cog fa-spin" ng-show="$ctrl.saving"></i>
-    {{ $ctrl.action | capitalize }}
+    {{ ::$ctrl.action | capitalize }}
   </button>
 </div><!-- .modal-footer -->

@@ -5,10 +5,10 @@
            ng-repeat="deed in $ctrl.deeds track by deed._id"
            ng-click="$ctrl.$location.url('/d/' + deed.urlTitle)">
         <div class="deed-image">
-          <img ng-src="{{ deed.logo || '/images/deed.png' }}"
+          <img ng-src="{{ ::deed.logo || '/images/deed.png' }}"
                class="img-responsive img-circle">
           <div class="deed-title-wrapper">
-            <div class="deed-title">{{ deed.title }}</div>
+            <div class="deed-title">{{ ::deed.title }}</div>
           </div>
         </div>
         <div class="deed-text text-center">

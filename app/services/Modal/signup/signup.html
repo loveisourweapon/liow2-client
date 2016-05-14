@@ -18,7 +18,7 @@
               name="joinGroup"
               ng-model="$ctrl.joinGroup"
               class="m-r-xs"></switch>
-      Join {{ $ctrl.Group.current.name }}
+      Join {{ ::$ctrl.Group.current.name }}
     </p>
     <hr>
   </div>
@@ -169,7 +169,7 @@
     </button>
   </form>
 
-  <div ng-show="$ctrl.canSwitch">
+  <div ng-show="::$ctrl.canSwitch">
     <hr>
     <p>
       Already have an account?

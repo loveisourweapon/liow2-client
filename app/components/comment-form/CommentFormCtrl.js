@@ -1,16 +1,27 @@
-import _ from 'lodash';
 import toMarkdown from 'to-markdown';
 
 export default class CommentFormCtrl {
   /* @ngInject */
-  constructor($scope, $timeout, Alertify, User, Comment, Feed) {
-    Object.assign(this, { $scope, $timeout, Alertify, User, Comment, Feed });
+  constructor($element, $scope, $timeout, Alertify, User, Comment, Feed) {
+    Object.assign(this, { $element, $scope, $timeout, Alertify, User, Comment, Feed });
 
     this.newComment = {
       content: { text: '' }
     };
+  }
 
+  /**
+   * All elements compiled and linked
+   */
+  $postLink() {
     this.setupMediumEditor();
+  }
+
+  /**
+   * Scope is being destroyed
+   */
+  $onDestroy() {
+    this.editor.destroy();
   }
 
   /**
@@ -60,34 +71,26 @@ export default class CommentFormCtrl {
    * TODO: move MediumEditor setup and config to a component
    */
   setupMediumEditor() {
-    this.$timeout(() => {
-      this.editor = new MediumEditor(document.querySelector('#comment'), {
-        placeholder: { text: this.placeholder || 'Enter your message...', hideOnClick: false },
-        toolbar: { buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'] },
-        autoLink: true
-      });
+    this.editor = new MediumEditor(this.$element.find('textarea'), {
+      placeholder: { text: this.placeholder || 'Enter your message...', hideOnClick: false },
+      toolbar: { buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'] },
+      autoLink: true
+    });
 
-      if (_.first(this.editor.elements).hasAttribute('autofocus')) {
-        _.first(this.editor.elements).focus();
-      }
-
-      this.editor.subscribe('editableInput', (event, editable) => {
-        this.$scope.$apply(() => {
-          this.newComment.content.text = toMarkdown(editable.innerHTML, {
-            converters: [{
-              // Remove spans and divs
-              filter: function (node) {
-                return node.nodeName === 'SPAN' || node.nodeName === 'DIV';
-              },
-              replacement: function (content) {
-                return content;
-              }
-            }]
-          });
+    this.editor.subscribe('editableInput', (event, editable) => {
+      this.$scope.$apply(() => {
+        this.newComment.content.text = toMarkdown(editable.innerHTML, {
+          converters: [{
+            // Remove spans and divs
+            filter: function (node) {
+              return node.nodeName === 'SPAN' || node.nodeName === 'DIV';
+            },
+            replacement: function (content) {
+              return content;
+            }
+          }]
         });
       });
-
-      this.$scope.$on('$destroy', () => this.editor.destroy());
     });
   }
 }

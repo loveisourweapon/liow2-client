@@ -37,8 +37,8 @@
                  'btn-default': !item.published,
                  'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
                }"
-               ng-href="/d/{{ item.deed.urlTitle }}">
-              {{ item.deed.title }}
+               ng-href="/d/{{ ::item.deed.urlTitle }}">
+              {{ ::item.deed.title }}
             </a>
             <button type="button"
                     class="btn dropdown-toggle col-xs-2"
@@ -87,14 +87,14 @@
           <!-- Show a normal button for non-admins -->
           <a class="btn btn-block"
              ng-repeat="item in $ctrl.campaign.deeds"
-             ng-href="/d/{{ item.deed.urlTitle }}"
+             ng-href="/d/{{ ::item.deed.urlTitle }}"
              ng-class="{
                'btn-primary': item.published,
                'btn-default': !item.published,
                'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
              }"
              ng-if="!$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
-            {{ item.deed.title }}
+            {{ ::item.deed.title }}
           </a>
         </div>
         <button type="button"

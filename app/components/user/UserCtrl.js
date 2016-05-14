@@ -4,7 +4,7 @@ const NUM_IMAGES = 6;
 
 export default class UserCtrl {
   /* @ngInject */
-  constructor($rootScope, $scope, $routeParams, User, Act, Feed, Modal) {
+  constructor($rootScope, $routeParams, User, Act, Feed, Modal) {
     Object.assign(this, { User, Act, Feed, Modal });
 
     // Set a random jumbotron background image seeded by the user ID
@@ -16,9 +16,16 @@ export default class UserCtrl {
         null
       );
 
-    let loginOff = this.User.on('login', () => this.Feed.update({ refresh: true }));
-    let logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
-    $scope.$on('$destroy', () => loginOff() && logoutOff());
+    this.loginOff = this.User.on('login', () => this.Feed.update({ refresh: true }));
+    this.logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
+  }
+
+  /**
+   * Scope is being destroyed
+   */
+  $onDestroy() {
+    this.loginOff();
+    this.logoutOff();
   }
 
   /**

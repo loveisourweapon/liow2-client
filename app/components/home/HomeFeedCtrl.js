@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export default class HomeFeedCtrl {
   /* @ngInject */
-  constructor($scope, User, Act, Feed) {
+  constructor(User, Act, Feed) {
     Object.assign(this, { User, Act });
 
     if (this.User.isAuthenticated() && this.User.current) {
@@ -10,12 +10,19 @@ export default class HomeFeedCtrl {
       this.countAllGroupActs(this.User.current.groups);
     }
 
-    let loginOff = this.User.on('login', user => {
+    this.loginOff = this.User.on('login', user => {
       Feed.update({ refresh: true });
       this.countAllGroupActs(user.groups);
     });
-    let logoutOff = this.User.on('logout', () => Feed.update({ clear: true }));
-    $scope.$on('$destroy', () => loginOff() && logoutOff());
+    this.logoutOff = this.User.on('logout', () => Feed.update({ clear: true }));
+  }
+
+  /**
+   * Scope is being destroyed
+   */
+  $onDestroy() {
+    this.loginOff();
+    this.logoutOff();
   }
 
   /**

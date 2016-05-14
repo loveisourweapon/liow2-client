@@ -2,12 +2,12 @@ import _ from 'lodash';
 
 export default class FeedCtrl {
   /* @ngInject */
-  constructor($scope, User, Feed) {
+  constructor(User, Feed) {
     Object.assign(this, { User, Feed });
 
     this.feedItems = null;
 
-    let feedUpdateOff = this.Feed.onUpdate((options) => {
+    this.feedUpdateOff = this.Feed.onUpdate((options) => {
       if (options.clear || options.refresh) {
         this.feedItems = null;
 
@@ -16,8 +16,13 @@ export default class FeedCtrl {
 
       this.loadFeed(this.feedItems ? { after: this.feedItems[0]._id } : {});
     });
+  }
 
-    $scope.$on('$destroy', feedUpdateOff);
+  /**
+   * Scope is being destroyed
+   */
+  $onDestroy() {
+    this.feedUpdateOff();
   }
 
   /**
