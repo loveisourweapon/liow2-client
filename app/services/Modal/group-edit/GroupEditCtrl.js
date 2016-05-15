@@ -16,22 +16,10 @@ export default class GroupEditCtrl {
     } else if (this.User.current) {
       this.resetFields();
     }
-  }
 
-  /**
-   * All elements compiled and linked
-   */
-  $postLink() {
     if (this.User.current) {
       this.setupMediumEditor();
     }
-  }
-
-  /**
-   * Scope is being destroyed
-   */
-  $onDestroy() {
-    this.editor.destroy();
   }
 
   /**
@@ -77,6 +65,8 @@ export default class GroupEditCtrl {
           });
         });
       });
+
+      this.$scope.$on('$destroy', () => this.editor.destroy());
     });
   }
 
