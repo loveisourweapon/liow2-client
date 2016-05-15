@@ -1,5 +1,7 @@
-import _ from 'lodash';
 import angular from 'angular';
+import has from 'lodash/has';
+import some from 'lodash/some';
+import forOwn from 'lodash/forOwn';
 import uuid from 'uuid';
 import seedrandom from 'seedrandom';
 
@@ -56,7 +58,7 @@ class User {
     }
 
     let userData = { email, password };
-    if (_.has(group, '_id')) {
+    if (has(group, '_id')) {
       userData.group = group._id;
     }
 
@@ -137,7 +139,7 @@ class User {
    * @returns {HttpPromise}
    */
   save(user) {
-    if (_.has(user, '_id')) {
+    if (has(user, '_id')) {
       return this.$http.put(`${this.baseUrl}/${user._id}`, user);
     } else {
       return this.$http.post(this.baseUrl, user);
@@ -186,8 +188,8 @@ class User {
    */
   isMemberOfGroup(group) {
     return (
-      _.has(currentUser, 'groups') &&
-      _.some(currentUser.groups, userGroup => userGroup._id === (_.has(group, '_id') ? group._id : group))
+      has(currentUser, 'groups') &&
+      some(currentUser.groups, userGroup => userGroup._id === (has(group, '_id') ? group._id : group))
     );
   }
 
@@ -199,7 +201,7 @@ class User {
    * @returns {boolean}
    */
   hasCommonGroup(groups) {
-    return _.some(groups, this.isMemberOfGroup);
+    return some(groups, this.isMemberOfGroup);
   }
 
   /**
@@ -257,7 +259,7 @@ class User {
   getDefaultUserImage(userId) {
     if (!userId) { return `/images/user0.png`; }
 
-    if (!_.has(defaultImagesDict, userId)) {
+    if (!has(defaultImagesDict, userId)) {
       defaultImagesDict[userId] = Math.floor(seedrandom(userId)() * NUM_IMAGES);
     }
 
@@ -286,7 +288,7 @@ class User {
    * @param {*}      [data=null]
    */
   pub(key, data = null) {
-    _.forOwn(listeners, listener => {
+    forOwn(listeners, listener => {
       if (listener.key === key) {
         listener.callback(data);
       }

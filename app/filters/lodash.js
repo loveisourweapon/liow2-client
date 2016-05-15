@@ -1,7 +1,8 @@
-import _ from 'lodash';
 import angular from 'angular';
+import capitalize from 'lodash/capitalize';
+import kebabCase from 'lodash/kebabCase';
 
 export default angular.module('app.filters.lodash', [])
-  .filter('capitalize', () => _.capitalize)
-  .filter('kebabCase', () => _.kebabCase)
+  .filter('capitalize', () => capitalize)
+  .filter('kebabCase', () => kebabCase)
   .name;

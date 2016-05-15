@@ -1,5 +1,7 @@
-import _ from 'lodash';
 import angular from 'angular';
+import has from 'lodash/has';
+import find from 'lodash/find';
+import merge from 'lodash/merge';
 
 // Module dependencies
 import config from '../config';
@@ -56,7 +58,7 @@ class Group {
    * @returns {HttpPromise}
    */
   search(query, params) {
-    params = _.merge({ query }, params);
+    params = merge({ query }, params);
 
     return this.find(params);
   }
@@ -69,7 +71,7 @@ class Group {
    * @returns {HttpPromise}
    */
   save(group) {
-    if (_.has(group, '_id')) {
+    if (has(group, '_id')) {
       return this.$http.put(`${this.baseUrl}/${group._id}`, group);
     } else {
       return this.$http.post(this.baseUrl, group);
@@ -85,7 +87,7 @@ class Group {
    * @returns {boolean}
    */
   isAdmin(group, user) {
-    return _.has(group, 'admins') && _.has(user, '_id') && ~group.admins.indexOf(user._id);
+    return has(group, 'admins') && has(user, '_id') && ~group.admins.indexOf(user._id);
   }
 
   /**
@@ -97,7 +99,7 @@ class Group {
     currentGroup = group;
 
     // If the current user is a member of this group, make it their active group
-    if (this.User.current && _.find(this.User.current.groups, ['id', group._id])) {
+    if (this.User.current && find(this.User.current.groups, ['id', group._id])) {
       this.User.group = group;
     }
   }

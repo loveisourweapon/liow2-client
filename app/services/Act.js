@@ -1,5 +1,6 @@
-import _ from 'lodash';
 import angular from 'angular';
+import has from 'lodash/has';
+import defaults from 'lodash/defaults';
 
 // Module dependencies
 import config from '../config';
@@ -21,7 +22,7 @@ class Act {
    * @returns {HttpPromise}
    */
   count(params = {}) {
-    params = _.defaults(params, { count: true });
+    params = defaults(params, { count: true });
 
     return this.$http.get(this.baseUrl, { params })
       .then(response => {
@@ -48,7 +49,7 @@ class Act {
   done(deed, group = null) {
     return this.$http.post(this.baseUrl, {
       deed: deed._id,
-      group: _.has(group, '_id') ? group._id : null
+      group: has(group, '_id') ? group._id : null
     });
   }
 }

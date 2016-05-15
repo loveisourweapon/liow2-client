@@ -1,5 +1,6 @@
-import _ from 'lodash';
 import angular from 'angular';
+import head from 'lodash/head';
+import isFunction from 'lodash/isFunction';
 
 export default angular.module('app.directives', [])
   .directive('sameAs', () => {
@@ -18,10 +19,10 @@ export default angular.module('app.directives', [])
       restrict: 'A',
       link: (scope, elm) => {
         $timeout(() => {
-          let element = _.head(elm);
+          let element = head(elm);
 
           element.focus();
-          _.isFunction(element.select) && element.select();
+          isFunction(element.select) && element.select();
         })
       }
     }

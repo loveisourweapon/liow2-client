@@ -1,4 +1,7 @@
-import _ from 'lodash';
+import has from 'lodash/has';
+import find from 'lodash/find';
+import findLast from 'lodash/findLast';
+import isNull from 'lodash/isNull';
 import seedrandom from 'seedrandom';
 import jsonpatch from 'fast-json-patch';
 
@@ -69,10 +72,10 @@ export default class GroupCtrl {
         this.campaign = campaign;
         if (this.campaign) {
           this.Act.count({ campaign: this.campaign._id });
-          this.currentDeed = _.findLast(this.campaign.deeds, { published: true });
+          this.currentDeed = findLast(this.campaign.deeds, { published: true });
           this.$location.search('setupCampaign', null);
         } else {
-          if (_.has(this.$location.search(), 'setupCampaign')) {
+          if (has(this.$location.search(), 'setupCampaign')) {
             this.editCampaign('create', this.Group.current)
               .then(() => this.$location.search('setupCampaign', null));
           }
@@ -93,9 +96,9 @@ export default class GroupCtrl {
    */
   setCampaignAlert(campaign, group, user) {
     this.showCampaignAlert = (
-      _.isNull(campaign) &&
-      _.has(group, 'admins') &&
-      _.has(user, '_id') &&
+      isNull(campaign) &&
+      has(group, 'admins') &&
+      has(user, '_id') &&
       ~group.admins.indexOf(user._id)
     );
   }
@@ -142,7 +145,7 @@ export default class GroupCtrl {
    */
   setPublished(campaign, deed, published = true) {
     let observer = jsonpatch.observe(campaign);
-    let campaignDeed = _.find(campaign.deeds, { deed : { _id : deed._id } });
+    let campaignDeed = find(campaign.deeds, { deed : { _id : deed._id } });
     campaignDeed.published = published;
     this.Campaign.update(campaign, jsonpatch.generate(observer))
       .then(() => this.Alertify.success(

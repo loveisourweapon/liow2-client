@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import angular from 'angular';
+import defaults from 'lodash/defaults';
 
 // Module dependencies
 import ngRoute from 'angular-route';
@@ -41,7 +41,7 @@ class Modal {
   constructor($uibModal, $q, User) {
     Object.assign(this, { $uibModal, $q, User });
 
-    this.defaults = {
+    this.modalDefaults = {
       controllerAs: '$ctrl',
       size: 'md'
     };
@@ -55,14 +55,14 @@ class Modal {
    * @returns {Promise}
    */
   openLogin(canSwitch = true) {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: LoginCtrl,
       template: loginTpl,
       size: 'sm',
       resolve: {
         canSwitch: this.$q.resolve(canSwitch)
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -73,13 +73,13 @@ class Modal {
    * @returns {Promise}
    */
   openSignup(canSwitch = true) {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: SignupCtrl,
       template: signupTpl,
       resolve: {
         canSwitch: this.$q.resolve(canSwitch)
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -90,14 +90,14 @@ class Modal {
    * @returns {Promise}
    */
   openForgotPassword(email = null) {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: ForgotPasswordCtrl,
       template: forgotPasswordTpl,
       size: 'sm',
       resolve: {
         email: this.$q.resolve(email)
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -109,7 +109,7 @@ class Modal {
    * @returns {Promise}
    */
   openGroupEdit(action = 'create', group = null) {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: GroupEditCtrl,
       template: groupEditTpl,
       resolve: {
@@ -117,7 +117,7 @@ class Modal {
         group: this.$q.resolve(angular.copy(group)),
         users: group ? this.User.find({ groups: group._id }).then(response => response.data) : null
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -130,7 +130,7 @@ class Modal {
    * @returns {Promise}
    */
   openCampaignEdit(action = 'create', group, campaign = null) {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: CampaignEditCtrl,
       template: campaignEditTpl,
       resolve: {
@@ -138,7 +138,7 @@ class Modal {
         group: this.$q.resolve(angular.copy(group)),
         campaign: this.$q.resolve(angular.copy(campaign))
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -149,13 +149,13 @@ class Modal {
    * @returns {Promise}
    */
   openDeedPreview(deedId) {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: DeedPreviewCtrl,
       template: deedPreviewTpl,
       resolve: {
         deedId: this.$q.resolve(deedId)
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -167,7 +167,7 @@ class Modal {
    * @returns {Promise}
    */
   openAlert(message, title = '') {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: AlertCtrl,
       template: alertTpl,
       size: 'sm',
@@ -175,7 +175,7 @@ class Modal {
         message: this.$q.resolve(message),
         title: this.$q.resolve(title)
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 
   /**
@@ -187,7 +187,7 @@ class Modal {
    * @returns {Promise}
    */
   openConfirm(message, title = '') {
-    return this.$uibModal.open(_.defaults({
+    return this.$uibModal.open(defaults({
       controller: ConfirmCtrl,
       template: confirmTpl,
       size: 'sm',
@@ -195,7 +195,7 @@ class Modal {
         message: this.$q.resolve(message),
         title: this.$q.resolve(title)
       }
-    }, this.defaults)).result;
+    }, this.modalDefaults)).result;
   }
 }
 

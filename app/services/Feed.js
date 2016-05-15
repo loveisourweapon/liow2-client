@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import angular from 'angular';
+import forOwn from 'lodash/forOwn';
 import uuid from 'uuid';
 
 // Module dependencies
@@ -48,7 +48,7 @@ class Feed {
    */
   update(options = {}) {
     this.$timeout(() => {
-      _.forOwn(listeners, listener => listener.callback(options));
+      forOwn(listeners, listener => listener.callback(options));
     }, FEED_UPDATE_DELAY);
   }
 }

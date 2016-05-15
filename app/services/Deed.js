@@ -1,4 +1,5 @@
 import angular from 'angular';
+import merge from 'lodash/merge';
 
 // Module dependencies
 import config from '../config';
@@ -54,7 +55,7 @@ class Deed {
    * @returns {HttpPromise}
    */
   search(query, params) {
-    params = _.merge({ query }, params);
+    params = merge({ query }, params);
 
     return this.find(params);
   }

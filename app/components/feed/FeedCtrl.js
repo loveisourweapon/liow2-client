@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import has from 'lodash/has';
+import merge from 'lodash/merge';
 
 export default class FeedCtrl {
   /* @ngInject */
@@ -32,11 +33,11 @@ export default class FeedCtrl {
    */
   loadFeed(params = {}) {
     this.loading = true;
-    this.Feed.find(_.merge(params, this.criteria))
+    this.Feed.find(merge(params, this.criteria))
       .then(response => {
-        if (_.has(params, 'before')) {
+        if (has(params, 'before')) {
           this.feedItems = this.feedItems.concat(response.data);
-        } else if (_.has(params, 'after')) {
+        } else if (has(params, 'after')) {
           this.feedItems = response.data.concat(this.feedItems);
         } else {
           this.feedItems = response.data;

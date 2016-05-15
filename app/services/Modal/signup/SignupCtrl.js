@@ -1,3 +1,5 @@
+import has from 'lodash/has';
+
 export default class SignupCtrl {
   /* @ngInject */
   constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal, canSwitch) {
@@ -5,7 +7,7 @@ export default class SignupCtrl {
 
     this.error = null;
     this.joinGroup = null;
-    if (_.has($routeParams, 'group')) {
+    if (has($routeParams, 'group')) {
       this.joinGroup = true;
     }
 

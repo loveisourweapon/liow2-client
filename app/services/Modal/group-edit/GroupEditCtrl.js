@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import capitalize from 'lodash/capitalize';
 import toMarkdown from 'to-markdown';
 import showdown from 'showdown';
 let converter = new showdown.Converter();
@@ -98,7 +98,7 @@ export default class GroupEditCtrl {
 
         this.$location.path(`/g/${response.data.urlName}`);
         this.$uibModalInstance.close();
-        this.Alertify.success(`${_.capitalize(this.action)}d group <strong>${this.Group.current.name}</strong>`);
+        this.Alertify.success(`${capitalize(this.action)}d group <strong>${this.Group.current.name}</strong>`);
 
         if (this.setupCampaign) {
           this.$location.search('setupCampaign', true);

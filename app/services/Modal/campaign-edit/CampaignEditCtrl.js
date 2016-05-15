@@ -1,4 +1,9 @@
 import _ from 'lodash';
+import each from 'lodash/each';
+import map from 'lodash/map';
+import cloneDeep from 'lodash/cloneDeep';
+import differenceBy from 'lodash/differenceBy';
+import capitalize from 'lodash/capitalize';
 
 export default class CampaignEditCtrl {
   /* @ngInject */
@@ -12,7 +17,7 @@ export default class CampaignEditCtrl {
     if (!campaign) {
       this.resetFields();
     } else {
-      this.campaign = _.cloneDeep(campaign);
+      this.campaign = cloneDeep(campaign);
     }
   }
 
@@ -32,15 +37,15 @@ export default class CampaignEditCtrl {
    * @param {object} campaign
    */
   save(campaign) {
-    let toSave = _.cloneDeep(campaign);
-    _.forEach(toSave.deeds, item => item.deed = item.deed._id);
+    let toSave = cloneDeep(campaign);
+    each(toSave.deeds, item => item.deed = item.deed._id);
 
     this.saving = true;
     this.error = null;
     this.Campaign.save(toSave)
       .then(() => {
         this.$uibModalInstance.close();
-        this.Alertify.success(`${_.capitalize(this.action)}d campaign`);
+        this.Alertify.success(`${capitalize(this.action)}d campaign`);
       })
       .catch(response => this.error = response.data.error)
       .then(() => this.saving = false);
@@ -53,8 +58,8 @@ export default class CampaignEditCtrl {
   loadDeeds() {
     this.loading = true;
     this.Deed.find({ fields: '_id,title' })
-      .then(response => this.deeds = _.differenceBy(
-        _.map(response.data, deed => ({ deed })),
+      .then(response => this.deeds = differenceBy(
+        map(response.data, deed => ({ deed })),
         this.campaign.deeds,
         'deed._id'
       ))

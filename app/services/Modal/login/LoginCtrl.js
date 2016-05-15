@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import has from 'lodash/has';
 
 export default class LoginCtrl {
   /* @ngInject */
@@ -7,7 +7,7 @@ export default class LoginCtrl {
 
     this.error = null;
     this.joinGroup = null;
-    if (_.has($routeParams, 'group')) {
+    if (has($routeParams, 'group')) {
       this.joinGroup = true;
     }
   }

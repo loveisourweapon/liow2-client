@@ -1,4 +1,5 @@
 import angular from 'angular';
+import has from 'lodash/has';
 
 // Module dependencies
 import config from '../config';
@@ -51,7 +52,7 @@ class Campaign {
    * @returns {HttpPromise}
    */
   save(campaign) {
-    if (_.has(campaign, '_id')) {
+    if (has(campaign, '_id')) {
       return this.$http.put(`${this.baseUrl}/${campaign._id}`, campaign);
     } else {
       return this.$http.post(this.baseUrl, campaign);

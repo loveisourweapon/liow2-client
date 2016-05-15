@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import each from 'lodash/each';
 
 // Include template files
 import templateHorizontal from './deedListHorizontal.html';
@@ -14,7 +14,7 @@ export default class DeedListCtrl {
       .then(response => {
         this.deeds = response.data;
 
-        _.each(this.deeds, deed => this.Act.count({ deed: deed._id }));
+        each(this.deeds, deed => this.Act.count({ deed: deed._id }));
       })
       .catch(() => null)
       .then(() => this.loading = false);

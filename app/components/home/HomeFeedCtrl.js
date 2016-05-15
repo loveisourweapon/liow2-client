@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import each from 'lodash/each';
+import map from 'lodash/map';
 
 export default class HomeFeedCtrl {
   /* @ngInject */
@@ -33,7 +34,7 @@ export default class HomeFeedCtrl {
    * @returns {string|null}
    */
   listGroupIds(groups) {
-    return (groups && groups.length) ? _.map(groups, '_id').join(',') : null;
+    return (groups && groups.length) ? map(groups, '_id').join(',') : null;
   }
 
   /**
@@ -42,6 +43,6 @@ export default class HomeFeedCtrl {
    * @param {object[]} groups
    */
   countAllGroupActs(groups) {
-    _.each(groups, group => this.Act.count({ group: group._id }));
+    each(groups, group => this.Act.count({ group: group._id }));
   }
 }

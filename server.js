@@ -1,4 +1,6 @@
-var _ = require('lodash');
+var mapValues = require('lodash/mapValues');
+var replace = require('lodash/replace');
+var upperCase = require('lodash/upperCase');
 var http = require('http');
 var path = require('path');
 var logger = require('morgan');
@@ -6,8 +8,8 @@ var express = require('express');
 var app = express();
 
 // Get config and look for environment variable overrides
-var config = _.mapValues(require('./config'), (value, key) => {
-  var envVar = process.env[_.replace(_.upperCase(key), /\s/g, '_')];
+var config = mapValues(require('./config'), (value, key) => {
+  var envVar = process.env[replace(upperCase(key), /\s/g, '_')];
   if (envVar) {
     return envVar;
   }
