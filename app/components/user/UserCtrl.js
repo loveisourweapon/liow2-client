@@ -11,10 +11,7 @@ export default class UserCtrl {
     this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.user)() * NUM_IMAGES)}.jpg`;
 
     this.loadUser($routeParams.user)
-      .then(() => $rootScope.title = this.user ?
-        this.user.firstName + (this.user.lastName ? ` ${this.user.lastName}` : '') :
-        null
-      );
+      .then(() => $rootScope.title = this.user ? this.user.name : null);
 
     let loginOff = this.User.on('login', () => this.Feed.update({ refresh: true }));
     let logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
