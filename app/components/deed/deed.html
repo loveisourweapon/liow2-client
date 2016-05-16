@@ -1,6 +1,7 @@
 <jumbotron jumbo-classes="videotron">
   <jumbo-content>
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="embed-responsive embed-responsive-16by9"
+         ng-if="$ctrl.Deed.current.videoUrl">
       <youtube-video ng-if="$ctrl.Deed.current.videoUrl"
                      video-url="$ctrl.Deed.current.videoUrl"
                      class="embed-responsive-item"></youtube-video>
