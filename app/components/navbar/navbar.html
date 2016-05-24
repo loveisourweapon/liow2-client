@@ -86,6 +86,13 @@
                 Your Profile
               </a>
             </li>
+            <li ng-show="$ctrl.User.isAuthenticated()">
+              <a ng-href="/control-panel"
+                 ng-click="$ctrl.collapseMenu()">
+                <i class="fa fa-fw fa-cogs"></i>
+                Control Panel
+              </a>
+            </li>
             <li ng-if="$ctrl.User.isAuthenticated()">
               <a ng-click="$ctrl.User.logout() && $ctrl.collapseMenu()" href>
                 <i class="fa fa-fw fa-sign-out"></i>

@@ -13,6 +13,7 @@ import { group, groupTpl } from '../group';
 import { user, userTpl } from '../user';
 import { confirmEmail, confirmEmailTpl } from '../confirm-email';
 import { resetPassword, resetPasswordTpl } from '../reset-password';
+import { controlPanel, controlPanelTpl } from '../control-panel';
 
 // Component dependencies
 import AppCtrl from './AppCtrl';
@@ -28,7 +29,8 @@ export default angular.module('app', [
   group,
   user,
   confirmEmail,
-  resetPassword
+  resetPassword,
+  controlPanel
 ])
   .component('app', {
     controller: AppCtrl,
@@ -76,6 +78,11 @@ export default angular.module('app', [
         controller: 'ResetPasswordCtrl',
         controllerAs: '$ctrl',
         template: resetPasswordTpl
+      })
+      .when('/control-panel', {
+        controller: 'ControlPanelCtrl',
+        controllerAs: '$ctrl',
+        template: controlPanelTpl
       })
       .otherwise('/');
 
