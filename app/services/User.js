@@ -174,7 +174,7 @@ class User {
    * @returns {boolean}
    */
   isSuperAdmin() {
-    return currentUser && currentUser.superAdmin;
+    return Boolean(currentUser) && currentUser.superAdmin;
   }
 
   /**
@@ -185,7 +185,7 @@ class User {
    * @returns {boolean}
    */
   isLoggedInUser(user) {
-    return currentUser && currentUser._id === user._id;
+    return Boolean(currentUser) && currentUser._id === user._id;
   }
 
   /**

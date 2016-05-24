@@ -57,9 +57,12 @@
       <user-control-panel ng-if="$ctrl.activeTab === 'user'"></user-control-panel>
       <group-control-panel ng-if="$ctrl.activeTab.split('-')[0] === 'group'"
                            group-id="$ctrl.activeTab.split('-')[1]"></group-control-panel>
-      <deeds-control-panel ng-if="$ctrl.activeTab === 'deeds'"></deeds-control-panel>
-      <users-control-panel ng-if="$ctrl.activeTab === 'users'"></users-control-panel>
-      <groups-control-panel ng-if="$ctrl.activeTab === 'groups'"></groups-control-panel>
+
+      <div ng-if="$ctrl.User.isSuperAdmin()">
+        <deeds-control-panel ng-if="$ctrl.activeTab === 'deeds'"></deeds-control-panel>
+        <users-control-panel ng-if="$ctrl.activeTab === 'users'"></users-control-panel>
+        <groups-control-panel ng-if="$ctrl.activeTab === 'groups'"></groups-control-panel>
+      </div>
     </div>
   </div>
 </div>
