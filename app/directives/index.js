@@ -14,17 +14,5 @@ export default angular.module('app.directives', [])
       }
     };
   })
-  .directive('autofocus', /* @ngInject */ $timeout => {
-    return {
-      restrict: 'A',
-      link: (scope, elm) => {
-        $timeout(() => {
-          let element = head(elm);
-
-          element.focus();
-          isFunction(element.select) && element.select();
-        })
-      }
-    }
   })
   .name;
