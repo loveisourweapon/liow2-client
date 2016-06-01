@@ -1,0 +1,13 @@
+user-control-panel {
+  img.profile {
+    border: 2px solid;
+    margin: 0 auto 20px;
+    max-width: 150px;
+  }
+
+  .table > tbody > tr > th {
+    text-align: right;
+    vertical-align: middle;
+    width: 120px;
+  }
+}

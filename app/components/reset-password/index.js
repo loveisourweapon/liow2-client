@@ -12,10 +12,10 @@ import template from './resetPassword.html';
 export let resetPasswordTpl = template;
 
 export let resetPassword = angular.module('app.component.resetPassword', [
-    Alertify,
-    User,
-    jumbotron,
-    directives
-  ])
+  Alertify,
+  User,
+  jumbotron,
+  directives
+])
   .controller('ResetPasswordCtrl', ResetPasswordCtrl)
   .name;

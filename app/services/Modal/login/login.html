@@ -42,7 +42,7 @@
       <i class="fa fa-fw fa-exclamation-triangle"></i>
       {{ $ctrl.error }}
       <span ng-if="$ctrl.error.indexOf('Please confirm') === 0">
-        <i class="fa fa-fw fa-blank"></i>
+        <i class="fa fa-fw"></i>
         <a ng-click="$ctrl.sendConfirmEmail($ctrl.email)" href>
           Re-send confirmation email?
           <i ng-show="$ctrl.sending" class="fa fa-cog fa-spin"></i>

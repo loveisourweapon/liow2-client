@@ -1,8 +1,13 @@
 import angular from 'angular';
 
 // Module dependencies
+import Alertify from '../../services/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
+import Act from '../../services/Act';
+import Modal from '../../services/Modal';
+import directives from '../../directives';
+import momentFilters from '../../filters/moment';
 
 // Component dependencies
 import ControlPanelCtrl from './ControlPanelCtrl';
@@ -19,8 +24,13 @@ import GroupsControlPanelCtrl from './GroupsControlPanelCtrl';
 import groupsControlPanel from './groupsControlPanel.html';
 
 let controlPanel = angular.module('app.components.controlPanel', [
+  Alertify,
   User,
-  Group
+  Group,
+  Act,
+  Modal,
+  directives,
+  momentFilters
 ])
   .controller('ControlPanelCtrl', ControlPanelCtrl)
   .component('userControlPanel', {
