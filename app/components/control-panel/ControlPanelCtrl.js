@@ -35,7 +35,7 @@ export default class ControlPanelCtrl {
     if (newTab !== this.activeTab) {
       this.activeTab = newTab;
       this.$location.search('active', this.activeTab);
-      this.getPageTitle(this.activeTab);
+      this.$rootScope.title = this.getPageTitle(this.activeTab);
     }
   }
 

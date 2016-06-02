@@ -1,4 +1,58 @@
+import jsonpatch from 'fast-json-patch';
+
 export default class GroupControlPanelCtrl {
   /* @ngInject */
-  constructor() {}
+  constructor($rootScope, $location, Alertify, User, Group, Act, Modal) {
+    Object.assign(this, { $rootScope, $location, Alertify, User, Group, Act, Modal });
+
+    this.loadGroup(this.groupId);
+  }
+
+  /**
+   * Load the group by ID
+   *
+   * @param {string} groupId
+   *
+   */
+  loadGroup(groupId) {
+    this.loading = true;
+    this.Group.findOne({ _id: groupId })
+      .then(group => {
+        this.group = group;
+        this.Act.count({ group: this.group._id });
+        this.$rootScope.title = this.group.name;
+      })
+      .catch(() => null)
+      .then(() => this.loading = false);
+  }
+
+  /**
+   * Remove the user from the group
+   *
+   * @param {object} user
+   * @param {object} group
+   */
+  leaveGroup(user, group) {
+    if (group.owner === user._id) {
+      return this.Modal.openAlert(`
+        <p>You are the current owner of <strong>${group.name}</strong>.</p>
+        <p>You'll need to make someone else the owner before leaving.</p>
+      `);
+    } else if (this.Group.isAdmin(group, user)) {
+      return this.Modal.openAlert(`
+        <p>You are currently an admin of <strong>${group.name}</strong>.</p>
+        <p>You'll need to remove yourself as an admin before leaving.</p>
+      `);
+    } else {
+      return this.Modal.openConfirm(`<p>Are you sure you want to leave <strong>${group.name}</strong>?</p>`)
+        .then(() => {
+          let observer = jsonpatch.observe(user);
+          user.groups.splice(user.groups.indexOf(group._id));
+          return this.User.update(user, jsonpatch.generate(observer));
+        })
+        .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
+        .then(() => this.$location.search('active', 'user'))
+        .catch(() => user.groups.push(group));
+    }
+  }
 }

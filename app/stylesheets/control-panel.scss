@@ -1,13 +1,26 @@
-user-control-panel {
-  img.profile {
-    border: 2px solid;
-    margin: 0 auto 20px;
-    max-width: 150px;
+.control-panel {
+  .list-group button {
+    outline: none;
   }
 
-  .table > tbody > tr > th {
-    text-align: right;
-    vertical-align: middle;
-    width: 120px;
+  user-control-panel,
+  group-control-panel {
+    img.profile {
+      border: 2px solid;
+      margin: 0 auto 20px;
+
+      @media (max-width: $screen-xs-max) {
+        max-width: 150px;
+      }
+    }
+
+    .table th {
+      text-align: right;
+      width: 120px;
+    }
+
+    .table td p:last-child {
+      margin-bottom: 0;
+    }
   }
 }
