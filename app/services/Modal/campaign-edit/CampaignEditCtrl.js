@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import each from 'lodash/each';
 import map from 'lodash/map';
 import cloneDeep from 'lodash/cloneDeep';
