@@ -32,6 +32,10 @@
           <td>{{ $ctrl.group.created | moment:'LL' }}</td>
         </tr>
         <tr>
+          <th>Members</th>
+          <td>{{ $ctrl.group.members | number }}</td>
+        </tr>
+        <tr>
           <th>Acts of Love</th>
           <td>{{ $ctrl.Act.counters[$ctrl.group._id] | number }}</td>
         </tr>

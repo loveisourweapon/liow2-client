@@ -21,7 +21,10 @@ export default class GroupControlPanelCtrl {
         this.group = group;
         this.Act.count({ group: this.group._id });
         this.$rootScope.title = this.group.name;
+
+        return this.User.find({ groups: this.group._id, count: true });
       })
+      .then(response => this.group.members = response.data)
       .catch(() => null)
       .then(() => this.loading = false);
   }
