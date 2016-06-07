@@ -24,16 +24,17 @@
     }
   }
 
-  deeds-control-panel {
+  users-control-panel,
+  groups-control-panel {
     img.icon {
-      width: 50px;
+      width: 30px;
       border: 1px solid;
     }
   }
 
-  users-control-panel {
+  deeds-control-panel {
     img.icon {
-      width: 30px;
+      width: 50px;
       border: 1px solid;
     }
   }
