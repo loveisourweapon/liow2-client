@@ -11,7 +11,7 @@
 
 <div class="container container-pad">
   <div class="row">
-    <div ng-hide="$ctrl.loading || $ctrl.error">
+    <div ng-if="!($ctrl.loading || $ctrl.error)">
       <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
         <div class="well well-sm"
              ng-if="$ctrl.User.isMemberOfGroup($ctrl.Group.current) && $ctrl.campaign !== null">
@@ -54,13 +54,13 @@
               <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right">
-              <li ng-hide="item.published">
+              <li ng-if="!item.published">
                 <a ng-click="$ctrl.setPublished($ctrl.campaign, item.deed, true)" href>
                   <i class="fa fa-fw fa-thumbs-up"></i>
                   Publish
                 </a>
               </li>
-              <li ng-show="item.published">
+              <li ng-if="item.published">
                 <a ng-click="$ctrl.setPublished($ctrl.campaign, item.deed, false)" href>
                   <i class="fa fa-fw fa-thumbs-down"></i>
                   Unpublish
@@ -104,7 +104,7 @@
                   $ctrl.Modal.openLogin()"
                 ng-if="!$ctrl.User.isMemberOfGroup($ctrl.Group.current)">
           <i class="fa fa-fw fa-users"></i>
-          <span ng-hide="$ctrl.User.isAuthenticated()">Login &amp; </span>
+          <span ng-if="!$ctrl.User.isAuthenticated()">Login &amp; </span>
           Join us
         </button>
         <button type="button"
@@ -132,7 +132,7 @@
 
       <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
         <uib-alert type="info"
-                   ng-show="$ctrl.showCampaignAlert"
+                   ng-if="$ctrl.showCampaignAlert"
                    close="$ctrl.showCampaignAlert = false">
           You haven't got an active campaign, would you like to set one up now?&nbsp;
           <button class="btn btn-info btn-inline m-t-xxs p-xs"
@@ -150,9 +150,9 @@
             </uib-tab-heading>
 
             <blockquote marked="$ctrl.Group.current.welcomeMessage"
-                        ng-show="$ctrl.Group.current.welcomeMessage"></blockquote>
+                        ng-if="$ctrl.Group.current.welcomeMessage"></blockquote>
 
-            <div ng-hide="$ctrl.Group.current.welcomeMessage">
+            <div ng-if="!$ctrl.Group.current.welcomeMessage">
               <h2>
                 The Love is our Weapon Campaign is a youth movement that exists to
                 change cities through the love of Jesus by doing strategic practical
@@ -173,9 +173,9 @@
             </uib-tab-heading>
 
             <feed criteria="{ group: $ctrl.Group.current._id }"
-                  ng-show="$ctrl.User.isAuthenticated()"></feed>
+                  ng-if="$ctrl.User.isAuthenticated()"></feed>
 
-            <p ng-hide="$ctrl.User.isAuthenticated()">
+            <p ng-if="!$ctrl.User.isAuthenticated()">
               You must <a ng-click="$ctrl.Modal.openLogin()" href>login</a>
               to see {{ $ctrl.Group.current.name }}'s Activity Feed.
             </p>
@@ -184,13 +184,13 @@
       </div>
     </div>
 
-    <div class="col-xs-12" ng-show="$ctrl.loading">
+    <div class="col-xs-12" ng-if="$ctrl.loading">
       <p class="text-center">
         <i class="fa fa-cog fa-5x fa-spin"></i>
       </p>
     </div>
 
-    <div class="col-xs-12" ng-show="$ctrl.error">
+    <div class="col-xs-12" ng-if="$ctrl.error">
       <uib-alert type="danger">
         <i class="fa fa-exclamation-triangle"></i>
         {{ $ctrl.error }}

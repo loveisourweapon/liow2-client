@@ -51,28 +51,28 @@
 
       <div class="col-sm-3">
         <h1 class="text-primary m-b-none">
-          <span ng-show="$ctrl.Act.counters.global">
+          <span>
             {{ $ctrl.Act.counters.global | number }}
+            <span ng-if="!$ctrl.Act.counters.global">&nbsp;</span>
           </span>
-          <span ng-hide="$ctrl.Act.counters.global">&nbsp;</span>
         </h1>
         <h4 class="m-none">acts of love</h4>
         <p class="m-t-none">done around the world</p>
 
         <h1 class="text-primary m-b-none">
-          <span ng-show="$ctrl.numberOfGroups">
+          <span>
             {{ $ctrl.numberOfGroups | number }}
+            <span ng-if="!$ctrl.numberOfGroups">&nbsp;</span>
           </span>
-          <span ng-hide="$ctrl.numberOfGroups">&nbsp;</span>
         </h1>
         <h4 class="m-none">groups</h4>
         <p class="m-t-none">serving together</p>
 
         <h1 class="text-primary m-b-none">
-          <span ng-show="$ctrl.numberOfUsers">
+          <span>
             {{ $ctrl.numberOfUsers | number }}
+            <span ng-if="!$ctrl.numberOfUsers">&nbsp;</span>
           </span>
-          <span ng-hide="$ctrl.numberOfUsers">&nbsp;</span>
         </h1>
         <h4 class="m-none">individuals</h4>
         <p class="m-t-none">causing change</p>

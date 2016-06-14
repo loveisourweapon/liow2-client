@@ -12,7 +12,7 @@
 
 <div class="container container-pad">
   <div class="row">
-    <div ng-hide="$ctrl.loading || $ctrl.error">
+    <div ng-if="!($ctrl.loading || $ctrl.error)">
       <div class="col-xs-12">
         <h3 class="m-t-none m-b-md">
           <i class="fa fa-fw fa-list"></i>
@@ -20,22 +20,22 @@
         </h3>
 
         <feed criteria="{ user: $ctrl.user._id }"
-              ng-show="$ctrl.User.isAuthenticated()"></feed>
+              ng-if="$ctrl.User.isAuthenticated()"></feed>
 
-        <p ng-hide="$ctrl.User.isAuthenticated()">
+        <p ng-if="!$ctrl.User.isAuthenticated()">
           You must <a ng-click="$ctrl.Modal.openLogin()" href>login</a>
           to see {{ $ctrl.user.firstName }}'s Activity Feed.
         </p>
       </div>
     </div>
 
-    <div class="col-xs-12" ng-show="$ctrl.loading">
+    <div class="col-xs-12" ng-if="$ctrl.loading">
       <p class="text-center">
         <i class="fa fa-cog fa-5x fa-spin"></i>
       </p>
     </div>
 
-    <div class="col-xs-12" ng-show="$ctrl.error">
+    <div class="col-xs-12" ng-if="$ctrl.error">
       <uib-alert type="danger">
         <i class="fa fa-exclamation-triangle"></i>
         {{ $ctrl.error }}

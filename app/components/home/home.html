@@ -21,6 +21,6 @@
   </jumbo-content>
 </jumbotron>
 
-<welcome ng-hide="$ctrl.User.isAuthenticated()"></welcome>
+<welcome ng-if="!$ctrl.User.isAuthenticated()"></welcome>
 
-<home-feed ng-show="$ctrl.User.isAuthenticated()"></home-feed>
+<home-feed ng-if="$ctrl.User.isAuthenticated()"></home-feed>

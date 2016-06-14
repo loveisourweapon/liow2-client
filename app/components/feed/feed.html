@@ -33,10 +33,12 @@
     <div class="feed-item-content">
       <h6 class="m-t-none">
         <a ng-href="/u/{{ ::item.user._id }}"
-           ng-show="$ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group)">
+           ng-if="$ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group)">
           {{ ::item.user.firstName }}
         </a>
-        <span ng-hide="$ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group)">Someone</span>
+        <span ng-if="!($ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group))">
+          Someone
+        </span>
 
         <span ng-if="::item.group && !item.target.group">
           from
@@ -74,7 +76,7 @@
   </div>
 
   <div class="feed-item"
-       ng-show="$ctrl.feedItems.length === 0">
+       ng-if="$ctrl.feedItems.length === 0">
     No feed items to show.
   </div>
 </div><!-- .feed-wrapper -->

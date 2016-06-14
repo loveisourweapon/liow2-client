@@ -38,10 +38,10 @@
   <form ng-submit="$ctrl.authenticateEmail($ctrl.email, $ctrl.password, $ctrl.joinGroup)">
     <uib-alert type="danger"
                class="p-sm"
-               ng-show="$ctrl.error">
+               ng-if="$ctrl.error">
       <i class="fa fa-fw fa-exclamation-triangle"></i>
       {{ $ctrl.error }}
-      <span ng-show="$ctrl.error.indexOf('Please confirm') === 0">
+      <span ng-if="$ctrl.error.indexOf('Please confirm') === 0">
         <i class="fa fa-fw fa-blank"></i>
         <a ng-click="$ctrl.sendConfirmEmail($ctrl.email)" href>
           Re-send confirmation email?
@@ -92,7 +92,7 @@
     </button>
   </form>
 
-  <div ng-show="::$ctrl.canSwitch">
+  <div ng-if="::$ctrl.canSwitch">
     <hr>
     <p>
       Don't have an account yet?

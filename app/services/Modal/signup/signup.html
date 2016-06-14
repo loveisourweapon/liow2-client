@@ -42,7 +42,7 @@
     <span ng-init="$ctrl.form = userEdit"></span>
 
     <uib-alert type="danger"
-               ng-show="$ctrl.error && !$ctrl.error.errors">
+               ng-if="$ctrl.error && !$ctrl.error.errors">
       <i class="fa fa-fw fa-exclamation-triangle"></i>
       Failed sending request. Please try again or
       <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
@@ -64,11 +64,11 @@
                required
                autofocus>
         <span class="help-block"
-              ng-show="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.email.$error.email">
+              ng-if="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.email.$error.email">
           Please enter a valid email address.
         </span>
         <span class="help-block"
-              ng-show="$ctrl.error.errors.email"
+              ng-if="$ctrl.error.errors.email"
               ng-repeat="error in $ctrl.error.errors.email">
           {{ error.message }}
         </span>
@@ -99,7 +99,7 @@
                ng-model="$ctrl.user.lastName">
       </div>
       <span class="help-block col-xs-8 col-xs-push-3"
-            ng-show="$ctrl.form.$submitted && $ctrl.form.firstName.$error.required">
+            ng-if="$ctrl.form.$submitted && $ctrl.form.firstName.$error.required">
         First name is required.
       </span>
     </div>
@@ -120,15 +120,15 @@
                required
                minlength="8">
         <span class="help-block"
-              ng-show="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.required">
+              ng-if="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.required">
           Password is required.
         </span>
         <span class="help-block"
-              ng-show="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.minlength">
+              ng-if="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.minlength">
           Password must be at least 8 characters.
         </span>
         <span class="help-block"
-              ng-show="$ctrl.error.errors.password"
+              ng-if="$ctrl.error.errors.password"
               ng-repeat="error in $ctrl.error.errors.password">
           {{ error.message }}
         </span>
@@ -150,11 +150,11 @@
                ng-model="$ctrl.user.picture"
                disabled>
         <span class="help-block"
-              ng-hide="$ctrl.error.errors.picture">
+              ng-if="!$ctrl.error.errors.picture">
           Ideally 200px x 200px
         </span>
         <span class="help-block"
-              ng-show="$ctrl.error.errors.picture"
+              ng-if="$ctrl.error.errors.picture"
               ng-repeat="error in $ctrl.error.errors.picture">
           {{ error.message }}
         </span>
@@ -169,7 +169,7 @@
     </button>
   </form>
 
-  <div ng-show="::$ctrl.canSwitch">
+  <div ng-if="::$ctrl.canSwitch">
     <hr>
     <p>
       Already have an account?

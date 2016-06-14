@@ -24,7 +24,7 @@
 
 <div class="container container-pad">
   <div class="row">
-    <div ng-hide="$ctrl.loading || $ctrl.error">
+    <div ng-if="!($ctrl.loading || $ctrl.error)">
       <div class="col-sm-3 col-sm-push-9 m-b-sm">
         <button type="button"
                 class="btn btn-primary btn-block btn-lg"
@@ -58,13 +58,13 @@
       </div>
     </div>
 
-    <div class="col-xs-12" ng-show="$ctrl.loading">
+    <div class="col-xs-12" ng-if="$ctrl.loading">
       <p class="text-center">
         <i class="fa fa-cog fa-5x fa-spin"></i>
       </p>
     </div>
 
-    <div class="col-xs-12" ng-show="$ctrl.error">
+    <div class="col-xs-12" ng-if="$ctrl.error">
       <uib-alert type="danger">
         <i class="fa fa-exclamation-triangle"></i>
         {{ $ctrl.error }}
