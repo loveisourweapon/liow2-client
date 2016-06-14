@@ -1,6 +1,6 @@
 import capitalize from 'lodash/capitalize';
 
-let superAdminTabs = ['deeds', 'users', 'groups'];
+const superAdminTabs = ['deeds', 'users', 'groups'];
 
 export default class ControlPanelCtrl {
   /* @ngInject */

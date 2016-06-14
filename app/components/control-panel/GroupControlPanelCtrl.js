@@ -19,6 +19,14 @@ export default class GroupControlPanelCtrl {
     this.Group.findOne({ _id: groupId })
       .then(group => {
         this.group = group;
+        if (!(
+          this.Group.isAdmin(this.group, this.User.current) ||
+          this.User.isSuperAdmin()
+        )) {
+          this.$location.url('/');
+          return Promise.reject();
+        }
+
         this.Act.count({ group: this.group._id });
         this.$rootScope.title = this.group.name;
 
