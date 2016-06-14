@@ -39,10 +39,8 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-right">
-                <li>
-                  <a ng-click="$ctrl.Modal.openAlert(group.welcomeMessage, 'md', group.name + ' Welcome Message')"
-                     ng-if="group.welcomeMessage"
-                     href>
+                <li ng-if="group.welcomeMessage">
+                  <a ng-click="$ctrl.Modal.openAlert(group.welcomeMessage, 'md', group.name + ' Welcome Message')" href>
                     <i class="fa fa-fw fa-commenting"></i>
                     Welcome Message
                   </a>

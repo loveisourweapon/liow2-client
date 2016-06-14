@@ -1,7 +1,7 @@
 export default class DeedsControlPanelCtrl {
   /* @ngInject */
-  constructor(Deed) {
-    Object.assign(this, { Deed });
+  constructor(Deed, Modal) {
+    Object.assign(this, { Deed, Modal });
 
     this.loadDeeds();
   }
