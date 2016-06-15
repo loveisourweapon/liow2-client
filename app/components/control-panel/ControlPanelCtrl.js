@@ -8,7 +8,10 @@ export default class ControlPanelCtrl {
     Object.assign(this, { $rootScope, $location, User, Group });
 
     this.baseTitle = 'Control Panel';
-    this.activeTab = this.$location.search().active || 'user';
+    ({
+      active: this.activeTab = 'user',
+      groupId: this.activeGroupId = null
+    } = this.$location.search());
     this.$rootScope.title = this.getPageTitle(this.activeTab);
 
     if (
@@ -29,12 +32,15 @@ export default class ControlPanelCtrl {
   /**
    * Change to a new active tab
    *
-   * @param {string} newTab
+   * @param {string}      newTab
+   * @param {string|null} [groupId=null]
    */
-  setActiveTab(newTab) {
-    if (newTab !== this.activeTab) {
+  setActiveTab(newTab, groupId = null) {
+    if (newTab !== this.activeTab || groupId !== this.activeGroupId) {
       this.activeTab = newTab;
+      this.activeGroupId = groupId;
       this.$location.search('active', this.activeTab);
+      this.$location.search('groupId', this.activeGroupId);
       this.$rootScope.title = this.getPageTitle(this.activeTab);
     }
   }
