@@ -19,7 +19,7 @@
         </button>
       </div>
 
-      <div ng-show="$ctrl.User.current.groups.length">
+      <div ng-if="$ctrl.User.current.groups.length">
         <h4>Your Groups</h4>
         <div class="list-group">
           <button class="list-group-item"
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div ng-show="$ctrl.User.isSuperAdmin()">
+      <div ng-if="$ctrl.User.isSuperAdmin()">
         <h4>Admin</h4>
         <div class="list-group">
           <button class="list-group-item"

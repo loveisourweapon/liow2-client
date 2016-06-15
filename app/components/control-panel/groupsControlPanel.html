@@ -12,7 +12,7 @@
              autofocus>
     </div>
 
-    <table class="table table-bordered table-striped" ng-hide="$ctrl.loading">
+    <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
       <thead>
         <tr>
           <th style="width: 65px;">Logo</th>
@@ -64,7 +64,7 @@
       </tbody>
     </table>
 
-    <p class="text-center" ng-show="$ctrl.loading">
+    <p class="text-center" ng-if="$ctrl.loading">
       <i class="fa fa-cog fa-5x fa-spin"></i>
     </p>
   </div>

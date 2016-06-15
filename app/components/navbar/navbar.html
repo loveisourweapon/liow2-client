@@ -86,7 +86,7 @@
                 Your Profile
               </a>
             </li>
-            <li ng-show="$ctrl.User.isAuthenticated()">
+            <li ng-if="$ctrl.User.isAuthenticated()">
               <a ng-href="/control-panel"
                  ng-click="$ctrl.collapseMenu()">
                 <i class="fa fa-fw fa-cogs"></i>

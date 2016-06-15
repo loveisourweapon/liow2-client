@@ -4,7 +4,7 @@
          class="profile img-responsive img-circle">
   </div>
   <div class="col-sm-9 col-sm-pull-3">
-    <table class="table table-bordered table-striped" ng-hide="$ctrl.loading">
+    <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
       <tbody>
         <tr>
           <th>Email</th>
@@ -13,13 +13,13 @@
         <tr>
           <th>Name</th>
           <td>
-            <div ng-hide="$ctrl.editingName">
+            <div ng-if="!$ctrl.editingName">
               <a ng-click="$ctrl.toggleEditName($ctrl.User.current)" class="pull-right" href>
                 <i class="fa fa-fw fa-pencil"></i>
               </a>
               {{ $ctrl.User.current.name }}
             </div>
-            <div ng-show="$ctrl.editingName">
+            <div ng-if="$ctrl.editingName">
               <a ng-click="$ctrl.toggleEditName($ctrl.User.current)" class="pull-right" href>
                 <i class="fa fa-fw fa-times"></i>
               </a>
@@ -99,7 +99,7 @@
       </tbody>
     </table>
 
-    <p class="text-center" ng-show="$ctrl.loading">
+    <p class="text-center" ng-if="$ctrl.loading">
       <i class="fa fa-cog fa-5x fa-spin"></i>
     </p>
   </div>
