@@ -93,11 +93,16 @@ export default class GroupEditCtrl {
     this.error = null;
     this.Group.save(group)
       .then(response => {
-        this.Group.current = response.data;
-        this.User.loadCurrent();
+        if (this.action === 'create' || this.Group.current._id === group._id) {
+          this.Group.current = response.data;
+          this.User.loadCurrent();
+        }
 
-        this.$location.path(`/g/${response.data.urlName}`);
-        this.$uibModalInstance.close();
+        if (this.action === 'create') {
+          this.$location.path(`/g/${response.data.urlName}`);
+        }
+
+        this.$uibModalInstance.close(group);
         this.Alertify.success(`${capitalize(this.action)}d group <strong>${this.Group.current.name}</strong>`);
 
         if (this.setupCampaign) {

@@ -61,6 +61,8 @@ export default class LoginCtrl {
 
   /**
    * Send confirm email address email
+   * 
+   * @param {string} email
    */
   sendConfirmEmail(email) {
     this.sending = true;

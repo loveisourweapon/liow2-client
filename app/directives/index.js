@@ -14,17 +14,15 @@ export default angular.module('app.directives', [])
       }
     };
   })
-  .directive('autofocus', /* @ngInject */ $timeout => {
-    return {
-      restrict: 'A',
-      link: (scope, elm) => {
-        $timeout(() => {
-          let element = head(elm);
-
-          element.focus();
-          isFunction(element.select) && element.select();
-        })
-      }
-    }
+  .component('iconChecked', {
+    bindings: {
+      value: '='
+    },
+    template: `
+      <i class="fa fa-lg" ng-class="{
+        'fa-check-circle text-success': $ctrl.value,
+        'fa-times-circle text-muted': !$ctrl.value
+      }"></i>
+    `
   })
   .name;

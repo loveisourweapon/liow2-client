@@ -1,0 +1,35 @@
+.control-panel {
+  .list-group button {
+    outline: none;
+  }
+
+  user-control-panel,
+  group-control-panel {
+    img.profile {
+      border: 2px solid;
+      margin: 0 auto 20px;
+
+      @media (max-width: $screen-xs-max) {
+        max-width: 150px;
+      }
+    }
+
+    .table th {
+      text-align: right;
+      width: 120px;
+    }
+
+    .table td p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  deeds-control-panel,
+  users-control-panel,
+  groups-control-panel {
+    img.icon {
+      width: 30px;
+      border: 1px solid;
+    }
+  }
+}

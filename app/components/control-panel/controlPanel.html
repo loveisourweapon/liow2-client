@@ -1,0 +1,68 @@
+<div class="container container-pad control-panel">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="m-b-lg">
+        <i class="fa fa-fw fa-cogs"></i>
+        Control Panel
+        <small>&raquo; User Settings</small>
+      </h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group">
+        <button class="list-group-item"
+                ng-class="{ active: $ctrl.activeTab === 'user' }"
+                ng-click="$ctrl.setActiveTab('user')">
+          User
+        </button>
+      </div>
+
+      <div ng-if="$ctrl.User.current.groups.length">
+        <h4>Your Groups</h4>
+        <div class="list-group">
+          <button class="list-group-item"
+                  ng-repeat="group in $ctrl.User.current.groups track by group._id"
+                  ng-class="{ active: $ctrl.activeTab === 'group' && $ctrl.activeGroupId === group._id }"
+                  ng-click="$ctrl.setActiveTab('group', group._id)">
+            {{ group.name }}
+          </button>
+        </div>
+      </div>
+
+      <div ng-if="$ctrl.User.isSuperAdmin()">
+        <h4>Admin</h4>
+        <div class="list-group">
+          <button class="list-group-item"
+                  ng-class="{ active: $ctrl.activeTab === 'deeds' }"
+                  ng-click="$ctrl.setActiveTab('deeds')">
+            Deeds
+          </button>
+          <button class="list-group-item"
+                  ng-class="{ active: $ctrl.activeTab === 'users' }"
+                  ng-click="$ctrl.setActiveTab('users')">
+            Users
+          </button>
+          <button class="list-group-item"
+                  ng-class="{ active: $ctrl.activeTab === 'groups' }"
+                  ng-click="$ctrl.setActiveTab('groups')">
+            Groups
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9" ng-switch="$ctrl.activeTab">
+      <user-control-panel ng-switch-default></user-control-panel>
+      <group-control-panel ng-switch-when="group"
+                           group-id="$ctrl.activeGroupId"></group-control-panel>
+
+      <div ng-if="$ctrl.User.isSuperAdmin()">
+        <deeds-control-panel ng-switch-when="deeds"></deeds-control-panel>
+        <users-control-panel ng-switch-when="users"></users-control-panel>
+        <groups-control-panel ng-switch-when="groups"></groups-control-panel>
+      </div>
+    </div>
+  </div>
+</div>

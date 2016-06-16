@@ -25,6 +25,8 @@ import SignupCtrl from './signup/SignupCtrl';
 import signupTpl from './signup/signup.html';
 import ForgotPasswordCtrl from './forgot-password/ForgotPasswordCtrl';
 import forgotPasswordTpl from './forgot-password/forgotPassword.html';
+import ChangePasswordCtrl from './change-password/ChangePasswordCtrl';
+import changePasswordTpl from './change-password/changePassword.html';
 import GroupEditCtrl from './group-edit/GroupEditCtrl';
 import groupEditTpl from './group-edit/groupEdit.html';
 import CampaignEditCtrl from './campaign-edit/CampaignEditCtrl';
@@ -101,6 +103,24 @@ class Modal {
   }
 
   /**
+   * Open the change password modal
+   *
+   * @param {object} user
+   *
+   * @returns {Promise}
+   */
+  openChangePassword(user) {
+    return this.$uibModal.open(defaults({
+      controller: ChangePasswordCtrl,
+      template: changePasswordTpl,
+      size: 'sm',
+      resolve: {
+        user: this.$q.resolve(user)
+      }
+    }, this.modalDefaults)).result;
+  }
+
+  /**
    * Open the group edit modal
    *
    * @param {string} [action='create']
@@ -162,15 +182,16 @@ class Modal {
    * Open an alert modal
    *
    * @param {string} message
+   * @param {string} [size='sm']
    * @param {string} [title='']
    *
    * @returns {Promise}
    */
-  openAlert(message, title = '') {
+  openAlert(message, size = 'sm', title = '') {
     return this.$uibModal.open(defaults({
       controller: AlertCtrl,
       template: alertTpl,
-      size: 'sm',
+      size: size,
       resolve: {
         message: this.$q.resolve(message),
         title: this.$q.resolve(title)

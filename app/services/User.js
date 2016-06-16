@@ -169,6 +169,15 @@ class User {
   }
 
   /**
+   * Check if the current user is a super admin
+   *
+   * @returns {boolean}
+   */
+  isSuperAdmin() {
+    return Boolean(currentUser) && currentUser.superAdmin;
+  }
+
+  /**
    * Check if the user is the currently logged in user
    *
    * @param {object} user
@@ -176,7 +185,7 @@ class User {
    * @returns {boolean}
    */
   isLoggedInUser(user) {
-    return currentUser && currentUser._id === user._id;
+    return Boolean(currentUser) && currentUser._id === user._id;
   }
 
   /**
