@@ -36,3 +36,19 @@
     }
   }
 }
+
+.modal-jumbotron .deed-header {
+  > img {
+    width: 40px;
+  }
+
+  > h1 {
+    font-size: 32px;
+    margin-top: 21px;
+  }
+
+  > h2 {
+    font-size: 18px;
+    margin-top: 30px;
+  }
+}

@@ -1,7 +1,7 @@
 export default class DeedPreviewCtrl {
   /* @ngInject */
-  constructor($uibModalInstance, Deed, deedId) {
-    Object.assign(this, { $uibModalInstance, Deed });
+  constructor($uibModalInstance, Deed, Act, deedId) {
+    Object.assign(this, { $uibModalInstance, Act, Deed });
 
     this.error = null;
 
@@ -16,7 +16,10 @@ export default class DeedPreviewCtrl {
   loadDeed(deedId) {
     this.loading = true;
     this.Deed.get(deedId)
-      .then(response => this.deed = response.data)
+      .then(response => {
+        this.deed = response.data;
+        this.Act.count({ deed: this.deed._id });
+      })
       .catch(response => this.error = 'Deed not found')
       .then(() => this.loading = false);
   }
