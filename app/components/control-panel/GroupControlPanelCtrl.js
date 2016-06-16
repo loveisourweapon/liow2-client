@@ -38,6 +38,17 @@ export default class GroupControlPanelCtrl {
   }
 
   /**
+   * Open the group edit modal
+   *
+   * @param {object} group
+   */
+  updateGroup(group) {
+    this.Modal.openGroupEdit('update', group)
+      .then(group => this.group = group)
+      .catch(() => null);
+  }
+
+  /**
    * Remove the user from the group
    *
    * @param {object} user

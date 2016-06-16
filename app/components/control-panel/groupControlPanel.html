@@ -5,7 +5,7 @@
 
     <button type="button"
             class="btn btn-default btn-block"
-            ng-click="$ctrl.Modal.openGroupEdit('update', $ctrl.group)"
+            ng-click="$ctrl.updateGroup($ctrl.group)"
             ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current)">
             <!-- TODO: allow superAdmin access -->
       <i class="fa fa-fw fa-edit"></i>
