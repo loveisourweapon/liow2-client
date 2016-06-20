@@ -1,5 +1,6 @@
 import angular from 'angular';
 import defaults from 'lodash/defaults';
+import first from 'lodash/first';
 
 // Module dependencies
 import ngRoute from 'angular-route';
@@ -247,18 +248,19 @@ angular.module(uibs)
       priority: 1,
       link: (scope, element) => {
         // Set max-height on modal-body
+        let modalBody = first(element.querySelectorAll('.modal-body'));
         let window = angular.element($window);
         window.on('resize', setMaxHeight);
         scope.$on('$destroy', () => window.off('resize', setMaxHeight));
         setMaxHeight();
 
         function setMaxHeight() {
-          element
-            .find('.modal-body')
-            .css({
-              maxHeight: window.height() * 0.85 - 80,
-              overflowY: 'auto'
-            });
+          let maxHeight = $window.innerHeight
+            - 62 /* margins + border */
+            - 120 /* header + footer */
+          ;
+
+          modalBody.style.maxHeight = `${maxHeight}px`;
         }
       }
     }

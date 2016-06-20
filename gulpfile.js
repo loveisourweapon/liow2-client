@@ -17,46 +17,31 @@ var dependencies = [
   'alertify.js',
   'angular',
   'angular-dragula',
+  'angular-inview',
   'angular-marked',
   'angular-route',
   'angular-sanitize',
   'angular-ui-bootstrap',
   'angular-ui-switch',
   'angular-youtube-embed',
-  'angular-inview',
+  'fast-json-patch',
   'lodash',
+  'medium-editor',
   'moment',
   'satellizer',
   'seedrandom',
   'showdown',
-  'ui-select'
+  'to-markdown',
+  'ui-select',
+  'uuid'
 ];
-
-/*
- |--------------------------------------------------------------------------
- | Combine all JS libraries into a single file for fewer HTTP requests.
- |--------------------------------------------------------------------------
- */
-gulp.task('vendor', ['clean'], function() {
-  return gulp.src([
-    'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-    'node_modules/medium-editor/dist/js/medium-editor.min.js'
-  ]).pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(require('gulp-concat')({ path: 'vendor.js', cwd: '.' }))
-      .pipe(rev())
-    .pipe(sourcemaps.write('../assets'))
-    .pipe(gulp.dest(jsDir))
-    .pipe(rev.manifest(manifestFile, { base: assetsDir, merge: true }))
-    .pipe(gulp.dest(assetsDir));
-});
 
 /*
  |--------------------------------------------------------------------------
  | Compile third-party dependencies separately for faster performance.
  |--------------------------------------------------------------------------
  */
-gulp.task('browserify-vendor', function() {
+gulp.task('browserify-vendor', ['clean'], function() {
   return browserify({ debug: true })
     .require(dependencies)
     .bundle()
@@ -160,7 +145,7 @@ gulp.task('watch', ['build'], function() {
   ], ['browserify']);
 });
 
-gulp.task('build', ['clean', 'fonts', 'styles', 'vendor', 'browserify-vendor', 'browserify']);
+gulp.task('build', ['clean', 'fonts', 'styles', 'browserify-vendor', 'browserify']);
 gulp.task('default', ['build', 'watch']);
 
 function swallowError(error) {

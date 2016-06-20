@@ -70,6 +70,10 @@ nav#liow-navbar {
       }
     }
 
+    .ui-select-match {
+      outline: none;
+    }
+
     .ui-select-choices:empty {
       display: none;
     }

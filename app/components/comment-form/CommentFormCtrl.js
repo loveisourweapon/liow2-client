@@ -1,3 +1,4 @@
+import MediumEditor from 'medium-editor';
 import toMarkdown from 'to-markdown';
 
 export default class CommentFormCtrl {

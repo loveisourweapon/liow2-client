@@ -29,14 +29,14 @@
             </div>
           </td>
           <td>
-            <div class="btn-group">
+            <div class="btn-group" uib-dropdown>
               <button type="button"
-                      class="btn btn-default dropdown-toggle"
-                      data-toggle="dropdown">
+                      class="btn btn-default"
+                      uib-dropdown-toggle>
                 Actions
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu dropdown-menu-right">
+              <ul class="dropdown-menu-right" uib-dropdown-menu>
                 <li>
                   <a ng-click="$ctrl.Modal.openDeedPreview(deed._id)" href>
                     <i class="fa fa-fw fa-external-link-square"></i>

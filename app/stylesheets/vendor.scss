@@ -48,6 +48,13 @@ ul.list-group[dragula] {
 }
 
 /**
+ * uibs Modals
+ */
+.modal-body {
+  overflow-y: auto;
+}
+
+/**
  * ui-select
  */
 .ui-select-multiple.ui-select-bootstrap .ui-select-match .close {

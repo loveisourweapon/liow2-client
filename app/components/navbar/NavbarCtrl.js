@@ -9,6 +9,7 @@ export default class NavbarCtrl {
 
     this.choices = [];
     this.selected = null;
+    this.isCollapsed = true;
 
     this.Act.count();
   }
@@ -67,10 +68,9 @@ export default class NavbarCtrl {
   }
 
   /**
-   * Call the jQuery .collapse method
-   * TODO: should be in directive?
+   * Collapse the navbar menu
    */
   collapseMenu() {
-    $('#liow-navbar-collapse').collapse('hide');
+    this.isCollapsed = true;
   }
 }

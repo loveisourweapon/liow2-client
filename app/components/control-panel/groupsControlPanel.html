@@ -31,14 +31,14 @@
           <td>{{ group.name }}</td>
           <td>{{ group.created | moment:'L' }}</td>
           <td>
-            <div class="btn-group">
+            <div class="btn-group" uib-dropdown>
               <button type="button"
-                      class="btn btn-default dropdown-toggle"
-                      data-toggle="dropdown">
+                      class="btn btn-default"
+                      uib-dropdown-toggle>
                 Actions
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu dropdown-menu-right">
+              <ul class="dropdown-menu-right" uib-dropdown-menu>
                 <li ng-if="group.welcomeMessage">
                   <a ng-click="$ctrl.Modal.openAlert(group.welcomeMessage, 'md', group.name + ' Welcome Message')" href>
                     <i class="fa fa-fw fa-commenting"></i>

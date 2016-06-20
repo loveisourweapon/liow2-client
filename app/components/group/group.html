@@ -30,7 +30,8 @@
           <!-- Show buttons with publish/unpublish menu for admins -->
           <div class="btn-group btn-block"
                ng-repeat="item in $ctrl.campaign.deeds"
-               ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)">
+               ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)"
+               uib-dropdown>
             <a class="btn col-xs-10"
                ng-class="{
                  'btn-primary': item.published,
@@ -41,19 +42,19 @@
               {{ ::item.deed.title }}
             </a>
             <button type="button"
-                    class="btn dropdown-toggle col-xs-2"
+                    class="btn col-xs-2"
                     ng-class="{
                       'btn-primary': item.published,
                       'btn-default': !item.published,
                       'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
                     }"
-                    data-toggle="dropdown"
+                    uib-dropdown-toggle
                     aria-haspopup="true"
                     aria-expanded="false">
               <span class="caret"></span>
               <span class="sr-only">Toggle Dropdown</span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right">
+            <ul class="dropdown-menu-right" uib-dropdown-menu>
               <li ng-if="!item.published">
                 <a ng-click="$ctrl.setPublished($ctrl.campaign, item.deed, true)" href>
                   <i class="fa fa-fw fa-thumbs-up"></i>

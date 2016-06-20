@@ -52,11 +52,6 @@
       "from": "angular@1.5.7",
       "resolved": "https://registry.npmjs.org/angular/-/angular-1.5.7.tgz"
     },
-    "angular-animate": {
-      "version": "1.5.7",
-      "from": "angular-animate@1.5.7",
-      "resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.5.7.tgz"
-    },
     "angular-dragula": {
       "version": "1.2.7",
       "from": "angular-dragula@1.2.7",
@@ -785,11 +780,6 @@
           "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.6.tgz"
         }
       }
-    },
-    "concat-with-sourcemaps": {
-      "version": "1.0.4",
-      "from": "concat-with-sourcemaps@>=1.0.0 <2.0.0",
-      "resolved": "https://registry.npmjs.org/concat-with-sourcemaps/-/concat-with-sourcemaps-1.0.4.tgz"
     },
     "console-browserify": {
       "version": "1.1.0",
@@ -2373,11 +2363,6 @@
       "version": "1.0.2",
       "from": "jodid25519@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/jodid25519/-/jodid25519-1.0.2.tgz"
-    },
-    "jquery": {
-      "version": "2.2.3",
-      "from": "jquery@2.2.3",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.2.3.tgz"
     },
     "js-base64": {
       "version": "2.1.9",

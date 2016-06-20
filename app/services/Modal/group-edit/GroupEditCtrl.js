@@ -1,3 +1,4 @@
+import MediumEditor from 'medium-editor';
 import capitalize from 'lodash/capitalize';
 import toMarkdown from 'to-markdown';
 import showdown from 'showdown';
@@ -44,7 +45,7 @@ export default class GroupEditCtrl {
    */
   setupMediumEditor() {
     this.$timeout(() => {
-      this.editor = new MediumEditor(document.querySelectorAll('#welcomeMessage'), {
+      this.editor = new MediumEditor(document.getElementById('welcomeMessage'), {
         placeholder: { text: 'Enter a welcome message...', hideOnClick: false },
         toolbar: { buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'] },
         autoLink: true
