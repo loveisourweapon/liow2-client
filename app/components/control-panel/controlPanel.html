@@ -53,15 +53,15 @@
       </div>
     </div>
 
-    <div class="col-sm-9" ng-switch="$ctrl.activeTab">
-      <user-control-panel ng-switch-default></user-control-panel>
-      <group-control-panel ng-switch-when="group"
+    <div class="col-sm-9">
+      <user-control-panel ng-if="$ctrl.activeTab === 'user'"></user-control-panel>
+      <group-control-panel ng-if="$ctrl.activeTab === 'group'"
                            group-id="$ctrl.activeGroupId"></group-control-panel>
 
       <div ng-if="$ctrl.User.isSuperAdmin()">
-        <deeds-control-panel ng-switch-when="deeds"></deeds-control-panel>
-        <users-control-panel ng-switch-when="users"></users-control-panel>
-        <groups-control-panel ng-switch-when="groups"></groups-control-panel>
+        <deeds-control-panel ng-if="$ctrl.activeTab === 'deeds'"></deeds-control-panel>
+        <users-control-panel ng-if="$ctrl.activeTab === 'users'"></users-control-panel>
+        <groups-control-panel ng-if="$ctrl.activeTab === 'groups'"></groups-control-panel>
       </div>
     </div>
   </div>
