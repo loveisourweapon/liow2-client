@@ -124,7 +124,7 @@ export default class GroupCtrl {
    * @param {object} campaign
    */
   finishCampaign(campaign) {
-    this.Modal.openConfirm('Are you sure you want to finish this campaign?')
+    this.Modal.openConfirm('Are you sure you want to finish this campaign?', 'Finish Campaign')
       .then(() => {
         let observer = jsonpatch.observe(campaign);
         campaign.active = false;
@@ -183,15 +183,15 @@ export default class GroupCtrl {
         You are the current owner of **${group.name}**.
         
         You'll need to make someone else the owner before leaving.
-      `);
+      `, 'Leave Group');
     } else if (this.Group.isAdmin(group, user)) {
       return this.Modal.openAlert(`
         You are currently an admin of **${group.name}**.
         
         You'll need to remove yourself as an admin before leaving.
-      `);
+      `, 'Leave Group');
     } else {
-      return this.Modal.openConfirm(`Are you sure you want to leave **${group.name}**?`)
+      return this.Modal.openConfirm(`Are you sure you want to leave **${group.name}**?`, 'Leave Group')
         .then(() => {
           let observer = jsonpatch.observe(user);
           user.groups.splice(user.groups.indexOf(group._id));

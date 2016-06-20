@@ -54,7 +54,7 @@
              class="col-xs-3 control-label">
         Email
       </label>
-      <div class="col-xs-8">
+      <div class="col-xs-9 col-sm-8">
         <input type="email"
                class="form-control"
                id="email"
@@ -81,24 +81,28 @@
              class="col-xs-3 control-label">
         Name
       </label>
-      <div class="col-xs-4">
-        <input type="text"
-               class="form-control"
-               id="firstName"
-               name="firstName"
-               placeholder="First..."
-               ng-model="$ctrl.user.firstName"
-               required>
+      <div class="col-xs-9 col-sm-8">
+        <div class="row">
+          <div class="col-xs-6">
+            <input type="text"
+                   class="form-control"
+                   id="firstName"
+                   name="firstName"
+                   placeholder="First..."
+                   ng-model="$ctrl.user.firstName"
+                   required>
+          </div>
+          <div class="col-xs-6">
+            <input type="text"
+                   class="form-control"
+                   id="lastName"
+                   name="lastName"
+                   placeholder="Last..."
+                   ng-model="$ctrl.user.lastName">
+          </div>
+        </div>
       </div>
-      <div class="col-xs-4">
-        <input type="text"
-               class="form-control"
-               id="lastName"
-               name="lastName"
-               placeholder="Last..."
-               ng-model="$ctrl.user.lastName">
-      </div>
-      <span class="help-block col-xs-8 col-xs-push-3"
+      <span class="help-block col-xs-9 col-xs-push-3"
             ng-if="$ctrl.form.$submitted && $ctrl.form.firstName.$error.required">
         First name is required.
       </span>
@@ -110,7 +114,7 @@
              class="col-xs-3 control-label">
         Password
       </label>
-      <div class="col-xs-8">
+      <div class="col-xs-9 col-sm-8">
         <input type="password"
                class="form-control"
                id="password"
@@ -141,7 +145,7 @@
              class="col-xs-3 control-label">
         Picture
       </label>
-      <div class="col-xs-8">
+      <div class="col-xs-9 col-sm-8">
         <input type="text"
                class="form-control"
                id="picture"
@@ -161,19 +165,25 @@
       </div>
     </div>
 
-    <button type="submit"
-            class="btn btn-primary btn-block"
-            ng-disabled="$ctrl.form.$pristine || $ctrl.saving">
-      <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.saving"></i>
-      Sign up
-    </button>
+    <button type="submit" hidden></button>
   </form>
 
-  <div ng-if="::$ctrl.canSwitch">
-    <hr>
-    <p>
-      Already have an account?
-      <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openLogin()" href>Login now</a>
-    </p>
+  <div ng-if="::$ctrl.canSwitch" class="row">
+    <div class="col-xs-9 col-xs-push-3">
+      <p>
+        Already have an account?
+        <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openLogin()" href>Login now</a>
+      </p>
+    </div>
   </div>
 </div><!-- .modal-body -->
+
+<div class="modal-footer">
+  <button type="submit"
+          class="btn btn-primary btn-block"
+          ng-click="$ctrl.form.$valid && $ctrl.save($ctrl.user, $ctrl.joinGroup)"
+          ng-disabled="$ctrl.form.$pristine || $ctrl.saving">
+    <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.saving"></i>
+    Sign up
+  </button>
+</div><!-- .modal-footer -->

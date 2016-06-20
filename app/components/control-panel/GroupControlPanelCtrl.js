@@ -60,15 +60,15 @@ export default class GroupControlPanelCtrl {
         You are the current owner of **${group.name}**.
         
         You'll need to make someone else the owner before leaving.
-      `);
+      `, 'Leave Group');
     } else if (this.Group.isAdmin(group, user)) {
       return this.Modal.openAlert(`
         You are currently an admin of **${group.name}**.
         
         You'll need to remove yourself as an admin before leaving.
-      `);
+      `, 'Leave Group');
     } else {
-      return this.Modal.openConfirm(`Are you sure you want to leave **${group.name}**?`)
+      return this.Modal.openConfirm(`Are you sure you want to leave **${group.name}**?`, 'Leave Group')
         .then(() => {
           let observer = jsonpatch.observe(user);
           user.groups.splice(user.groups.indexOf(group._id));

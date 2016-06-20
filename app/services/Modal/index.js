@@ -183,12 +183,12 @@ class Modal {
    * Open an alert modal
    *
    * @param {string} message
-   * @param {string} [size='sm']
    * @param {string} [title='']
+   * @param {string} [size='sm']
    *
    * @returns {Promise}
    */
-  openAlert(message, size = 'sm', title = '') {
+  openAlert(message, title = '', size = 'sm') {
     return this.$uibModal.open(defaults({
       controller: AlertCtrl,
       template: alertTpl,

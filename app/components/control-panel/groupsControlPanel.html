@@ -40,7 +40,7 @@
               </button>
               <ul class="dropdown-menu-right" uib-dropdown-menu>
                 <li ng-if="group.welcomeMessage">
-                  <a ng-click="$ctrl.Modal.openAlert(group.welcomeMessage, 'md', group.name + ' Welcome Message')" href>
+                  <a ng-click="$ctrl.Modal.openAlert(group.welcomeMessage, group.name + ' Welcome Message', 'md')" href>
                     <i class="fa fa-fw fa-commenting"></i>
                     Welcome Message
                   </a>

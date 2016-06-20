@@ -84,19 +84,23 @@
       </span>
     </div>
 
-    <button type="submit"
-            class="btn btn-primary btn-block"
-            ng-disabled="!$ctrl.email || !$ctrl.password || $ctrl.loggingIn">
-      <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.loggingIn"></i>
-      Login
-    </button>
+    <button type="submit" hidden></button>
   </form>
 
   <div ng-if="::$ctrl.canSwitch">
-    <hr>
     <p>
       Don't have an account yet?
       <a ng-click="$ctrl.$uibModalInstance.dismiss() && $ctrl.Modal.openSignup()" href>Sign up now</a>
     </p>
   </div>
 </div><!-- .modal-body -->
+
+<div class="modal-footer">
+  <button type="submit"
+          class="btn btn-primary btn-block"
+          ng-click="$ctrl.authenticateEmail($ctrl.email, $ctrl.password, $ctrl.joinGroup)"
+          ng-disabled="!$ctrl.email || !$ctrl.password || $ctrl.loggingIn">
+    <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.loggingIn"></i>
+    Login
+  </button>
+</div><!-- .modal-footer -->
