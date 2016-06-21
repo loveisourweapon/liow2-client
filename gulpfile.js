@@ -25,7 +25,6 @@ var dependencies = [
   'angular-ui-switch',
   'angular-youtube-embed',
   'fast-json-patch',
-  'lodash',
   'medium-editor',
   'moment',
   'satellizer',
