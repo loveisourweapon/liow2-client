@@ -122,7 +122,7 @@
                    ng-model="$ctrl.group.admins"
                    ng-disabled="!$ctrl.group._id">
           <ui-select-match placeholder="Select admins..."
-                           ui-lock-choice="$item._id === $ctrl.User.current._id || $item._id === $ctrl.group.owner">
+                           ui-lock-choice="$item._id === $ctrl.group.owner">
             <img ng-src="{{ $item.picture || $ctrl.User.getDefaultUserImage($item._id) }}"
                  class="img-circle b-xs m-xxs"
                  style="width: 22px;">

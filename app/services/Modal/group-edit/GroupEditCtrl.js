@@ -94,7 +94,10 @@ export default class GroupEditCtrl {
     this.error = null;
     this.Group.save(group)
       .then(response => {
-        if (this.action === 'create' || this.Group.current._id === group._id) {
+        if (
+          this.action === 'create' ||
+          (this.Group.current && this.Group.current._id === group._id)
+        ) {
           this.Group.current = response.data;
           this.User.loadCurrent();
         }
@@ -104,7 +107,7 @@ export default class GroupEditCtrl {
         }
 
         this.$uibModalInstance.close(group);
-        this.Alertify.success(`${capitalize(this.action)}d group <strong>${this.Group.current.name}</strong>`);
+        this.Alertify.success(`${capitalize(this.action)}d group <strong>${group.name}</strong>`);
 
         if (this.setupCampaign) {
           this.$location.search('setupCampaign', true);
