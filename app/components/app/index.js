@@ -2,6 +2,7 @@ import angular from 'angular';
 
 // Module dependencies
 import ngRoute from 'angular-route';
+import ngAnimate from 'angular-animate';
 import uiSelect from 'ui-select';
 import navbar from '../navbar';
 
@@ -41,6 +42,7 @@ export default angular.module('app', [
     $httpProvider,
     $routeProvider,
     $locationProvider,
+    $animateProvider,
     uiSelectConfig
   ) => {
     $routeProvider
@@ -89,6 +91,7 @@ export default angular.module('app', [
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.useApplyAsync(true);
     $locationProvider.html5Mode(true);
+    $animateProvider.classNameFilter(/^((?!(fa)).)*$/);
 
     uiSelectConfig.theme = 'bootstrap';
     uiSelectConfig.appendToBody = true;

@@ -2,6 +2,7 @@ import angular from 'angular';
 
 // Module dependencies
 import ngSanitize from 'angular-sanitize';
+import ngAnimate from 'angular-animate';
 import uibs from 'angular-ui-bootstrap';
 import uiSelect from 'ui-select';
 import User from '../../services/User';
@@ -16,6 +17,7 @@ import navbarTpl from './navbar.html';
 
 export default angular.module('app.components.navbar', [
   ngSanitize,
+  ngAnimate,
   uibs,
   uiSelect,
   User,
