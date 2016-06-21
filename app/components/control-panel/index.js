@@ -2,6 +2,7 @@ import angular from 'angular';
 
 // Module dependencies
 import angularMarked from 'angular-marked';
+import uibs from 'angular-ui-bootstrap';
 import Alertify from '../../services/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
@@ -26,6 +27,7 @@ import groupsControlPanel from './groupsControlPanel.html';
 
 let controlPanel = angular.module('app.components.controlPanel', [
   angularMarked,
+  uibs,
   Alertify,
   User,
   Group,
