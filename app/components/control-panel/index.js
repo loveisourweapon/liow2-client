@@ -9,6 +9,7 @@ import Group from '../../services/Group';
 import Act from '../../services/Act';
 import Modal from '../../services/Modal';
 import directives from '../../directives';
+import lodashFilters from '../../filters/lodash';
 import momentFilters from '../../filters/moment';
 
 // Component dependencies
@@ -34,6 +35,7 @@ let controlPanel = angular.module('app.components.controlPanel', [
   Act,
   Modal,
   directives,
+  lodashFilters,
   momentFilters
 ])
   .controller('ControlPanelCtrl', ControlPanelCtrl)
