@@ -4,22 +4,27 @@ import map from 'lodash/map';
 export default class HomeFeedCtrl {
   /* @ngInject */
   constructor(User, Act, Feed) {
-    Object.assign(this, { User, Act });
+    Object.assign(this, { User, Act, Feed });
+  }
 
+  /**
+   * Component is being initialised
+   */
+  $onInit() {
     if (this.User.isAuthenticated() && this.User.current) {
-      Feed.update({ refresh: true });
+      this.Feed.update({ refresh: true });
       this.countAllGroupActs(this.User.current.groups);
     }
 
     this.loginOff = this.User.on('login', user => {
-      Feed.update({ refresh: true });
+      this.Feed.update({ refresh: true });
       this.countAllGroupActs(user.groups);
     });
-    this.logoutOff = this.User.on('logout', () => Feed.update({ clear: true }));
+    this.logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
   }
 
   /**
-   * Scope is being destroyed
+   * Component is being destroyed
    */
   $onDestroy() {
     this.loginOff();

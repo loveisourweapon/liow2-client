@@ -40,7 +40,10 @@ export default angular.module('app.components.controlPanel', [
 ])
   .component('controlPanel', {
     controller: ControlPanelCtrl,
-    template: controlPanelTpl
+    template: controlPanelTpl,
+    bindings: {
+      view: '<'
+    }
   })
   .component('userControlPanel', {
     controller: UserControlPanelCtrl,

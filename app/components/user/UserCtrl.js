@@ -4,21 +4,30 @@ const NUM_IMAGES = 6;
 
 export default class UserCtrl {
   /* @ngInject */
-  constructor($rootScope, $scope, $routeParams, User, Act, Feed, Modal) {
-    Object.assign(this, { User, Act, Feed, Modal });
+  constructor($rootScope, User, Act, Feed, Modal) {
+    Object.assign(this, { $rootScope, User, Act, Feed, Modal });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     // Set a random jumbotron background image seeded by the user ID
-    this.jumbotronBackground = `/images/header${Math.floor(seedrandom($routeParams.user)() * NUM_IMAGES)}.jpg`;
+    this.jumbotronBackground = `/images/header${Math.floor(seedrandom(this.userId)() * NUM_IMAGES)}.jpg`;
 
-    this.loadUser($routeParams.user)
-      .then(() => $rootScope.title = this.user ? this.user.name : null);
+    this.loadUser(this.userId)
+      .then(() => this.$rootScope.title = this.user ? this.user.name : null);
 
-    let loginOff = this.User.on('login', () => this.Feed.update({ refresh: true }));
-    let logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
-    $scope.$on('$destroy', () => {
-      loginOff();
-      logoutOff();
-    });
+    this.loginOff = this.User.on('login', () => this.Feed.update({ refresh: true }));
+    this.logoutOff = this.User.on('logout', () => this.Feed.update({ clear: true }));
+  }
+
+  /**
+   * Component is being destroyed
+   */
+  $onDestroy() {
+    this.loginOff();
+    this.logoutOff();
   }
 
   /**

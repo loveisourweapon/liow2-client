@@ -6,7 +6,12 @@ export default class NavbarCtrl {
   /* @ngInject */
   constructor($location, $q, User, Group, Deed, Act, Modal) {
     Object.assign(this, { $location, $q, User, Group, Deed, Act, Modal });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.choices = [];
     this.selected = null;
     this.isCollapsed = true;

@@ -36,6 +36,9 @@ export default angular.module('app.components.deed', [
 ])
   .component('deed', {
     controller: DeedCtrl,
-    template: deedTpl
+    template: deedTpl,
+    bindings: {
+      deedSlug: '<'
+    }
   })
   .name;

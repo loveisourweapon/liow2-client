@@ -1,9 +1,14 @@
 export default class ResetPasswordCtrl {
   /* @ngInject */
-  constructor($rootScope, $routeParams, $location, Alertify, User, Modal) {
-    Object.assign(this, { $routeParams, $location, Alertify, User, Modal });
+  constructor($rootScope, $location, Alertify, User, Modal) {
+    Object.assign(this, { $rootScope, $location, Alertify, User, Modal });
+  }
 
-    $rootScope.title = 'Reset Password';
+  /**
+   * Component is initialised
+   */
+  $onInit() {
+    this.$rootScope.title = 'Reset Password';
   }
 
   /**

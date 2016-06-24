@@ -5,7 +5,12 @@ export default class CommentFormCtrl {
   /* @ngInject */
   constructor($element, $scope, $timeout, Alertify, User, Comment, Feed) {
     Object.assign(this, { $element, $scope, $timeout, Alertify, User, Comment, Feed });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.newComment = {
       content: { text: '' }
     };
@@ -19,7 +24,7 @@ export default class CommentFormCtrl {
   }
 
   /**
-   * Scope is being destroyed
+   * Component is being destroyed
    */
   $onDestroy() {
     this.editor.destroy();

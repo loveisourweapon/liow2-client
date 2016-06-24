@@ -18,6 +18,9 @@ export default angular.module('app.component.resetPassword', [
 ])
   .component('resetPassword', {
     controller: ResetPasswordCtrl,
-    template: resetPasswordTpl
+    template: resetPasswordTpl,
+    bindings: {
+      token: '<'
+    }
   })
   .name;

@@ -32,6 +32,9 @@ export default angular.module('app.components.group', [
 ])
   .component('group', {
     controller: GroupCtrl,
-    template: groupTpl
+    template: groupTpl,
+    bindings: {
+      groupSlug: '<'
+    }
   })
   .name;

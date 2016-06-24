@@ -7,7 +7,12 @@ export default class UsersControlPanelCtrl {
   /* @ngInject */
   constructor($timeout, User) {
     Object.assign(this, { $timeout, User });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.loadUsers();
   }
 

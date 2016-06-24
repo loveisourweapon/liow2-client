@@ -16,6 +16,9 @@ export default angular.module('app.component.confirmEmail', [
 ])
   .component('confirmEmail', {
     controller: ConfirmEmailCtrl,
-    template: confirmEmailTpl
+    template: confirmEmailTpl,
+    bindings: {
+      token: '<'
+    }
   })
   .name;

@@ -1,10 +1,15 @@
 export default class DeedCtrl {
   /* @ngInject */
-  constructor($rootScope, $routeParams, Alertify, User, Group, Deed, Act, Feed, Modal) {
-    Object.assign(this, { Alertify, User, Group, Deed, Act, Feed, Modal });
+  constructor($rootScope, Alertify, User, Group, Deed, Act, Feed, Modal) {
+    Object.assign(this, { $rootScope, Alertify, User, Group, Deed, Act, Feed, Modal });
+  }
 
-    this.loadDeed($routeParams.deed)
-      .then(() => $rootScope.title = this.Deed.current ? this.Deed.current.title : null);
+  /**
+   * Component is initialised
+   */
+  $onInit() {
+    this.loadDeed(this.deedSlug)
+      .then(() => this.$rootScope.title = this.Deed.current ? this.Deed.current.title : null);
   }
 
   /**

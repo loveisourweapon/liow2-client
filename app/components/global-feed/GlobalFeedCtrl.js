@@ -1,8 +1,15 @@
 export default class GlobalFeedCtrl {
   /* @ngInject */
   constructor($rootScope, Feed) {
-    $rootScope.title = 'Global Activity Feed';
+    Object.assign(this, { $rootScope, Feed });
+  }
 
-    Feed.update({ refresh: true });
+  /**
+   * Component is initialised
+   */
+  $onInit() {
+    this.$rootScope.title = 'Global Activity Feed';
+
+    this.Feed.update({ refresh: true });
   }
 }

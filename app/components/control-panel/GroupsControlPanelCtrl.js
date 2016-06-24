@@ -7,7 +7,12 @@ export default class GroupsControlPanelCtrl {
   /* @ngInject */
   constructor($timeout, Group, Modal) {
     Object.assign(this, { $timeout, Group, Modal });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.loadGroups();
   }
 

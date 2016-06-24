@@ -22,6 +22,9 @@ export default angular.module('app.components.user', [
 ])
   .component('user', {
     controller: UserCtrl,
-    template: userTpl
+    template: userTpl,
+    bindings: {
+      userId: '<'
+    }
   })
   .name;

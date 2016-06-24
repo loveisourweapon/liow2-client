@@ -1,5 +1,8 @@
 export default class AppCtrl {
-  constructor() {
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.date = Date.now();
   }
 }
