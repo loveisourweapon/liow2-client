@@ -12,14 +12,13 @@ import deedList from '../deed-list';
 
 // Component dependencies
 import HomeCtrl from './HomeCtrl';
-import template from './home.html';
+import homeTpl from './home.html';
 import WelcomeCtrl from './WelcomeCtrl';
 import welcomeTpl from './welcome.html';
 import HomeFeedCtrl from './HomeFeedCtrl';
 import homeFeedTpl from './homeFeed.html';
 
-export let homeTpl = template;
-export let home = angular.module('app.components.home', [
+export default angular.module('app.components.home', [
   User,
   Group,
   Act,
@@ -29,7 +28,10 @@ export let home = angular.module('app.components.home', [
   feed,
   deedList
 ])
-  .controller('HomeCtrl', HomeCtrl)
+  .component('home', {
+    controller: HomeCtrl,
+    template: homeTpl
+  })
   .component('welcome', {
     controller: WelcomeCtrl,
     template: welcomeTpl

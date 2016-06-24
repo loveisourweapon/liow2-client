@@ -10,10 +10,9 @@ import jumbotron from '../jumbotron';
 
 // Component dependencies
 import UserCtrl from './UserCtrl';
-import template from './user.html';
-export let userTpl = template;
+import userTpl from './user.html';
 
-export let user = angular.module('app.components.user', [
+export default angular.module('app.components.user', [
   uibs,
   User,
   Act,
@@ -21,5 +20,8 @@ export let user = angular.module('app.components.user', [
   Modal,
   jumbotron
 ])
-  .controller('UserCtrl', UserCtrl)
+  .component('user', {
+    controller: UserCtrl,
+    template: userTpl
+  })
   .name;

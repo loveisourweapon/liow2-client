@@ -7,14 +7,14 @@ import uiSelect from 'ui-select';
 import navbar from '../navbar';
 
 // Router dependencies
-import { home, homeTpl } from '../home';
-import { globalFeed, globalFeedTpl } from '../global-feed';
-import { deed, deedTpl } from '../deed';
-import { group, groupTpl } from '../group';
-import { user, userTpl } from '../user';
-import { confirmEmail, confirmEmailTpl } from '../confirm-email';
-import { resetPassword, resetPasswordTpl } from '../reset-password';
-import { controlPanel, controlPanelTpl } from '../control-panel';
+import home from '../home';
+import controlPanel from '../control-panel';
+import globalFeed from '../global-feed';
+import deed from '../deed';
+import group from '../group';
+import user from '../user';
+import confirmEmail from '../confirm-email';
+import resetPassword from '../reset-password';
 
 // Component dependencies
 import AppCtrl from './AppCtrl';
@@ -25,13 +25,13 @@ export default angular.module('app', [
   uiSelect,
   navbar,
   home,
+  controlPanel,
   globalFeed,
   deed,
   group,
   user,
   confirmEmail,
-  resetPassword,
-  controlPanel
+  resetPassword
 ])
   .component('app', {
     controller: AppCtrl,
@@ -47,44 +47,28 @@ export default angular.module('app', [
   ) => {
     $routeProvider
       .when('/', {
-        controller: 'HomeCtrl',
-        controllerAs: '$ctrl',
-        template: homeTpl
-      })
-      .when('/global', {
-        controller: 'GlobalFeedCtrl',
-        controllerAs: '$ctrl',
-        template: globalFeedTpl
-      })
-      .when('/d/:deed', {
-        controller: 'DeedCtrl',
-        controllerAs: '$ctrl',
-        template: deedTpl
-      })
-      .when('/g/:group', {
-        controller: 'GroupCtrl',
-        controllerAs: '$ctrl',
-        template: groupTpl
-      })
-      .when('/u/:user', {
-        controller: 'UserCtrl',
-        controllerAs: '$ctrl',
-        template: userTpl
-      })
-      .when('/confirm/:token', {
-        controller: 'ConfirmEmailCtrl',
-        controllerAs: '$ctrl',
-        template: confirmEmailTpl
-      })
-      .when('/reset/:token', {
-        controller: 'ResetPasswordCtrl',
-        controllerAs: '$ctrl',
-        template: resetPasswordTpl
+        template: '<home></home>'
       })
       .when('/control-panel', {
-        controller: 'ControlPanelCtrl',
-        controllerAs: '$ctrl',
-        template: controlPanelTpl
+        template: '<control-panel></control-panel>'
+      })
+      .when('/global', {
+        template: '<global-feed></global-feed>'
+      })
+      .when('/d/:deed', {
+        template: '<deed></deed>'
+      })
+      .when('/g/:group', {
+        template: '<group></group>'
+      })
+      .when('/u/:user', {
+        template: '<user></user>'
+      })
+      .when('/confirm/:token', {
+        template: '<confirm-email></confirm-email>'
+      })
+      .when('/reset/:token', {
+        template: '<reset-password></reset-password>'
       })
       .otherwise('/');
 

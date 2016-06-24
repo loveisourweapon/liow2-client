@@ -17,10 +17,9 @@ import commentForm from '../comment-form';
 
 // Component dependencies
 import DeedCtrl from './DeedCtrl';
-import template from './deed.html';
-export let deedTpl = template;
+import deedTpl from './deed.html';
 
-export let deed = angular.module('app.components.deed', [
+export default angular.module('app.components.deed', [
   angularMarked,
   angularYoutube,
   uibs,
@@ -35,5 +34,8 @@ export let deed = angular.module('app.components.deed', [
   deedList,
   commentForm
 ])
-  .controller('DeedCtrl', DeedCtrl)
+  .component('deed', {
+    controller: DeedCtrl,
+    template: deedTpl
+  })
   .name;

@@ -15,10 +15,9 @@ import feed from '../feed';
 
 // Component dependencies
 import GroupCtrl from './GroupCtrl';
-import template from './group.html';
-export let groupTpl = template;
+import groupTpl from './group.html';
 
-export let group = angular.module('app.components.group', [
+export default angular.module('app.components.group', [
   angularMarked,
   uibs,
   Alertify,
@@ -31,5 +30,8 @@ export let group = angular.module('app.components.group', [
   jumbotron,
   feed
 ])
-  .controller('GroupCtrl', GroupCtrl)
+  .component('group', {
+    controller: GroupCtrl,
+    template: groupTpl
+  })
   .name;

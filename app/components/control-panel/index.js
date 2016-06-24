@@ -26,7 +26,7 @@ import usersControlPanelTpl from './usersControlPanel.html';
 import GroupsControlPanelCtrl from './GroupsControlPanelCtrl';
 import groupsControlPanel from './groupsControlPanel.html';
 
-let controlPanel = angular.module('app.components.controlPanel', [
+export default angular.module('app.components.controlPanel', [
   angularMarked,
   uibs,
   Alertify,
@@ -38,7 +38,10 @@ let controlPanel = angular.module('app.components.controlPanel', [
   lodashFilters,
   momentFilters
 ])
-  .controller('ControlPanelCtrl', ControlPanelCtrl)
+  .component('controlPanel', {
+    controller: ControlPanelCtrl,
+    template: controlPanelTpl
+  })
   .component('userControlPanel', {
     controller: UserControlPanelCtrl,
     template: userControlPanelTpl
@@ -63,8 +66,3 @@ let controlPanel = angular.module('app.components.controlPanel', [
     template: groupsControlPanel
   })
   .name;
-
-export {
-  controlPanel,
-  controlPanelTpl
-};
