@@ -41,8 +41,8 @@ import confirmTpl from './confirm/confirm.html';
 
 class Modal {
   /* @ngInject */
-  constructor($uibModal, $q, User) {
-    Object.assign(this, { $uibModal, $q, User });
+  constructor($uibModal, User) {
+    Object.assign(this, { $uibModal, User });
 
     this.modalDefaults = {
       controllerAs: '$ctrl',
@@ -63,7 +63,7 @@ class Modal {
       template: loginTpl,
       size: 'sm',
       resolve: {
-        canSwitch: this.$q.resolve(canSwitch)
+        canSwitch: () => canSwitch
       }
     }, this.modalDefaults)).result;
   }
@@ -80,7 +80,7 @@ class Modal {
       controller: SignupCtrl,
       template: signupTpl,
       resolve: {
-        canSwitch: this.$q.resolve(canSwitch)
+        canSwitch: () => canSwitch
       }
     }, this.modalDefaults)).result;
   }
@@ -98,7 +98,7 @@ class Modal {
       template: forgotPasswordTpl,
       size: 'sm',
       resolve: {
-        email: this.$q.resolve(email)
+        email: () => email
       }
     }, this.modalDefaults)).result;
   }
@@ -116,7 +116,7 @@ class Modal {
       template: changePasswordTpl,
       size: 'sm',
       resolve: {
-        user: this.$q.resolve(user)
+        user: () => user
       }
     }, this.modalDefaults)).result;
   }
@@ -134,9 +134,11 @@ class Modal {
       controller: GroupEditCtrl,
       template: groupEditTpl,
       resolve: {
-        action: this.$q.resolve(action),
-        group: this.$q.resolve(angular.copy(group)),
-        users: group ? this.User.find({ groups: group._id }).then(response => response.data) : null
+        action: () => action,
+        group: () => angular.copy(group),
+        users: () => group ?
+          this.User.find({ groups: group._id }).then(response => response.data) :
+          null
       }
     }, this.modalDefaults)).result;
   }
@@ -155,9 +157,9 @@ class Modal {
       controller: CampaignEditCtrl,
       template: campaignEditTpl,
       resolve: {
-        action: this.$q.resolve(action),
-        group: this.$q.resolve(angular.copy(group)),
-        campaign: this.$q.resolve(angular.copy(campaign))
+        action: () => action,
+        group: () => angular.copy(group),
+        campaign: () => angular.copy(campaign)
       }
     }, this.modalDefaults)).result;
   }
@@ -174,7 +176,7 @@ class Modal {
       controller: DeedPreviewCtrl,
       template: deedPreviewTpl,
       resolve: {
-        deedId: this.$q.resolve(deedId)
+        deedId: () => deedId
       }
     }, this.modalDefaults)).result;
   }
@@ -194,8 +196,8 @@ class Modal {
       template: alertTpl,
       size: size,
       resolve: {
-        message: this.$q.resolve(message),
-        title: this.$q.resolve(title)
+        message: () => message,
+        title: () => title
       }
     }, this.modalDefaults)).result;
   }
@@ -214,8 +216,8 @@ class Modal {
       template: confirmTpl,
       size: 'sm',
       resolve: {
-        message: this.$q.resolve(message),
-        title: this.$q.resolve(title)
+        message: () => message,
+        title: () => title
       }
     }, this.modalDefaults)).result;
   }

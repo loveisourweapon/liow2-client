@@ -115,7 +115,7 @@ export default class GroupCtrl {
   editCampaign(action = 'create', group, campaign = null) {
     return this.Modal.openCampaignEdit(action, group, campaign)
       .then(() => this.loadCampaign(group))
-      .catch(err => null);
+      .catch(() => null);
   }
 
   /**
@@ -199,7 +199,7 @@ export default class GroupCtrl {
         })
         .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
         .then(() => this.activeTab = 0)
-        .catch(() => user.groups.push(group));
+        .catch(reason => reason && user.groups.push(group));
     }
   }
 }

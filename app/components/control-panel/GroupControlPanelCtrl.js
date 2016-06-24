@@ -76,7 +76,7 @@ export default class GroupControlPanelCtrl {
         })
         .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
         .then(() => this.$location.search('active', 'user'))
-        .catch(() => user.groups.push(group));
+        .catch(reason => reason && user.groups.push(group));
     }
   }
 }
