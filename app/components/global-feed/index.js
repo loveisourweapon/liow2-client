@@ -7,13 +7,15 @@ import feed from '../feed';
 
 // Component dependencies
 import GlobalFeedCtrl from './GlobalFeedCtrl';
-import template from './globalFeed.html';
-export let globalFeedTpl = template;
+import globalFeedTpl from './globalFeed.html';
 
-export let globalFeed = angular.module('app.components.globalFeed', [
+export default angular.module('app.components.globalFeed', [
   Feed,
   jumbotron,
   feed
 ])
-  .controller('GlobalFeedCtrl', GlobalFeedCtrl)
+  .component('globalFeed', {
+    controller: GlobalFeedCtrl,
+    template: globalFeedTpl
+  })
   .name;

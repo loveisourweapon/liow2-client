@@ -1,12 +1,17 @@
 export default class WelcomeCtrl {
   /* @ngInject */
   constructor(User, Group, Act, Modal) {
-    Object.assign(this, { Act, Modal });
+    Object.assign(this, { User, Group, Act, Modal });
+  }
 
-    Group.find({ count: true })
+  /**
+   * Component is initialised
+   */
+  $onInit() {
+    this.Group.find({ count: true })
       .then(response => this.numberOfGroups = Number(response.data));
 
-    User.find({ count: true })
+    this.User.find({ count: true })
       .then(response => this.numberOfUsers = Number(response.data));
   }
 }

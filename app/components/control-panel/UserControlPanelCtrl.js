@@ -2,20 +2,31 @@ import jsonpatch from 'fast-json-patch';
 
 export default class UserControlPanelCtrl {
   /* @ngInject */
-  constructor($scope, Alertify, User, Act, Modal) {
+  constructor(Alertify, User, Act, Modal) {
     Object.assign(this, { Alertify, User, Act, Modal });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     if (this.User.current) {
       this.Act.count({ user: this.User.current._id });
     } else {
       this.loading = true;
     }
 
-    let loginOff = this.User.on('login', user => {
+    this.loginOff = this.User.on('login', user => {
       this.Act.count({ user: user._id });
       this.loading = false;
     });
-    $scope.$on('$destroy', loginOff);
+  }
+
+  /**
+   * Component is being destroyed
+   */
+  $onDestroy() {
+    this.loginOff();
   }
 
   /**

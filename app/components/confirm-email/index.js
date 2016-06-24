@@ -7,13 +7,18 @@ import jumbotron from '../jumbotron';
 
 // Component dependencies
 import ConfirmEmailCtrl from './ConfirmEmailCtrl';
-import template from './confirmEmail.html';
-export let confirmEmailTpl = template;
+import confirmEmailTpl from './confirmEmail.html';
 
-export let confirmEmail = angular.module('app.component.confirmEmail', [
+export default angular.module('app.component.confirmEmail', [
   Alertify,
   User,
   jumbotron
 ])
-  .controller('ConfirmEmailCtrl', ConfirmEmailCtrl)
+  .component('confirmEmail', {
+    controller: ConfirmEmailCtrl,
+    template: confirmEmailTpl,
+    bindings: {
+      token: '<'
+    }
+  })
   .name;

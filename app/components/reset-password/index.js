@@ -8,14 +8,19 @@ import directives from '../../directives';
 
 // Component dependencies
 import ResetPasswordCtrl from './ResetPasswordCtrl';
-import template from './resetPassword.html';
-export let resetPasswordTpl = template;
+import resetPasswordTpl from './resetPassword.html';
 
-export let resetPassword = angular.module('app.component.resetPassword', [
+export default angular.module('app.component.resetPassword', [
   Alertify,
   User,
   jumbotron,
   directives
 ])
-  .controller('ResetPasswordCtrl', ResetPasswordCtrl)
+  .component('resetPassword', {
+    controller: ResetPasswordCtrl,
+    template: resetPasswordTpl,
+    bindings: {
+      token: '<'
+    }
+  })
   .name;

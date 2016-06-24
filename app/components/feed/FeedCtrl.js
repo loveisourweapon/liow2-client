@@ -5,10 +5,15 @@ export default class FeedCtrl {
   /* @ngInject */
   constructor(User, Feed) {
     Object.assign(this, { User, Feed });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.feedItems = null;
 
-    this.feedUpdateOff = this.Feed.onUpdate((options) => {
+    this.feedUpdateOff = this.Feed.onUpdate(options => {
       if (options.clear || options.refresh) {
         this.feedItems = null;
 
@@ -20,7 +25,7 @@ export default class FeedCtrl {
   }
 
   /**
-   * Scope is being destroyed
+   * Component is being destroyed
    */
   $onDestroy() {
     this.feedUpdateOff();

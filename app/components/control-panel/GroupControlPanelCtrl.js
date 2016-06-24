@@ -4,7 +4,12 @@ export default class GroupControlPanelCtrl {
   /* @ngInject */
   constructor($rootScope, $location, Alertify, User, Group, Act, Modal) {
     Object.assign(this, { $rootScope, $location, Alertify, User, Group, Act, Modal });
+  }
 
+  /**
+   * Component is initialised
+   */
+  $onInit() {
     this.loadGroup(this.groupId);
   }
 

@@ -12,9 +12,8 @@
       <tbody>
         <tr ng-repeat="deed in $ctrl.deeds track by deed._id">
           <td class="text-center">
-            <img ng-src="{{deed.logo}}"
-                 class="img-circle icon"
-                 ng-if="deed.logo">
+            <img ng-src="{{ deed.logo || '/images/deed.png' }}"
+                 class="img-circle icon">
           </td>
           <td>{{ deed.title }}</td>
           <td>

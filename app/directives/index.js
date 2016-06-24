@@ -1,6 +1,4 @@
 import angular from 'angular';
-import head from 'lodash/head';
-import isFunction from 'lodash/isFunction';
 
 export default angular.module('app.directives', [])
   .directive('sameAs', () => {

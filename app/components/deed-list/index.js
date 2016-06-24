@@ -12,10 +12,10 @@ export default angular.module('app.components.deedList', [
   Act
 ])
   .component('deedList', {
+    controller: DeedListCtrl,
+    template: '<ng-include src="$ctrl.getTemplateName()" />',
     bindings: {
       layout: '@'
-    },
-    controller: DeedListCtrl,
-    template: '<ng-include src="$ctrl.getTemplateName()" />'
+    }
   })
   .name;
