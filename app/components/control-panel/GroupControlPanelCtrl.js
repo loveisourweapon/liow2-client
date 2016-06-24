@@ -33,7 +33,7 @@ export default class GroupControlPanelCtrl {
         }
 
         this.Act.count({ group: this.group._id });
-        this.$rootScope.title = this.group.name;
+        this.$rootScope.title = `${this.group.name} | Control Panel`;
 
         return this.User.find({ groups: this.group._id, count: true });
       })
