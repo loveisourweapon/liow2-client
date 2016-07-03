@@ -1,30 +1,22 @@
 import angular from 'angular';
+import CommentFormComponent from './comment-form.component';
 
 // Module dependencies
 import Alertify from '../../services/Alertify';
 import User from '../../services/User';
 import Comment from '../../services/Comment';
 import Feed from '../../services/Feed';
+import MediumEditor from '../medium-editor';
 
-// Component dependencies
-import CommentFormCtrl from './CommentFormCtrl';
-import commentFormTpl from './commentForm.html';
-
-export default angular.module('app.components.commentForm', [
-  Alertify,
-  User,
-  Comment,
-  Feed
-])
-  .component('commentForm', {
-    controller: CommentFormCtrl,
-    template: commentFormTpl,
-    bindings: {
-      deed: '<',
-      group: '<',
-      comment: '<',
-      act: '<',
-      placeholder: '@'
-    }
-  })
+const commentForm = angular
+  .module('commentForm', [
+    Alertify,
+    User,
+    Comment,
+    Feed,
+    MediumEditor,
+  ])
+  .component('commentForm', CommentFormComponent)
   .name;
+
+export default commentForm;

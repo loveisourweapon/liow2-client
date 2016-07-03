@@ -1,21 +1,16 @@
 import angular from 'angular';
+import DeedListComponent from './deed-list.component';
 
 // Module dependencies
 import Deed from '../../services/Deed';
 import Act from '../../services/Act';
 
-// Component dependencies
-import DeedListCtrl from './DeedListCtrl';
-
-export default angular.module('app.components.deedList', [
-  Deed,
-  Act
-])
-  .component('deedList', {
-    controller: DeedListCtrl,
-    template: '<ng-include src="$ctrl.getTemplateName()" />',
-    bindings: {
-      layout: '@'
-    }
-  })
+const deedList = angular
+  .module('deedList', [
+    Deed,
+    Act,
+  ])
+  .component('deedList', DeedListComponent)
   .name;
+
+export default deedList;

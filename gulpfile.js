@@ -62,9 +62,8 @@ gulp.task('browserify-vendor', ['clean'], function() {
  |--------------------------------------------------------------------------
  */
 gulp.task('browserify', ['clean-app'], function() {
-  return browserify('app/components/app', { debug: true })
+  return browserify('app/app.js', { debug: true })
     .external(dependencies)
-    .transform(require('partialify'))
     .transform(require('babelify').configure({ presets: ['es2015'], plugins: ['transform-object-assign'] }))
     .bundle()
     .on('error', swallowError)

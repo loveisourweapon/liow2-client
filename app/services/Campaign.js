@@ -2,7 +2,7 @@ import angular from 'angular';
 import has from 'lodash/has';
 
 // Module dependencies
-import config from '../config';
+import Config from '../common/config';
 
 class Campaign {
   /* @ngInject */
@@ -72,8 +72,11 @@ class Campaign {
   }
 }
 
-export default angular.module('app.services.Campaign', [
-  config
-])
+const campaignService = angular
+  .module('app.services.Campaign', [
+    Config,
+  ])
   .service('Campaign', Campaign)
   .name;
+
+export default campaignService;

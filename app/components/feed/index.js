@@ -1,28 +1,22 @@
 import angular from 'angular';
+import FeedComponent from './feed.component.js';
 
 // Module dependencies
 import angularMarked from 'angular-marked';
 import angularInView from 'angular-inview';
-import momentFilters from '../../filters/moment';
 import User from '../../services/User';
 import Feed from '../../services/Feed';
+import Moment from '../moment';
 
-// Component dependencies
-import FeedCtrl from './FeedCtrl';
-import feedTpl from './feed.html';
-
-export default angular.module('app.components.feed', [
-  angularMarked,
-  angularInView.name,
-  momentFilters,
-  User,
-  Feed
-])
-  .component('feed', {
-    controller: FeedCtrl,
-    template: feedTpl,
-    bindings: {
-      criteria: '<'
-    }
-  })
+const feed = angular
+  .module('feed', [
+    angularMarked,
+    angularInView.name,
+    User,
+    Feed,
+    Moment,
+  ])
+  .component('feed', FeedComponent)
   .name;
+
+export default feed;

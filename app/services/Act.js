@@ -3,7 +3,7 @@ import has from 'lodash/has';
 import defaults from 'lodash/defaults';
 
 // Module dependencies
-import config from '../config';
+import Config from '../common/config';
 
 class Act {
   /* @ngInject */
@@ -54,8 +54,11 @@ class Act {
   }
 }
 
-export default angular.module('app.services.Act', [
-  config
-])
+const actService = angular
+  .module('app.services.Act', [
+    Config,
+  ])
   .service('Act', Act)
   .name;
+
+export default actService;

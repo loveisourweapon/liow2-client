@@ -1,7 +1,8 @@
 import angular from 'angular';
 import alertify from 'alertify.js';
 
-export default angular.module('app.services.Alertify', [])
+const alertifyService = angular
+  .module('app.services.Alertify', [])
   .factory('Alertify', () => {
     alertify
       .theme('bootstrap')
@@ -54,3 +55,5 @@ export default angular.module('app.services.Alertify', [])
     };
   })
   .name;
+
+export default alertifyService;

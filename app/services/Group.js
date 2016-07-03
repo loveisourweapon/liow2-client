@@ -4,7 +4,7 @@ import find from 'lodash/find';
 import merge from 'lodash/merge';
 
 // Module dependencies
-import config from '../config';
+import Config from '../common/config';
 import User from './User';
 
 let currentGroup = null;
@@ -114,9 +114,12 @@ class Group {
   }
 }
 
-export default angular.module('app.services.Group', [
-  config,
-  User
-])
+const groupService = angular
+  .module('app.services.Group', [
+    Config,
+    User,
+  ])
   .service('Group', Group)
   .name;
+
+export default groupService;

@@ -2,7 +2,7 @@ import angular from 'angular';
 import has from 'lodash/has';
 
 // Module dependencies
-import config from '../config';
+import Config from '../common/config';
 
 class Comment {
   /* @ngInject */
@@ -40,8 +40,11 @@ class Comment {
   }
 }
 
-export default angular.module('si.services.Comment', [
-  config
-])
+const commentService = angular
+  .module('si.services.Comment', [
+    Config,
+  ])
   .service('Comment', Comment)
   .name;
+
+export default commentService;

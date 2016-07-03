@@ -3,7 +3,7 @@ import forOwn from 'lodash/forOwn';
 import uuid from 'uuid';
 
 // Module dependencies
-import config from '../config';
+import Config from '../common/config';
 
 const FEED_UPDATE_DELAY = 80;
 let listeners = {};
@@ -53,8 +53,11 @@ class Feed {
   }
 }
 
-export default angular.module('app.services.Feed', [
-  config
-])
+const feedService = angular
+  .module('app.services.Feed', [
+    Config,
+  ])
   .service('Feed', Feed)
   .name;
+
+export default feedService;

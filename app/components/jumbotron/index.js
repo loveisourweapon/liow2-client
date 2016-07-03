@@ -1,22 +1,9 @@
 import angular from 'angular';
+import JumbotronComponent from './jumbotron.component';
 
-// Component dependencies
-import JumbotronCtrl from './JumbotronCtrl';
-import jumbotronTpl from './jumbotron.html';
-
-export default angular.module('app.components.jumbotron', [])
-  .component('jumbotron', {
-    controller: JumbotronCtrl,
-    template: jumbotronTpl,
-    transclude: {
-      content: '?jumboContent',
-      title: '?jumboTitle',
-      text: '?jumboText'
-    },
-    bindings: {
-      image: '<jumboImage',
-      background: '<jumboBackground',
-      classes: '@jumboClasses'
-    }
-  })
+let jumbotron = angular
+  .module('jumbotron', [])
+  .component('jumbotron', JumbotronComponent)
   .name;
+
+export default jumbotron;

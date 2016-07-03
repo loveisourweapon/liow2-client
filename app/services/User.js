@@ -6,8 +6,8 @@ import uuid from 'uuid';
 import seedrandom from 'seedrandom';
 
 // Module dependencies
-import config from '../config';
 import satellizer from 'satellizer';
+import Config from '../common/config';
 import Alertify from './Alertify';
 
 const NUM_IMAGES = 12;
@@ -332,12 +332,15 @@ class User {
   }
 }
 
-export default angular.module('app.services.User', [
-  config,
-  satellizer,
-  Alertify
-])
-  .config(/* @ngInject */($authProvider, config) => {
+const userService = angular
+  .module('app.services.User', [
+    satellizer,
+    Config,
+    Alertify,
+  ])
+  .config(($authProvider, config) => {
+    'ngInject';
+
     $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
     $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
     $authProvider.facebook({
@@ -347,3 +350,5 @@ export default angular.module('app.services.User', [
   })
   .service('User', User)
   .name;
+
+export default userService;
