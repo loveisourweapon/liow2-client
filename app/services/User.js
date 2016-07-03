@@ -8,7 +8,7 @@ import seedrandom from 'seedrandom';
 // Module dependencies
 import satellizer from 'satellizer';
 import Config from '../common/config';
-import Alertify from './Alertify';
+import Alertify from '../components/Alertify';
 
 const NUM_IMAGES = 12;
 var defaultImagesDict = {};

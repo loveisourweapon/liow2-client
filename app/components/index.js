@@ -4,10 +4,11 @@ import angular from 'angular';
 import Jumbotron from './jumbotron';
 import Feed from './feed';
 import DeedList from './deed-list';
-import MediumEditor from './medium-editor';
 import CommentForm from './comment-form';
 import IconChecked from './icon-checked';
 import SameAs from './same-as';
+import MediumEditor from './medium-editor';
+import Alertify from './alertify';
 import Lodash from './lodash';
 import Moment from './moment';
 
@@ -16,10 +17,11 @@ const components = angular
     Jumbotron,
     Feed,
     DeedList,
-    MediumEditor,
     CommentForm,
     IconChecked,
     SameAs,
+    MediumEditor,
+    Alertify,
     Lodash,
     Moment,
   ])

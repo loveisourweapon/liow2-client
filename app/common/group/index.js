@@ -4,7 +4,7 @@ import GroupComponent from './group.component';
 // Module dependencies
 import angularMarked from 'angular-marked';
 import uibs from 'angular-ui-bootstrap';
-import Alertify from '../../services/Alertify';
+import Alertify from '../../components/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
