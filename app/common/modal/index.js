@@ -11,13 +11,10 @@ import uiSelect from 'ui-select';
 import angularMarked from 'angular-marked';
 import angularYoutube from 'angular-youtube-embed';
 import 'angular-ui-switch'; // Not browserified
-import Alertify from '../../components/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
 import Deed from '../../services/Deed';
-import Lodash from '../../components/lodash';
-import SameAs from '../../components/same-as';
 
 const modalService = angular
   .module('app.services.Modal', [
@@ -29,13 +26,10 @@ const modalService = angular
     angularMarked,
     angularYoutube,
     'uiSwitch',
-    Alertify,
     User,
     Group,
     Campaign,
     Deed,
-    Lodash,
-    SameAs,
   ])
   .service('Modal', ModalService)
   .name;

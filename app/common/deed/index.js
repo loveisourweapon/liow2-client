@@ -10,11 +10,6 @@ import Group from '../../services/Group';
 import Deed from '../../services/Deed';
 import Act from '../../services/Act';
 import Feed from '../../services/Feed';
-import Modal from '../modal';
-import Jumbotron from '../../components/jumbotron';
-import feed from '../../components/feed';
-import DeedList from '../../components/deed-list';
-import CommentForm from '../../components/comment-form';
 
 const deed = angular
   .module('deed', [
@@ -26,11 +21,6 @@ const deed = angular
     Deed,
     Act,
     Feed,
-    Modal,
-    Jumbotron,
-    feed,
-    DeedList,
-    CommentForm,
   ])
   .component('deed', DeedComponent)
   .name;

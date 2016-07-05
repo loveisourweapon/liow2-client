@@ -18,7 +18,7 @@ const CommentFormComponent = {
     
         <button type="submit"
                 class="btn btn-primary m-t-xs"
-                ng-disabled="!$ctrl.textContent">
+                ng-disabled="!$ctrl.textContent || $ctrl.saving">
           <i class="fa fa-fw fa-cog fa-spin" ng-show="$ctrl.saving"></i>
           Save
         </button>

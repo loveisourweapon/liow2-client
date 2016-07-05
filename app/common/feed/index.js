@@ -6,7 +6,6 @@ import angularMarked from 'angular-marked';
 import angularInView from 'angular-inview';
 import User from '../../services/User';
 import Feed from '../../services/Feed';
-import Moment from '../moment';
 
 const feed = angular
   .module('feed', [
@@ -14,7 +13,6 @@ const feed = angular
     angularInView.name,
     User,
     Feed,
-    Moment,
   ])
   .component('feed', FeedComponent)
   .name;

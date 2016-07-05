@@ -8,10 +8,6 @@ import User from '../../services/User';
 import Group from '../../services/Group';
 import Act from '../../services/Act';
 import Feed from '../../services/Feed';
-import Modal from '../modal';
-import Jumbotron from '../../components/jumbotron';
-import feed from '../../components/feed';
-import DeedList from '../../components/deed-list';
 
 const home = angular
   .module('home', [
@@ -19,10 +15,6 @@ const home = angular
     Group,
     Act,
     Feed,
-    Modal,
-    Jumbotron,
-    feed,
-    DeedList,
   ])
   .component('home', HomeComponent)
   .component('welcome', WelcomeComponent)

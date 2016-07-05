@@ -9,27 +9,17 @@ import GroupsControlPanelComponent from './groups-control-panel.component';
 // Module dependencies
 import angularMarked from 'angular-marked';
 import uibs from 'angular-ui-bootstrap';
-import Alertify from '../../components/Alertify';
 import User from '../../services/User';
 import Group from '../../services/Group';
 import Act from '../../services/Act';
-import Modal from '../modal';
-import IconChecked from '../../components/icon-checked';
-import Lodash from '../../components/lodash';
-import Moment from '../../components/moment';
 
 const controlPanel = angular
   .module('controlPanel', [
     angularMarked,
     uibs,
-    Alertify,
     User,
     Group,
     Act,
-    Modal,
-    IconChecked,
-    Lodash,
-    Moment,
   ])
   .component('controlPanel', ControlPanelComponent)
   .component('userControlPanel', UserControlPanelComponent)
