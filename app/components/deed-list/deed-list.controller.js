@@ -1,13 +1,9 @@
 import each from 'lodash/each';
 
-// Include template files
-import templateVertical from './deed-list-vertical.template';
-import templateHorizontal from './deed-list-horizontal.template';
-
 export default class DeedListController {
   /* @ngInject */
-  constructor($location, $templateCache, Deed, Act) {
-    Object.assign(this, { $location, $templateCache, Deed, Act });
+  constructor($location, Deed, Act) {
+    Object.assign(this, { $location, Deed, Act });
   }
 
   /**
@@ -22,21 +18,5 @@ export default class DeedListController {
       })
       .catch(() => null)
       .then(() => this.loading = false);
-
-    this.$templateCache.put('deed-list-vertical.template', templateVertical);
-    this.$templateCache.put('deed-list-horizontal.template', templateHorizontal);
-  }
-
-  /**
-   * Get the name of the template
-   *
-   * @param {string} [layout='vertical']
-   *
-   * @returns {string}
-   */
-  getTemplateName(layout = 'vertical') {
-    return layout === 'vertical' ?
-      'deed-list-vertical.template' :
-      'deed-list-horizontal.template';
   }
 }

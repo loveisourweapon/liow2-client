@@ -1,4 +1,4 @@
-deed-list:not([layout=vertical]) > ng-include > div {
+deed-list > deed-list-horizontal > div {
   .deed-wrapper {
     float: left;
     width: calc(100% / 3);
@@ -78,6 +78,7 @@ deed-list:not([layout=vertical]) > ng-include > div {
       .deed-subtext {
         font-size: 10px;
         font-weight: 200;
+        text-transform: uppercase;
 
         @media (min-width: $screen-sm-min) {
           font-size: 12px;
@@ -87,7 +88,7 @@ deed-list:not([layout=vertical]) > ng-include > div {
   }
 }
 
-deed-list[layout=vertical] > ng-include > div {
+deed-list > deed-list-vertical > div {
   .deed-wrapper {
     overflow: auto;
     cursor: pointer;
@@ -128,8 +129,9 @@ deed-list[layout=vertical] > ng-include > div {
       }
 
       .deed-subtext {
-        font-weight: 200;
         font-size: 11px;
+        font-weight: 200;
+        text-transform: uppercase;
 
         @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
           display: block;
