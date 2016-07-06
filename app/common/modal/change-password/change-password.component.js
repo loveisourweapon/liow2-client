@@ -15,13 +15,13 @@ export const ChangePasswordComponent = {
         Change Password
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <form name="changePassword"
             ng-submit="$ctrl.form.$valid && $ctrl.save($ctrl.user, $ctrl.currentPassword, $ctrl.newPassword)"
             novalidate>
         <span ng-init="$ctrl.form = changePassword"></span>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error }">
           <label for="currentPassword">Current Password</label>
@@ -38,7 +38,7 @@ export const ChangePasswordComponent = {
             {{ $ctrl.error }}
           </span>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.newPassword.$invalid }">
           <label for="newPassword">New Password</label>
@@ -55,7 +55,7 @@ export const ChangePasswordComponent = {
             Password must be at least 8 characters.
           </span>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.confirmPassword.$invalid }">
           <input type="password"
@@ -71,11 +71,11 @@ export const ChangePasswordComponent = {
             Entered passwords must be the same.
           </span>
         </div>
-    
+
         <button type="submit" hidden></button>
       </form>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="button"
               class="btn btn-default"

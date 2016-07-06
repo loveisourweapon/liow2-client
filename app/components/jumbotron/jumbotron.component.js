@@ -22,10 +22,10 @@ const JumbotronComponent = {
             <img ng-src="{{ $ctrl.image }}"
                  class="img-responsive img-circle">
           </div>
-          
+
           <h1 class="jumbotron-title"
               ng-transclude="title"></h1>
-              
+
           <p class="jumbotron-text"
              ng-transclude="text"></p>
         </div>

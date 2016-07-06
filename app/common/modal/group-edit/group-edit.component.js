@@ -15,7 +15,7 @@ export const GroupEditComponent = {
         {{ ::$ctrl.action | capitalize }} Group
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <uib-alert type="danger"
                  ng-if="$ctrl.error && !$ctrl.error.errors">
@@ -23,7 +23,7 @@ export const GroupEditComponent = {
         Failed sending request. Please try again or
         <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
       </uib-alert>
-    
+
       <form name="groupEdit"
             class="form-horizontal"
             ng-submit="$ctrl.form.$valid && $ctrl.save($ctrl.group)"
@@ -61,7 +61,7 @@ export const GroupEditComponent = {
             </span>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.logo }">
           <label for="logo"
@@ -87,7 +87,7 @@ export const GroupEditComponent = {
             </span>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.coverImage }">
           <label for="coverImage"
@@ -113,7 +113,7 @@ export const GroupEditComponent = {
             </span>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.admins }">
           <label for="logo"
@@ -144,7 +144,7 @@ export const GroupEditComponent = {
             </ui-select>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.welcomeMessage }">
           <label for="welcomeMessage"
@@ -167,7 +167,7 @@ export const GroupEditComponent = {
             </span>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-if="!$ctrl.group._id">
           <div class="col-xs-9 col-xs-push-3">
@@ -182,10 +182,10 @@ export const GroupEditComponent = {
             </p>
           </div>
         </div>
-    
+
         <button type="submit" hidden></button>
       </form>
-    
+
       <div ng-if="!$ctrl.User.isAuthenticated()">
         <p>Please sign up or login to setup a new group</p>
         <p>
@@ -203,7 +203,7 @@ export const GroupEditComponent = {
         </p>
       </div>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="button"
               class="btn btn-default"

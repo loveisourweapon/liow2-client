@@ -16,7 +16,7 @@ const GroupComponent = {
         acts of love
       </jumbo-text>
     </jumbotron>
-    
+
     <div class="container container-pad">
       <div class="row">
         <div ng-if="!($ctrl.loading || $ctrl.error)">
@@ -33,7 +33,7 @@ const GroupComponent = {
                   acts of love
                 </small>
               </h5>
-    
+
               <!-- TODO: move buttons to a directive -->
               <!-- Show buttons with publish/unpublish menu for admins -->
               <div class="btn-group btn-block"
@@ -92,7 +92,7 @@ const GroupComponent = {
                   Finish campaign
                 </button>
               </div>
-    
+
               <!-- Show a normal button for non-admins -->
               <a class="btn btn-block"
                  ng-repeat="item in $ctrl.campaign.deeds"
@@ -138,7 +138,7 @@ const GroupComponent = {
               Leave group
             </button>
           </div>
-    
+
           <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
             <uib-alert type="info"
                        ng-if="$ctrl.showCampaignAlert"
@@ -149,7 +149,7 @@ const GroupComponent = {
                 Setup Campaign
               </button>
             </uib-alert>
-    
+
             <uib-tabset active="$ctrl.activeTab"
                         type="pills">
               <uib-tab>
@@ -157,7 +157,7 @@ const GroupComponent = {
                   <i class="fa fa-fw fa-commenting"></i>
                   Welcome
                 </uib-tab-heading>
-    
+
                 <blockquote marked="$ctrl.Group.current.welcomeMessage"
                             ng-if="$ctrl.Group.current.welcomeMessage"></blockquote>
     
@@ -174,16 +174,16 @@ const GroupComponent = {
                   </p>
                 </div>
               </uib-tab>
-    
+
               <uib-tab>
                 <uib-tab-heading>
                   <i class="fa fa-fw fa-list"></i>
                   Activity Feed
                 </uib-tab-heading>
-    
+
                 <feed criteria="{ group: $ctrl.Group.current._id }"
                       ng-if="$ctrl.User.isAuthenticated()"></feed>
-    
+
                 <p ng-if="!$ctrl.User.isAuthenticated()">
                   You must <a ng-click="$ctrl.Modal.openLogin()" href>login</a>
                   to see {{ $ctrl.Group.current.name }}'s Activity Feed.
@@ -192,9 +192,9 @@ const GroupComponent = {
             </uib-tabset>
           </div>
         </div>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
-    
+
         <div class="col-xs-12" ng-if="$ctrl.error">
           <uib-alert type="danger">
             <i class="fa fa-exclamation-triangle"></i>

@@ -15,7 +15,7 @@ export const SignupComponent = {
         Sign up
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <div ng-if="$ctrl.joinGroup !== null">
         <p>
@@ -27,7 +27,7 @@ export const SignupComponent = {
         </p>
         <hr>
       </div>
-    
+
       <p>
         <button ng-click="$ctrl.authenticateFacebook($ctrl.joinGroup)"
                 class="btn btn-facebook btn-block"
@@ -37,22 +37,22 @@ export const SignupComponent = {
           Sign up with Facebook
         </button>
       </p>
-    
+
       <hr>
-    
+
       <form name="userEdit"
             class="form-horizontal"
             ng-submit="$ctrl.form.$valid && $ctrl.save($ctrl.user, $ctrl.joinGroup)"
             novalidate>
         <span ng-init="$ctrl.form = userEdit"></span>
-    
+
         <uib-alert type="danger"
                    ng-if="$ctrl.error && !$ctrl.error.errors">
           <i class="fa fa-fw fa-exclamation-triangle"></i>
           Failed sending request. Please try again or
           <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
         </uib-alert>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.email || ($ctrl.form.$submitted && $ctrl.form.email.$invalid) }">
           <label for="email"
@@ -79,7 +79,7 @@ export const SignupComponent = {
             </span>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.firstName.$invalid }">
           <label for="firstName"
@@ -112,7 +112,7 @@ export const SignupComponent = {
             First name is required.
           </span>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.password || ($ctrl.form.$submitted && $ctrl.form.password.$invalid) }">
           <label for="password"
@@ -143,7 +143,7 @@ export const SignupComponent = {
             </span>
           </div>
         </div>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.error.errors.picture }">
           <label for="picture"
@@ -169,10 +169,10 @@ export const SignupComponent = {
             </span>
           </div>
         </div>
-    
+
         <button type="submit" hidden></button>
       </form>
-    
+
       <div ng-if="::$ctrl.canSwitch" class="row">
         <div class="col-xs-9 col-xs-push-3">
           <p>
@@ -182,7 +182,7 @@ export const SignupComponent = {
         </div>
       </div>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="submit"
               class="btn btn-primary btn-block"

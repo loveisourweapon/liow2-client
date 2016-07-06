@@ -6,7 +6,7 @@ const AppComponent = {
     <navbar></navbar>
 
     <ng-view autoscroll></ng-view>
-    
+
     <footer class="footer">
       <div class="container">
         <div class="pull-left">

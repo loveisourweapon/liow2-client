@@ -15,7 +15,7 @@ const NavbarComponent = {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-    
+
           <a class="navbar-brand"
              ng-click="$ctrl.collapseMenu()"
              title="Love is our Weapon"
@@ -30,11 +30,11 @@ const NavbarComponent = {
             </div>
           </a>
         </div>
-    
+
         <div class="collapse navbar-collapse"
              uib-collapse="$ctrl.isCollapsed">
           <div class="navbar-divider navbar-left"></div>
-    
+
           <form class="navbar-form navbar-left" id="group-search" role="search">
             <div class="form-group">
               <label class="input-group">
@@ -56,7 +56,7 @@ const NavbarComponent = {
               </label>
             </div>
           </form>
-    
+
           <ul class="nav navbar-nav navbar-right">
             <li>
               <a ng-href="/global"

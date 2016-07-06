@@ -15,14 +15,14 @@ export const CampaignEditComponent = {
         {{ ::$ctrl.action | capitalize }} Campaign for {{ ::$ctrl.group.name }}
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <uib-alert type="danger" ng-if="$ctrl.error && !$ctrl.error.errors">
         <i class="fa fa-fw fa-exclamation-triangle"></i>
         Failed sending request. Please try again or
         <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
       </uib-alert>
-    
+
       <p>
         Create a campaign by dragging deeds from the 'Available Deeds' list into
         the 'Your Campaign' list. You can also re-order deeds within your campaign.
@@ -33,12 +33,12 @@ export const CampaignEditComponent = {
         youth groups, a 4-6 week campaign works best to keep up interest and
         engagement with the campaign.
       </p>
-    
+
       <form name="campaignEdit"
             class="form-horizontal"
             ng-submit="$ctrl.save($ctrl.campaign)">
         <span ng-init="$ctrl.form = campaignEdit"></span>
-    
+
         <div class="form-group">
           <div class="col-xs-6">
             <h5>Available Deeds</h5>
@@ -56,7 +56,7 @@ export const CampaignEditComponent = {
               </li>
             </ul>
           </div>
-    
+
           <div class="col-xs-6">
             <h5>Your Campaign</h5>
             <ul class="list-group"
@@ -74,11 +74,11 @@ export const CampaignEditComponent = {
             </ul>
           </div>
         </div>
-    
+
         <button type="submit" hidden></button>
       </form>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="button"
               class="btn btn-default"

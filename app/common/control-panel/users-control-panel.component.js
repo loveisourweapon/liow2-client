@@ -16,7 +16,7 @@ const UsersControlPanelComponent = {
                  ng-change="$ctrl.search($ctrl.query)"
                  autofocus>
         </div>
-    
+
         <div class="table-responsive">
           <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
             <thead>
@@ -50,7 +50,7 @@ const UsersControlPanelComponent = {
             </tbody>
           </table>
         </div>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>

@@ -15,7 +15,7 @@ export const LoginComponent = {
         Login
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <div ng-if="$ctrl.joinGroup !== null">
         <p>
@@ -27,7 +27,7 @@ export const LoginComponent = {
         </p>
         <hr>
       </div>
-    
+
       <p>
         <button ng-click="$ctrl.authenticateFacebook($ctrl.joinGroup)"
                 class="btn btn-facebook btn-block"
@@ -37,9 +37,9 @@ export const LoginComponent = {
           Sign in with Facebook
         </button>
       </p>
-    
+
       <hr>
-    
+
       <form ng-submit="$ctrl.authenticateEmail($ctrl.email, $ctrl.password, $ctrl.joinGroup)">
         <uib-alert type="danger"
                    class="p-sm"
@@ -54,7 +54,7 @@ export const LoginComponent = {
             </a>
           </span>
         </uib-alert>
-    
+
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon">
@@ -69,7 +69,7 @@ export const LoginComponent = {
                    autofocus>
           </div>
         </div>
-    
+
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon">
@@ -88,10 +88,10 @@ export const LoginComponent = {
             </a>
           </span>
         </div>
-    
+
         <button type="submit" hidden></button>
       </form>
-    
+
       <div ng-if="::$ctrl.canSwitch">
         <p>
           Don't have an account yet?
@@ -99,7 +99,7 @@ export const LoginComponent = {
         </p>
       </div>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="submit"
               class="btn btn-primary btn-block"

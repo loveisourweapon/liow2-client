@@ -15,7 +15,7 @@ const FeedComponent = {
            ng-class="{ 'fa-spin': $ctrl.loadingFeed }"></i>
       </button>
     </div>
-    
+
     <div class="feed-wrapper">
       <div class="feed-item clearfix"
            ng-repeat="item in $ctrl.feedItems track by item._id"
@@ -32,12 +32,12 @@ const FeedComponent = {
                }"></i>
           </span>
         </div>
-    
+
         <div class="feed-item-image">
           <img ng-src="{{ ::item.user.picture || $ctrl.User.getDefaultUserImage(item.user._id) }}"
                class="img-circle">
         </div>
-    
+
         <div class="feed-item-content">
           <h6 class="m-t-none">
             <a ng-href="/u/{{ ::item.user._id }}"
@@ -47,27 +47,27 @@ const FeedComponent = {
             <span ng-if="!($ctrl.User.isLoggedInUser(item.user) || $ctrl.User.isMemberOfGroup(item.group))">
               Someone
             </span>
-    
+
             <span ng-if="::item.group && !item.target.group">
               from
               <a ng-href="/g/{{ ::item.group.urlName }}">{{ ::item.group.name }}</a>
             </span>
-    
+
             <span ng-if="::item.act">did the act of love</span>
             <span ng-if="::item.comment && item.target.deed">left a testimony on</span>
             <span ng-if="::item.comment && item.target.group">wrote a message to</span>
-    
+
             <a ng-href="/d/{{ ::item.target.deed.urlTitle }}"
                ng-if="::item.target.deed">{{ ::item.target.deed.title }}</a>
-    
+
             <a ng-href="/g/{{ ::item.target.group.urlName }}"
                ng-if="::item.target.group">{{ ::item.target.group.name }}</a>
           </h6>
-    
+
           <div marked="::item.comment.content.text"
                class="feed-item-comment"
                ng-if="::item.comment.content.text"></div>
-    
+
           <p class="small m-b-none">
             <a href>
               {{ ::item.created | fromNow }}
@@ -77,12 +77,12 @@ const FeedComponent = {
           </p>
         </div>
       </div><!-- .feed-item -->
-    
+
       <div class="feed-item feed-item-narrow text-center"
            ng-show="$ctrl.loading || $ctrl.feedItems === null">
         <i class="fa fa-ellipsis-h fa-2x"></i>
       </div>
-    
+
       <div class="feed-item"
            ng-if="$ctrl.feedItems.length === 0">
         No feed items to show.

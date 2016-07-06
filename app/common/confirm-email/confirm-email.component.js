@@ -7,7 +7,7 @@ const ConfirmEmailComponent = {
   controller: ConfirmEmailController,
   template: `
     <jumbotron jumbo-background="'/images/header.jpg'"></jumbotron>
-    
+
     <div class="container container-pad">
       <div class="row">
         <loading-spinner size="2x" classes="middle">

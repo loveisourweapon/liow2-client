@@ -15,11 +15,11 @@ export const ConfirmComponent = {
         {{ ::$ctrl.title }}
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <div marked="::$ctrl.message"></div>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="button"
               class="btn btn-default"

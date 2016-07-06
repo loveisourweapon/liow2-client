@@ -12,7 +12,7 @@ const GlobalFeedComponent = {
             <i class="fa fa-fw fa-list"></i>
             Global Activity Feed
           </h3>
-    
+
           <feed criteria="{ 'target.group': 'null' }"></feed>
         </div>
       </div>

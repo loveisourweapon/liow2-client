@@ -28,13 +28,13 @@ const UserControlPanelComponent = {
                   <a ng-click="$ctrl.toggleEditName($ctrl.User.current)" class="pull-right" href>
                     <i class="fa fa-fw fa-times"></i>
                   </a>
-    
+
                   <form name="userNameEdit"
                         class="form-inline"
                         ng-submit="$ctrl.form.$valid && $ctrl.saveName($ctrl.User.current)"
                         novalidate>
                     <span ng-init="$ctrl.form = userNameEdit"></span>
-    
+
                     <div class="form-group"
                          ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.firstName.$invalid }">
                       <label class="sr-only" for="firstName">First name</label>
@@ -103,7 +103,7 @@ const UserControlPanelComponent = {
             </tr>
           </tbody>
         </table>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>

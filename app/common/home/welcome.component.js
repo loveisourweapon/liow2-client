@@ -27,9 +27,9 @@ const WelcomeComponent = {
         </div>
       </div>
     </div><!-- .Home__SignupLogin -->
-    
+
     <deed-list layout="horizontal"></deed-list>
-    
+
     <div class="Home__Welcome">
       <div class="container container-pad">
         <div class="row">
@@ -53,7 +53,7 @@ const WelcomeComponent = {
               </button>
             </p>
           </div>
-    
+
           <div class="col-sm-3">
             <h1 class="text-primary m-b-none">
               <span>
@@ -63,7 +63,7 @@ const WelcomeComponent = {
             </h1>
             <h4 class="m-none">acts of love</h4>
             <p class="m-t-none">done around the world</p>
-    
+
             <h1 class="text-primary m-b-none">
               <span>
                 {{ $ctrl.numberOfGroups | number }}
@@ -72,7 +72,7 @@ const WelcomeComponent = {
             </h1>
             <h4 class="m-none">groups</h4>
             <p class="m-t-none">serving together</p>
-    
+
             <h1 class="text-primary m-b-none">
               <span>
                 {{ $ctrl.numberOfUsers | number }}
@@ -85,7 +85,7 @@ const WelcomeComponent = {
         </div>
       </div>
     </div><!-- .Home__Welcome -->
-    
+
     <div class="Home__HowTo">
       <div class="container">
         <div class="row">
@@ -109,9 +109,9 @@ const WelcomeComponent = {
         </div>
       </div>
     </div><!-- .Home__HowTo -->
-    
+
     <div class="Home__Spacer"></div>
-    
+
     <div class="Home__Footer">
       <div class="container container-pad text-center">
         <div class="row">

@@ -15,12 +15,12 @@ const ResetPasswordComponent = {
             <i class="fa fa-fw fa-key"></i>
             Reset your password
           </h3>
-    
+
           <form name="resetPassword"
                 ng-submit="$ctrl.form.$valid && $ctrl.save($ctrl.password, $ctrl.token)"
                 novalidate>
             <span ng-init="$ctrl.form = resetPassword"></span>
-    
+
             <div class="form-group"
                  ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.password.$invalid }">
               <label for="password">Password</label>
@@ -38,7 +38,7 @@ const ResetPasswordComponent = {
                 Password must be at least 8 characters.
               </span>
             </div>
-    
+
             <div class="form-group"
                  ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.confirmPassword.$invalid }">
               <label for="confirmPassword">Confirm Password</label>
@@ -55,7 +55,7 @@ const ResetPasswordComponent = {
                 Entered passwords must be the same.
               </span>
             </div>
-    
+
             <button type="submit"
                     class="btn btn-primary btn-block"
                     ng-disabled="$ctrl.form.$pristine || $ctrl.saving">

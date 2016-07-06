@@ -59,7 +59,7 @@ const DeedsControlPanelComponent = {
             </tr>
           </tbody>
         </table>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>

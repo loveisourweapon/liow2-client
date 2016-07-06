@@ -10,7 +10,7 @@ const GroupControlPanelComponent = {
       <div class="col-sm-3 col-sm-push-9">
         <img ng-src="/images/group.png"
              class="profile img-responsive img-circle">
-    
+
         <button type="button"
                 class="btn btn-default btn-block"
                 ng-click="$ctrl.updateGroup($ctrl.group)"
@@ -27,7 +27,7 @@ const GroupControlPanelComponent = {
           Leave
         </button>
       </div>
-    
+
       <div class="col-sm-9 col-sm-pull-3">
         <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
           <tbody>
@@ -53,7 +53,7 @@ const GroupControlPanelComponent = {
             </tr>
           </tbody>
         </table>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>

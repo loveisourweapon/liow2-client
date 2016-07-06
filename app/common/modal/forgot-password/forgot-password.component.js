@@ -15,13 +15,13 @@ export const ForgotPasswordComponent = {
         Forgot your password?
       </h4>
     </div><!-- .modal-header -->
-    
+
     <div class="modal-body">
       <form name="forgotPassword"
             ng-submit="$ctrl.form.$valid && $ctrl.send($ctrl.email)"
             novalidate>
         <span ng-init="$ctrl.form = forgotPassword"></span>
-    
+
         <div class="form-group"
              ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.email.$invalid }">
           <label for="email"
@@ -41,11 +41,11 @@ export const ForgotPasswordComponent = {
             Please enter a valid email address.
           </span>
         </div>
-    
+
         <button type="submit" hidden></button>
       </form>
     </div><!-- .modal-body -->
-    
+
     <div class="modal-footer">
       <button type="submit"
               class="btn btn-primary btn-block"

@@ -15,7 +15,7 @@ const CommentFormComponent = {
         <medium-editor content="$ctrl.textContent"
                        on-content-changed="$ctrl.onContentChanged($event)"
                        placeholder="{{ ::$ctrl.placeholder }}"></medium-editor>
-    
+
         <button type="submit"
                 class="btn btn-primary m-t-xs"
                 ng-disabled="!$ctrl.textContent || $ctrl.saving">

@@ -14,22 +14,22 @@ const DeedComponent = {
                          video-url="$ctrl.Deed.current.videoUrl"
                          class="embed-responsive-item"></youtube-video>
         </div>
-    
+
         <div class="deed-header">
           <img ng-src="{{ $ctrl.Deed.current.logo || '/images/deed.png' }}"
                class="img-responsive img-circle pull-left m-t-md m-r-sm">
-    
+
           <h2 class="text-uppercase pull-left m-b-none">
             {{ $ctrl.Deed.current.title }}
           </h2>
-    
+
           <h1 class="pull-right text-right m-b-none">
             {{ $ctrl.Act.counters[$ctrl.Deed.current._id] | number }}
           </h1>
         </div>
       </jumbo-content>
     </jumbotron>
-    
+
     <div class="container container-pad">
       <div class="row">
         <div ng-if="!($ctrl.loading || $ctrl.error)">
@@ -43,7 +43,7 @@ const DeedComponent = {
               <i class="fa fa-cog fa-lg fa-spin" ng-show="$ctrl.doing"></i>
               Done
             </button>
-    
+
             <button type="button"
                     class="btn btn-primary btn-block btn-lg"
                     ng-click="$ctrl.Modal.openLogin()"
@@ -51,24 +51,24 @@ const DeedComponent = {
               <i class="fa fa-fw fa-user"></i>
               Login
             </button>
-    
+
             <deed-list layout="vertical"></deed-list>
           </div>
-    
+
           <div class="col-sm-9 col-sm-pull-3">
             <h2 class="m-t-none">Devotional</h2>
             <div marked="$ctrl.Deed.current.content" class="m-b-md"></div>
-    
+
             <comment-form deed="$ctrl.Deed.current"
                           placeholder="Leave a testimony..."
                           ng-if="$ctrl.User.isAuthenticated()"></comment-form>
-    
+
             <feed criteria="{ 'target.deed': $ctrl.Deed.current._id }"></feed>
           </div>
         </div>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
-    
+
         <div class="col-xs-12" ng-if="$ctrl.error">
           <uib-alert type="danger">
             <i class="fa fa-exclamation-triangle"></i>

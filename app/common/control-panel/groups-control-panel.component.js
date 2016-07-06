@@ -16,7 +16,7 @@ const GroupsControlPanelComponent = {
                  ng-change="$ctrl.search($ctrl.query)"
                  autofocus>
         </div>
-    
+
         <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
           <thead>
             <tr>
@@ -26,7 +26,7 @@ const GroupsControlPanelComponent = {
               <th style="width: 102px;">&nbsp;</th>
             </tr>
           </thead>
-    
+
           <tbody>
             <tr ng-repeat="group in $ctrl.groups track by group._id">
               <td class="text-center">
@@ -68,7 +68,7 @@ const GroupsControlPanelComponent = {
             </tr>
           </tbody>
         </table>
-    
+
         <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>

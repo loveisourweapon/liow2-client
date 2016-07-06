@@ -29,13 +29,13 @@ const HomeFeedComponent = {
             </a>
           </div>
         </div>
-    
+
         <div class="col-sm-8 col-sm-pull-4">
           <h3 class="m-t-none m-b-md">
             <i class="fa fa-fw fa-list"></i>
             Activity Feed
           </h3>
-    
+
           <feed criteria="{
             user: $ctrl.User.current._id,
             group: $ctrl.listGroupIds($ctrl.User.current.groups)
