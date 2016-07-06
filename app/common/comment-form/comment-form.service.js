@@ -17,19 +17,14 @@ class CommentFormService {
     let method = has(comment, '_id') ? 'put' : 'post',
         url = `/comments${has(comment, '_id') ? `/${comment._id}` : ''}`;
 
-    switch(true) {
-      case has(comment.target, 'deed'):
-        url = `/deeds/${comment.target.deed}${url}`;
-        break;
-      case has(comment.target, 'group'):
-        url = `/groups/${comment.target.group}${url}`;
-        break;
-      case has(comment.target, 'comment'):
-        url = `/comments/${comment.target.comment}${url}`;
-        break;
-      case has(comment.target, 'act'):
-        url = `/acts/${comment.target.acts}${url}`;
-        break;
+    if (has(comment.target, 'deed')) {
+      url = `/deeds/${comment.target.deed}${url}`;
+    } else if (has(comment.target, 'group')) {
+      url = `/groups/${comment.target.group}${url}`;
+    } else if (has(comment.target, 'comment')) {
+      url = `/comments/${comment.target.comment}${url}`;
+    } else if (has(comment.target, 'act')) {
+      url = `/acts/${comment.target.acts}${url}`;
     }
 
     return this.$http[method](`${this.baseUrl}${url}`, comment);
