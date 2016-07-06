@@ -1,6 +1,6 @@
 import angular from 'angular';
-import first from 'lodash/first';
 import ModalService from './modal.service';
+import UiModalWindowDirective from './ui-modal-window.directive';
 
 // Module dependencies
 import ngRoute from 'angular-route';
@@ -16,8 +16,8 @@ import Group from '../../services/Group';
 import Campaign from '../../services/Campaign';
 import Deed from '../../services/Deed';
 
-const modalService = angular
-  .module('app.services.Modal', [
+const modal = angular
+  .module('modal', [
     ngRoute,
     ngSanitize,
     angularDragula(angular),
@@ -34,32 +34,8 @@ const modalService = angular
   .service('Modal', ModalService)
   .name;
 
-export default modalService;
+export default modal;
 
-// Fixes to UI Bootstrap Modal
 angular
   .module(uibs)
-  .directive('uibModalWindow', $window => {
-    'ngInject';
-
-    return {
-      priority: 1,
-      link: (scope, element) => {
-        // Set max-height on modal-body
-        let modalBody = first(element.querySelectorAll('.modal-body'));
-        let window = angular.element($window);
-        window.on('resize', setMaxHeight);
-        scope.$on('$destroy', () => window.off('resize', setMaxHeight));
-        setMaxHeight();
-
-        function setMaxHeight() {
-          let maxHeight = $window.innerHeight
-            - 62 /* margins + border */
-            - 120 /* header + footer */
-          ;
-
-          modalBody.style.maxHeight = `${maxHeight}px`;
-        }
-      }
-    }
-  });
+  .directive('uibModalWindow', /* @ngInject */ $window => new UiModalWindowDirective($window));
