@@ -23,11 +23,7 @@ const DeedListHorizontalComponent = {
           </div>
         </div>
     
-        <div class="col-xs-12" ng-if="$ctrl.deedList.loading">
-          <p class="text-center">
-            <i class="fa fa-cog fa-4x fa-spin"></i>
-          </p>
-        </div>
+        <loading-spinner size="4x" ng-if="$ctrl.deedList.loading"></loading-spinner>
       </div>
     </div>
   `

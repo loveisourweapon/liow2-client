@@ -37,11 +37,7 @@ const UserComponent = {
           </div>
         </div>
     
-        <div class="col-xs-12" ng-if="$ctrl.loading">
-          <p class="text-center">
-            <i class="fa fa-cog fa-5x fa-spin"></i>
-          </p>
-        </div>
+        <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
     
         <div class="col-xs-12" ng-if="$ctrl.error">
           <uib-alert type="danger">

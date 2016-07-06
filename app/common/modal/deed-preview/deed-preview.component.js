@@ -41,9 +41,7 @@ export const DeedPreviewComponent = {
       <div marked="$ctrl.deed.content"
            ng-if="!($ctrl.loading || $ctrl.error)"></div>
     
-      <p class="text-center" ng-if="$ctrl.loading">
-        <i class="fa fa-cog fa-5x fa-spin"></i>
-      </p>
+      <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
     
       <uib-alert type="danger" ng-if="$ctrl.error">
         <i class="fa fa-exclamation-triangle"></i>

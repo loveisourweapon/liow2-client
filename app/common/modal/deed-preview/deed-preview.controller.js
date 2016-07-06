@@ -3,8 +3,6 @@ class DeedPreviewController {
   constructor($uibModalInstance, Deed, Act, deedId) {
     Object.assign(this, { $uibModalInstance, Act, Deed });
 
-    this.error = null;
-
     this.loadDeed(deedId);
   }
 

@@ -10,10 +10,9 @@ const ConfirmEmailComponent = {
     
     <div class="container container-pad">
       <div class="row">
-        <div class="col-xs-12">
-          <i class="fa fa-fw fa-cog fa-2x fa-spin middle"></i>
+        <loading-spinner size="2x" classes="middle">
           Confirming your email address
-        </div>
+        </loading-spinner>
       </div>
     </div>
   `
