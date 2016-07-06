@@ -1,13 +1,8 @@
 import angular from 'angular';
 import GlobalFeedComponent from './global-feed.component';
 
-// Module dependencies
-import Feed from '../../services/Feed';
-
 const globalFeed = angular
-  .module('globalFeed', [
-    Feed,
-  ])
+  .module('globalFeed', [])
   .component('globalFeed', GlobalFeedComponent)
   .name;
 

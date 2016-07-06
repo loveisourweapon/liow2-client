@@ -1,25 +1,19 @@
 import angular from 'angular';
+import GroupService from './group.service';
+import CampaignService from './campaign.service';
 import GroupComponent from './group.component';
 
 // Module dependencies
 import angularMarked from 'angular-marked';
 import uibs from 'angular-ui-bootstrap';
-import User from '../../services/User';
-import Group from '../../services/Group';
-import Campaign from '../../services/Campaign';
-import Act from '../../services/Act';
-import Feed from '../../services/Feed';
 
 const group = angular
   .module('group', [
     angularMarked,
     uibs,
-    User,
-    Group,
-    Campaign,
-    Act,
-    Feed,
   ])
+  .service('Group', GroupService)
+  .service('Campaign', CampaignService)
   .component('group', GroupComponent)
   .name;
 

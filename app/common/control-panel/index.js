@@ -9,17 +9,11 @@ import GroupsControlPanelComponent from './groups-control-panel.component';
 // Module dependencies
 import angularMarked from 'angular-marked';
 import uibs from 'angular-ui-bootstrap';
-import User from '../../services/User';
-import Group from '../../services/Group';
-import Act from '../../services/Act';
 
 const controlPanel = angular
   .module('controlPanel', [
     angularMarked,
     uibs,
-    User,
-    Group,
-    Act,
   ])
   .component('controlPanel', ControlPanelComponent)
   .component('userControlPanel', UserControlPanelComponent)

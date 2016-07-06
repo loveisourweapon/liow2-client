@@ -11,10 +11,6 @@ import uiSelect from 'ui-select';
 import angularMarked from 'angular-marked';
 import angularYoutube from 'angular-youtube-embed';
 import 'angular-ui-switch'; // Not browserified
-import User from '../../services/User';
-import Group from '../../services/Group';
-import Campaign from '../../services/Campaign';
-import Deed from '../../services/Deed';
 
 const modal = angular
   .module('modal', [
@@ -26,10 +22,6 @@ const modal = angular
     angularMarked,
     angularYoutube,
     'uiSwitch',
-    User,
-    Group,
-    Campaign,
-    Deed,
   ])
   .service('Modal', ModalService)
   .name;

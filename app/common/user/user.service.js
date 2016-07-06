@@ -1,14 +1,8 @@
-import angular from 'angular';
 import has from 'lodash/has';
 import some from 'lodash/some';
 import forOwn from 'lodash/forOwn';
 import uuid from 'uuid';
 import seedrandom from 'seedrandom';
-
-// Module dependencies
-import satellizer from 'satellizer';
-import Config from '../common/config';
-import Alertify from '../components/Alertify';
 
 const NUM_IMAGES = 12;
 var defaultImagesDict = {};
@@ -17,7 +11,7 @@ let currentUser = null;
 let currentGroup = null;
 let listeners = {};
 
-class User {
+class UserService {
   /* @ngInject */
   constructor($auth, $http, $q, config, Alertify) {
     Object.assign(this, { $auth, $http, $q, Alertify });
@@ -332,23 +326,4 @@ class User {
   }
 }
 
-const userService = angular
-  .module('app.services.User', [
-    satellizer,
-    Config,
-    Alertify,
-  ])
-  .config(($authProvider, config) => {
-    'ngInject';
-
-    $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
-    $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
-    $authProvider.facebook({
-      clientId: config.facebookClientId,
-      url: `${config.serverUrl}/auth/facebook`
-    });
-  })
-  .service('User', User)
-  .name;
-
-export default userService;
+export default UserService;

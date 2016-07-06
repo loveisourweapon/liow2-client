@@ -1,15 +1,10 @@
 import angular from 'angular';
+import CommentFormService from './comment-form.service';
 import CommentFormComponent from './comment-form.component';
 
-// Module dependencies
-import User from '../../services/User';
-import Comment from '../../services/Comment';
-
 const commentForm = angular
-  .module('commentForm', [
-    User,
-    Comment,
-  ])
+  .module('commentForm', [])
+  .service('CommentForm', CommentFormService)
   .component('commentForm', CommentFormComponent)
   .name;
 

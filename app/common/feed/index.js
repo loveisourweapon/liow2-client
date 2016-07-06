@@ -1,19 +1,17 @@
 import angular from 'angular';
-import FeedComponent from './feed.component.js';
+import FeedService from './feed.service';
+import FeedComponent from './feed.component';
 
 // Module dependencies
 import angularMarked from 'angular-marked';
 import angularInView from 'angular-inview';
-import User from '../../services/User';
-import Feed from '../../services/Feed';
 
 const feed = angular
   .module('feed', [
     angularMarked,
     angularInView.name,
-    User,
-    Feed,
   ])
+  .service('Feed', FeedService)
   .component('feed', FeedComponent)
   .name;
 

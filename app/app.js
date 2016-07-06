@@ -3,7 +3,6 @@ import AppComponent from './app.component';
 
 // Module dependencies
 import ngRoute from 'angular-route';
-import ngAnimate from 'angular-animate';
 import uiSelect from 'ui-select';
 import Common from './common';
 import Components from './components';

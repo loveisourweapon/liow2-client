@@ -1,12 +1,8 @@
-import angular from 'angular';
 import merge from 'lodash/merge';
-
-// Module dependencies
-import Config from '../common/config';
 
 let currentDeed = null;
 
-class Deed {
+class DeedService {
   /* @ngInject */
   constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
@@ -91,11 +87,4 @@ class Deed {
   }
 }
 
-const deedService = angular
-  .module('app.services.Deed', [
-    Config,
-  ])
-  .service('Deed', Deed)
-  .name;
-
-export default deedService;
+export default DeedService;

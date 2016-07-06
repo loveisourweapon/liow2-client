@@ -2,6 +2,7 @@ import angular from 'angular';
 
 // Module dependencies
 import Config from './config';
+import Act from './act';
 import Modal from './modal';
 import Navbar from './navbar';
 import Feed from './feed';
@@ -19,6 +20,7 @@ import ResetPassword from './reset-password';
 const common = angular
   .module('app.common', [
     Config,
+    Act,
     Modal,
     Home,
     Navbar,

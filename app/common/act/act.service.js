@@ -2,10 +2,7 @@ import angular from 'angular';
 import has from 'lodash/has';
 import defaults from 'lodash/defaults';
 
-// Module dependencies
-import Config from '../common/config';
-
-class Act {
+class ActService {
   /* @ngInject */
   constructor($http, config) {
     Object.assign(this, { $http });
@@ -54,11 +51,4 @@ class Act {
   }
 }
 
-const actService = angular
-  .module('app.services.Act', [
-    Config,
-  ])
-  .service('Act', Act)
-  .name;
-
-export default actService;
+export default ActService;

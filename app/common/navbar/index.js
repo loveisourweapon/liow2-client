@@ -6,10 +6,6 @@ import ngSanitize from 'angular-sanitize';
 import ngAnimate from 'angular-animate';
 import uibs from 'angular-ui-bootstrap';
 import uiSelect from 'ui-select';
-import User from '../../services/User';
-import Group from '../../services/Group';
-import Deed from '../../services/Deed';
-import Act from '../../services/Act';
 
 const navbar = angular
   .module('navbar', [
@@ -17,10 +13,6 @@ const navbar = angular
     ngAnimate,
     uibs,
     uiSelect,
-    User,
-    Group,
-    Deed,
-    Act,
   ])
   .component('navbar', NavbarComponent)
   .name;

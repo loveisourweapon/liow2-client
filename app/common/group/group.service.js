@@ -1,15 +1,10 @@
-import angular from 'angular';
 import has from 'lodash/has';
 import find from 'lodash/find';
 import merge from 'lodash/merge';
 
-// Module dependencies
-import Config from '../common/config';
-import User from './User';
-
 let currentGroup = null;
 
-class Group {
+class GroupService {
   /* @ngInject */
   constructor($http, $q, config, User) {
     Object.assign(this, { $http, $q, User });
@@ -114,12 +109,4 @@ class Group {
   }
 }
 
-const groupService = angular
-  .module('app.services.Group', [
-    Config,
-    User,
-  ])
-  .service('Group', Group)
-  .name;
-
-export default groupService;
+export default GroupService;

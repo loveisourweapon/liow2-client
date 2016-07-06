@@ -1,13 +1,8 @@
 import angular from 'angular';
 import ConfirmEmailComponent from './confirm-email.component';
 
-// Module dependencies
-import User from '../../services/User';
-
 const confirmEmail = angular
-  .module('confirmEmail', [
-    User,
-  ])
+  .module('confirmEmail', [])
   .component('confirmEmail', ConfirmEmailComponent)
   .name;
 

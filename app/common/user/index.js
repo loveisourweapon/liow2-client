@@ -1,20 +1,28 @@
 import angular from 'angular';
+import UserService from './user.service';
 import UserComponent from './user.component';
 
 // Module dependencies
 import uibs from 'angular-ui-bootstrap';
-import User from '../../services/User';
-import Act from '../../services/Act';
-import Feed from '../../services/Feed';
+import satellizer from 'satellizer';
 
 const user = angular
   .module('user', [
     uibs,
-    User,
-    Act,
-    Feed,
+    satellizer,
   ])
+  .service('User', UserService)
   .component('user', UserComponent)
+  .config(($authProvider, config) => {
+    'ngInject';
+
+    $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
+    $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;
+    $authProvider.facebook({
+      clientId: config.facebookClientId,
+      url: `${config.serverUrl}/auth/facebook`,
+    });
+  })
   .name;
 
 export default user;

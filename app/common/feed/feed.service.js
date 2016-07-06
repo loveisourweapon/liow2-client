@@ -1,14 +1,10 @@
-import angular from 'angular';
 import forOwn from 'lodash/forOwn';
 import uuid from 'uuid';
-
-// Module dependencies
-import Config from '../common/config';
 
 const FEED_UPDATE_DELAY = 80;
 let listeners = {};
 
-class Feed {
+class FeedService {
   /* @ngInject */
   constructor($http, $timeout, config) {
     Object.assign(this, { $http, $timeout });
@@ -53,11 +49,4 @@ class Feed {
   }
 }
 
-const feedService = angular
-  .module('app.services.Feed', [
-    Config,
-  ])
-  .service('Feed', Feed)
-  .name;
-
-export default feedService;
+export default FeedService;

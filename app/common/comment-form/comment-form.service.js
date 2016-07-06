@@ -1,10 +1,6 @@
-import angular from 'angular';
 import has from 'lodash/has';
 
-// Module dependencies
-import Config from '../common/config';
-
-class Comment {
+class CommentFormService {
   /* @ngInject */
   constructor($http, config) {
     Object.assign(this, { $http });
@@ -40,11 +36,4 @@ class Comment {
   }
 }
 
-const commentService = angular
-  .module('si.services.Comment', [
-    Config,
-  ])
-  .service('Comment', Comment)
-  .name;
-
-export default commentService;
+export default CommentFormService;

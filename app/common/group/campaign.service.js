@@ -1,10 +1,6 @@
-import angular from 'angular';
 import has from 'lodash/has';
 
-// Module dependencies
-import Config from '../common/config';
-
-class Campaign {
+class CampaignService {
   /* @ngInject */
   constructor($http, $q, config) {
     Object.assign(this, { $http, $q });
@@ -72,11 +68,4 @@ class Campaign {
   }
 }
 
-const campaignService = angular
-  .module('app.services.Campaign', [
-    Config,
-  ])
-  .service('Campaign', Campaign)
-  .name;
-
-export default campaignService;
+export default CampaignService;

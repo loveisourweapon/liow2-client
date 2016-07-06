@@ -1,13 +1,8 @@
 import angular from 'angular';
 import ResetPasswordComponent from './reset-password.component';
 
-// Module dependencies
-import User from '../../services/User';
-
 const resetPassword = angular
-  .module('resetPassword', [
-    User,
-  ])
+  .module('resetPassword', [])
   .component('resetPassword', ResetPasswordComponent)
   .name;
 
