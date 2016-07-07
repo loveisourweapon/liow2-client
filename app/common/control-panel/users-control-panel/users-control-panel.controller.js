@@ -3,43 +3,41 @@ import merge from 'lodash/merge';
 const SEARCH_INPUT_DELAY = 500;
 let searchInputTimeout = null;
 
-class GroupsControlPanelController {
+export class UsersControlPanelController {
   /* @ngInject */
-  constructor($timeout, Group, Modal) {
-    Object.assign(this, { $timeout, Group, Modal });
+  constructor($timeout, User) {
+    Object.assign(this, { $timeout, User });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    this.loadGroups();
+    this.loadUsers();
   }
 
   /**
-   * Load the groups
+   * Load the users
    *
    * @param {object} [params={}]
    */
-  loadGroups(params = {}) {
+  loadUsers(params = {}) {
     let findParams = merge({ limit: 20 }, params);
 
     this.loading = true;
-    this.Group.find(findParams)
-      .then(response => this.groups = response.data)
+    this.User.find(findParams)
+      .then(response => this.users = response.data)
       .catch(() => null)
       .then(() => this.loading = false);
   }
 
   /**
-   * Start a timer to reload the groups list
+   * Start a timer to reload the users list
    *
    * @param {string} query
    */
   search(query) {
     this.$timeout.cancel(searchInputTimeout);
-    searchInputTimeout = this.$timeout(() => this.loadGroups({ query }), SEARCH_INPUT_DELAY);
+    searchInputTimeout = this.$timeout(() => this.loadUsers({ query }), SEARCH_INPUT_DELAY);
   }
 }
-
-export default GroupsControlPanelController;

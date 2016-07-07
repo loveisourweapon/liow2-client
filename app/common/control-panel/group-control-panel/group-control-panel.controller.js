@@ -1,6 +1,6 @@
 import jsonpatch from 'fast-json-patch';
 
-class GroupControlPanelController {
+export class GroupControlPanelController {
   /* @ngInject */
   constructor($rootScope, $location, Alertify, User, Group, Act, Modal) {
     Object.assign(this, { $rootScope, $location, Alertify, User, Group, Act, Modal });
@@ -85,5 +85,3 @@ class GroupControlPanelController {
     }
   }
 }
-
-export default GroupControlPanelController;

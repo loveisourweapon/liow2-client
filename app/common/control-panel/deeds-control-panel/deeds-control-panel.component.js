@@ -1,6 +1,6 @@
-import DeedsControlPanelController from './deeds-control-panel.controller'
+import { DeedsControlPanelController } from './deeds-control-panel.controller'
 
-const DeedsControlPanelComponent = {
+export const DeedsControlPanelComponent = {
   controller: DeedsControlPanelController,
   template: `
     <div class="row">
@@ -65,5 +65,3 @@ const DeedsControlPanelComponent = {
     </div>
   `
 };
-
-export default DeedsControlPanelComponent;

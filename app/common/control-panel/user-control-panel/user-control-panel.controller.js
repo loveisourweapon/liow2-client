@@ -1,6 +1,6 @@
 import jsonpatch from 'fast-json-patch';
 
-class UserControlPanelController {
+export class UserControlPanelController {
   /* @ngInject */
   constructor(Alertify, User, Act, Modal) {
     Object.assign(this, { Alertify, User, Act, Modal });
@@ -69,5 +69,3 @@ class UserControlPanelController {
       .then(() => this.sending = false);
   }
 }
-
-export default UserControlPanelController;

@@ -1,4 +1,4 @@
-class DeedsControlPanelController {
+export class DeedsControlPanelController {
   /* @ngInject */
   constructor(Deed, Modal) {
     Object.assign(this, { Deed, Modal });
@@ -23,5 +23,3 @@ class DeedsControlPanelController {
       .then(() => this.loading = false);
   }
 }
-
-export default DeedsControlPanelController;

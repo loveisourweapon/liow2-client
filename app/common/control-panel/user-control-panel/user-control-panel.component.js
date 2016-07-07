@@ -1,6 +1,6 @@
-import UserControlPanelController from './user-control-panel.controller';
+import { UserControlPanelController } from './user-control-panel.controller';
 
-const UserControlPanelComponent = {
+export const UserControlPanelComponent = {
   controller: UserControlPanelController,
   template: `
     <div class="row">
@@ -109,5 +109,3 @@ const UserControlPanelComponent = {
     </div>
   `
 };
-
-export default UserControlPanelComponent;

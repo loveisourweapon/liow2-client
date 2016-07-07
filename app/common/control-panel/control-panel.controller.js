@@ -2,7 +2,7 @@ import capitalize from 'lodash/capitalize';
 
 const superAdminViews = ['deeds', 'users', 'groups'];
 
-class ControlPanelController {
+export class ControlPanelController {
   /* @ngInject */
   constructor($rootScope, $location, User, Group) {
     Object.assign(this, { $rootScope, $location, User, Group });
@@ -55,5 +55,3 @@ class ControlPanelController {
     return superAdminViews.indexOf(this.view) === -1 || this.User.isSuperAdmin();
   }
 }
-
-export default ControlPanelController;

@@ -1,6 +1,6 @@
-import ControlPanelController from './control-panel.controller';
+import { ControlPanelController } from './control-panel.controller';
 
-const ControlPanelComponent = {
+export const ControlPanelComponent = {
   bindings: {
     view: '<',
   },
@@ -76,5 +76,3 @@ const ControlPanelComponent = {
     </div>
   `
 };
-
-export default ControlPanelComponent;

@@ -1,6 +1,6 @@
-import GroupsControlPanelController from './groups-control-panel.controller';
+import { GroupsControlPanelController } from './groups-control-panel.controller';
 
-const GroupsControlPanelComponent = {
+export const GroupsControlPanelComponent = {
   controller: GroupsControlPanelController,
   template: `
     <div class="row">
@@ -74,5 +74,3 @@ const GroupsControlPanelComponent = {
     </div>
   `
 };
-
-export default GroupsControlPanelComponent;

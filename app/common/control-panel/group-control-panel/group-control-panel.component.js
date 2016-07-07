@@ -1,6 +1,6 @@
-import GroupControlPanelController from './group-control-panel.controller';
+import { GroupControlPanelController } from './group-control-panel.controller';
 
-const GroupControlPanelComponent = {
+export const GroupControlPanelComponent = {
   bindings: {
     groupId: '<',
   },
@@ -59,5 +59,3 @@ const GroupControlPanelComponent = {
     </div>
   `
 };
-
-export default GroupControlPanelComponent;
