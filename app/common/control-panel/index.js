@@ -1,5 +1,6 @@
 import angular from 'angular';
 import { ControlPanelComponent } from './control-panel.component';
+import { ControlPanelSearchComponent } from './control-panel-search.component';
 import { UserControlPanelComponent } from './user-control-panel';
 import { GroupControlPanelComponent } from './group-control-panel';
 import { DeedsControlPanelComponent } from './deeds-control-panel';
@@ -16,6 +17,7 @@ const controlPanel = angular
     uibs,
   ])
   .component('controlPanel', ControlPanelComponent)
+  .component('controlPanelSearch', ControlPanelSearchComponent)
   .component('userControlPanel', UserControlPanelComponent)
   .component('groupControlPanel', GroupControlPanelComponent)
   .component('deedsControlPanel', DeedsControlPanelComponent)

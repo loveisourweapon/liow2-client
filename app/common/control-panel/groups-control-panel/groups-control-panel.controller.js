@@ -1,12 +1,9 @@
 import merge from 'lodash/merge';
 
-const SEARCH_INPUT_DELAY = 500;
-let searchInputTimeout = null;
-
 export class GroupsControlPanelController {
   /* @ngInject */
-  constructor($timeout, Group, Modal) {
-    Object.assign(this, { $timeout, Group, Modal });
+  constructor(Group, Modal) {
+    Object.assign(this, { Group, Modal });
   }
 
   /**
@@ -32,12 +29,11 @@ export class GroupsControlPanelController {
   }
 
   /**
-   * Start a timer to reload the groups list
+   * Updated search query
    *
-   * @param {string} query
+   * @param {object} $event
    */
-  search(query) {
-    this.$timeout.cancel(searchInputTimeout);
-    searchInputTimeout = this.$timeout(() => this.loadGroups({ query }), SEARCH_INPUT_DELAY);
+  onSearch($event) {
+    this.loadGroups({ query: $event.query });
   }
 }

@@ -5,17 +5,7 @@ export const GroupsControlPanelComponent = {
   template: `
     <div class="row">
       <div class="col-xs-12">
-        <div class="input-group m-b-md">
-          <span class="input-group-addon">
-            <i class="fa fa-search"></i>
-          </span>
-          <input type="text"
-                 class="form-control"
-                 placeholder="Search..."
-                 ng-model="$ctrl.query"
-                 ng-change="$ctrl.search($ctrl.query)"
-                 autofocus>
-        </div>
+        <control-panel-search on-search="$ctrl.onSearch($event)"></control-panel-search>
 
         <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
           <thead>

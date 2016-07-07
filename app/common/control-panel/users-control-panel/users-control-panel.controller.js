@@ -1,12 +1,9 @@
 import merge from 'lodash/merge';
 
-const SEARCH_INPUT_DELAY = 500;
-let searchInputTimeout = null;
-
 export class UsersControlPanelController {
   /* @ngInject */
-  constructor($timeout, User) {
-    Object.assign(this, { $timeout, User });
+  constructor(User) {
+    Object.assign(this, { User });
   }
 
   /**
@@ -32,12 +29,11 @@ export class UsersControlPanelController {
   }
 
   /**
-   * Start a timer to reload the users list
+   * Updated search query
    *
-   * @param {string} query
+   * @param {object} $event
    */
-  search(query) {
-    this.$timeout.cancel(searchInputTimeout);
-    searchInputTimeout = this.$timeout(() => this.loadUsers({ query }), SEARCH_INPUT_DELAY);
+  onSearch($event) {
+    this.loadUsers({ query: $event.query });
   }
 }
