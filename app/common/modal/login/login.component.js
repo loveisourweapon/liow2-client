@@ -3,18 +3,8 @@ import LoginController from './login.controller';
 export const LoginComponent = {
   controller: LoginController,
   template: `
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              ng-click="$ctrl.$uibModalInstance.dismiss()">
-        <span aria-hidden="true"><i class="fa fa-times"></i></span>
-      </button>
-      <h4 class="modal-title">
-        Login
-      </h4>
-    </div><!-- .modal-header -->
+    <modal-header modal-title="Login"
+                  on-close-click="$ctrl.$uibModalInstance.dismiss()"></modal-header>
 
     <div class="modal-body">
       <div ng-if="$ctrl.joinGroup !== null">

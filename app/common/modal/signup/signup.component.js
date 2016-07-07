@@ -3,18 +3,8 @@ import SignupController from './signup.controller';
 export const SignupComponent = {
   controller: SignupController,
   template: `
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              ng-click="$ctrl.$uibModalInstance.dismiss()">
-        <span aria-hidden="true"><i class="fa fa-times"></i></span>
-      </button>
-      <h4 class="modal-title">
-        Sign up
-      </h4>
-    </div><!-- .modal-header -->
+    <modal-header modal-title="Sign up"
+                  on-close-click="$ctrl.$uibModalInstance.dismiss()"></modal-header>
 
     <div class="modal-body">
       <div ng-if="$ctrl.joinGroup !== null">

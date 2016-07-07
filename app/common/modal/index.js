@@ -1,5 +1,6 @@
 import angular from 'angular';
 import ModalService from './modal.service';
+import ModalHeaderComponent from './modal-header.component';
 import UiModalWindowDirective from './ui-modal-window.directive';
 
 // Module dependencies
@@ -24,6 +25,7 @@ const modal = angular
     'uiSwitch',
   ])
   .service('Modal', ModalService)
+  .component('modalHeader', ModalHeaderComponent)
   .name;
 
 export default modal;

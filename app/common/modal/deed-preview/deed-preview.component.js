@@ -3,18 +3,8 @@ import DeedPreviewController from './deed-preview.controller';
 export const DeedPreviewComponent = {
   controller: DeedPreviewController,
   template: `
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              ng-click="$ctrl.$uibModalInstance.dismiss()">
-        <span aria-hidden="true"><i class="fa fa-times"></i></span>
-      </button>
-      <h4 class="modal-title">
-        Preview Deed
-      </h4>
-    </div><!-- .modal-header -->
+    <modal-header modal-title="Preview Deed"
+                  on-close-click="$ctrl.$uibModalInstance.dismiss()"></modal-header>
 
     <div class="modal-body deed-modal">
       <div class="modal-jumbotron" ng-if="!($ctrl.loading || $ctrl.error)">

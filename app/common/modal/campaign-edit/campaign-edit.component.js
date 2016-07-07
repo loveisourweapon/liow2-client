@@ -3,18 +3,8 @@ import CampaignEditController from './campaign-edit.controller';
 export const CampaignEditComponent = {
   controller: CampaignEditController,
   template: `
-    <div class="modal-header">
-      <button type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              ng-click="$ctrl.$uibModalInstance.dismiss()">
-        <span aria-hidden="true"><i class="fa fa-times"></i></span>
-      </button>
-      <h4 class="modal-title">
-        {{ ::$ctrl.action | capitalize }} Campaign for {{ ::$ctrl.group.name }}
-      </h4>
-    </div><!-- .modal-header -->
+    <modal-header modal-title="{{ ::$ctrl.action | capitalize }} Campaign for {{ ::$ctrl.group.name }}"
+                  on-close-click="$ctrl.$uibModalInstance.dismiss()"></modal-header>
 
     <div class="modal-body">
       <uib-alert type="danger" ng-if="$ctrl.error && !$ctrl.error.errors">
