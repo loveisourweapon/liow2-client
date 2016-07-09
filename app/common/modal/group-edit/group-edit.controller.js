@@ -1,25 +1,15 @@
-import MediumEditor from 'medium-editor';
 import capitalize from 'lodash/capitalize';
-import toMarkdown from 'to-markdown';
-import showdown from 'showdown';
-let converter = new showdown.Converter();
 
 class GroupEditController {
   /* @ngInject */
-  constructor($uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users) {
-    Object.assign(this, { $uibModalInstance, $scope, $timeout, $location, Alertify, User, Group, Modal, action, group, users });
+  constructor($uibModalInstance, $location, Alertify, User, Group, Modal, action, group, users) {
+    Object.assign(this, { $uibModalInstance, $location, Alertify, User, Group, Modal, action, group, users });
 
     this.error = null;
     this.setupCampaign = this.group ? false : true;
 
-    if (this.group) {
-      this.group.welcomeMessage = converter.makeHtml(this.group.welcomeMessage);
-    } else if (this.User.current) {
+    if (!group && this.User.current) {
       this.resetFields();
-    }
-
-    if (this.User.current) {
-      this.setupMediumEditor();
     }
   }
 
@@ -39,36 +29,14 @@ class GroupEditController {
   }
 
   /**
-   * Initialise the MediumEditor element, respond to input changes
+   * Welcome message content changed
    *
-   * TODO: move MediumEditor setup and config to a component
+   * @param {string} content
    */
-  setupMediumEditor() {
-    this.$timeout(() => {
-      this.editor = new MediumEditor(document.getElementById('welcomeMessage'), {
-        placeholder: { text: 'Enter a welcome message...', hideOnClick: false },
-        toolbar: { buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'] },
-        autoLink: true
-      });
-
-      this.editor.subscribe('editableInput', (event, editable) => {
-        this.$scope.$apply(() => {
-          this.group.welcomeMessage = toMarkdown(editable.innerHTML, {
-            converters: [{
-              // Remove spans and divs
-              filter: function (node) {
-                return node.nodeName === 'SPAN' || node.nodeName === 'DIV';
-              },
-              replacement: function (content) {
-                return content;
-              }
-            }]
-          });
-        });
-      });
-
-      this.$scope.$on('$destroy', () => this.editor.destroy());
-    });
+  onWelcomeContentChanged({ content }) {
+    if (content) {
+      this.group.welcomeMessage = content;
+    }
   }
 
   /**

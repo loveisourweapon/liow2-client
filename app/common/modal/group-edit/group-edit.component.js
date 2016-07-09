@@ -140,10 +140,9 @@ export const GroupEditComponent = {
             Intro Message
           </label>
           <div class="col-xs-9">
-            <div class="well well-sm medium-editor m-none">
-              <textarea id="welcomeMessage"
-                        ng-model="$ctrl.group.welcomeMessage"></textarea>
-            </div>
+            <medium-editor content="$ctrl.group.welcomeMessage"
+                           on-content-changed="$ctrl.onWelcomeContentChanged($event)"
+                           placeholder="Enter a welcome message..."></medium-editor>
             <span class="help-block"
                   ng-if="!$ctrl.error.errors.welcomeMessage">
               Select text to add links, bold, italics, etc.
