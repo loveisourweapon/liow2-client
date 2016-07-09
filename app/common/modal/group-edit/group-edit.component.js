@@ -40,14 +40,10 @@ export const GroupEditComponent = {
               https://loveisourweapon.com/g/{{ ($ctrl.group.name | kebabCase) || '...' }}
             </span>
             <span class="help-block"
-                  ng-if="$ctrl.error.errors.name"
-                  ng-repeat="error in $ctrl.error.errors.name">
-              {{ error.message }}
-            </span>
-            <span class="help-block"
-                  ng-if="$ctrl.error.errors.urlName"
-                  ng-repeat="error in $ctrl.error.errors.urlName">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message-exp="['name', 'urlName']">
+                Name is already taken
+              </span>
             </span>
           </div>
         </div>
@@ -71,9 +67,10 @@ export const GroupEditComponent = {
               Ideally 500px x 500px
             </span>
             <span class="help-block"
-                  ng-if="$ctrl.error.errors.logo"
-                  ng-repeat="error in $ctrl.error.errors.logo">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message="logo">
+                {{ $ctrl.error.errors.logo[0].message }}
+              </span>
             </span>
           </div>
         </div>
@@ -97,9 +94,10 @@ export const GroupEditComponent = {
               Ideally 1280px x 580px
             </span>
             <span class="help-block"
-                  ng-if="$ctrl.error.errors.coverImage"
-                  ng-repeat="error in $ctrl.error.errors.coverImage">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message="coverImage">
+                {{ $ctrl.error.errors.coverImage[0].message }}
+              </span>
             </span>
           </div>
         </div>
@@ -151,9 +149,10 @@ export const GroupEditComponent = {
               Select text to add links, bold, italics, etc.
             </span>
             <span class="help-block"
-                  ng-if="$ctrl.error.errors.welcomeMessage"
-                  ng-repeat="error in $ctrl.error.errors.welcomeMessage">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message="welcomeMessage">
+                {{ $ctrl.error.errors.welcomeMessage[0].message }}
+              </span>
             </span>
           </div>
         </div>

@@ -19,6 +19,7 @@ var dependencies = [
   'angular-dragula',
   'angular-inview',
   'angular-marked',
+  'angular-messages',
   'angular-route',
   'angular-sanitize',
   'angular-ui-bootstrap',

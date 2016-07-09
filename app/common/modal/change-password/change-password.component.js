@@ -41,8 +41,8 @@ export const ChangePasswordComponent = {
                  required
                  minlength="8">
           <span class="help-block"
-                ng-if="$ctrl.form.newPassword.$error.minlength">
-            Password must be at least 8 characters.
+                ng-messages="$ctrl.form.newPassword.$error">
+            <span ng-message="minlength">Password must be at least 8 characters</span>
           </span>
         </div>
 
@@ -57,8 +57,8 @@ export const ChangePasswordComponent = {
                  required
                  same-as="$ctrl.newPassword">
           <span class="help-block"
-                ng-if="$ctrl.form.confirmPassword.$error.sameAs">
-            Entered passwords must be the same.
+                ng-messages="$ctrl.form.confirmPassword.$error">
+            <span ng-message="sameAs">Entered passwords must be the same</span>
           </span>
         </div>
 

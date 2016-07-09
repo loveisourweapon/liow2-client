@@ -27,8 +27,10 @@ export const ForgotPasswordComponent = {
                  required
                  autofocus>
           <span class="help-block"
-                ng-if="$ctrl.form.$submitted && $ctrl.form.email.$error.email">
-            Please enter a valid email address.
+                ng-messages="$ctrl.form.$submitted && $ctrl.form.email.$error">
+            <span ng-message-exp="['required', 'email']">
+              Please enter a valid email address
+            </span>
           </span>
         </div>
 

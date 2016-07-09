@@ -59,13 +59,14 @@ export const SignupComponent = {
                    required
                    autofocus>
             <span class="help-block"
-                  ng-if="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.email.$error.email">
-              Please enter a valid email address.
+                  ng-messages="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.email.$error">
+              <span ng-message-exp="['required', 'email']">Please enter a valid email address</span>
             </span>
             <span class="help-block"
-                  ng-if="$ctrl.error.errors.email"
-                  ng-repeat="error in $ctrl.error.errors.email">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message="email">
+                {{ $ctrl.error.errors.email[0].message }}
+              </span>
             </span>
           </div>
         </div>
@@ -98,8 +99,8 @@ export const SignupComponent = {
             </div>
           </div>
           <span class="help-block col-xs-9 col-xs-push-3"
-                ng-if="$ctrl.form.$submitted && $ctrl.form.firstName.$error.required">
-            First name is required.
+                ng-messages="$ctrl.form.$submitted && $ctrl.form.firstName.$error">
+            <span ng-message="required">First name is required</span>
           </span>
         </div>
 
@@ -119,17 +120,15 @@ export const SignupComponent = {
                    required
                    minlength="8">
             <span class="help-block"
-                  ng-if="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.required">
-              Password is required.
+                  ng-messages="!$ctrl.error.errors.password && $ctrl.form.$submitted && $ctrl.form.password.$error">
+              <span ng-message="required">Password is required</span>
+              <span ng-message="minlength">Password must be at least 8 characters</span>
             </span>
             <span class="help-block"
-                  ng-if="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.password.$error.minlength">
-              Password must be at least 8 characters.
-            </span>
-            <span class="help-block"
-                  ng-if="$ctrl.error.errors.password"
-                  ng-repeat="error in $ctrl.error.errors.password">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message="password">
+                {{ $ctrl.error.errors.password[0].message }}
+              </span>
             </span>
           </div>
         </div>
@@ -153,9 +152,10 @@ export const SignupComponent = {
               Ideally 200px x 200px
             </span>
             <span class="help-block"
-                  ng-if="$ctrl.error.errors.picture"
-                  ng-repeat="error in $ctrl.error.errors.picture">
-              {{ error.message }}
+                  ng-messages="$ctrl.error.errors">
+              <span ng-message="picture">
+                {{ $ctrl.error.errors.picture[0].message }}
+              </span>
             </span>
           </div>
         </div>

@@ -72,6 +72,11 @@
       "from": "angular-marked@1.2.1",
       "resolved": "https://registry.npmjs.org/angular-marked/-/angular-marked-1.2.1.tgz"
     },
+    "angular-messages": {
+      "version": "1.5.7",
+      "from": "angular-messages@1.5.7",
+      "resolved": "https://registry.npmjs.org/angular-messages/-/angular-messages-1.5.7.tgz"
+    },
     "angular-route": {
       "version": "1.5.7",
       "from": "angular-route@1.5.7",

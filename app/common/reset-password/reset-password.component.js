@@ -34,8 +34,8 @@ const ResetPasswordComponent = {
                      minlength="8"
                      autofocus>
               <span class="help-block"
-                    ng-if="$ctrl.form.password.$error.minlength">
-                Password must be at least 8 characters.
+                    ng-messages="$ctrl.form.password.$error">
+                <span ng-message="minlength">Password must be at least 8 characters</span>
               </span>
             </div>
 
@@ -51,8 +51,8 @@ const ResetPasswordComponent = {
                      required
                      same-as="$ctrl.password">
               <span class="help-block"
-                    ng-if="$ctrl.form.confirmPassword.$error.sameAs">
-                Entered passwords must be the same.
+                    ng-messages="$ctrl.form.confirmPassword.$error">
+                <span ng-message="sameAs">Entered passwords must be the same</span>
               </span>
             </div>
 

@@ -4,6 +4,7 @@ import ModalHeaderComponent from './modal-header.component';
 import UiModalWindowDirective from './ui-modal-window.directive';
 
 // Module dependencies
+import ngMessages from 'angular-messages';
 import ngRoute from 'angular-route';
 import ngSanitize from 'angular-sanitize';
 import angularDragula from 'angular-dragula';
@@ -15,6 +16,7 @@ import 'angular-ui-switch'; // Not browserified
 
 const modal = angular
   .module('modal', [
+    ngMessages,
     ngRoute,
     ngSanitize,
     angularDragula(angular),
