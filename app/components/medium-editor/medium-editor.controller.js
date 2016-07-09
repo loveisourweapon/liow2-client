@@ -9,6 +9,20 @@ class MediumEditorController {
     Object.assign(this, { $element, $q });
   }
 
+  $onChanges(changes) {
+    if (
+      !this.editor || // editor isn't initialised
+      !changes.content || // no change to content
+      this.$element[0].querySelectorAll(':focus').length // editor is currently focused/typing
+    ) { return; }
+
+    let newContent = changes.content.currentValue;
+    if (newContent === undefined || newContent === null) {
+      newContent = '';
+    }
+    this.editor.setContent(converter.makeHtml(String(newContent)));
+  }
+
   /**
    * All elements compiled and linked
    */
@@ -20,7 +34,7 @@ class MediumEditorController {
     });
 
     if (this.content) {
-      this.editor.setContent(converter.makeHtml(this.content));
+      this.editor.setContent(converter.makeHtml(String(this.content)));
     }
 
     this.editor.subscribe('editableInput', (event, editable) => {
