@@ -9,6 +9,11 @@ class MediumEditorController {
     Object.assign(this, { $element, $q });
   }
 
+  /**
+   * Component bindings updated
+   * 
+   * @param {object} changes
+   */
   $onChanges(changes) {
     if (
       !this.editor || // editor isn't initialised
