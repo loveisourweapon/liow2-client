@@ -7,15 +7,8 @@ import { DeedsControlPanelComponent } from './deeds-control-panel';
 import { UsersControlPanelComponent } from './users-control-panel';
 import { GroupsControlPanelComponent } from './groups-control-panel';
 
-// Module dependencies
-import angularMarked from 'angular-marked';
-import uibs from 'angular-ui-bootstrap';
-
 const controlPanel = angular
-  .module('controlPanel', [
-    angularMarked,
-    uibs,
-  ])
+  .module('controlPanel', [])
   .component('controlPanel', ControlPanelComponent)
   .component('controlPanelSearch', ControlPanelSearchComponent)
   .component('userControlPanel', UserControlPanelComponent)

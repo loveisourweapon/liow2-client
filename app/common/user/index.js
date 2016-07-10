@@ -2,15 +2,8 @@ import angular from 'angular';
 import UserService from './user.service';
 import UserComponent from './user.component';
 
-// Module dependencies
-import uibs from 'angular-ui-bootstrap';
-import satellizer from 'satellizer';
-
 const user = angular
-  .module('user', [
-    uibs,
-    satellizer,
-  ])
+  .module('user', [])
   .service('User', UserService)
   .component('user', UserComponent)
   .config(($authProvider, config) => {
