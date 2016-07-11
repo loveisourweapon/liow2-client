@@ -6,8 +6,16 @@ const user = angular
   .module('user', [])
   .service('User', UserService)
   .component('user', UserComponent)
-  .config(($authProvider, config) => {
+  .config(($stateProvider, $authProvider, config) => {
     'ngInject';
+
+    $stateProvider.state('user', {
+      url: '/u/:userId',
+      component: 'user',
+      resolve: {
+        userId: /* @ngInject */ $stateParams => $stateParams.userId,
+      }
+    });
 
     $authProvider.loginUrl = `${config.serverUrl}/auth/login`;
     $authProvider.signupUrl = `${config.serverUrl}/auth/signup`;

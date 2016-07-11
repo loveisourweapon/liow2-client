@@ -8,6 +8,14 @@ const home = angular
   .component('home', HomeComponent)
   .component('welcome', WelcomeComponent)
   .component('homeFeed', HomeFeedComponent)
+  .config($stateProvider => {
+    'ngInject';
+
+    $stateProvider.state('home', {
+      url: '/',
+      component: 'home',
+    });
+  })
   .name;
 
 export default home;

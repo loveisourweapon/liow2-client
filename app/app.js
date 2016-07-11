@@ -6,9 +6,9 @@ import angularDragula from 'angular-dragula';
 import angularInView from 'angular-inview';
 import angularMarked from 'angular-marked';
 import ngMessages from 'angular-messages';
-import ngRoute from 'angular-route';
 import ngSanitize from 'angular-sanitize';
 import uibs from 'angular-ui-bootstrap';
+import uiRouter from 'angular-ui-router';
 import 'angular-ui-switch'; // Not browserified
 import angularYoutube from 'angular-youtube-embed';
 import satellizer from 'satellizer';
@@ -22,9 +22,9 @@ const app = angular
     angularInView.name,
     angularMarked,
     ngMessages,
-    ngRoute,
     ngSanitize,
     uibs,
+    uiRouter,
     'uiSwitch',
     angularYoutube,
     satellizer,
@@ -37,61 +37,14 @@ const app = angular
   .config((
     $compileProvider,
     $httpProvider,
-    $routeProvider,
+    $urlRouterProvider,
     $locationProvider,
     $animateProvider,
     uiSelectConfig
   ) => {
     'ngInject';
 
-    $routeProvider
-      .when('/', {
-        template: '<home></home>',
-      })
-      .when('/control-panel/:view', {
-        template: '<control-panel view="$resolve.view"></control-panel>',
-        resolve: {
-          view: /* @ngInject */ $route => $route.current.params.view
-        }
-      })
-      .when('/control-panel', {
-        redirectTo: '/control-panel/user',
-      })
-      .when('/global', {
-        template: '<global-feed></global-feed>',
-      })
-      .when('/d/:deedSlug', {
-        template: '<deed deed-slug="$resolve.deedSlug"></deed>',
-        resolve: {
-          deedSlug: /* @ngInject */ $route => $route.current.params.deedSlug
-        }
-      })
-      .when('/g/:groupSlug', {
-        template: '<group group-slug="$resolve.groupSlug"></group>',
-        resolve: {
-          groupSlug: /* @ngInject */ $route => $route.current.params.groupSlug
-        }
-      })
-      .when('/u/:userId', {
-        template: '<user user-id="$resolve.userId"></user>',
-        resolve: {
-          userId: /* @ngInject */ $route => $route.current.params.userId
-        }
-      })
-      .when('/confirm/:token', {
-        template: '<confirm-email token="$resolve.token"></confirm-email>',
-        resolve: {
-          token: /* @ngInject */ $route => $route.current.params.token
-        }
-      })
-      .when('/reset/:token', {
-        template: '<reset-password token="$resolve.token"></reset-password>',
-        resolve: {
-          token: /* @ngInject */ $route => $route.current.params.token
-        }
-      })
-      .otherwise('/');
-
+    $urlRouterProvider.otherwise('/');
     $compileProvider.debugInfoEnabled(false);
     $httpProvider.useApplyAsync(true);
     $locationProvider.html5Mode(true);

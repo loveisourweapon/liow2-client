@@ -2,12 +2,12 @@ import has from 'lodash/has';
 
 class SignupController {
   /* @ngInject */
-  constructor($uibModalInstance, $routeParams, Alertify, User, Group, Modal, canSwitch) {
+  constructor($uibModalInstance, $stateParams, Alertify, User, Group, Modal, canSwitch) {
     Object.assign(this, { $uibModalInstance, Alertify, User, Group, Modal, canSwitch });
 
     this.error = null;
     this.joinGroup = null;
-    if (has($routeParams, 'group')) {
+    if (has($stateParams, 'group')) {
       this.joinGroup = true;
     }
 

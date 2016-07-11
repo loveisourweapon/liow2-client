@@ -5,7 +5,7 @@ const AppComponent = {
   template: `
     <navbar></navbar>
 
-    <ng-view autoscroll></ng-view>
+    <ui-view></ui-view>
 
     <footer class="footer">
       <div class="container">

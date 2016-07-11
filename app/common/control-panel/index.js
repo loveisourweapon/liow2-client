@@ -16,6 +16,19 @@ const controlPanel = angular
   .component('deedsControlPanel', DeedsControlPanelComponent)
   .component('usersControlPanel', UsersControlPanelComponent)
   .component('groupsControlPanel', GroupsControlPanelComponent)
+  .config(($stateProvider, $urlRouterProvider) => {
+    'ngInject';
+
+    $stateProvider.state('controlPanel', {
+      url: '/control-panel/:view',
+      component: 'controlPanel',
+      resolve: {
+        view: /* @ngInject */ $stateParams => $stateParams.view,
+      }
+    });
+
+    $urlRouterProvider.when('/control-panel', '/control-panel/user');
+  })
   .name;
 
 export default controlPanel;

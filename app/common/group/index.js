@@ -8,6 +8,17 @@ const group = angular
   .service('Group', GroupService)
   .service('Campaign', CampaignService)
   .component('group', GroupComponent)
+  .config($stateProvider => {
+    'ngInject';
+
+    $stateProvider.state('group', {
+      url: '/g/:groupSlug',
+      component: 'group',
+      resolve: {
+        groupSlug: /* @ngInject */ $stateParams => $stateParams.groupSlug,
+      }
+    });
+  })
   .name;
 
 export default group;
