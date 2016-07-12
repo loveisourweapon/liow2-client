@@ -7,7 +7,7 @@ const DeedListVerticalComponent = {
       <div class="deed-wrapper"
            ng-class="{ 'deed-current': deed._id === $ctrl.deedList.Deed.current._id }"
            ng-repeat="deed in $ctrl.deedList.deeds track by deed._id"
-           ng-click="$ctrl.deedList.$location.url('/d/' + deed.urlTitle)">
+           ui-sref="deed({ deedSlug: deed.urlTitle })">
         <div class="deed-image">
           <img ng-src="{{ ::deed.logo || '/images/deed.png' }}"
                class="img-responsive img-circle">

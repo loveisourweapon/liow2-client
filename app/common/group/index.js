@@ -12,10 +12,12 @@ const group = angular
     'ngInject';
 
     $stateProvider.state('group', {
-      url: '/g/:groupSlug',
+      url: '/g/:groupSlug?setupCampaign',
+      reloadOnSearch: false,
       component: 'group',
       resolve: {
         groupSlug: /* @ngInject */ $stateParams => $stateParams.groupSlug,
+        setupCampaign: /* @ngInject */ $stateParams => $stateParams.setupCampaign === 'true',
       }
     });
   })

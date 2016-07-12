@@ -1,7 +1,7 @@
 class ConfirmEmailController {
   /* @ngInject */
-  constructor($rootScope, $location, Alertify, User) {
-    Object.assign(this, { $rootScope, $location, Alertify, User });
+  constructor($rootScope, $state, Alertify, User) {
+    Object.assign(this, { $rootScope, $state, Alertify, User });
   }
 
   /**
@@ -13,7 +13,7 @@ class ConfirmEmailController {
     this.User.confirmEmail(this.token)
       .then(() => this.Alertify.success('Confirmed email address'))
       .catch(() => this.Alertify.error('Failed confirming email address'))
-      .then(() => this.$location.url('/'));
+      .then(() => this.$state.go('home'));
   }
 }
 

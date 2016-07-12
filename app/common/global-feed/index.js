@@ -8,7 +8,7 @@ const globalFeed = angular
     'ngInject';
 
     $stateProvider.state('globalFeed', {
-      url: '/d/:deedSlug',
+      url: '/global',
       component: 'globalFeed',
     });
   })

@@ -11,9 +11,9 @@ const HomeFeedComponent = {
             Groups
           </h3>
           <div class="list-group group-list">
-            <a class="list-group-item clearfix"
-               ng-repeat="group in $ctrl.User.current.groups track by group._id"
-               ng-href="/g/{{ ::group.urlName }}">
+            <a ng-href="/g/{{ ::group.urlName }}"
+               class="list-group-item clearfix"
+               ng-repeat="group in $ctrl.User.current.groups track by group._id">
               <div class="group-list-img">
                 <img ng-src="{{ ::group.logo || '/images/group.png' }}"
                      class="img-circle">

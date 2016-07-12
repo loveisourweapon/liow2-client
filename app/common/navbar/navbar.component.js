@@ -16,10 +16,10 @@ const NavbarComponent = {
             <span class="icon-bar"></span>
           </button>
 
-          <a class="navbar-brand"
+          <a href="/"
+             class="navbar-brand"
              ng-click="$ctrl.collapseMenu()"
-             title="Love is our Weapon"
-             href="/">
+             title="Love is our Weapon">
             <img src="/images/logo-navbar.png"
                  alt="Love is our Weapon">
             <div class="navbar-brand-label">

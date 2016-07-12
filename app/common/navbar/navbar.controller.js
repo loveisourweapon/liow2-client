@@ -2,8 +2,8 @@ const MIN_QUERY_LENGTH = 3;
 
 class NavbarController {
   /* @ngInject */
-  constructor($location, $q, User, Group, Deed, Act, Modal) {
-    Object.assign(this, { $location, $q, User, Group, Deed, Act, Modal });
+  constructor($q, $state, User, Group, Deed, Act, Modal) {
+    Object.assign(this, { $q, $state, User, Group, Deed, Act, Modal });
   }
 
   /**
@@ -57,8 +57,13 @@ class NavbarController {
    */
   select(item) {
     this.selected = null;
-    this.$location.path(item.urlName ? `/g/${item.urlName}` : `/d/${item.urlTitle}`);
     this.collapseMenu();
+
+    if (item.urlName) {
+      this.$state.go('group', { groupSlug: item.urlName });
+    } else {
+      this.$state.go('deed', { deedSlug: item.urlTitle });
+    }
   }
 
   /**

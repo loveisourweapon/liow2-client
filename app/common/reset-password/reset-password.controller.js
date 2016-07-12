@@ -1,7 +1,7 @@
 class ResetPasswordController {
   /* @ngInject */
-  constructor($rootScope, $location, Alertify, User, Modal) {
-    Object.assign(this, { $rootScope, $location, Alertify, User, Modal });
+  constructor($rootScope, $state, Alertify, User, Modal) {
+    Object.assign(this, { $rootScope, $state, Alertify, User, Modal });
   }
 
   /**
@@ -22,7 +22,8 @@ class ResetPasswordController {
     this.User.resetPassword(password, token)
       .then(() => this.Alertify.success('Password reset'))
       .catch(() => this.Alertify.error('Password reset link has expired'))
-      .then(() => this.Modal.openLogin() && this.$location.url('/'));
+      .then(() => this.$state.go('home'))
+      .then(() => this.Modal.openLogin());
   }
 }
 

@@ -2,8 +2,8 @@ import capitalize from 'lodash/capitalize';
 
 class GroupEditController {
   /* @ngInject */
-  constructor($uibModalInstance, $location, Alertify, User, Group, Modal, action, group, users) {
-    Object.assign(this, { $uibModalInstance, $location, Alertify, User, Group, Modal, action, group, users });
+  constructor($uibModalInstance, $state, Alertify, User, Group, Modal, action, group, users) {
+    Object.assign(this, { $uibModalInstance, $state, Alertify, User, Group, Modal, action, group, users });
 
     this.error = null;
     this.setupCampaign = this.group ? false : true;
@@ -70,15 +70,14 @@ class GroupEditController {
           this.User.loadCurrent();
         }
 
-        if (this.action === 'create') {
-          this.$location.path(`/g/${response.data.urlName}`);
-        }
-
         this.$uibModalInstance.close(group);
         this.Alertify.success(`${capitalize(this.action)}d group <strong>${group.name}</strong>`);
 
-        if (this.setupCampaign) {
-          this.$location.search('setupCampaign', true);
+        if (this.action === 'create') {
+          this.$state.go('group', {
+            groupSlug: response.data.urlName,
+            setupCampaign: this.setupCampaign ? true : undefined,
+          });
         }
       })
       .catch(response => this.error = response.data.error)

@@ -3,6 +3,7 @@ import GroupController from './group.controller';
 const GroupComponent = {
   bindings: {
     groupSlug: '<',
+    setupCampaign: '<',
   },
   controller: GroupController,
   template: `
@@ -40,13 +41,13 @@ const GroupComponent = {
                    ng-repeat="item in $ctrl.campaign.deeds"
                    ng-if="$ctrl.Group.isAdmin($ctrl.Group.current, $ctrl.User.current)"
                    uib-dropdown>
-                <a class="btn col-xs-10"
+                <a ng-href="/d/{{ ::item.deed.urlTitle }}"
+                   class="btn col-xs-10"
                    ng-class="{
                      'btn-primary': item.published,
                      'btn-default': !item.published,
                      'btn-lg': item.deed._id === $ctrl.currentDeed.deed._id
-                   }"
-                   ng-href="/d/{{ ::item.deed.urlTitle }}">
+                   }">
                   {{ ::item.deed.title }}
                 </a>
                 <button type="button"
@@ -94,9 +95,9 @@ const GroupComponent = {
               </div>
 
               <!-- Show a normal button for non-admins -->
-              <a class="btn btn-block"
+              <a ng-href="/d/{{ ::item.deed.urlTitle }}"
+                 class="btn btn-block"
                  ng-repeat="item in $ctrl.campaign.deeds"
-                 ng-href="/d/{{ ::item.deed.urlTitle }}"
                  ng-class="{
                    'btn-primary': item.published,
                    'btn-default': !item.published,

@@ -2,8 +2,8 @@ import each from 'lodash/each';
 
 export default class DeedListController {
   /* @ngInject */
-  constructor($location, Deed, Act) {
-    Object.assign(this, { $location, Deed, Act });
+  constructor(Deed, Act) {
+    Object.assign(this, { Deed, Act });
   }
 
   /**

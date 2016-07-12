@@ -8,7 +8,7 @@ const DeedListHorizontalComponent = {
         <div class="col-xs-12" ng-if="!$ctrl.deedList.loading">
           <div class="deed-wrapper"
                ng-repeat="deed in $ctrl.deedList.deeds track by deed._id"
-               ng-click="$ctrl.deedList.$location.url('/d/' + deed.urlTitle)">
+               ui-sref="deed({ deedSlug: deed.urlTitle })">
             <div class="deed-image">
               <img ng-src="{{ ::deed.logo || '/images/deed.png' }}"
                    class="img-responsive img-circle">

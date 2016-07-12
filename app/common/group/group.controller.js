@@ -9,8 +9,8 @@ const NUM_IMAGES = 6;
 
 class GroupController {
   /* @ngInject */
-  constructor($rootScope, $location, Alertify, User, Group, Campaign, Act, Feed, Modal) {
-    Object.assign(this, { $rootScope, $location, Alertify, User, Group, Campaign, Act, Feed, Modal });
+  constructor($rootScope, $state, Alertify, User, Group, Campaign, Act, Feed, Modal) {
+    Object.assign(this, { $rootScope, $state, Alertify, User, Group, Campaign, Act, Feed, Modal });
   }
 
   /**
@@ -82,11 +82,11 @@ class GroupController {
         if (this.campaign) {
           this.Act.count({ campaign: this.campaign._id });
           this.currentDeed = findLast(this.campaign.deeds, { published: true });
-          this.$location.search('setupCampaign', null);
+          this.$state.go('.', { setupCampaign: null });
         } else {
-          if (has(this.$location.search(), 'setupCampaign')) {
+          if (this.setupCampaign) {
             this.editCampaign('create', this.Group.current)
-              .then(() => this.$location.search('setupCampaign', null));
+              .then(() => this.$state.go('.', { setupCampaign: null }));
           }
         }
 
@@ -123,8 +123,7 @@ class GroupController {
    */
   editCampaign(action = 'create', group, campaign = null) {
     return this.Modal.openCampaignEdit(action, group, campaign)
-      .then(() => this.loadCampaign(group))
-      .catch(() => null);
+      .then(() => this.loadCampaign(group));
   }
 
   /**
