@@ -47,7 +47,7 @@ export const GroupsControlPanelComponent = {
                       </a>
                     </li>
                     <li>
-                      <a ng-href="/control-panel/group?groupId={{ group._id }}">
+                      <a ui-sref="controlPanel.group({ groupId: group._id })">
                         <i class="fa fa-fw fa-cogs"></i>
                         View Admin Page
                       </a>

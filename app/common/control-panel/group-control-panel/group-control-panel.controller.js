@@ -2,8 +2,8 @@ import jsonpatch from 'fast-json-patch';
 
 export class GroupControlPanelController {
   /* @ngInject */
-  constructor($rootScope, $location, Alertify, User, Group, Act, Modal) {
-    Object.assign(this, { $rootScope, $location, Alertify, User, Group, Act, Modal });
+  constructor($rootScope, $state, $q, Alertify, User, Group, Act, Modal) {
+    Object.assign(this, { $rootScope, $state, $q, Alertify, User, Group, Act, Modal });
   }
 
   /**
@@ -25,11 +25,11 @@ export class GroupControlPanelController {
       .then(group => {
         this.group = group;
         if (!(
-          this.Group.isAdmin(this.group, this.User.current) ||
+          this.User.isMemberOfGroup(this.group) ||
           this.User.isSuperAdmin()
         )) {
-          this.$location.url('/');
-          return Promise.reject();
+          this.$state.go('controlPanel.user');
+          return this.$q.reject();
         }
 
         this.Act.count({ group: this.group._id });
@@ -80,7 +80,7 @@ export class GroupControlPanelController {
           return this.User.update(user, jsonpatch.generate(observer));
         })
         .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
-        .then(() => this.$location.search('active', 'user'))
+        .then(() => this.$state.go('controlPanel.user'))
         .catch(reason => reason && user.groups.push(group));
     }
   }

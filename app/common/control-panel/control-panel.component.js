@@ -1,9 +1,6 @@
 import { ControlPanelController } from './control-panel.controller';
 
 export const ControlPanelComponent = {
-  bindings: {
-    view: '<',
-  },
   controller: ControlPanelController,
   template: `
     <div class="container container-pad control-panel">
@@ -21,8 +18,8 @@ export const ControlPanelComponent = {
         <div class="col-sm-3">
           <div class="list-group">
             <a class="list-group-item"
-               ng-class="{ active: $ctrl.view === 'user' }"
-               href="/control-panel/user">
+               ui-sref="controlPanel.user"
+               ui-sref-active="active">
               User
             </a>
           </div>
@@ -31,9 +28,9 @@ export const ControlPanelComponent = {
             <h4>Your Groups</h4>
             <div class="list-group">
               <a class="list-group-item"
-                 ng-class="{ active: $ctrl.view === 'group' && $ctrl.groupId === group._id }"
                  ng-repeat="group in $ctrl.User.current.groups track by group._id"
-                 ng-href="/control-panel/group?groupId={{ group._id }}">
+                 ui-sref="controlPanel.group({ groupId: group._id })"
+                 ui-sref-active="active">
                 {{ group.name }}
               </a>
             </div>
@@ -43,18 +40,18 @@ export const ControlPanelComponent = {
             <h4>Admin</h4>
             <div class="list-group">
               <a class="list-group-item"
-                 ng-class="{ active: $ctrl.view === 'deeds' }"
-                 href="/control-panel/deeds">
+                 ui-sref="controlPanel.deeds"
+                 ui-sref-active="active">
                 Deeds
               </a>
               <a class="list-group-item"
-                 ng-class="{ active: $ctrl.view === 'users' }"
-                 href="/control-panel/users">
+                 ui-sref="controlPanel.users"
+                 ui-sref-active="active">
                 Users
               </a>
               <a class="list-group-item"
-                 ng-class="{ active: $ctrl.view === 'groups' }"
-                 href="/control-panel/groups">
+                 ui-sref="controlPanel.groups"
+                 ui-sref-active="active">
                 Groups
               </a>
             </div>
@@ -62,15 +59,7 @@ export const ControlPanelComponent = {
         </div>
 
         <div class="col-sm-9">
-          <user-control-panel ng-if="$ctrl.view === 'user'"></user-control-panel>
-          <group-control-panel ng-if="$ctrl.view === 'group'"
-                               group-id="$ctrl.groupId"></group-control-panel>
-
-          <div ng-if="$ctrl.User.isSuperAdmin()">
-            <deeds-control-panel ng-if="$ctrl.view === 'deeds'"></deeds-control-panel>
-            <users-control-panel ng-if="$ctrl.view === 'users'"></users-control-panel>
-            <groups-control-panel ng-if="$ctrl.view === 'groups'"></groups-control-panel>
-          </div>
+          <div ui-view="section"></div>
         </div>
       </div>
     </div>

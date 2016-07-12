@@ -19,13 +19,45 @@ const controlPanel = angular
   .config(($stateProvider, $urlRouterProvider) => {
     'ngInject';
 
-    $stateProvider.state('controlPanel', {
-      url: '/control-panel/:view',
-      component: 'controlPanel',
-      resolve: {
-        view: /* @ngInject */ $stateParams => $stateParams.view,
-      }
-    });
+    $stateProvider
+      .state('controlPanel', {
+        url: '/control-panel',
+        component: 'controlPanel',
+        abstract: true,
+      })
+      .state('controlPanel.user', {
+        url: '/user',
+        views: {
+          section: { component: 'userControlPanel' },
+        }
+      })
+      .state('controlPanel.group', {
+        url: '/group/:groupId',
+        views: {
+          section: { component: 'groupControlPanel' },
+        },
+        resolve: {
+          groupId: /* @ngInject */ $stateParams => $stateParams.groupId,
+        }
+      })
+      .state('controlPanel.deeds', {
+        url: '/deeds',
+        views: {
+          section: { component: 'deedsControlPanel' },
+        }
+      })
+      .state('controlPanel.users', {
+        url: '/users',
+        views: {
+          section: { component: 'usersControlPanel' },
+        }
+      })
+      .state('controlPanel.groups', {
+        url: '/groups',
+        views: {
+          section: { component: 'groupsControlPanel' },
+        }
+      });
 
     $urlRouterProvider.when('/control-panel', '/control-panel/user');
   })

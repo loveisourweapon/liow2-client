@@ -4,27 +4,27 @@ const superAdminViews = ['deeds', 'users', 'groups'];
 
 export class ControlPanelController {
   /* @ngInject */
-  constructor($rootScope, $location, User, Group) {
-    Object.assign(this, { $rootScope, $location, User, Group });
+  constructor($rootScope, $state, User) {
+    Object.assign(this, { $rootScope, $state, User });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
+    this.view = this.$state.current.url.substr(1);
     this.baseTitle = 'Control Panel';
-    this.groupId = this.$location.search().groupId;
     this.$rootScope.title = this.getPageTitle(this.view);
 
     if (
       !this.User.isAuthenticated() ||
       (this.User.current && !this.hasAccess())
-    ) this.$location.url('/');
+    ) this.$state.go('home');
 
     this.loginOff = this.User.on('login', () => {
-      if (!this.hasAccess()) this.$location.url('/');
+      if (!this.hasAccess()) this.$state.go('home');
     });
-    this.logoutOff = this.User.on('logout', () => this.$location.url('/'));
+    this.logoutOff = this.User.on('logout', () => this.$state.go('home'));
   }
 
   /**
