@@ -1,6 +1,6 @@
-import { ControlPanelController } from './control-panel.controller';
+import ControlPanelController from './control-panel.controller';
 
-export const ControlPanelComponent = {
+const ControlPanelComponent = {
   controller: ControlPanelController,
   template: `
     <div class="container container-pad control-panel">
@@ -9,7 +9,7 @@ export const ControlPanelComponent = {
           <h3 class="m-b-lg">
             <i class="fa fa-fw fa-cogs"></i>
             Control Panel
-            <small>&raquo; {{ $ctrl.view | capitalize }}</small>
+            <small>&raquo; {{ $ctrl.$state.current.name.split('.') | last | capitalize }}</small>
           </h3>
         </div>
       </div>
@@ -19,7 +19,7 @@ export const ControlPanelComponent = {
           <div class="list-group">
             <a class="list-group-item"
                ui-sref="controlPanel.user"
-               ui-sref-active="active">
+               ui-sref-active="{ active: 'controlPanel.user' }">
               User
             </a>
           </div>
@@ -30,7 +30,7 @@ export const ControlPanelComponent = {
               <a class="list-group-item"
                  ng-repeat="group in $ctrl.User.current.groups track by group._id"
                  ui-sref="controlPanel.group({ groupId: group._id })"
-                 ui-sref-active="active">
+                 ui-sref-active="{ active: 'controlPanel.group' }">
                 {{ group.name }}
               </a>
             </div>
@@ -41,17 +41,17 @@ export const ControlPanelComponent = {
             <div class="list-group">
               <a class="list-group-item"
                  ui-sref="controlPanel.deeds"
-                 ui-sref-active="active">
+                 ui-sref-active="{ active: 'controlPanel.deeds' }">
                 Deeds
               </a>
               <a class="list-group-item"
-                 ui-sref="controlPanel.users"
-                 ui-sref-active="active">
+                 ui-sref="controlPanel.users({ query: null })"
+                 ui-sref-active="{ active: 'controlPanel.users' }">
                 Users
               </a>
               <a class="list-group-item"
-                 ui-sref="controlPanel.groups"
-                 ui-sref-active="active">
+                 ui-sref="controlPanel.groups({ query: null })"
+                 ui-sref-active="{ active: 'controlPanel.groups' }">
                 Groups
               </a>
             </div>
@@ -65,3 +65,5 @@ export const ControlPanelComponent = {
     </div>
   `
 };
+
+export default ControlPanelComponent;

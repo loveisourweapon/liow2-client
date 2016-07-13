@@ -1,3 +1,4 @@
+import angular from 'angular';
 import has from 'lodash/has';
 import find from 'lodash/find';
 import findLast from 'lodash/findLast';
@@ -17,13 +18,18 @@ class GroupController {
    * Component is initialised
    */
   $onInit() {
-    // Set a random jumbotron background image seeded by the group name
-    this.jumbotronBackground = `/images/header${Math.floor(seedrandom(this.groupSlug)() * NUM_IMAGES)}.jpg`;
+    this.$rootScope.title = this.group.name;
     this.activeTab = 0;
     this.campaign = null;
+    if (this.User.isMemberOfGroup(this.group)) this.activeTab = 1;
+    this.Act.count({ group: this.group._id });
+    this.loadCampaign(this.group);
+    if (this.User.isAuthenticated()) this.Feed.update({ refresh: true });
 
-    this.loadGroup(this.groupSlug)
-      .then(() => this.$rootScope.title = this.Group.current ? this.Group.current.name : null);
+    this.Group.current = this.group;
+
+    // Set a random jumbotron background image seeded by the group name
+    this.jumbotronBackground = `/images/header${Math.floor(seedrandom(this.group._id)() * NUM_IMAGES)}.jpg`;
 
     this.loginOff = this.User.on('login', user => {
       this.Feed.update({ refresh: true });
@@ -38,35 +44,22 @@ class GroupController {
   }
 
   /**
+   * Component bindings updated
+   *
+   * @param {object} changes
+   */
+  $onChanges(changes) {
+    if (changes.group) {
+      this.group = angular.copy(this.group);
+    }
+  }
+
+  /**
    * Component is being destroyed
    */
   $onDestroy() {
     this.loginOff();
     this.logoutOff();
-  }
-
-  /**
-   * Load a group by it's urlName
-   *
-   * @param {string} urlName
-   *
-   * @returns {Promise}
-   */
-  loadGroup(urlName) {
-    this.loading = true;
-    return this.Group.findOne({ urlName })
-      .then(group => {
-        this.Group.current = group;
-        if (this.User.isMemberOfGroup(this.Group.current)) this.activeTab = 1;
-        this.Act.count({ group: group._id });
-        this.loadCampaign(group);
-        if (this.User.isAuthenticated()) this.Feed.update({ refresh: true });
-      })
-      .catch(err => {
-        this.error = err.message;
-        this.Group.current = null;
-      })
-      .then(() => this.loading = false);
   }
 
   /**
@@ -139,8 +132,10 @@ class GroupController {
         campaign.dateEnd = new Date();
         return this.Campaign.update(campaign, jsonpatch.generate(observer));
       })
-      .then(() => this.Alertify.success('Finished campaign'))
-      .then(() => this.loadCampaign(this.Group.current))
+      .then(() => {
+        this.Alertify.success('Finished campaign');
+        this.loadCampaign(this.Group.current);
+      })
       .catch(() => campaign.active = true);
   }
 

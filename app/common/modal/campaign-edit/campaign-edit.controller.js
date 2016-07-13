@@ -57,8 +57,8 @@ class CampaignEditController {
   loadDeeds() {
     this.loading = true;
     this.Deed.find({ fields: '_id,title' })
-      .then(response => this.deeds = differenceBy(
-        map(response.data, deed => ({ deed })),
+      .then(deeds => this.deeds = differenceBy(
+        map(deeds, deed => ({ deed })),
         this.campaign.deeds,
         'deed._id'
       ))

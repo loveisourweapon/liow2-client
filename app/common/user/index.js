@@ -13,7 +13,7 @@ const user = angular
       url: '/u/:userId',
       component: 'user',
       resolve: {
-        userId: /* @ngInject */ $stateParams => $stateParams.userId,
+        user: /* @ngInject */ ($stateParams, User) => User.findById($stateParams.userId),
       }
     });
 

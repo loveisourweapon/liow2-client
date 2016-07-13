@@ -1,13 +1,15 @@
+import angular from 'angular';
 import has from 'lodash/has';
 import find from 'lodash/find';
 import merge from 'lodash/merge';
+import first from 'lodash/first';
 
 let currentGroup = null;
 
 class GroupService {
   /* @ngInject */
-  constructor($http, $q, config, User) {
-    Object.assign(this, { $http, $q, User });
+  constructor($http, config, User) {
+    Object.assign(this, { $http, User });
 
     this.baseUrl = `${config.serverUrl}/groups`;
   }
@@ -17,10 +19,10 @@ class GroupService {
    *
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   find(params = {}) {
-    return this.$http.get(this.baseUrl, { params });
+    return this.$http.get(this.baseUrl, { params }).then(extractData);
   }
 
   /**
@@ -31,17 +33,14 @@ class GroupService {
    * @returns {Promise}
    */
   findOne(params) {
-    return this.$q((resolve, reject) => {
-      this.find(params)
-        .then(response => {
-          if (response.data.length === 1) {
-            resolve(response.data[0]);
-          } else {
-            reject(new Error('Group not found'));
-          }
-        })
-        .catch(() => reject(new Error('Failed connecting to server')));
-    });
+    return this.find(params)
+      .then(groups => {
+        if (groups.length === 1) {
+          return first(groups);
+        } else {
+          throw 'Group not found';
+        }
+      });
   }
 
   /**
@@ -50,7 +49,7 @@ class GroupService {
    * @param {string} query
    * @param {object} params
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   search(query, params) {
     params = merge({ query }, params);
@@ -63,13 +62,13 @@ class GroupService {
    *
    * @param {object} group
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   save(group) {
     if (has(group, '_id')) {
-      return this.$http.put(`${this.baseUrl}/${group._id}`, group);
+      return this.$http.put(`${this.baseUrl}/${group._id}`, group).then(extractData);
     } else {
-      return this.$http.post(this.baseUrl, group);
+      return this.$http.post(this.baseUrl, group).then(extractData);
     }
   }
 
@@ -91,7 +90,7 @@ class GroupService {
    * @param {object|null} group
    */
   set current(group) {
-    currentGroup = group;
+    currentGroup = angular.copy(group);
 
     // If the current user is a member of this group, make it their active group
     if (this.User.current && find(this.User.current.groups, ['id', group._id])) {
@@ -107,6 +106,17 @@ class GroupService {
   get current() {
     return currentGroup;
   }
+}
+
+/**
+ * Extra data from HTTP response
+ *
+ * @param {Response} response
+ *
+ * @returns {*}
+ */
+function extractData(response) {
+  return response.data;
 }
 
 export default GroupService;

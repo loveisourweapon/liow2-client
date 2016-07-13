@@ -17,10 +17,10 @@ class FeedService {
    *
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   find(params = {}) {
-    return this.$http.get(this.baseUrl, { params });
+    return this.$http.get(this.baseUrl, { params }).then(response => response.data);
   }
 
   /**

@@ -1,11 +1,13 @@
+import angular from 'angular';
 import merge from 'lodash/merge';
+import first from 'lodash/first';
 
 let currentDeed = null;
 
 class DeedService {
   /* @ngInject */
-  constructor($http, $q, config) {
-    Object.assign(this, { $http, $q });
+  constructor($http, config) {
+    Object.assign(this, { $http });
 
     this.baseUrl = `${config.serverUrl}/deeds`;
   }
@@ -15,10 +17,10 @@ class DeedService {
    *
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   find(params = {}) {
-    return this.$http.get(this.baseUrl, { params });
+    return this.$http.get(this.baseUrl, { params }).then(extractData);
   }
 
   /**
@@ -29,17 +31,14 @@ class DeedService {
    * @returns {Promise}
    */
   findOne(params) {
-    return this.$q((resolve, reject) => {
-      this.find(params)
-        .then(response => {
-          if (response.data.length === 1) {
-            resolve(response.data[0]);
-          } else {
-            reject(new Error('Deed not found'));
-          }
-        })
-        .catch(() => reject(new Error('Failed connecting to server')));
-    });
+    return this.find(params)
+      .then(deeds => {
+        if (deeds.length === 1) {
+          return first(deeds);
+        } else {
+          throw 'Deed not found';
+        }
+      });
   }
 
   /**
@@ -48,7 +47,7 @@ class DeedService {
    * @param {string} query
    * @param {object} params
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   search(query, params) {
     params = merge({ query }, params);
@@ -62,10 +61,10 @@ class DeedService {
    * @param {string} deedId
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   get(deedId, params = {}) {
-    return this.$http.get(`${this.baseUrl}/${deedId}`, { params });
+    return this.$http.get(`${this.baseUrl}/${deedId}`, { params }).then(extractData);
   }
 
   /**
@@ -74,7 +73,7 @@ class DeedService {
    * @param {object|null} deed
    */
   set current(deed) {
-    currentDeed = deed;
+    currentDeed = angular.copy(deed);
   }
 
   /**
@@ -85,6 +84,17 @@ class DeedService {
   get current() {
     return currentDeed;
   }
+}
+
+/**
+ * Extra data from HTTP response
+ *
+ * @param {Response} response
+ *
+ * @returns {*}
+ */
+function extractData(response) {
+  return response.data;
 }
 
 export default DeedService;

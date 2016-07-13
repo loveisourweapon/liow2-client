@@ -1,31 +1,27 @@
-import merge from 'lodash/merge';
+import angular from 'angular';
 
-export class UsersControlPanelController {
+class UsersControlPanelController {
   /* @ngInject */
-  constructor(User) {
-    Object.assign(this, { User });
+  constructor($rootScope, $state, User) {
+    Object.assign(this, { $rootScope, $state, User });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    this.loadUsers();
+    this.$rootScope.title = 'Users | Control Panel';
   }
 
   /**
-   * Load the users
+   * Component bindings updated
    *
-   * @param {object} [params={}]
+   * @param {object} changes
    */
-  loadUsers(params = {}) {
-    let findParams = merge({ limit: 20 }, params);
-
-    this.loading = true;
-    this.User.find(findParams)
-      .then(response => this.users = response.data)
-      .catch(() => null)
-      .then(() => this.loading = false);
+  $onChanges(changes) {
+    if (changes.users) {
+      this.users = angular.copy(this.users);
+    }
   }
 
   /**
@@ -34,6 +30,8 @@ export class UsersControlPanelController {
    * @param {object} $event
    */
   onSearch($event) {
-    this.loadUsers({ query: $event.query });
+    this.$state.go('.', { query: $event.query });
   }
 }
+
+export default UsersControlPanelController;

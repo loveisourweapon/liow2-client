@@ -1,32 +1,29 @@
+import angular from 'angular';
 import jsonpatch from 'fast-json-patch';
 
-export class UserControlPanelController {
+class UserControlPanelController {
   /* @ngInject */
-  constructor(Alertify, User, Act, Modal) {
-    Object.assign(this, { Alertify, User, Act, Modal });
+  constructor($rootScope, Alertify, User, Act, Modal) {
+    Object.assign(this, { $rootScope, Alertify, User, Act, Modal });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    if (this.User.current) {
-      this.Act.count({ user: this.User.current._id });
-    } else {
-      this.loading = true;
-    }
-
-    this.loginOff = this.User.on('login', user => {
-      this.Act.count({ user: user._id });
-      this.loading = false;
-    });
+    this.$rootScope.title = 'User | Control Panel';
+    this.Act.count({ user: this.user._id });
   }
 
   /**
-   * Component is being destroyed
+   * Component bindings updated
+   *
+   * @param {object} changes
    */
-  $onDestroy() {
-    this.loginOff();
+  $onChanges(changes) {
+    if (changes.user) {
+      this.user = angular.copy(this.user);
+    }
   }
 
   /**
@@ -51,7 +48,10 @@ export class UserControlPanelController {
    */
   saveName(user) {
     this.User.update(user, jsonpatch.generate(this.observer))
-      .then(() => this.Alertify.success('Updated name'))
+      .then(user => {
+        this.user = angular.copy(user);
+        this.Alertify.success('Updated name');
+      })
       .catch(() => this.Alertify.error('Failed updating name'))
       .then(() => this.toggleEditName(user));
   }
@@ -69,3 +69,5 @@ export class UserControlPanelController {
       .then(() => this.sending = false);
   }
 }
+
+export default UserControlPanelController;

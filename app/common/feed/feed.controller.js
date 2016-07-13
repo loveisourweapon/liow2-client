@@ -39,13 +39,13 @@ class FeedController {
   loadFeed(params = {}) {
     this.loading = true;
     this.Feed.find(merge(params, this.criteria))
-      .then(response => {
+      .then(feedItems => {
         if (has(params, 'before')) {
-          this.feedItems = this.feedItems.concat(response.data);
+          this.feedItems = this.feedItems.concat(feedItems);
         } else if (has(params, 'after')) {
-          this.feedItems = response.data.concat(this.feedItems);
+          this.feedItems = feedItems.concat(this.feedItems);
         } else {
-          this.feedItems = response.data;
+          this.feedItems = feedItems;
         }
       })
       .catch(() => null)

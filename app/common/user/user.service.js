@@ -1,3 +1,4 @@
+import angular from 'angular';
 import has from 'lodash/has';
 import some from 'lodash/some';
 import forOwn from 'lodash/forOwn';
@@ -81,11 +82,17 @@ class UserService {
   /**
    * Get the current user from the server
    *
+   * @param {boolean} [forceReload=false]
+   *
    * @returns {Promise}
    */
-  loadCurrent() {
+  loadCurrent(forceReload = false) {
     if (!this.isAuthenticated()) {
       return this.$q.reject('Not logged in')
+    }
+
+    if (currentUser && !forceReload) {
+      return this.$q.resolve(currentUser);
     }
 
     return this.$http.get(`${this.baseUrl}/me`)
@@ -98,7 +105,7 @@ class UserService {
           currentGroup = currentUser.groups[0];
         }
 
-        return response;
+        return currentUser;
       });
   }
 
@@ -107,10 +114,10 @@ class UserService {
    *
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   find(params = {}) {
-    return this.$http.get(this.baseUrl, { params });
+    return this.$http.get(this.baseUrl, { params }).then(extractData);
   }
 
   /**
@@ -119,10 +126,10 @@ class UserService {
    * @param {string} userId
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   findById(userId, params) {
-    return this.$http.get(`${this.baseUrl}/${userId}`, { params });
+    return this.$http.get(`${this.baseUrl}/${userId}`, { params }).then(extractData);
   }
 
   /**
@@ -130,13 +137,13 @@ class UserService {
    *
    * @param {object} user
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   save(user) {
     if (has(user, '_id')) {
-      return this.$http.put(`${this.baseUrl}/${user._id}`, user);
+      return this.$http.put(`${this.baseUrl}/${user._id}`, user).then(extractData);
     } else {
-      return this.$http.post(this.baseUrl, user);
+      return this.$http.post(this.baseUrl, user).then(extractData);
     }
   }
 
@@ -150,7 +157,7 @@ class UserService {
    */
   update(user, changes) {
     return this.$http.patch(`${this.baseUrl}/${user._id}`, changes)
-      .then(response => this.loadCurrent());
+      .then(() => this.loadCurrent(true));
   }
 
   /**
@@ -235,10 +242,10 @@ class UserService {
    *
    * @param {string} email
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   sendConfirmEmail(email) {
-    return this.$http.get(`${this.authUrl}/confirm`, { params: { email } });
+    return this.$http.get(`${this.authUrl}/confirm`, { params: { email } }).then(extractData);
   }
 
   /**
@@ -246,10 +253,10 @@ class UserService {
    *
    * @param {string} token
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   confirmEmail(token) {
-    return this.$http.post(`${this.authUrl}/confirm`, { token });
+    return this.$http.post(`${this.authUrl}/confirm`, { token }).then(extractData);
   }
 
   /**
@@ -313,7 +320,7 @@ class UserService {
    * @param {object|null} group
    */
   set group(group) {
-    currentGroup = group;
+    currentGroup = angular.copy(group);
   }
 
   /**
@@ -324,6 +331,17 @@ class UserService {
   get group() {
     return currentGroup;
   }
+}
+
+/**
+ * Extra data from HTTP response
+ *
+ * @param {Response} response
+ *
+ * @returns {*}
+ */
+function extractData(response) {
+  return response.data;
 }
 
 export default UserService;

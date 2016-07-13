@@ -13,7 +13,7 @@ const deed = angular
       url: '/d/:deedSlug',
       component: 'deed',
       resolve: {
-        deedSlug: /* @ngInject */ $stateParams => $stateParams.deedSlug,
+        deed: /* @ngInject */ ($stateParams, Deed) => Deed.findOne({ urlTitle: $stateParams.deedSlug }),
       }
     });
   })

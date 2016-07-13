@@ -1,8 +1,8 @@
-import { GroupControlPanelController } from './group-control-panel.controller';
+import GroupControlPanelController from './group-control-panel.controller';
 
-export const GroupControlPanelComponent = {
+const GroupControlPanelComponent = {
   bindings: {
-    groupId: '<',
+    group: '<',
   },
   controller: GroupControlPanelController,
   template: `
@@ -29,33 +29,33 @@ export const GroupControlPanelComponent = {
       </div>
 
       <div class="col-sm-9 col-sm-pull-3">
-        <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
+        <table class="table table-bordered table-striped">
           <tbody>
             <tr>
               <th>Name</th>
-              <td>{{ $ctrl.group.name }}</td>
+              <td>{{ ::$ctrl.group.name }}</td>
             </tr>
             <tr>
               <th>Created</th>
-              <td>{{ $ctrl.group.created | moment:'LL' }}</td>
+              <td>{{ ::$ctrl.group.created | moment:'LL' }}</td>
             </tr>
             <tr>
               <th>Members</th>
-              <td>{{ $ctrl.group.members | number }}</td>
+              <td>{{ ::$ctrl.group.members | number }}</td>
             </tr>
             <tr>
               <th>Acts of Love</th>
-              <td>{{ $ctrl.Act.counters[$ctrl.group._id] | number }}</td>
+              <td>{{ ::$ctrl.Act.counters[$ctrl.group._id] | number }}</td>
             </tr>
             <tr>
               <th>Welcome Message</th>
-              <td><div marked="$ctrl.group.welcomeMessage"></div></td>
+              <td marked="::$ctrl.group.welcomeMessage"></td>
             </tr>
           </tbody>
         </table>
-
-        <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>
   `
 };
+
+export default GroupControlPanelComponent;

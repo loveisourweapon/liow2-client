@@ -1,11 +1,14 @@
-import { DeedsControlPanelController } from './deeds-control-panel.controller'
+import DeedsControlPanelController from './deeds-control-panel.controller'
 
-export const DeedsControlPanelComponent = {
+const DeedsControlPanelComponent = {
+  bindings: {
+    deeds: '<',
+  },
   controller: DeedsControlPanelController,
   template: `
     <div class="row">
       <div class="col-xs-12">
-        <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
+        <table class="table table-bordered table-striped">
           <thead>
             <tr>
               <th style="width: 65px;">Logo</th>
@@ -15,20 +18,20 @@ export const DeedsControlPanelComponent = {
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="deed in $ctrl.deeds track by deed._id">
+            <tr ng-repeat="deed in ::$ctrl.deeds track by deed._id">
               <td class="text-center">
-                <img ng-src="{{ deed.logo || '/images/deed.png' }}"
+                <img ng-src="{{ ::deed.logo || '/images/deed.png' }}"
                      class="img-circle icon">
               </td>
-              <td>{{ deed.title }}</td>
+              <td>{{ ::deed.title }}</td>
               <td>
-                <div ng-if="deed.videoUrl">
-                  <a ng-href="{{ deed.videoUrl }}" target="_blank">
+                <div ng-if="::deed.videoUrl">
+                  <a ng-href="{{ ::deed.videoUrl }}" target="_blank">
                     <i class="fa fa-lg fa-youtube-play"></i>
-                    {{ deed.videoUrl.split('/') | last }}
+                    {{ ::deed.videoUrl.split('/') | last }}
                   </a>
                 </div>
-                <div ng-if="!deed.videoUrl" class="text-center">
+                <div ng-if="::!deed.videoUrl" class="text-center">
                   <i class="fa fa-lg fa-times-circle text-muted"></i>
                 </div>
               </td>
@@ -48,7 +51,7 @@ export const DeedsControlPanelComponent = {
                       </a>
                     </li>
                     <li>
-                      <a ng-href="/d/{{ deed.urlTitle }}">
+                      <a ng-href="/d/{{ ::deed.urlTitle }}">
                         <i class="fa fa-fw fa-heart"></i>
                         View Public Page
                       </a>
@@ -59,9 +62,9 @@ export const DeedsControlPanelComponent = {
             </tr>
           </tbody>
         </table>
-
-        <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>
   `
 };
+
+export default DeedsControlPanelComponent;

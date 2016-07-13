@@ -12,6 +12,8 @@ class CommentFormService {
    * Save a comment
    *
    * @param {object} comment
+   *
+   * @returns {Promise}
    */
   save(comment) {
     let method = has(comment, '_id') ? 'put' : 'post',
@@ -27,7 +29,7 @@ class CommentFormService {
       url = `/acts/${comment.target.acts}${url}`;
     }
 
-    return this.$http[method](`${this.baseUrl}${url}`, comment);
+    return this.$http[method](`${this.baseUrl}${url}`, comment).then(response => response.data);
   }
 }
 

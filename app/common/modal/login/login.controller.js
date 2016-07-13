@@ -47,13 +47,13 @@ class LoginController {
   authenticateEmail(email, password, joinGroup) {
     this.loggingIn = true;
     this.User.authenticateEmail(email, password, joinGroup ? this.Group.current : null)
-      .then(response => {
+      .then(user => {
         if (joinGroup) {
           this.User.group = this.Group.current;
         }
 
         this.$uibModalInstance.close();
-        this.Alertify.success('Signed in' + (!response.data.confirmed ? '. Please confirm your email address' : ''));
+        this.Alertify.success('Signed in' + (!user.confirmed ? '. Please confirm your email address' : ''));
       })
       .catch(response => this.error = response.data.message)
       .then(() => this.loggingIn = false);

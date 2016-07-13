@@ -1,7 +1,11 @@
-export const ControlPanelSearchComponent = {
+import ControlPanelSearchController from './control-panel-search.controller';
+
+const ControlPanelSearchComponent = {
   bindings: {
+    query: '<',
     onSearch: '&',
   },
+  controller: ControlPanelSearchController,
   template: `
     <div class="input-group m-b-md">
       <span class="input-group-addon">
@@ -12,8 +16,9 @@ export const ControlPanelSearchComponent = {
              placeholder="Search..."
              ng-model="$ctrl.query"
              ng-model-options="{ debounce: 500 }"
-             ng-change="$ctrl.onSearch({ $event: { query: $ctrl.query } })"
-             autofocus>
+             ng-change="$ctrl.onSearch({ $event: { query: $ctrl.query } })">
     </div>
   `
 };
+
+export default ControlPanelSearchComponent;

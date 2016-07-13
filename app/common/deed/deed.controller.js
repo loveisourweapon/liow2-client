@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 class DeedController {
   /* @ngInject */
   constructor($rootScope, Alertify, User, Group, Deed, Act, Feed, Modal) {
@@ -8,29 +10,21 @@ class DeedController {
    * Component is initialised
    */
   $onInit() {
-    this.loadDeed(this.deedSlug)
-      .then(() => this.$rootScope.title = this.Deed.current ? this.Deed.current.title : null);
+    this.$rootScope.title = this.deed.title;
+    this.Act.count({ deed: this.deed._id });
+    this.Feed.update({ refresh: true });
   }
 
   /**
-   * Load a deed by urlTitle
+   * Component bindings updated
    *
-   * @param {string} urlTitle
+   * @param {object} changes
    */
-  loadDeed(urlTitle) {
-    this.loading = true;
-    return this.Deed
-      .findOne({ urlTitle })
-      .then(deed => {
-        this.Deed.current = deed;
-        this.Act.count({ deed: deed._id });
-        this.Feed.update({ refresh: true });
-      })
-      .catch(error => {
-        this.error = error.message;
-        this.Deed.current = null;
-      })
-      .then(() => this.loading = false);
+  $onChanges(changes) {
+    if (changes.deed) {
+      this.deed = angular.copy(this.deed);
+      this.Deed.current = this.deed;
+    }
   }
 
   /**

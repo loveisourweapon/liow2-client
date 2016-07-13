@@ -9,10 +9,10 @@ class WelcomeController {
    */
   $onInit() {
     this.Group.find({ count: true })
-      .then(response => this.numberOfGroups = Number(response.data));
+      .then(groupsCount => this.numberOfGroups = Number(groupsCount));
 
     this.User.find({ count: true })
-      .then(response => this.numberOfUsers = Number(response.data));
+      .then(usersCount => this.numberOfUsers = Number(usersCount));
   }
 }
 

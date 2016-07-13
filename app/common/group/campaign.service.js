@@ -1,4 +1,5 @@
 import has from 'lodash/has';
+import first from 'lodash/first';
 
 class CampaignService {
   /* @ngInject */
@@ -13,10 +14,10 @@ class CampaignService {
    *
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   find(params = {}) {
-    return this.$http.get(this.baseUrl, { params });
+    return this.$http.get(this.baseUrl, { params }).then(extractData);
   }
 
   /**
@@ -27,17 +28,14 @@ class CampaignService {
    * @returns {Promise}
    */
   findOne(params) {
-    return this.$q((resolve, reject) => {
-      this.find(params)
-        .then(response => {
-          if (response.data.length === 1) {
-            resolve(response.data[0]);
-          } else {
-            reject(new Error('Campaign not found'));
-          }
-        })
-        .catch(() => reject(new Error('Failed connecting to server')));
-    });
+    return this.find(params)
+      .then(campaigns => {
+        if (campaigns.length === 1) {
+          return first(campaigns);
+        } else {
+          throw 'Campaign not found';
+        }
+      });
   }
 
   /**
@@ -45,13 +43,13 @@ class CampaignService {
    *
    * @param {object} campaign
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   save(campaign) {
     if (has(campaign, '_id')) {
-      return this.$http.put(`${this.baseUrl}/${campaign._id}`, campaign);
+      return this.$http.put(`${this.baseUrl}/${campaign._id}`, campaign).then(extractData);
     } else {
-      return this.$http.post(this.baseUrl, campaign);
+      return this.$http.post(this.baseUrl, campaign).then(extractData);
     }
   }
 
@@ -61,11 +59,22 @@ class CampaignService {
    * @param {object}   campaign
    * @param {object[]} changes
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   update(campaign, changes) {
-    return this.$http.patch(`${this.baseUrl}/${campaign._id}`, changes);
+    return this.$http.patch(`${this.baseUrl}/${campaign._id}`, changes).then(extractData);
   }
+}
+
+/**
+ * Extra data from HTTP response
+ *
+ * @param {Response} response
+ *
+ * @returns {*}
+ */
+function extractData(response) {
+  return response.data;
 }
 
 export default CampaignService;

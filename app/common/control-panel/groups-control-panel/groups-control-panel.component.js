@@ -1,13 +1,19 @@
-import { GroupsControlPanelController } from './groups-control-panel.controller';
+import GroupsControlPanelController from './groups-control-panel.controller';
 
-export const GroupsControlPanelComponent = {
+const GroupsControlPanelComponent = {
+  bindings: {
+    groups: '<',
+    query: '<',
+  },
   controller: GroupsControlPanelController,
   template: `
     <div class="row">
       <div class="col-xs-12">
-        <control-panel-search on-search="$ctrl.onSearch($event)"></control-panel-search>
+        <control-panel-search query="$ctrl.query"
+                              on-search="$ctrl.onSearch($event)"
+                              autofocus></control-panel-search>
 
-        <table class="table table-bordered table-striped" ng-if="!$ctrl.loading">
+        <table class="table table-bordered table-striped">
           <thead>
             <tr>
               <th style="width: 65px;">Logo</th>
@@ -23,8 +29,8 @@ export const GroupsControlPanelComponent = {
                 <img ng-src="/images/group.png"
                      class="img-circle icon">
               </td>
-              <td>{{ group.name }}</td>
-              <td>{{ group.created | moment:'L' }}</td>
+              <td>{{ ::group.name }}</td>
+              <td>{{ ::group.created | moment:'L' }}</td>
               <td>
                 <div class="btn-group" uib-dropdown>
                   <button type="button"
@@ -41,7 +47,7 @@ export const GroupsControlPanelComponent = {
                       </a>
                     </li>
                     <li>
-                      <a ng-href="/g/{{ group.urlName }}">
+                      <a ng-href="/g/{{ ::group.urlName }}">
                         <i class="fa fa-fw fa-users"></i>
                         View Public Page
                       </a>
@@ -58,9 +64,9 @@ export const GroupsControlPanelComponent = {
             </tr>
           </tbody>
         </table>
-
-        <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
       </div>
     </div>
   `
 };
+
+export default GroupsControlPanelComponent;

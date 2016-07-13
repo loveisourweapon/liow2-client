@@ -12,8 +12,8 @@ export default class DeedListController {
   $onInit() {
     this.loading = true;
     this.Deed.find({ fields: '_id,logo,title,urlTitle' })
-      .then(response => {
-        this.deeds = response.data;
+      .then(deeds => {
+        this.deeds = deeds;
         each(this.deeds, deed => this.Act.count({ deed: deed._id }));
       })
       .catch(() => null)

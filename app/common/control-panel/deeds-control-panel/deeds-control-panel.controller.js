@@ -1,25 +1,26 @@
-export class DeedsControlPanelController {
+class DeedsControlPanelController {
   /* @ngInject */
-  constructor(Deed, Modal) {
-    Object.assign(this, { Deed, Modal });
+  constructor($rootScope, Modal) {
+    Object.assign(this, { $rootScope, Modal });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    this.loadDeeds();
+    this.$rootScope.title = 'Deeds | Control Panel';
   }
 
   /**
-   * Load all of the deeds
-   * Note: in the future we might not want to preload ALL deeds
+   * Component bindings updated
+   *
+   * @param {object} changes
    */
-  loadDeeds() {
-    this.loading = true;
-    this.Deed.find()
-      .then(response => this.deeds = response.data)
-      .catch(() => null)
-      .then(() => this.loading = false);
+  $onChanges(changes) {
+    if (changes.deeds) {
+      this.deeds = angular.copy(this.deeds);
+    }
   }
 }
+
+export default DeedsControlPanelController;

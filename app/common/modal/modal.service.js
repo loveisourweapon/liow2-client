@@ -106,9 +106,7 @@ class ModalService {
       resolve: {
         action: () => action,
         group: () => angular.copy(group),
-        users: () => group ?
-          this.User.find({ groups: group._id }).then(response => response.data) :
-          null
+        users: () => group ? this.User.find({ groups: group._id }) : null
       }
     }, this.modalDefaults)).result;
   }

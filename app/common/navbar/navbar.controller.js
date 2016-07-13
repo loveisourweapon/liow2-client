@@ -34,9 +34,9 @@ class NavbarController {
     return this.$q
       .all([
         this.Group.search(query, { fields: '_id,name,urlName' }),
-        this.Deed.search(query, { fields: '_id,title,urlTitle' })
+        this.Deed.search(query, { fields: '_id,title,urlTitle' }),
       ])
-      .then(responses => this.choices = responses[0].data.concat(responses[1].data));
+      .then(([groups, deeds]) => this.choices = groups.concat(deeds));
   }
 
   /**

@@ -16,22 +16,22 @@ class ActService {
    *
    * @param {object} [params={}]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   count(params = {}) {
     params = defaults(params, { count: true });
 
     return this.$http.get(this.baseUrl, { params })
-      .then(response => {
-        response.data = Number(response.data);
+      .then(extractData)
+      .then(count => Number(count))
+      .then(count => {
+        if (params.user) this.counters[params.user] = count;
+        else if (params.group) this.counters[params.group] = count;
+        else if (params.campaign) this.counters[params.campaign] = count;
+        else if (params.deed) this.counters[params.deed] = count;
+        else this.counters.global = count;
 
-        if (params.user) this.counters[params.user] = response.data;
-        else if (params.group) this.counters[params.group] = response.data;
-        else if (params.campaign) this.counters[params.campaign] = response.data;
-        else if (params.deed) this.counters[params.deed] = response.data;
-        else this.counters.global = response.data;
-
-        return response;
+        return count;
       });
   }
 
@@ -41,14 +41,25 @@ class ActService {
    * @param {object} deed
    * @param {object} [group=null]
    *
-   * @returns {HttpPromise}
+   * @returns {Promise}
    */
   done(deed, group = null) {
     return this.$http.post(this.baseUrl, {
       deed: deed._id,
       group: has(group, '_id') ? group._id : null
-    });
+    }).then(extractData);
   }
+}
+
+/**
+ * Extra data from HTTP response
+ *
+ * @param {Response} response
+ *
+ * @returns {*}
+ */
+function extractData(response) {
+  return response.data;
 }
 
 export default ActService;

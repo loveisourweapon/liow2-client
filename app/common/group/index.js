@@ -16,7 +16,7 @@ const group = angular
       reloadOnSearch: false,
       component: 'group',
       resolve: {
-        groupSlug: /* @ngInject */ $stateParams => $stateParams.groupSlug,
+        group: /* @ngInject */ ($stateParams, Group) => Group.findOne({ urlName: $stateParams.groupSlug }),
         setupCampaign: /* @ngInject */ $stateParams => $stateParams.setupCampaign === 'true',
       }
     });

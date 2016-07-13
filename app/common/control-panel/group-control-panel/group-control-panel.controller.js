@@ -1,45 +1,40 @@
+import angular from 'angular';
 import jsonpatch from 'fast-json-patch';
 
-export class GroupControlPanelController {
+class GroupControlPanelController {
   /* @ngInject */
-  constructor($rootScope, $state, $q, Alertify, User, Group, Act, Modal) {
-    Object.assign(this, { $rootScope, $state, $q, Alertify, User, Group, Act, Modal });
+  constructor($rootScope, $state, Alertify, User, Group, Act, Modal) {
+    Object.assign(this, { $rootScope, $state, Alertify, User, Group, Act, Modal });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    this.loadGroup(this.groupId);
+    if (!(
+      this.User.isMemberOfGroup(this.group) ||
+      this.User.isSuperAdmin()
+    )) {
+      return this.$state.go('controlPanel.user');
+    }
+
+    this.Act.count({ group: this.group._id });
+    this.$rootScope.title = `${this.group.name} | Control Panel`;
+
+    this.User.find({ groups: this.group._id, count: true })
+      .then(users => this.group.members = users)
+      .catch(() => null);
   }
 
   /**
-   * Load the group by ID
+   * Component bindings updated
    *
-   * @param {string} groupId
-   *
+   * @param {object} changes
    */
-  loadGroup(groupId) {
-    this.loading = true;
-    this.Group.findOne({ _id: groupId })
-      .then(group => {
-        this.group = group;
-        if (!(
-          this.User.isMemberOfGroup(this.group) ||
-          this.User.isSuperAdmin()
-        )) {
-          this.$state.go('controlPanel.user');
-          return this.$q.reject();
-        }
-
-        this.Act.count({ group: this.group._id });
-        this.$rootScope.title = `${this.group.name} | Control Panel`;
-
-        return this.User.find({ groups: this.group._id, count: true });
-      })
-      .then(response => this.group.members = response.data)
-      .catch(() => null)
-      .then(() => this.loading = false);
+  $onChanges(changes) {
+    if (changes.group) {
+      this.group = angular.copy(this.group);
+    }
   }
 
   /**
@@ -79,9 +74,13 @@ export class GroupControlPanelController {
           user.groups.splice(user.groups.indexOf(group._id));
           return this.User.update(user, jsonpatch.generate(observer));
         })
-        .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
-        .then(() => this.$state.go('controlPanel.user'))
+        .then(() => {
+          this.Alertify.success(`Left group <strong>${group.name}</strong>`);
+          this.$state.go('controlPanel.user');
+        })
         .catch(reason => reason && user.groups.push(group));
     }
   }
 }
+
+export default GroupControlPanelController;

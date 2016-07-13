@@ -14,8 +14,8 @@ class DeedPreviewController {
   loadDeed(deedId) {
     this.loading = true;
     this.Deed.get(deedId)
-      .then(response => {
-        this.deed = response.data;
+      .then(deed => {
+        this.deed = deed;
         this.Act.count({ deed: this.deed._id });
       })
       .catch(response => this.error = 'Deed not found')

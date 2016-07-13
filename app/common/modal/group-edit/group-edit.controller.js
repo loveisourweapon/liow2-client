@@ -48,7 +48,6 @@ class GroupEditController {
     this.Modal[type === 'login' ? 'openLogin' : 'openSignup'](false)
       .then(() => this.User.loadCurrent())
       .then(() => this.resetFields())
-      .then(() => this.setupMediumEditor())
       .catch(() => null);
   }
 
@@ -61,12 +60,12 @@ class GroupEditController {
     this.saving = true;
     this.error = null;
     this.Group.save(group)
-      .then(response => {
+      .then(group => {
         if (
           this.action === 'create' ||
           (this.Group.current && this.Group.current._id === group._id)
         ) {
-          this.Group.current = response.data;
+          this.Group.current = group;
           this.User.loadCurrent();
         }
 
@@ -75,7 +74,7 @@ class GroupEditController {
 
         if (this.action === 'create') {
           this.$state.go('group', {
-            groupSlug: response.data.urlName,
+            groupSlug: group.urlName,
             setupCampaign: this.setupCampaign ? true : undefined,
           });
         }

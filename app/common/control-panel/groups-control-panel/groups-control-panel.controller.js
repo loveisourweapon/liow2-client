@@ -1,31 +1,27 @@
-import merge from 'lodash/merge';
+import angular from 'angular';
 
-export class GroupsControlPanelController {
+class GroupsControlPanelController {
   /* @ngInject */
-  constructor(Group, Modal) {
-    Object.assign(this, { Group, Modal });
+  constructor($rootScope, $state, Modal) {
+    Object.assign(this, { $rootScope, $state, Modal });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    this.loadGroups();
+    this.$rootScope.title = 'Groups | Control Panel';
   }
 
   /**
-   * Load the groups
+   * Component bindings updated
    *
-   * @param {object} [params={}]
+   * @param {object} changes
    */
-  loadGroups(params = {}) {
-    let findParams = merge({ limit: 20 }, params);
-
-    this.loading = true;
-    this.Group.find(findParams)
-      .then(response => this.groups = response.data)
-      .catch(() => null)
-      .then(() => this.loading = false);
+  $onChanges(changes) {
+    if (changes.groups) {
+      this.groups = angular.copy(this.groups);
+    }
   }
 
   /**
@@ -34,6 +30,8 @@ export class GroupsControlPanelController {
    * @param {object} $event
    */
   onSearch($event) {
-    this.loadGroups({ query: $event.query });
+    this.$state.go('.', { query: $event.query });
   }
 }
+
+export default GroupsControlPanelController;
