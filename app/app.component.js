@@ -1,5 +1,7 @@
 import AppController from './app.controller';
 
+import './stylesheets/main.scss';
+
 const AppComponent = {
   controller: AppController,
   template: `
