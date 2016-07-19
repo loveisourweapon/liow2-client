@@ -1,0 +1,9 @@
+@import '~angular-dragula/dist/dragula';
+
+ul.list-group[dragula] {
+  min-height: 200px;
+}
+.gu-mirror {
+  background: $state-info-bg;
+  border-radius: $border-radius-base;
+}

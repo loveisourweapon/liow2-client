@@ -1,6 +1,6 @@
 import AppController from './app.controller';
 
-import './stylesheets/main.scss';
+import './stylesheets/app.scss';
 
 const AppComponent = {
   controller: AppController,
