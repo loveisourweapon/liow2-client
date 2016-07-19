@@ -6,41 +6,47 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const paths = {
+  // Main app entry point
+  app: path.join(__dirname, 'app', 'app.js'),
+
+  // Webpack output path
+  build: path.join(__dirname, 'public', 'bundles'),
+};
+
+// Note: lodash isn't included here, we include specific methods when
+//       required, rather than the full library
+const vendorDependencies = [
+  'alertify.js',
+  'angular',
+  'angular-dragula',
+  'angular-inview',
+  'angular-marked',
+  'angular-messages',
+  'angular-sanitize',
+  'angular-ui-bootstrap',
+  'angular-ui-router',
+  'angular-ui-switch',
+  'angular-youtube-embed',
+  'fast-json-patch',
+  'medium-editor',
+  'moment',
+  'satellizer',
+  'seedrandom',
+  'showdown',
+  'to-markdown',
+  'ui-select',
+  'uuid',
+];
 
 const common = {
   entry: {
-    // Main app entry point
-    'app': './app/app.js',
-
-    // Vendor dependencies
-    // Note: lodash isn't included here, we include specific methods when
-    //       required, rather than the full library
-    'vendor': [
-      'alertify.js',
-      'angular',
-      'angular-dragula',
-      'angular-inview',
-      'angular-marked',
-      'angular-messages',
-      'angular-sanitize',
-      'angular-ui-bootstrap',
-      'angular-ui-router',
-      'angular-ui-switch',
-      'angular-youtube-embed',
-      'fast-json-patch',
-      'medium-editor',
-      'moment',
-      'satellizer',
-      'seedrandom',
-      'showdown',
-      'to-markdown',
-      'ui-select',
-      'uuid',
-    ],
+    'app': paths.app,
+    'vendor': vendorDependencies,
   },
 
   output: {
-    path: path.join(__dirname, 'public', 'bundles'),
+    path: paths.build,
     filename: '[name].[hash].bundle.js',
   },
 
@@ -111,6 +117,7 @@ if (isProduction) {
   });
 } else {
   const LiveReloadPlugin = require('webpack-livereload-plugin');
+  const rimraf = require('rimraf');
 
   module.exports = merge(common, {
     // Build source maps
@@ -119,6 +126,13 @@ if (isProduction) {
     plugins: [
       // LiveReload for webpack --watch
       new LiveReloadPlugin(),
+
+      // Clean the build directory before watch rebuild
+      function () {
+        this.plugin('invalid', () => {
+          rimraf.sync(path.join(paths.build, '*.{js,css,map,json}'));
+        });
+      },
     ],
   });
 }
