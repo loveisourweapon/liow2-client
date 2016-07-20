@@ -1,15 +1,19 @@
-var mapValues = require('lodash/mapValues');
-var replace = require('lodash/replace');
-var upperCase = require('lodash/upperCase');
-var http = require('http');
-var path = require('path');
-var logger = require('morgan');
-var express = require('express');
-var app = express();
+'use strict';
+
+const mapValues = require('lodash/mapValues');
+const replace = require('lodash/replace');
+const upperCase = require('lodash/upperCase');
+
+const http = require('http');
+const path = require('path');
+const logger = require('morgan');
+const express = require('express');
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Get config and look for environment variable overrides
-var config = mapValues(require('./config'), (value, key) => {
-  var envVar = process.env[replace(upperCase(key), /\s/g, '_')];
+const config = mapValues(require('./config'), (value, key) => {
+  let envVar = process.env[replace(upperCase(key), /\s/g, '_')];
   if (envVar) {
     return envVar;
   }
@@ -17,29 +21,30 @@ var config = mapValues(require('./config'), (value, key) => {
   return value;
 });
 
-var swig = require('swig');
-var fs = require('fs');
-var revManifestFile = 'public/assets/rev-manifest.json';
+const swig = require('swig');
+const fs = require('fs');
+const revManifestFile = 'public/bundles/manifest.json';
 swig.setFilter('revManifest', input => {
-  var revManifest = JSON.parse(fs.readFileSync(revManifestFile, 'utf8'));
+  let revManifest = JSON.parse(fs.readFileSync(revManifestFile, 'utf8'));
 
   return revManifest[input] || input;
 });
 
+let app = express();
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-var router = express.Router();
+let router = express.Router();
 router.get('/config.js', (req, res) => {
-  res.type('.js').send('var LIOW_CONFIG = ' + JSON.stringify(config));
+  res.type('.js').send(`var LIOW_CONFIG = ${JSON.stringify(config)}`);
 });
 router.get('*', (req, res) => {
-  res.send(swig.renderFile('views/index.html'));
+  res.send(swig.renderFile('views/index.html', { isDevelopment }));
 });
 app.use('/', router);
 
-var server = http.createServer(app);
+let server = http.createServer(app);
 server.listen(app.get('port'), () => {
-  console.info(`Express server listening on port ${app.get('port')}`);
+  console.info(`Listening on port ${app.get('port')}`);
 });
