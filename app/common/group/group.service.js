@@ -8,8 +8,8 @@ let currentGroup = null;
 
 class GroupService {
   /* @ngInject */
-  constructor($http, config, User) {
-    Object.assign(this, { $http, User });
+  constructor($http, $q, config, User) {
+    Object.assign(this, { $http, $q, User });
 
     this.baseUrl = `${config.serverUrl}/groups`;
   }
@@ -38,7 +38,7 @@ class GroupService {
         if (groups.length === 1) {
           return first(groups);
         } else {
-          throw 'Group not found';
+          return this.$q.reject('Group not found');
         }
       });
   }

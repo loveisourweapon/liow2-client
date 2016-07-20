@@ -6,8 +6,8 @@ let currentDeed = null;
 
 class DeedService {
   /* @ngInject */
-  constructor($http, config) {
-    Object.assign(this, { $http });
+  constructor($http, $q, config) {
+    Object.assign(this, { $http, $q });
 
     this.baseUrl = `${config.serverUrl}/deeds`;
   }
@@ -36,7 +36,7 @@ class DeedService {
         if (deeds.length === 1) {
           return first(deeds);
         } else {
-          throw 'Deed not found';
+          return this.$q.reject('Deed not found');
         }
       });
   }

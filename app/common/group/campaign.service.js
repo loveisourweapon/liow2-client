@@ -33,7 +33,7 @@ class CampaignService {
         if (campaigns.length === 1) {
           return first(campaigns);
         } else {
-          throw 'Campaign not found';
+          return this.$q.reject('Campaign not found');
         }
       });
   }
