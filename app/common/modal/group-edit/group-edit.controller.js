@@ -40,7 +40,7 @@ class GroupEditController {
   }
 
   /**
-   * Prompt user to login, then reset the form fields and setup the MediumEditor
+   * Prompt user to login, then reset the form fields
    *
    * @param {string} type
    */
@@ -66,7 +66,7 @@ class GroupEditController {
           (this.Group.current && this.Group.current._id === group._id)
         ) {
           this.Group.current = group;
-          this.User.loadCurrent();
+          this.User.loadCurrent(true);
         }
 
         this.$uibModalInstance.close(group);
