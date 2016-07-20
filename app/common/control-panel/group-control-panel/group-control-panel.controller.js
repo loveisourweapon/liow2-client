@@ -3,8 +3,8 @@ import jsonpatch from 'fast-json-patch';
 
 class GroupControlPanelController {
   /* @ngInject */
-  constructor($rootScope, $state, Alertify, User, Group, Act, Modal) {
-    Object.assign(this, { $rootScope, $state, Alertify, User, Group, Act, Modal });
+  constructor($rootScope, $state, $q, Alertify, User, Group, Act, Modal) {
+    Object.assign(this, { $rootScope, $state, $q, Alertify, User, Group, Act, Modal });
   }
 
   /**
@@ -68,7 +68,9 @@ class GroupControlPanelController {
         You'll need to remove yourself as an admin before leaving.
       `, 'Leave Group');
     } else {
+      const cancelConfirm = Symbol('cancelConfirm');
       return this.Modal.openConfirm(`Are you sure you want to leave **${group.name}**?`, 'Leave Group')
+        .catch(() => this.$q.reject(cancelConfirm))
         .then(() => {
           let observer = jsonpatch.observe(user);
           user.groups.splice(user.groups.indexOf(group._id));
@@ -78,7 +80,7 @@ class GroupControlPanelController {
           this.Alertify.success(`Left group <strong>${group.name}</strong>`);
           this.$state.go('controlPanel.user');
         })
-        .catch(reason => reason && user.groups.push(group));
+        .catch(reason => (reason !== cancelConfirm) && user.groups.push(group));
     }
   }
 }

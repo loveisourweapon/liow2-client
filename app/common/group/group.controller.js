@@ -10,8 +10,8 @@ const NUM_IMAGES = 6;
 
 class GroupController {
   /* @ngInject */
-  constructor($rootScope, $state, Alertify, User, Group, Campaign, Act, Feed, Modal) {
-    Object.assign(this, { $rootScope, $state, Alertify, User, Group, Campaign, Act, Feed, Modal });
+  constructor($rootScope, $state, $q, Alertify, User, Group, Campaign, Act, Feed, Modal) {
+    Object.assign(this, { $rootScope, $state, $q, Alertify, User, Group, Campaign, Act, Feed, Modal });
   }
 
   /**
@@ -194,7 +194,9 @@ class GroupController {
         You'll need to remove yourself as an admin before leaving.
       `, 'Leave Group');
     } else {
+      const cancelConfirm = Symbol('cancelConfirm');
       return this.Modal.openConfirm(`Are you sure you want to leave **${group.name}**?`, 'Leave Group')
+        .catch(() => this.$q.reject(cancelConfirm))
         .then(() => {
           let observer = jsonpatch.observe(user);
           user.groups.splice(user.groups.indexOf(group._id));
@@ -202,7 +204,7 @@ class GroupController {
         })
         .then(() => this.Alertify.success(`Left group <strong>${group.name}</strong>`))
         .then(() => this.activeTab = 0)
-        .catch(reason => reason && user.groups.push(group));
+        .catch(reason => (reason !== cancelConfirm) && user.groups.push(group));
     }
   }
 }
