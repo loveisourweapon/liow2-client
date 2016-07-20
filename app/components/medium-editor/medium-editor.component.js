@@ -1,4 +1,5 @@
 import MediumEditorController from './medium-editor.controller';
+import mediumEditorTemplate from './medium-editor.html';
 
 const MediumEditorComponent = {
   bindings: {
@@ -7,11 +8,7 @@ const MediumEditorComponent = {
     placeholder: '@',
   },
   controller: MediumEditorController,
-  template: `
-    <div class="well well-sm medium-editor m-none">
-      <textarea ng-model="$ctrl.content"></textarea>
-    </div>
-  `
+  template: mediumEditorTemplate,
 };
 
 export default MediumEditorComponent;

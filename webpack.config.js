@@ -40,6 +40,9 @@ const vendorDependencies = [
 ];
 
 const common = {
+  // Build source maps
+  devtool: 'cheap-module-source-map',
+
   entry: {
     'app': paths.app,
     'vendor': vendorDependencies,
@@ -74,7 +77,13 @@ const common = {
       },
 
       {
-        // Fonts loader (Font awesome)
+        // HTML loader
+        test: /\.html$/,
+        loader: 'html',
+      },
+
+      {
+        // Font loader (Font awesome)
         test: /\.(ttf|eot|svg|woff2?)/,
         loader: 'file',
       },
@@ -100,9 +109,6 @@ const common = {
 
 if (isProduction) {
   module.exports = merge(common, {
-    // Build source maps
-    devtool: 'source-map',
-
     plugins: [
       // Minify JS
       new webpack.optimize.UglifyJsPlugin({
@@ -120,9 +126,6 @@ if (isProduction) {
   const rimraf = require('rimraf');
 
   module.exports = merge(common, {
-    // Build source maps
-    devtool: 'cheap-module-source-map',
-
     plugins: [
       // LiveReload for webpack --watch
       new LiveReloadPlugin(),

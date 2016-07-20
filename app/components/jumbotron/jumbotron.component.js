@@ -1,4 +1,5 @@
 import JumbotronController from './jumbotron.controller';
+import jumbotronTemplate from './jumbotron.html';
 
 const JumbotronComponent = {
   bindings: {
@@ -12,26 +13,7 @@ const JumbotronComponent = {
     text: '?jumboText',
   },
   controller: JumbotronController,
-  template: `
-    <div class="jumbotron {{ $ctrl.classes }}"
-         ng-style="$ctrl.styles">
-      <div class="container">
-        <div ng-transclude="content">
-          <div class="jumbotron-image"
-               ng-if="$ctrl.image">
-            <img ng-src="{{ $ctrl.image }}"
-                 class="img-responsive img-circle">
-          </div>
-
-          <h1 class="jumbotron-title"
-              ng-transclude="title"></h1>
-
-          <p class="jumbotron-text"
-             ng-transclude="text"></p>
-        </div>
-      </div>
-    </div>
-  `,
+  template: jumbotronTemplate,
 };
 
 export default JumbotronComponent;

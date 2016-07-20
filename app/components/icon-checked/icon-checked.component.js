@@ -1,13 +1,10 @@
+import iconCheckedTemplate from './icon-checked.html';
+
 const IconCheckedComponent = {
   bindings: {
     value: '<',
   },
-  template: `
-    <i class="fa fa-lg" ng-class="{
-      'fa-check-circle text-success': $ctrl.value,
-      'fa-times-circle text-muted': !$ctrl.value
-    }"></i>
-  `
+  template: iconCheckedTemplate,
 };
 
 export default IconCheckedComponent;

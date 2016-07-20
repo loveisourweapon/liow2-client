@@ -1,4 +1,5 @@
 import UsersControlPanelController from './users-control-panel.controller';
+import usersControlPanelTemplate from './users-control-panel.html';
 
 const UsersControlPanelComponent = {
   bindings: {
@@ -6,49 +7,7 @@ const UsersControlPanelComponent = {
     query: '<',
   },
   controller: UsersControlPanelController,
-  template: `
-    <div class="row">
-      <div class="col-xs-12">
-        <control-panel-search query="$ctrl.query"
-                              on-search="$ctrl.onSearch($event)"
-                              autofocus></control-panel-search>
-
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th style="width: 65px;">Picture</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Joined</th>
-                <th>Last Seen</th>
-                <th>Confirmed</th>
-                <th>Super Admin</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="user in $ctrl.users track by user._id">
-                <td class="text-center">
-                  <img ng-src="{{ ::user.picture || $ctrl.User.getDefaultUserImage(user._id) }}"
-                       class="img-circle icon">
-                </td>
-                <td>{{ ::user.email }}</td>
-                <td>{{ ::user.name }}</td>
-                <td>{{ ::user.created | moment:'L' }}</td>
-                <td>{{ ::user.lastSeen | moment:'L' }}</td>
-                <td class="text-center">
-                  <icon-checked value="::user.confirmed"></icon-checked>
-                </td>
-                <td class="text-center">
-                  <icon-checked value="::user.superAdmin"></icon-checked>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  `
+  template: usersControlPanelTemplate,
 };
 
 export default UsersControlPanelComponent;

@@ -1,14 +1,12 @@
 import DeedListController from './deed-list.controller';
+import deedListTemplate from './deed-list.html';
 
 const DeedListComponent = {
   bindings: {
     layout: '@',
   },
   controller: DeedListController,
-  template: `
-    <deed-list-vertical ng-if="$ctrl.layout === 'vertical'"></deed-list-vertical>
-    <deed-list-horizontal ng-if="$ctrl.layout === 'horizontal'"></deed-list-horizontal>
-  `
+  template: deedListTemplate,
 };
 
 export default DeedListComponent;
