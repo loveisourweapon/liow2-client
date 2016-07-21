@@ -30,7 +30,16 @@ class UsersControlPanelController {
    * @param {object} $event
    */
   onSearch($event) {
-    this.$state.go('.', { query: $event.query });
+    this.$state.go('.', { query: $event.query, page: 1 });
+  }
+
+  /**
+   * Changed to a new pagination page
+   *
+   * @param {number} page
+   */
+  onPaginationChange(page) {
+    this.$state.go('.', { page });
   }
 }
 

@@ -7,14 +7,28 @@ const usersControlPanel = angular
   .config($stateProvider => {
     'ngInject';
 
+    const limit = 20;
+
     $stateProvider.state('controlPanel.users', {
-      url: '/users?query',
+      url: '/users?query&page',
       views: {
         section: { component: 'usersControlPanel' },
       },
       resolve: {
         query: /* @ngInject */ $stateParams => $stateParams.query,
-        users: /* @ngInject */ (User, query) => User.find({ limit: 20, query }),
+        page: /* @ngInject */ $stateParams => $stateParams.page || 1,
+        pageSize: () => limit,
+        users: /* @ngInject */ (User, query, page) => User.find({
+          limit,
+          query,
+          skip: (page - 1) * limit,
+        }),
+        numberOfUsers: /* @ngInject */ (User, query, page) => User.find({
+          count: true,
+          limit,
+          query,
+          skip: (page - 1) * limit,
+        }),
       }
     });
   })
