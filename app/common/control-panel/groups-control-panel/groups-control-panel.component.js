@@ -4,7 +4,10 @@ import groupsControlPanelTemplate from './groups-control-panel.html';
 const GroupsControlPanelComponent = {
   bindings: {
     groups: '<',
+    numberOfGroups: '<',
     query: '<',
+    page: '<',
+    pageSize: '<',
   },
   controller: GroupsControlPanelController,
   template: groupsControlPanelTemplate,
