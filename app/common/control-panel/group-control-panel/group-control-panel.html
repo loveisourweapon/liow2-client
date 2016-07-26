@@ -1,49 +1,71 @@
-<div class="row">
-  <div class="col-sm-3 col-sm-push-9">
-    <img ng-src="/images/group.png"
-         class="profile img-responsive img-circle">
+<ul class="nav nav-pills" role="tablist">
+  <li ui-sref="controlPanel.group"
+      ui-sref-active-eq="active"
+      role="presentation">
+    <a href>
+      <i class="fa fa-fw fa-users"></i>
+      Overview
+    </a>
+  </li>
+  <li ui-sref="controlPanel.group.users"
+      ui-sref-active="active"
+      ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current) || $ctrl.User.isSuperAdmin()"
+      role="presentation">
+    <a href>
+      <i class="fa fa-fw fa-user"></i>
+      Users
+    </a>
+  </li>
+</ul>
 
-    <button type="button"
-            class="btn btn-default btn-block"
-            ng-click="$ctrl.updateGroup($ctrl.group)"
-            ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current)">
-      <!-- TODO: allow superAdmin access -->
-      <i class="fa fa-fw fa-edit"></i>
-      Update
-    </button>
-    <button type="button"
-            class="btn btn-default btn-block"
-            ng-click="$ctrl.leaveGroup($ctrl.User.current, $ctrl.group)"
-            ng-if="$ctrl.User.isMemberOfGroup($ctrl.group)">
-      <i class="fa fa-fw fa-sign-out"></i>
-      Leave
-    </button>
-  </div>
+<div ui-view="tab">
+  <div class="row">
+    <div class="col-sm-3 col-sm-push-9 m-b-md">
+      <img ng-src="/images/group.png"
+           class="profile img-responsive img-circle">
 
-  <div class="col-sm-9 col-sm-pull-3">
-    <table class="table table-bordered table-striped">
-      <tbody>
-        <tr>
-          <th>Name</th>
-          <td>{{ ::$ctrl.group.name }}</td>
-        </tr>
-        <tr>
-          <th>Created</th>
-          <td>{{ ::$ctrl.group.created | moment:'LL' }}</td>
-        </tr>
-        <tr>
-          <th>Members</th>
-          <td>{{ ::$ctrl.group.members | number }}</td>
-        </tr>
-        <tr>
-          <th>Acts of Love</th>
-          <td>{{ ::$ctrl.Act.counters[$ctrl.group._id] | number }}</td>
-        </tr>
-        <tr>
-          <th>Welcome Message</th>
-          <td marked="::$ctrl.group.welcomeMessage"></td>
-        </tr>
-      </tbody>
-    </table>
+      <button type="button"
+              class="btn btn-default btn-block"
+              ng-click="$ctrl.updateGroup($ctrl.group)"
+              ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current)">
+        <!-- TODO: allow superAdmin access -->
+        <i class="fa fa-fw fa-edit"></i>
+        Update
+      </button>
+      <button type="button"
+              class="btn btn-default btn-block"
+              ng-click="$ctrl.leaveGroup($ctrl.User.current, $ctrl.group)"
+              ng-if="$ctrl.User.isMemberOfGroup($ctrl.group)">
+        <i class="fa fa-fw fa-sign-out"></i>
+        Leave
+      </button>
+    </div>
+
+    <div class="col-sm-9 col-sm-pull-3">
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>{{ ::$ctrl.group.name }}</td>
+          </tr>
+          <tr>
+            <th>Created</th>
+            <td>{{ ::$ctrl.group.created | moment:'LL' }}</td>
+          </tr>
+          <tr>
+            <th>Members</th>
+            <td>{{ ::$ctrl.numberOfMembers | number }}</td>
+          </tr>
+          <tr>
+            <th>Acts of Love</th>
+            <td>{{ ::$ctrl.Act.counters[$ctrl.group._id] | number }}</td>
+          </tr>
+          <tr>
+            <th>Welcome Message</th>
+            <td marked="::$ctrl.group.welcomeMessage"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

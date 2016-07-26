@@ -14,7 +14,7 @@
       <div class="list-group">
         <a class="list-group-item"
            ui-sref="controlPanel.user"
-           ui-sref-active="{ active: 'controlPanel.user' }">
+           ui-sref-active="active">
           User
         </a>
       </div>
@@ -25,7 +25,7 @@
           <a class="list-group-item"
              ng-repeat="group in $ctrl.User.current.groups track by group._id"
              ui-sref="controlPanel.group({ groupId: group._id })"
-             ui-sref-active="{ active: 'controlPanel.group' }">
+             ui-sref-active="active">
             {{ group.name }}
           </a>
         </div>
@@ -36,17 +36,17 @@
         <div class="list-group">
           <a class="list-group-item"
              ui-sref="controlPanel.deeds"
-             ui-sref-active="{ active: 'controlPanel.deeds' }">
+             ui-sref-active="active">
             Deeds
           </a>
           <a class="list-group-item"
-             ui-sref="controlPanel.users({ query: null })"
-             ui-sref-active="{ active: 'controlPanel.users' }">
+             ui-sref="controlPanel.users"
+             ui-sref-active="active">
             Users
           </a>
           <a class="list-group-item"
-             ui-sref="controlPanel.groups({ query: null })"
-             ui-sref-active="{ active: 'controlPanel.groups' }">
+             ui-sref="controlPanel.groups"
+             ui-sref-active="active">
             Groups
           </a>
         </div>

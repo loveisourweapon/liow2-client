@@ -20,10 +20,6 @@ class GroupControlPanelController {
 
     this.Act.count({ group: this.group._id });
     this.$rootScope.title = `${this.group.name} | Control Panel`;
-
-    this.User.find({ groups: this.group._id, count: true })
-      .then(users => this.group.members = users)
-      .catch(() => null);
   }
 
   /**
