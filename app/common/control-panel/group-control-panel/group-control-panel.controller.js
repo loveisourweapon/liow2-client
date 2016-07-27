@@ -19,7 +19,7 @@ class GroupControlPanelController {
     }
 
     this.Act.count({ group: this.group._id });
-    this.$rootScope.title = `${this.group.name} | Control Panel`;
+    this.$rootScope.title = `${this.title || this.group.name} | Control Panel`;
   }
 
   /**

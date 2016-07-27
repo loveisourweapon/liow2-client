@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-class UsersControlPanelController {
+class CommentsControlPanelController {
   /* @ngInject */
   constructor($rootScope, $state, User) {
     Object.assign(this, { $rootScope, $state, User });
@@ -10,7 +10,7 @@ class UsersControlPanelController {
    * Component is initialised
    */
   $onInit() {
-    this.$rootScope.title = `${this.title || 'Users'} | Control Panel`;
+    this.$rootScope.title = `${this.title || 'Comments'} | Control Panel`;
   }
 
   /**
@@ -19,18 +19,9 @@ class UsersControlPanelController {
    * @param {object} changes
    */
   $onChanges(changes) {
-    if (changes.users) {
-      this.users = angular.copy(this.users);
+    if (changes.comments) {
+      this.comments = angular.copy(this.comments);
     }
-  }
-
-  /**
-   * Updated search query
-   *
-   * @param {object} $event
-   */
-  onSearch($event) {
-    this.$state.go('.', { query: $event.query, page: 1 });
   }
 
   /**
@@ -43,4 +34,4 @@ class UsersControlPanelController {
   }
 }
 
-export default UsersControlPanelController;
+export default CommentsControlPanelController;

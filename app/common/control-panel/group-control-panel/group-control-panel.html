@@ -16,6 +16,15 @@
       Users
     </a>
   </li>
+  <li ui-sref="controlPanel.group.testimonies"
+      ui-sref-active="active"
+      ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current) || $ctrl.User.isSuperAdmin()"
+      role="presentation">
+    <a href>
+      <i class="fa fa-fw fa-comment"></i>
+      Testimonies
+    </a>
+  </li>
 </ul>
 
 <div ui-view="tab">

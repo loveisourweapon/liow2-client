@@ -4,6 +4,7 @@ import userControlPanelTemplate from './user-control-panel.html';
 const UserControlPanelComponent = {
   bindings: {
     user: '<',
+    title: '<browserTitle',
   },
   controller: UserControlPanelController,
   template: userControlPanelTemplate,

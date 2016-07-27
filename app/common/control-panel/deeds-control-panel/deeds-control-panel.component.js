@@ -4,6 +4,7 @@ import deedsControlPanelTemplate from './deeds-control-panel.html';
 const DeedsControlPanelComponent = {
   bindings: {
     deeds: '<',
+    title: '<browserTitle',
   },
   controller: DeedsControlPanelController,
   template: deedsControlPanelTemplate,

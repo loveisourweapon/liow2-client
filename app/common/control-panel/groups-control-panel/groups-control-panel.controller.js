@@ -10,7 +10,7 @@ class GroupsControlPanelController {
    * Component is initialised
    */
   $onInit() {
-    this.$rootScope.title = 'Groups | Control Panel';
+    this.$rootScope.title = `${this.title || 'Groups'} | Control Panel`;
   }
 
   /**

@@ -2,8 +2,8 @@ import angular from 'angular';
 
 class CommentFormController {
   /* @ngInject */
-  constructor(Alertify, User, CommentForm, Feed) {
-    Object.assign(this, { Alertify, User, CommentForm, Feed });
+  constructor(Alertify, User, Comment, Feed) {
+    Object.assign(this, { Alertify, User, Comment, Feed });
   }
 
   /**
@@ -61,7 +61,7 @@ class CommentFormController {
     comment = this.setGroupAndTarget(comment);
 
     this.saving = true;
-    this.CommentForm.save(comment)
+    this.Comment.save(comment)
       .then(() => {
         this.Alertify.success('Comment saved');
         this.Feed.update();

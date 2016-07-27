@@ -11,7 +11,7 @@ class UserControlPanelController {
    * Component is initialised
    */
   $onInit() {
-    this.$rootScope.title = 'User | Control Panel';
+    this.$rootScope.title = `${this.title || this.user.name} | Control Panel`;
     this.Act.count({ user: this.user._id });
   }
 

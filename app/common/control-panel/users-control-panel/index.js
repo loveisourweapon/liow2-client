@@ -22,12 +22,14 @@ const usersControlPanel = angular
           limit,
           query,
           skip: (page - 1) * limit,
+          sort: '-_id',
         }),
         numberOfUsers: /* @ngInject */ (User, query, page) => User.find({
           count: true,
           limit,
           query,
           skip: (page - 1) * limit,
+          sort: '-_id',
         }),
       }
     });

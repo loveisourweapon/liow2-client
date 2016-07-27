@@ -50,8 +50,8 @@
             </td>
             <td>{{ ::user.email }}</td>
             <td>{{ ::user.name }}</td>
-            <td>{{ ::user.created | moment:'L' }}</td>
-            <td>{{ ::user.lastSeen | moment:'L' }}</td>
+            <td>{{ ::user.created | moment }}</td>
+            <td>{{ ::user.lastSeen | moment }}</td>
             <td class="text-center">
               <icon-checked value="::user.confirmed"></icon-checked>
             </td>

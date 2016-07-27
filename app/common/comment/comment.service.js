@@ -1,12 +1,24 @@
 import has from 'lodash/has';
 
-class CommentFormService {
+class CommentService {
   /* @ngInject */
   constructor($http, config) {
     Object.assign(this, { $http });
 
     this.baseUrl = config.serverUrl;
   }
+
+  /**
+   * Find comments by params
+   *
+   * @param {object} [params={}]
+   *
+   * @returns {Promise}
+   */
+  find(params = {}) {
+    return this.$http.get(`${this.baseUrl}/comments`, { params }).then(extractData);
+  }
+
 
   /**
    * Save a comment
@@ -29,8 +41,19 @@ class CommentFormService {
       url = `/acts/${comment.target.acts}${url}`;
     }
 
-    return this.$http[method](`${this.baseUrl}${url}`, comment).then(response => response.data);
+    return this.$http[method](`${this.baseUrl}${url}`, comment).then(extractData);
   }
 }
 
-export default CommentFormService;
+/**
+ * Extra data from HTTP response
+ *
+ * @param {Response} response
+ *
+ * @returns {*}
+ */
+function extractData(response) {
+  return response.data;
+}
+
+export default CommentService;

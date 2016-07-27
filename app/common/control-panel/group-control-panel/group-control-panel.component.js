@@ -5,6 +5,7 @@ const GroupControlPanelComponent = {
   bindings: {
     group: '<',
     numberOfMembers: '<',
+    title: '<browserTitle',
   },
   controller: GroupControlPanelController,
   template: groupControlPanelTemplate,

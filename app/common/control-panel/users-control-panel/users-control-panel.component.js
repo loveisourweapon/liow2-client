@@ -8,6 +8,7 @@ const UsersControlPanelComponent = {
     query: '<',
     page: '<',
     pageSize: '<',
+    title: '<browserTitle',
   },
   controller: UsersControlPanelController,
   template: usersControlPanelTemplate,

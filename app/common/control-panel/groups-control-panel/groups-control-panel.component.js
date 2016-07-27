@@ -8,6 +8,7 @@ const GroupsControlPanelComponent = {
     query: '<',
     page: '<',
     pageSize: '<',
+    title: '<browserTitle',
   },
   controller: GroupsControlPanelController,
   template: groupsControlPanelTemplate,

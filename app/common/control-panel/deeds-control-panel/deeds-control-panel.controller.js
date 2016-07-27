@@ -8,7 +8,7 @@ class DeedsControlPanelController {
    * Component is initialised
    */
   $onInit() {
-    this.$rootScope.title = 'Deeds | Control Panel';
+    this.$rootScope.title = `${this.title || 'Deeds'} | Control Panel`;
   }
 
   /**

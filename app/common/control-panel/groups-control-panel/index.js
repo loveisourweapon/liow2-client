@@ -22,12 +22,14 @@ const groupsControlPanel = angular
           limit,
           query,
           skip: (page - 1) * limit,
+          sort: '-_id',
         }),
         numberOfGroups: /* @ngInject */ (Group, query, page) => Group.find({
           count: true,
           limit,
           query,
           skip: (page - 1) * limit,
+          sort: '-_id',
         }),
       }
     });

@@ -31,6 +31,7 @@ const groupControlPanel = angular
           tab: { component: 'usersControlPanel' },
         },
         resolve: {
+          browserTitle: /* @ngInject */ group => `Users | ${group.name}`,
           query: /* @ngInject */ $stateParams => $stateParams.query,
           page: /* @ngInject */ $stateParams => $stateParams.page || 1,
           pageSize: () => limit,
@@ -39,6 +40,7 @@ const groupControlPanel = angular
             limit,
             query,
             skip: (page - 1) * limit,
+            sort: '-_id',
           }),
           numberOfUsers: /* @ngInject */ (User, group, query, page) => User.find({
             count: true,
@@ -46,8 +48,35 @@ const groupControlPanel = angular
             limit,
             query,
             skip: (page - 1) * limit,
+            sort: '-_id',
           }),
         }
+      })
+      .state('controlPanel.group.testimonies', {
+        url: '/testimonies?page',
+        views: {
+          tab: { component: 'commentsControlPanel' },
+        },
+        resolve: {
+          browserTitle: /* @ngInject */ group => `Testimonies | ${group.name}`,
+          page: /* @ngInject */ $stateParams => $stateParams.page || 1,
+          pageSize: () => limit,
+          comments: /* @ngInject */ (Comment, group, page) => Comment.find({
+            group: group._id,
+            'target.group': 'null',
+            limit,
+            skip: (page - 1) * limit,
+            sort: '-_id',
+          }),
+          numberOfComments: /* @ngInject */ (Comment, group, page) => Comment.find({
+            count: true,
+            group: group._id,
+            'target.group': 'null',
+            limit,
+            skip: (page - 1) * limit,
+            sort: '-_id',
+          }),
+        },
       });
   })
   .name;
