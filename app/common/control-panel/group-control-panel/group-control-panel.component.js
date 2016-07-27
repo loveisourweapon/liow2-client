@@ -4,6 +4,8 @@ import groupControlPanelTemplate from './group-control-panel.html';
 const GroupControlPanelComponent = {
   bindings: {
     group: '<',
+    numberOfMembers: '<',
+    title: '<browserTitle',
   },
   controller: GroupControlPanelController,
   template: groupControlPanelTemplate,

@@ -7,7 +7,7 @@ import Modal from './modal';
 import Navbar from './navbar';
 import Feed from './feed';
 import DeedList from './deed-list';
-import CommentForm from './comment-form';
+import Comment from './comment';
 import Home from './home';
 import ControlPanel from './control-panel';
 import GlobalFeed from './global-feed';
@@ -26,7 +26,7 @@ const common = angular
     Navbar,
     Feed,
     DeedList,
-    CommentForm,
+    Comment,
     ControlPanel,
     GlobalFeed,
     Deed,

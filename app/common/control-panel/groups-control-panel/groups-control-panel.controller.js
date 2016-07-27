@@ -10,7 +10,7 @@ class GroupsControlPanelController {
    * Component is initialised
    */
   $onInit() {
-    this.$rootScope.title = 'Groups | Control Panel';
+    this.$rootScope.title = `${this.title || 'Groups'} | Control Panel`;
   }
 
   /**
@@ -30,7 +30,16 @@ class GroupsControlPanelController {
    * @param {object} $event
    */
   onSearch($event) {
-    this.$state.go('.', { query: $event.query });
+    this.$state.go('.', { query: $event.query, page: 1 });
+  }
+
+  /**
+   * Changed to a new pagination page
+   *
+   * @param {number} page
+   */
+  onPaginationChange(page) {
+    this.$state.go('.', { page });
   }
 }
 

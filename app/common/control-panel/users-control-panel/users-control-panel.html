@@ -4,6 +4,30 @@
                           on-search="$ctrl.onSearch($event)"
                           autofocus></control-panel-search>
 
+    <p>
+      Number of users:
+      <strong>{{ $ctrl.numberOfUsers }}</strong>,
+      showing:
+      <strong>{{ (($ctrl.page - 1) * $ctrl.pageSize) + 1 }}</strong>
+      to
+      <strong>{{
+        $ctrl.page == $ctrl.numberOfPages ?
+          $ctrl.numberOfUsers :
+          $ctrl.page * $ctrl.pageSize
+      }}</strong>
+    </p>
+
+    <uib-pagination total-items="$ctrl.numberOfUsers"
+                    items-per-page="$ctrl.pageSize"
+                    ng-model="$ctrl.page"
+                    ng-change="$ctrl.onPaginationChange($ctrl.page)"
+                    num-pages="$ctrl.numberOfPages"
+                    boundary-link-numbers="true"
+                    max-size="5"
+                    previous-text="&laquo;"
+                    next-text="&raquo;"
+                    class="m-none pagination-sm"></uib-pagination>
+
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
@@ -14,7 +38,8 @@
             <th>Joined</th>
             <th>Last Seen</th>
             <th>Confirmed</th>
-            <th>Super Admin</th>
+            <th ng-if="$ctrl.$state.params.groupId">Admin</th>
+            <th ng-if="$ctrl.User.isSuperAdmin()">Super Admin</th>
           </tr>
         </thead>
 
@@ -26,12 +51,17 @@
             </td>
             <td>{{ ::user.email }}</td>
             <td>{{ ::user.name }}</td>
-            <td>{{ ::user.created | moment:'L' }}</td>
-            <td>{{ ::user.lastSeen | moment:'L' }}</td>
+            <td>{{ ::user.created | moment }}</td>
+            <td>{{ ::user.lastSeen | moment }}</td>
             <td class="text-center">
               <icon-checked value="::user.confirmed"></icon-checked>
             </td>
-            <td class="text-center">
+            <td ng-if="$ctrl.$state.params.groupId"
+                class="text-center">
+              <icon-checked value="$ctrl.Group.isAdmin($ctrl.group, user)"></icon-checked>
+            </td>
+            <td ng-if="$ctrl.User.isSuperAdmin()"
+                class="text-center">
               <icon-checked value="::user.superAdmin"></icon-checked>
             </td>
           </tr>

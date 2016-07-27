@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-xs-12">
+    <p>
+      Number of comments:
+      <strong>{{ $ctrl.numberOfComments }}</strong>,
+      showing:
+      <strong>{{ (($ctrl.page - 1) * $ctrl.pageSize) + 1 }}</strong>
+      to
+      <strong>{{
+        $ctrl.page == $ctrl.numberOfPages ?
+        $ctrl.numberOfComments :
+        $ctrl.page * $ctrl.pageSize
+        }}</strong>
+    </p>
+
+    <uib-pagination total-items="$ctrl.numberOfComments"
+                    items-per-page="$ctrl.pageSize"
+                    ng-model="$ctrl.page"
+                    ng-change="$ctrl.onPaginationChange($ctrl.page)"
+                    num-pages="$ctrl.numberOfPages"
+                    boundary-link-numbers="true"
+                    max-size="5"
+                    previous-text="&laquo;"
+                    next-text="&raquo;"
+                    class="m-none pagination-sm"></uib-pagination>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th style="width: 190px;">User</th>
+          <th style="width: 190px;">Deed</th>
+          <th>Content</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="comment in $ctrl.comments track by comment._id">
+          <td>
+            <div class="media">
+              <div class="media-left">
+                <img ng-src="{{ ::comment.user.picture || $ctrl.User.getDefaultUserImage(comment.user._id) }}"
+                     class="media-object img-circle icon">
+              </div>
+              <div class="media-body media-middle">
+                {{ ::comment.user.name }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="media">
+              <div class="media-left">
+                <img ng-src="{{ ::comment.target.deed.logo }}"
+                     class="media-object img-circle icon">
+              </div>
+              <div class="media-body media-middle">
+                {{ ::comment.target.deed.title }}
+              </div>
+            </div>
+          </td>
+          <td marked="::comment.content.text"></td>
+          <td>{{ ::comment.created | moment }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

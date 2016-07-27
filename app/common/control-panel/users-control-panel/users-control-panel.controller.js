@@ -2,15 +2,15 @@ import angular from 'angular';
 
 class UsersControlPanelController {
   /* @ngInject */
-  constructor($rootScope, $state, User) {
-    Object.assign(this, { $rootScope, $state, User });
+  constructor($rootScope, $state, User, Group) {
+    Object.assign(this, { $rootScope, $state, User, Group });
   }
 
   /**
    * Component is initialised
    */
   $onInit() {
-    this.$rootScope.title = 'Users | Control Panel';
+    this.$rootScope.title = `${this.title || 'Users'} | Control Panel`;
   }
 
   /**
@@ -30,7 +30,16 @@ class UsersControlPanelController {
    * @param {object} $event
    */
   onSearch($event) {
-    this.$state.go('.', { query: $event.query });
+    this.$state.go('.', { query: $event.query, page: 1 });
+  }
+
+  /**
+   * Changed to a new pagination page
+   *
+   * @param {number} page
+   */
+  onPaginationChange(page) {
+    this.$state.go('.', { page });
   }
 }
 

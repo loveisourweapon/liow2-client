@@ -8,6 +8,7 @@ import GroupControlPanel from './group-control-panel';
 import DeedsControlPanel from './deeds-control-panel';
 import UsersControlPanel from './users-control-panel';
 import GroupsControlPanel from './groups-control-panel';
+import CommentsControlPanel from './comments-control-panel';
 
 const controlPanel = angular
   .module('controlPanel', [
@@ -17,6 +18,7 @@ const controlPanel = angular
     DeedsControlPanel,
     UsersControlPanel,
     GroupsControlPanel,
+    CommentsControlPanel,
   ])
   .component('controlPanel', ControlPanelComponent)
   .config(($stateProvider, $urlRouterProvider) => {
