@@ -2,8 +2,8 @@ import angular from 'angular';
 
 class UsersControlPanelController {
   /* @ngInject */
-  constructor($rootScope, $state, User) {
-    Object.assign(this, { $rootScope, $state, User });
+  constructor($rootScope, $state, User, Group) {
+    Object.assign(this, { $rootScope, $state, User, Group });
   }
 
   /**

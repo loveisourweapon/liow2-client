@@ -5,6 +5,7 @@ const UsersControlPanelComponent = {
   bindings: {
     users: '<',
     numberOfUsers: '<',
+    group: '<',
     query: '<',
     page: '<',
     pageSize: '<',

@@ -38,7 +38,8 @@
             <th>Joined</th>
             <th>Last Seen</th>
             <th>Confirmed</th>
-            <th>Super Admin</th>
+            <th ng-if="$ctrl.$state.params.groupId">Admin</th>
+            <th ng-if="$ctrl.User.isSuperAdmin()">Super Admin</th>
           </tr>
         </thead>
 
@@ -55,7 +56,12 @@
             <td class="text-center">
               <icon-checked value="::user.confirmed"></icon-checked>
             </td>
-            <td class="text-center">
+            <td ng-if="$ctrl.$state.params.groupId"
+                class="text-center">
+              <icon-checked value="$ctrl.Group.isAdmin($ctrl.group, user)"></icon-checked>
+            </td>
+            <td ng-if="$ctrl.User.isSuperAdmin()"
+                class="text-center">
               <icon-checked value="::user.superAdmin"></icon-checked>
             </td>
           </tr>
