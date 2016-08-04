@@ -41,7 +41,7 @@
     "angular-marked": "1.2.2",
     "angular-messages": "1.5.8",
     "angular-sanitize": "1.5.8",
-    "angular-ui-bootstrap": "1.3.3",
+    "angular-ui-bootstrap": "2.0.1",
     "angular-ui-router": "1.0.0-beta.1",
     "angular-ui-switch": "0.1.1",
     "angular-youtube-embed": "1.3.0",

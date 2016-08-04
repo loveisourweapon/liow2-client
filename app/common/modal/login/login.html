@@ -26,9 +26,9 @@
   <hr>
 
   <form ng-submit="$ctrl.authenticateEmail($ctrl.email, $ctrl.password, $ctrl.joinGroup)">
-    <uib-alert type="danger"
-               class="p-sm"
-               ng-if="$ctrl.error">
+    <div uib-alert
+         class="alert-danger p-sm"
+         ng-if="$ctrl.error">
       <i class="fa fa-fw fa-exclamation-triangle"></i>
       {{ $ctrl.error }}
       <span ng-if="$ctrl.error.indexOf('Please confirm') === 0">
@@ -38,7 +38,7 @@
           <i ng-show="$ctrl.sending" class="fa fa-cog fa-spin"></i>
         </a>
       </span>
-    </uib-alert>
+    </div>
 
     <div class="form-group">
       <div class="input-group">
