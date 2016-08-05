@@ -28,10 +28,12 @@
 
   <loading-spinner size="5x" ng-if="$ctrl.loading"></loading-spinner>
 
-  <uib-alert type="danger" ng-if="$ctrl.error">
+  <div uib-alert
+       class="alert-danger"
+       ng-if="$ctrl.error">
     <i class="fa fa-exclamation-triangle"></i>
     {{ $ctrl.error }}
-  </uib-alert>
+  </div>
 </div><!-- .modal-body -->
 
 <div class="modal-footer">

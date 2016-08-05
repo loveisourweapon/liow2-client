@@ -131,15 +131,16 @@
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
-      <uib-alert type="info"
-                 ng-if="$ctrl.showCampaignAlert"
-                 close="$ctrl.showCampaignAlert = false">
+      <div uib-alert
+           class="alert-info"
+           ng-if="$ctrl.showCampaignAlert"
+           close="$ctrl.showCampaignAlert = false">
         You haven't got an active campaign, would you like to set one up now?&nbsp;
         <button class="btn btn-info btn-inline m-t-xxs p-xs"
                 ng-click="$ctrl.editCampaign('create', $ctrl.group)">
           Setup Campaign
         </button>
-      </uib-alert>
+      </div>
 
       <uib-tabset active="$ctrl.activeTab"
                   type="pills">

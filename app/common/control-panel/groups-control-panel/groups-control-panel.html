@@ -17,16 +17,17 @@
       }}</strong>
     </p>
 
-    <uib-pagination total-items="$ctrl.numberOfGroups"
-                    items-per-page="$ctrl.pageSize"
-                    ng-model="$ctrl.page"
-                    ng-change="$ctrl.onPaginationChange($ctrl.page)"
-                    num-pages="$ctrl.numberOfPages"
-                    boundary-link-numbers="true"
-                    max-size="5"
-                    previous-text="&laquo;"
-                    next-text="&raquo;"
-                    class="m-none pagination-sm"></uib-pagination>
+    <ul uib-pagination
+        total-items="$ctrl.numberOfGroups"
+        items-per-page="$ctrl.pageSize"
+        ng-model="$ctrl.page"
+        ng-change="$ctrl.onPaginationChange($ctrl.page)"
+        num-pages="$ctrl.numberOfPages"
+        boundary-link-numbers="true"
+        max-size="5"
+        previous-text="&laquo;"
+        next-text="&raquo;"
+        class="m-none pagination-sm"></ul>
 
     <table class="table table-bordered table-striped">
       <thead>

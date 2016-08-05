@@ -1,7 +1,9 @@
 <div class="jumbotron {{ $ctrl.classes }}"
      ng-style="$ctrl.styles">
   <div class="container">
-    <div ng-transclude="content">
+    <div ng-transclude="content"></div>
+
+    <div ng-if="!$ctrl.hasJumboContent">
       <div class="jumbotron-image"
            ng-if="$ctrl.image">
         <img ng-src="{{ $ctrl.image }}"
