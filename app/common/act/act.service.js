@@ -1,4 +1,3 @@
-import angular from 'angular';
 import has from 'lodash/has';
 import defaults from 'lodash/defaults';
 
@@ -25,11 +24,13 @@ class ActService {
       .then(extractData)
       .then(count => Number(count))
       .then(count => {
-        if (params.user) this.counters[params.user] = count;
-        else if (params.group) this.counters[params.group] = count;
-        else if (params.campaign) this.counters[params.campaign] = count;
-        else if (params.deed) this.counters[params.deed] = count;
-        else this.counters.global = count;
+        this.counters[
+          params.user ||
+          params.group ||
+          params.campaign ||
+          params.deed ||
+          'global'
+        ] = count;
 
         return count;
       });

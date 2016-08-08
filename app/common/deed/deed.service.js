@@ -1,13 +1,14 @@
 import angular from 'angular';
 import merge from 'lodash/merge';
 import first from 'lodash/first';
+import each from 'lodash/each';
 
 let currentDeed = null;
 
 class DeedService {
   /* @ngInject */
-  constructor($http, $q, config) {
-    Object.assign(this, { $http, $q });
+  constructor($http, $q, config, Act) {
+    Object.assign(this, { $http, $q, Act });
 
     this.baseUrl = `${config.serverUrl}/deeds`;
   }
@@ -65,6 +66,19 @@ class DeedService {
    */
   get(deedId, params = {}) {
     return this.$http.get(`${this.baseUrl}/${deedId}`, { params }).then(extractData);
+  }
+
+  /**
+   * Get counts for all deeds
+   *
+   * @returns {Promise}
+   */
+  countAll() {
+    return this.$http.get(`${this.baseUrl}/counters`)
+      .then(extractData)
+      .then(deedCounters =>
+        each(deedCounters, counter => this.Act.counters[counter.deed] = counter.count)
+      );
   }
 
   /**
