@@ -1,9 +1,7 @@
-import each from 'lodash/each';
-
 export default class DeedListController {
   /* @ngInject */
-  constructor(Deed, Act) {
-    Object.assign(this, { Deed, Act });
+  constructor($q, Deed, Act) {
+    Object.assign(this, { $q, Deed, Act });
   }
 
   /**
@@ -11,11 +9,12 @@ export default class DeedListController {
    */
   $onInit() {
     this.loading = true;
-    this.Deed.find({ fields: '_id,logo,title,urlTitle' })
-      .then(deeds => {
-        this.deeds = deeds;
-        each(this.deeds, deed => this.Act.count({ deed: deed._id }));
-      })
+    this.$q
+      .all([
+        this.Deed.find({ fields: '_id,logo,title,urlTitle' }),
+        this.Deed.countAll(),
+      ])
+      .then(([deeds,]) => this.deeds = deeds)
       .catch(() => null)
       .then(() => this.loading = false);
   }
