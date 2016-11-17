@@ -1,13 +1,13 @@
 {
-  "app.css": "app.d1071bc3e4213a2ad5b0.bundle.css",
-  "app.css.map": "app.d1071bc3e4213a2ad5b0.bundle.css.map",
-  "app.js": "app.d1071bc3e4213a2ad5b0.bundle.js",
-  "app.js.map": "app.d1071bc3e4213a2ad5b0.bundle.js.map",
-  "fontawesome-webfont.eot": "25a32416abee198dd821b0b17a198a8f.eot",
-  "fontawesome-webfont.svg": "d7c639084f684d66a1bc66855d193ed8.svg",
-  "fontawesome-webfont.ttf": "1dc35d25e61d819a9c357074014867ab.ttf",
-  "fontawesome-webfont.woff": "c8ddf1e5e5bf3682bc7bebf30f394148.woff",
-  "fontawesome-webfont.woff2": "e6cf7c6ec7c2d6f670ae9d762604cb0b.woff2",
-  "vendor.js": "vendor.d1071bc3e4213a2ad5b0.bundle.js",
-  "vendor.js.map": "vendor.d1071bc3e4213a2ad5b0.bundle.js.map"
+  "app.css": "app.418808df2714ca7ca0dd.bundle.css",
+  "app.css.map": "app.418808df2714ca7ca0dd.bundle.css.map",
+  "app.js": "app.418808df2714ca7ca0dd.bundle.js",
+  "app.js.map": "app.418808df2714ca7ca0dd.bundle.js.map",
+  "fontawesome-webfont.eot": "674f50d287a8c48dc19ba404d20fe713.eot",
+  "fontawesome-webfont.svg": "912ec66d7572ff821749319396470bde.svg",
+  "fontawesome-webfont.ttf": "b06871f281fee6b241d60582ae9369b9.ttf",
+  "fontawesome-webfont.woff": "fee66e712a8a08eef5805a46892932ad.woff",
+  "fontawesome-webfont.woff2": "af7ae505a9eed503f8b8e6982036873e.woff2",
+  "vendor.js": "vendor.418808df2714ca7ca0dd.bundle.js",
+  "vendor.js.map": "vendor.418808df2714ca7ca0dd.bundle.js.map"
 }
