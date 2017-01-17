@@ -1,8 +1,21 @@
 {
-  "name": "liow2-ng2",
-  "version": "1.0.0",
+  "name": "liow2-client",
+  "version": "2.0.0",
+  "description": "The Love is our Weapon Campaign website client app",
+  "keywords": [
+    "Love",
+    "Weapon",
+    "Campaign",
+    "website",
+    "client",
+    "app",
+    "Angular",
+    "ES6"
+  ],
+  "author": "Ben Booth <bkbooth@gmail.com>",
   "license": "MIT",
   "angular-cli": {},
+  "repository": "git@github.com:loveisourweapon/liow2-client.git",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
