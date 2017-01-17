@@ -18,7 +18,7 @@
       "prefix": "liow",
       "mobile": false,
       "styles": [
-        "styles.scss"
+        "styles/styles.scss"
       ],
       "scripts": [],
       "environments": {
