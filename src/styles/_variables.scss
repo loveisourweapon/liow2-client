@@ -1,0 +1,23 @@
+/**
+ * Bootstrap overrides, variables & mixins
+ */
+$brand-primary: #da190b;
+$gray-border: #999;
+
+$navbar-height: 58px;
+$navbar-default-bg: #fff;
+$navbar-default-color: #111;
+$navbar-default-link-color: $navbar-default-color;
+$navbar-default-border: $gray-border;
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+
+/**
+ * Font-awesome overrides, variables & mixins
+ */
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+
+@import "~font-awesome/scss/variables";
+@import "~font-awesome/scss/mixins";

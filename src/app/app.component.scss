@@ -1,0 +1,15 @@
+@import "../styles/variables";
+
+footer {
+  height: 60px;
+  border-top: 1px solid $gray-border;
+
+  > .container {
+    padding: 15px;
+    line-height: 30px;
+  }
+
+  ul {
+    margin-bottom: 0;
+  }
+}

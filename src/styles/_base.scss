@@ -1,0 +1,29 @@
+body {
+  padding-top: $navbar-height;
+  margin-top: 0 !important;
+}
+
+a {
+  transition: color 0.3s;
+}
+
+.container-pad {
+  padding-top: 40px;
+  padding-bottom: 50px;
+}
+.container-pad-sm {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.no-resize {
+  resize: none;
+}
+
+.middle {
+  vertical-align: middle;
+}
+
+// Fonts
+.f-sm { font-size: 85%; }
+.f-lg { font-size: 125%; }
