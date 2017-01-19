@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { RouterOutletStubComponent } from '../testing';
+import { NavbarStubComponent, RouterOutletStubComponent } from '../testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -13,6 +13,7 @@ describe('AppComponent', () => {
       .configureTestingModule({
         declarations: [
           AppComponent,
+          NavbarStubComponent,
           RouterOutletStubComponent,
         ],
       })

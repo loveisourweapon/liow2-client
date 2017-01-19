@@ -6,13 +6,32 @@
 
 import { NgModule } from '@angular/core';
 
-import { WelcomeStubComponent } from './component-stubs';
-import { RouterOutletStubComponent } from './router-stubs';
+import {
+  CollapseStubDirective,
+  DropdownStubDirective,
+  DropdownMenuStubDirective,
+  DropdownToggleStubDirective,
+} from './bootstrap-stubs';
+import {
+  NavbarStubComponent,
+  WelcomeStubComponent,
+} from './component-stubs';
+import {
+  RouterLinkStubDirective,
+  RouterOutletStubComponent,
+} from './router-stubs';
 
 @NgModule({
   declarations: [
+    CollapseStubDirective,
+    DropdownStubDirective,
+    DropdownMenuStubDirective,
+    DropdownToggleStubDirective,
+
+    NavbarStubComponent,
     WelcomeStubComponent,
 
+    RouterLinkStubDirective,
     RouterOutletStubComponent,
   ],
 })
