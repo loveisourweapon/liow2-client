@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState, LayoutState } from '../reducers';
-import { LayoutActionTypes } from '../actions';
+import * as fromRoot from '../reducers';
+import * as fromLayout from '../reducers/layout';
+import * as layout from '../actions/layout';
 
 @Component({
   selector: 'liow-navbar',
@@ -14,16 +15,17 @@ export class NavbarComponent {
   isMenuOpen$: Observable<boolean>;
 
   constructor(
-    private store: Store<AppState>,
+    private store: Store<fromRoot.State>,
   ) {
-    this.isMenuOpen$ = this.store.select('layout').map((state: LayoutState) => state.isMenuOpen);
+    this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
+    // this.isMenuOpen$ = this.store.select('layout').map((state: fromLayout.State) => state.isMenuOpen);
   }
 
   toggleMenu(): void {
-    this.store.dispatch({ type: LayoutActionTypes.TOGGLE_MENU });
+    this.store.dispatch(new layout.ToggleMenuAction());
   }
 
   closeMenu(): void {
-    this.store.dispatch({ type: LayoutActionTypes.CLOSE_MENU });
+    this.store.dispatch(new layout.CloseMenuAction());
   }
 }

@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { NavbarComponent } from './navbar.component';
-import { LayoutState } from '../reducers';
-import { LayoutActionTypes } from '../actions';
+import * as fromLayout from '../reducers/layout';
+import * as layout from '../actions/layout';
 import {
   CollapseStubDirective,
   DropdownStubDirective,
@@ -20,12 +20,10 @@ describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let element: DebugElement;
-  let store: Store<LayoutState>;
-  let state: BehaviorSubject<LayoutState>;
+  let store: Store<fromLayout.State>;
 
-  const initialState: LayoutState = {
-    isMenuOpen: false,
-  };
+  const isMenuOpen = false;
+  let isMenuOpen$: BehaviorSubject<boolean>;
 
   beforeEach(async(() => {
     TestBed
@@ -47,8 +45,8 @@ describe('NavbarComponent', () => {
 
   beforeEach(() => {
     store = TestBed.get(Store);
-    state = new BehaviorSubject(initialState);
-    spyOn(TestBed.get(Store), 'select').and.returnValue(state);
+    isMenuOpen$ = new BehaviorSubject(isMenuOpen);
+    spyOn(TestBed.get(Store), 'select').and.returnValue(isMenuOpen$);
 
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
@@ -58,7 +56,7 @@ describe('NavbarComponent', () => {
 
   it(`should get the isMenuOpen state from store`, () => {
     component.isMenuOpen$.subscribe((isMenuOpen: boolean) => {
-      expect(isMenuOpen).toBe(initialState.isMenuOpen);
+      expect(isMenuOpen).toBe(isMenuOpen);
     });
   });
 
@@ -66,24 +64,24 @@ describe('NavbarComponent', () => {
     const dispatchSpy = spyOn(store, 'dispatch');
     const toggleButton = element.query(By.css('button.navbar-toggle'));
     toggleButton.triggerEventHandler('click', new MouseEvent('click'));
-    expect(dispatchSpy.calls.mostRecent().args[0].type).toBe(LayoutActionTypes.TOGGLE_MENU);
+    expect(dispatchSpy.calls.mostRecent().args[0].type).toBe(layout.ActionTypes.TOGGLE_MENU);
   });
 
   it(`should trigger CLOSE_MENU when clicking a router link`, () => {
     const dispatchSpy = spyOn(store, 'dispatch');
     const routerLink = element.query(By.css('ul.navbar-right > li:first-child > a'));
     routerLink.triggerEventHandler('click', new MouseEvent('click'));
-    expect(dispatchSpy.calls.mostRecent().args[0].type).toBe(LayoutActionTypes.CLOSE_MENU);
+    expect(dispatchSpy.calls.mostRecent().args[0].type).toBe(layout.ActionTypes.CLOSE_MENU);
   });
 
   it(`should pass isCollapsed state to [collapse] directive`, () => {
     const collapseElement = element.query(By.directive(CollapseStubDirective));
     const collapseDirective = collapseElement.injector.get(CollapseStubDirective);
-    expect(collapseDirective.isCollapsed).toBe(!initialState.isMenuOpen);
+    expect(collapseDirective.isCollapsed).toBe(!isMenuOpen);
 
-    const newState: LayoutState = { isMenuOpen: true };
-    state.next(newState);
+    const newState = true;
+    isMenuOpen$.next(newState);
     fixture.detectChanges();
-    expect(collapseDirective.isCollapsed).toBe(!newState.isMenuOpen);
+    expect(collapseDirective.isCollapsed).toBe(!newState);
   });
 });

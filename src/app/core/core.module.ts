@@ -3,14 +3,14 @@ import { StoreModule } from '@ngrx/store';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
 
-import { appReducer } from './reducers';
+import { reducer } from './reducers';
 import { SharedModule } from '../shared';
 
 import { NavbarComponent } from './navbar';
 
 @NgModule({
   imports: [
-    StoreModule.provideStore(appReducer),
+    StoreModule.provideStore(reducer),
     RouterStoreModule.connectRouter(),
 
     CollapseModule.forRoot(),
