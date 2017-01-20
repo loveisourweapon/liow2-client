@@ -1,14 +1,21 @@
 import { NgModule, Optional, LOCALE_ID, SkipSelf } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { RouterStoreModule } from '@ngrx/router-store';
 import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
 
+import { appReducer } from './reducers';
 import { SharedModule } from '../shared';
 
 import { NavbarComponent } from './navbar';
 
 @NgModule({
   imports: [
+    StoreModule.provideStore(appReducer),
+    RouterStoreModule.connectRouter(),
+
     CollapseModule.forRoot(),
     DropdownModule.forRoot(),
+
     SharedModule,
   ],
   providers: [

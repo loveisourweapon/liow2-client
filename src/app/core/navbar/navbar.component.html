@@ -4,7 +4,7 @@
       <button type="button"
               class="navbar-toggle"
               aria-expanded="false"
-              (click)="setCollapsed(!isCollapsed)">
+              (click)="toggleMenu()">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -14,7 +14,7 @@
       <a [routerLink]="'/'"
          class="navbar-brand"
          title="Love is our Weapon"
-         (click)="null"><!-- TODO: collapse navbar -->
+         (click)="closeMenu()">
         <img src="/images/logo-navbar.png"
              alt="Love is our Weapon">
         <div class="navbar-brand-label">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="collapse navbar-collapse"
-         [collapse]="isCollapsed">
+         [collapse]="!(isMenuOpen$ | async)">
       <div class="navbar-divider navbar-left"></div>
 
       <!--<form class="navbar-form navbar-left" id="group-search" role="search">
@@ -56,7 +56,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a [routerLink]="'/global'"
-             (click)="setCollapsed(true)"
+             (click)="closeMenu()"
              title="Global Activity Feed">
             Global
           </a>

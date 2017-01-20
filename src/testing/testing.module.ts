@@ -20,6 +20,9 @@ import {
   RouterLinkStubDirective,
   RouterOutletStubComponent,
 } from './router-stubs';
+import {
+  StoreStubService,
+} from './store-stubs';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import {
 
     RouterLinkStubDirective,
     RouterOutletStubComponent,
+  ],
+  providers: [
+    StoreStubService,
   ],
 })
 export class TestingModule { }
