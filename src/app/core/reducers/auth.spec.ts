@@ -1,7 +1,7 @@
-import * as fromAuth from './auth';
 import * as auth from '../actions/auth';
+import * as fromAuth from './auth';
 
-describe('authReducer', () => {
+describe('auth reducer', () => {
   const initialState: fromAuth.State = {
     isAuthenticated: false,
     user: null,

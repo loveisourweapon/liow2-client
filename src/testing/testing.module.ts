@@ -21,8 +21,9 @@ import {
   RouterOutletStubComponent,
 } from './router-stubs';
 import {
+  HttpStubService,
   StoreStubService,
-} from './store-stubs';
+} from './service-stubs';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {
     RouterOutletStubComponent,
   ],
   providers: [
+    HttpStubService,
     StoreStubService,
   ],
 })

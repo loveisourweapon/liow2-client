@@ -1,7 +1,7 @@
-import * as fromLayout from './layout';
 import * as layout from '../actions/layout';
+import * as fromLayout from './layout';
 
-describe('layoutReducer', () => {
+describe('layout reducer', () => {
   const initialState: fromLayout.State = {
     isMenuOpen: false,
   };
@@ -22,6 +22,6 @@ describe('layoutReducer', () => {
 
   it(`should leave state untouched for CLOSE_MENU action if isMenuOpen is already false`, () => {
     const state = fromLayout.reducer(initialState, new layout.CloseMenuAction());
-    expect(state).toEqual(initialState);
+    expect(state).toBe(initialState);
   });
 });
