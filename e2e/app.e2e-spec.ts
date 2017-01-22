@@ -1,10 +1,10 @@
-import { Liow2Ng2Page } from './app.po';
+import { Liow2ClientPage } from './app.po';
 
-describe('liow2-ng2 App', function() {
-  let page: Liow2Ng2Page;
+describe('liow2-client App', function() {
+  let page: Liow2ClientPage;
 
   beforeEach(() => {
-    page = new Liow2Ng2Page();
+    page = new Liow2ClientPage();
   });
 
   it('should display message saying app works', () => {

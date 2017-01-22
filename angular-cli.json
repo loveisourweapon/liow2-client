@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-beta.25.5",
-    "name": "liow2-ng2"
+    "version": "1.0.0-beta.26",
+    "name": "liow2-client"
   },
   "apps": [
     {
@@ -28,8 +28,6 @@
       }
     }
   ],
-  "addons": [],
-  "packages": [],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"

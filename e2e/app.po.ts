@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class Liow2Ng2Page {
+export class Liow2ClientPage {
   navigateTo() {
     return browser.get('/');
   }
