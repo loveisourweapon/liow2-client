@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import * as fromRoot from '../reducers';
-import * as fromLayout from '../reducers/layout';
 import * as layout from '../actions/layout';
 
 @Component({
@@ -18,7 +17,6 @@ export class NavbarComponent {
     private store: Store<fromRoot.State>,
   ) {
     this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
-    // this.isMenuOpen$ = this.store.select('layout').map((state: fromLayout.State) => state.isMenuOpen);
   }
 
   toggleMenu(): void {
