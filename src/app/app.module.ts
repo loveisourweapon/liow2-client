@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { CoreModule } from './core';
-import { SharedModule } from './shared';
+import { StoreModule } from './store';
 import { HomeModule } from './home';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     CoreModule,
-    SharedModule,
+    StoreModule,
     HomeModule,
     AppRoutingModule,
   ],

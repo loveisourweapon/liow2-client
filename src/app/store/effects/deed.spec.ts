@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { DeedEffects } from './deed';
 import * as deed from '../actions/deed';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../../core';
 import { apiBaseUrlTest, HttpStubService } from '../../../testing';
 
 describe('DeedEffects', () => {

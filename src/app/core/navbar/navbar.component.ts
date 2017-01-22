@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import * as fromRoot from '../reducers';
-import * as layout from '../actions/layout';
+import * as layout from '../../store/actions/layout';
+import * as fromRoot from '../../store/reducers';
 
 @Component({
   selector: 'liow-navbar',

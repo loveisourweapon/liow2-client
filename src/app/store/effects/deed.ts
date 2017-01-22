@@ -5,7 +5,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../../core';
 import { Deed } from '../models';
 import * as deed from '../actions/deed';
 

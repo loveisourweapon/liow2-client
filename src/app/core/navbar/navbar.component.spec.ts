@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { NavbarComponent } from './navbar.component';
-import * as fromLayout from '../reducers/layout';
-import * as layout from '../actions/layout';
+import * as layout from '../../store/actions/layout';
+import * as fromLayout from '../../store/reducers/layout';
 import {
   CollapseStubDirective,
   DropdownStubDirective,
