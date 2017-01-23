@@ -1,4 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'liow-deed-list',
+  template: '',
+})
+export class DeedListStubComponent {
+  @Input() layout: string;
+}
+
+@Component({
+  selector: 'liow-deed-list-horizontal',
+  template: '',
+})
+export class DeedListHorizontalStubComponent {
+  @Input() deeds: any;
+}
+
+@Component({
+  selector: 'liow-deed-list-vertical',
+  template: '',
+})
+export class DeedListVerticalStubComponent {
+  @Input() deeds: any;
+}
 
 @Component({
   selector: 'liow-navbar',

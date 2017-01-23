@@ -1,22 +1,25 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button"
-              class="navbar-toggle"
-              aria-expanded="false"
-              (click)="toggleMenu()">
+      <button
+        type="button"
+        (click)="toggleMenu()"
+        class="navbar-toggle"
+        aria-expanded="false"
+      >
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
 
-      <a [routerLink]="'/'"
-         class="navbar-brand"
-         title="Love is our Weapon"
-         (click)="closeMenu()">
-        <img src="/images/logo-navbar.png"
-             alt="Love is our Weapon">
+      <a
+        [routerLink]="'/'"
+        (click)="closeMenu()"
+        class="navbar-brand"
+        title="Love is our Weapon"
+      >
+        <img src="/images/logo-navbar.png" alt="Love is our Weapon">
         <div class="navbar-brand-label">
           <span class="text-primary">
             <!-- TODO: show global counter -->
@@ -27,8 +30,7 @@
       </a>
     </div>
 
-    <div class="collapse navbar-collapse"
-         [collapse]="!(isMenuOpen$ | async)">
+    <div class="collapse navbar-collapse" [collapse]="!(isMenuOpen$ | async)">
       <div class="navbar-divider navbar-left"></div>
 
       <!--<form class="navbar-form navbar-left" id="group-search" role="search">
@@ -55,9 +57,11 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a [routerLink]="'/global'"
-             (click)="closeMenu()"
-             title="Global Activity Feed">
+          <a
+            [routerLink]="'/global'"
+            (click)="closeMenu()"
+            title="Global Activity Feed"
+          >
             Global
           </a>
         </li>
@@ -69,11 +73,13 @@
           </a>
         </li>-->
         <li dropdown>
-          <a class="user-dropdown"
-             dropdownToggle
-             role="button"
-             aria-haspopup="true"
-             aria-expanded="false">
+          <a
+            class="user-dropdown"
+            dropdownToggle
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             <img src="/images/user0.png" class="img-circle"><!-- TODO: use user image -->
             <span class="caret"></span>
           </a>

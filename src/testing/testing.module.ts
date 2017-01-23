@@ -13,6 +13,9 @@ import {
   DropdownToggleStubDirective,
 } from './bootstrap-stubs';
 import {
+  DeedListStubComponent,
+  DeedListHorizontalStubComponent,
+  DeedListVerticalStubComponent,
   NavbarStubComponent,
   WelcomeStubComponent,
 } from './component-stubs';
@@ -32,6 +35,9 @@ import {
     DropdownMenuStubDirective,
     DropdownToggleStubDirective,
 
+    DeedListStubComponent,
+    DeedListHorizontalStubComponent,
+    DeedListVerticalStubComponent,
     NavbarStubComponent,
     WelcomeStubComponent,
 

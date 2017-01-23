@@ -1,0 +1,19 @@
+<div class="container-pad-sm">
+  <div
+    *ngFor="let deed of deeds; trackBy: deed?._id"
+    class="deed-wrapper"
+    [routerLink]="['/d', deed.urlTitle]"
+  ><!-- [class.deed-current]="deed._id === (currentDeedId$ | async)" -->
+    <div class="deed-image">
+      <img [src]="deed.logo || 'images/deed.png'" class="img-responsive img-circle">
+    </div>
+    <div class="deed-text">
+      <span class="deed-title">{{ deed.title }}</span>
+      <br>
+      <!-- TODO: get deed counters -->
+      <span class="deed-count">12,345</span>
+      <!--<span class="deed-count">{{ $ctrl.deedList.Act.counters[$ctrl.deedList.User.group._id + deed._id] | number }}</span>-->
+      <span class="deed-subtext">Deeds Done</span>
+    </div>
+  </div>
+</div>

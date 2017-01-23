@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WelcomeComponent } from './welcome.component';
+import { DeedListStubComponent } from '../../../testing';
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
@@ -11,6 +12,7 @@ describe('WelcomeComponent', () => {
       .configureTestingModule({
         declarations: [
           WelcomeComponent,
+          DeedListStubComponent,
         ],
       })
       .compileComponents();

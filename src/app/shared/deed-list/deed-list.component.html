@@ -1,0 +1,10 @@
+<div [ngSwitch]="layout">
+  <liow-deed-list-horizontal
+    *ngSwitchCase="'horizontal'"
+    [deeds]="deeds$ | async"
+  ></liow-deed-list-horizontal>
+  <liow-deed-list-vertical
+    *ngSwitchCase="'vertical'"
+    [deeds]="deeds$ | async"
+  ></liow-deed-list-vertical>
+</div>

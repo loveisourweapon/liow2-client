@@ -1,4 +1,5 @@
 export interface Deed {
+  _id: string;
   title: string;
   urlTitle: string;
   content: string;

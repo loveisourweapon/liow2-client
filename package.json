@@ -45,6 +45,7 @@
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.4",
     "ng2-bootstrap": "^1.2.5",
     "ngrx-store-freeze": "^0.1.6",
     "reselect": "^2.5.4",
@@ -55,6 +56,7 @@
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
+    "@types/lodash": "^4.14.50",
     "@types/node": "^6.0.42",
     "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
