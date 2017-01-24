@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
@@ -10,15 +10,17 @@ import * as fromRoot from '../../store/reducers';
   selector: 'liow-deed-list',
   templateUrl: './deed-list.component.html',
 })
-export class DeedListComponent {
+export class DeedListComponent implements OnInit {
   @Input() layout: string;
 
   deeds$: Observable<Deed[]>;
 
   constructor(
-    store: Store<fromRoot.State>,
-  ) {
-    this.deeds$ = store.select(fromRoot.getDeeds)
+    private store: Store<fromRoot.State>,
+  ) { }
+
+  ngOnInit(): void {
+    this.deeds$ = this.store.select(fromRoot.getDeeds)
       .map((deeds: Deed[]) => deeds.map((deed: Deed) => pick(deed, ['_id', 'logo', 'title', 'urlTitle'])));
   }
 }

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -44,13 +44,14 @@ describe('NavbarComponent', () => {
   }));
 
   beforeEach(() => {
+    fixture = TestBed.createComponent(NavbarComponent);
+    component = fixture.componentInstance;
+    element = fixture.debugElement;
+
     store = TestBed.get(Store);
     isMenuOpen$ = new BehaviorSubject(isMenuOpen);
     spyOn(TestBed.get(Store), 'select').and.returnValue(isMenuOpen$);
 
-    fixture = TestBed.createComponent(NavbarComponent);
-    component = fixture.componentInstance;
-    element = fixture.debugElement;
     fixture.detectChanges();
   });
 

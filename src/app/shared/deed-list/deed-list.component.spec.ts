@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -30,11 +30,12 @@ describe('DeedListComponent', () => {
   }));
 
   beforeEach(() => {
-    spyOn(TestBed.get(Store), 'select').and.returnValue(Observable.of(deeds));
-
     fixture = TestBed.createComponent(DeedListComponent);
     component = fixture.componentInstance;
     element = fixture.debugElement;
+
+    spyOn(TestBed.get(Store), 'select').and.returnValue(Observable.of(deeds));
+
     fixture.detectChanges();
   });
 
