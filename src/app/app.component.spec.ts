@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, NgModule } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NavbarStubComponent, RouterOutletStubComponent } from '../testing';
+import { RouterOutletStubComponent } from '../testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -33,3 +34,13 @@ describe('AppComponent', () => {
     expect(element.nativeElement.textContent.trim()).toContain(date.getFullYear().toString());
   });
 });
+
+@Component({
+  selector: 'liow-navbar',
+  template: '',
+})
+class NavbarStubComponent { }
+
+// Required for AOT compiler
+@NgModule({ declarations: [ NavbarStubComponent ] })
+class TestingModule { }

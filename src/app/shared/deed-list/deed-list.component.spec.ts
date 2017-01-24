@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement, Input, NgModule } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { DeedListComponent } from './deed-list.component';
-import { StoreStubService, DeedListHorizontalStubComponent, DeedListVerticalStubComponent } from '../../../testing';
+import { StoreStubService } from '../../../testing';
 
 describe('DeedListComponent', () => {
   let component: DeedListComponent;
@@ -78,3 +78,28 @@ describe('DeedListComponent', () => {
     expect(horizontalComponent.deeds).toEqual(deeds);
   });
 });
+
+@Component({
+  selector: 'liow-deed-list-horizontal',
+  template: '',
+})
+class DeedListHorizontalStubComponent {
+  @Input() deeds: any;
+}
+
+@Component({
+  selector: 'liow-deed-list-vertical',
+  template: '',
+})
+class DeedListVerticalStubComponent {
+  @Input() deeds: any;
+}
+
+// Required for AOT compiler
+@NgModule({
+  declarations: [
+    DeedListHorizontalStubComponent,
+    DeedListVerticalStubComponent,
+  ],
+})
+class TestingModule { }

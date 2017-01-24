@@ -14,10 +14,6 @@ import {
 } from './bootstrap-stubs';
 import {
   DeedListStubComponent,
-  DeedListHorizontalStubComponent,
-  DeedListVerticalStubComponent,
-  NavbarStubComponent,
-  WelcomeStubComponent,
   JumbtronStubComponent,
 } from './component-stubs';
 import {
@@ -38,10 +34,6 @@ import {
     DropdownToggleStubDirective,
 
     DeedListStubComponent,
-    DeedListHorizontalStubComponent,
-    DeedListVerticalStubComponent,
-    NavbarStubComponent,
-    WelcomeStubComponent,
     JumbtronStubComponent,
 
     RouterLinkStubDirective,

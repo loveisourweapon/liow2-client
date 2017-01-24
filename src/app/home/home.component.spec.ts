@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, NgModule } from '@angular/core';
 
 import { HomeComponent } from './home.component';
-import { JumbtronStubComponent, WelcomeStubComponent } from '../../testing';
+import { JumbtronStubComponent } from '../../testing';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -29,3 +30,13 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'liow-welcome',
+  template: '',
+})
+class WelcomeStubComponent { }
+
+// Required for AOT compiler
+@NgModule({ declarations: [ WelcomeStubComponent ] })
+class TestingModule { }
