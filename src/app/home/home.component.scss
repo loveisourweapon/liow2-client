@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+
+.home-header {
+  h1 {
+    font-size: 35px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 40px;
+    }
+  }
+
+  p {
+    font-size: 19px;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 22px;
+    }
+  }
+}

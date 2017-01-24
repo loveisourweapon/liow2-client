@@ -18,6 +18,7 @@ import {
   DeedListVerticalStubComponent,
   NavbarStubComponent,
   WelcomeStubComponent,
+  JumbtronStubComponent,
 } from './component-stubs';
 import {
   ActivatedRouteStubService,
@@ -41,6 +42,7 @@ import {
     DeedListVerticalStubComponent,
     NavbarStubComponent,
     WelcomeStubComponent,
+    JumbtronStubComponent,
 
     RouterLinkStubDirective,
     RouterOutletStubComponent,

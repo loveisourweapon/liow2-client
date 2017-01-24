@@ -10,6 +10,7 @@ import * as fromRoot from '../store/reducers';
 
 @Component({
   templateUrl: './deed.component.html',
+  styleUrls: ['./deed.component.scss'],
 })
 export class DeedComponent implements OnDestroy, OnInit {
   deed$: Observable<Deed>;

@@ -1,0 +1,65 @@
+@import "../../../styles/variables";
+
+.jumbotron {
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  color: white;
+  height: 45vw;
+
+  @media (min-width: $screen-sm-min) {
+    height: 35vw;
+  }
+
+  &.videotron {
+    height: auto;
+    background-color: black;
+
+    .container {
+      @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+        width: 80vw;
+      }
+      @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+        width: 70vw;
+      }
+      @media (min-width: $screen-lg) {
+        width: 60vw;
+      }
+    }
+  }
+
+  &.jumbotron-small {
+    height: auto;
+
+    .jumbotron-image {
+      margin: 0;
+    }
+    .jumbotron-title {
+      margin-top: 1%;
+    }
+  }
+}
+
+.jumbotron-image {
+  float: left;
+  width: 15%;
+  margin-top: 8%;
+
+  img {
+    width: 200px;
+    border: 2px solid;
+  }
+}
+
+.jumbotron-title {
+  float: right;
+  width: 80%;
+  margin: 9% 0 0;
+  font-size: 5vw;
+}
+
+.jumbotron-text {
+  float: right;
+  width: 80%;
+  font-size: 3vw;
+}

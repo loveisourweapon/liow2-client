@@ -25,6 +25,16 @@ export class DeedListVerticalStubComponent {
 }
 
 @Component({
+  selector: 'liow-jumbotron',
+  template: '',
+})
+export class JumbtronStubComponent {
+  @Input() image: string;
+  @Input() background: string;
+  @Input() classes: string;
+}
+
+@Component({
   selector: 'liow-navbar',
   template: '',
 })

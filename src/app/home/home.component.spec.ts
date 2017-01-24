@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { WelcomeStubComponent } from '../../testing';
+import { JumbtronStubComponent, WelcomeStubComponent } from '../../testing';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -12,6 +12,7 @@ describe('HomeComponent', () => {
       .configureTestingModule({
         declarations: [
           HomeComponent,
+          JumbtronStubComponent,
           WelcomeStubComponent,
         ],
       })

@@ -1,25 +1,28 @@
-<!--<jumbotron jumbo-classes="videotron">
-  <jumbo-content>
-    <div class="embed-responsive embed-responsive-16by9"
-         ng-if="::$ctrl.deed.videoUrl">
-      <youtube-video video-url="::$ctrl.deed.videoUrl"
-                     class="embed-responsive-item"></youtube-video>
+<liow-jumbotron [classes]="['videotron']">
+  <div jumbotron-content>
+    <div class="embed-responsive embed-responsive-16by9" *ngIf="(deed$ | async)?.videoUrl">
+      <p>VIDEO URL: {{ (deed$ | async)?.videoUrl }}</p>
+      <!--<youtube-video video-url="::$ctrl.deed.videoUrl"
+                     class="embed-responsive-item"></youtube-video>-->
     </div>
 
     <div class="deed-header">
-      <img ng-src="{{ ::$ctrl.deed.logo || '/images/deed.png' }}"
-           class="img-responsive img-circle pull-left m-t-md m-r-sm">
+      <img
+        [src]="(deed$ | async)?.logo || '/images/deed.png'"
+        class="img-responsive img-circle pull-left m-t-md m-r-sm"
+      >
 
       <h2 class="text-uppercase pull-left m-b-none">
-        {{ ::$ctrl.deed.title }}
+        {{ (deed$ | async)?.title }}
       </h2>
 
       <h1 class="pull-right text-right m-b-none">
-        {{ $ctrl.Act.counters[$ctrl.User.group._id + $ctrl.deed._id] | number }}
+        <!-- TODO: get counter -->
+        32,456
       </h1>
     </div>
-  </jumbo-content>
-</jumbotron>-->
+  </div>
+</liow-jumbotron>
 
 <div class="container container-pad">
   <div class="row">
@@ -50,15 +53,10 @@
     </div>
 
     <div class="col-sm-9 col-sm-pull-3">
-      <div><!-- TODO: remove this div -->
-        <h2>{{ (deed$ | async)?.title }}</h2>
+      <h2 class="m-t-none">Devotional</h2>
 
-        <p>Video: {{ (deed$ | async)?.videoUrl }}</p>
-
-        <p>Content: {{ (deed$ | async)?.content }}</p>
-      </div>
-
-      <!--<h2 class="m-t-none">Devotional</h2>-->
+      <!-- TODO: remove this -->
+      <p>{{ (deed$ | async)?.content }}</p>
 
       <!--<div marked="::$ctrl.deed.content" class="m-b-md"></div>-->
 

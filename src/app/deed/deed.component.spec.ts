@@ -4,7 +4,12 @@ import { Store } from '@ngrx/store';
 
 import { DeedComponent } from './deed.component';
 import * as fromDeed from '../store/reducers/deed';
-import { ActivatedRouteStubService, DeedListStubComponent, StoreStubService } from '../../testing';
+import {
+  ActivatedRouteStubService,
+  DeedListStubComponent,
+  JumbtronStubComponent,
+  StoreStubService,
+} from '../../testing';
 
 // TODO: Add tests!
 // I'm giving up on tests for now because this component uses multiple `store.select` calls
@@ -23,6 +28,7 @@ xdescribe('DeedComponent', () => {
         declarations: [
           DeedComponent,
           DeedListStubComponent,
+          JumbtronStubComponent,
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
