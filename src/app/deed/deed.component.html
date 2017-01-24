@@ -55,10 +55,7 @@
     <div class="col-sm-9 col-sm-pull-3">
       <h2 class="m-t-none">Devotional</h2>
 
-      <!-- TODO: remove this -->
-      <p>{{ (deed$ | async)?.content }}</p>
-
-      <!--<div marked="::$ctrl.deed.content" class="m-b-md"></div>-->
+      <div [marked]="(deed$ | async)?.content" class="m-b-md"></div>
 
       <!--<comment-form deed="::$ctrl.deed"
                     placeholder="Leave a testimony..."

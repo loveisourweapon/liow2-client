@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { JumbotronComponent } from './jumbotron';
+import { MarkedComponent } from './marked.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { JumbotronComponent } from './jumbotron';
     DeedListHorizontalComponent,
     DeedListVerticalComponent,
     JumbotronComponent,
+    MarkedComponent,
   ],
   exports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { JumbotronComponent } from './jumbotron';
 
     DeedListComponent,
     JumbotronComponent,
+    MarkedComponent,
   ],
 })
 export class SharedModule { }
