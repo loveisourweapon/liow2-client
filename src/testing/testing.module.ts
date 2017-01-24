@@ -20,6 +20,7 @@ import {
   WelcomeStubComponent,
 } from './component-stubs';
 import {
+  ActivatedRouteStubService,
   RouterLinkStubDirective,
   RouterOutletStubComponent,
 } from './router-stubs';
@@ -45,6 +46,8 @@ import {
     RouterOutletStubComponent,
   ],
   providers: [
+    ActivatedRouteStubService,
+
     HttpStubService,
     StoreStubService,
   ],

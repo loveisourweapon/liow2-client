@@ -1,3 +1,4 @@
+import { Deed } from '../models';
 import * as deed from '../actions/deed';
 import * as fromDeed from './deed';
 
@@ -6,6 +7,7 @@ describe('deed reducer', () => {
     isLoading: false,
     isLoaded: false,
     deeds: [],
+    current: null,
   };
 
   it(`should set isLoading to true with FIND action`, () => {
@@ -28,5 +30,12 @@ describe('deed reducer', () => {
     const state = fromDeed.reducer(loadingState, new deed.FindFailAction(new Error()));
     expect(state).not.toBe(loadingState);
     expect(state.isLoading).toBe(false);
+  });
+
+  it(`should set current deed with SET_CURRENT action`, () => {
+    const currentDeed = <Deed>{};
+    const state = fromDeed.reducer(initialState, new deed.SetCurrentAction(currentDeed));
+    expect(state).not.toBe(initialState);
+    expect(state.current).toBe(currentDeed);
   });
 });

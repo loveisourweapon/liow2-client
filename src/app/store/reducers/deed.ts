@@ -5,12 +5,14 @@ export interface State {
   isLoading: boolean;
   isLoaded: boolean;
   deeds: Deed[];
+  current: Deed;
 }
 
 const initialState: State = {
   isLoading: true,
   isLoaded: false,
   deeds: [],
+  current: null,
 };
 
 export function reducer(state = initialState, action: deed.Actions): State {
@@ -23,10 +25,14 @@ export function reducer(state = initialState, action: deed.Actions): State {
         isLoading: false,
         isLoaded: true,
         deeds: action.payload,
+        current: state.current,
       };
 
     case deed.ActionTypes.FIND_FAIL:
       return Object.assign({}, state, { isLoading: false });
+
+    case deed.ActionTypes.SET_CURRENT:
+      return Object.assign({}, state, { current: action.payload });
 
     default:
       return state;
@@ -36,3 +42,4 @@ export function reducer(state = initialState, action: deed.Actions): State {
 export function getIsLoading(state: State) { return state.isLoading; }
 export function getIsLoaded(state: State) { return state.isLoaded; }
 export function getDeeds(state: State) { return state.deeds; }
+export function getCurrent(state: State) { return state.current; }

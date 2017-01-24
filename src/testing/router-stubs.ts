@@ -1,4 +1,5 @@
-import { Component, Directive, Input } from '@angular/core';
+import { Component, Directive, Injectable, Input } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'router-outlet',
@@ -9,4 +10,9 @@ export class RouterOutletStubComponent { }
 @Directive({ selector: '[routerLink]' })
 export class RouterLinkStubDirective {
   @Input('routerLink') linkParams: any;
+}
+
+@Injectable()
+export class ActivatedRouteStubService {
+  params = new BehaviorSubject<any>({});
 }
