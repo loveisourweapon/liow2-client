@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, NgModule } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { NavigationEnd, Router } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { RouterOutletStubComponent } from '../testing';
+import { RouterStubService, RouterOutletStubComponent } from '../testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -16,6 +17,9 @@ describe('AppComponent', () => {
           AppComponent,
           NavbarStubComponent,
           RouterOutletStubComponent,
+        ],
+        providers: [
+          { provide: Router, useClass: RouterStubService },
         ],
       })
       .compileComponents();
@@ -32,6 +36,14 @@ describe('AppComponent', () => {
     const element = fixture.debugElement.query(By.css('footer > .container > div:first-child'));
 
     expect(element.nativeElement.textContent.trim()).toContain(date.getFullYear().toString());
+  });
+
+  it(`should call window.scrollTo after NavigationEnd event`, () => {
+    const windowSpy = spyOn(window, 'scrollTo');
+    const router = TestBed.get(Router);
+    router.events.next(new NavigationEnd(1, '/', '/'));
+
+    expect(windowSpy).toHaveBeenCalledWith(0, 0);
   });
 });
 

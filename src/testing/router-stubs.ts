@@ -16,3 +16,8 @@ export class RouterLinkStubDirective {
 export class ActivatedRouteStubService {
   params = new BehaviorSubject<any>({});
 }
+
+@Injectable()
+export class RouterStubService {
+  events = new BehaviorSubject<any>({});
+}
