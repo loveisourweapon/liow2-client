@@ -1,27 +1,25 @@
-/* tslint:disable: component-selector no-input-rename */
-
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { has } from 'lodash';
 import * as marked from 'marked';
 
 @Component({
-  selector: '[marked]',
-  template: `<div [innerHTML]="content"></div>`,
+  selector: 'ui-marked',
+  template: `<div [innerHTML]="htmlContent"></div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MarkedComponent implements OnChanges {
-  @Input('marked') rawContent: string;
+  @Input() content: string;
 
-  content: SafeHtml;
+  htmlContent: SafeHtml;
 
   constructor(
     private sanitizer: DomSanitizer,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.content = has(changes, 'rawContent.currentValue') && changes['rawContent'].currentValue ?
-      this.sanitizer.bypassSecurityTrustHtml(marked(this.rawContent)) :
+    this.htmlContent = has(changes, 'content.currentValue') && changes['content'].currentValue ?
+      this.sanitizer.bypassSecurityTrustHtml(marked(this.content)) :
       '';
   }
 }

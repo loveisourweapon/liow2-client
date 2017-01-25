@@ -98,8 +98,8 @@
       "check-type"
     ],
 
-    "directive-selector": [true, "attribute", "liow", "camelCase"],
-    "component-selector": [true, "element", "liow", "kebab-case"],
+    "directive-selector": [true, "attribute", ["liow", "ui"], "camelCase"],
+    "component-selector": [true, "element", ["liow", "ui"], "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

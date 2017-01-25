@@ -44,7 +44,7 @@ describe('MarkedComponent', () => {
 });
 
 @Component({
-  template: `<div [marked]="rawContent"></div>`,
+  template: `<ui-marked [content]="rawContent"></ui-marked>`,
 })
 class TestHostComponent {
   rawContent: string;
