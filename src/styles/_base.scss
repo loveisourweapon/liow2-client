@@ -1,6 +1,11 @@
+html {
+  height: 100%;
+}
+
 body {
   padding-top: $navbar-height;
   margin-top: 0 !important;
+  min-height: 100%;
 }
 
 a {
@@ -22,6 +27,16 @@ a {
 
 .middle {
   vertical-align: middle;
+}
+
+.app-loading-spinner {
+  position: absolute;
+  top: calc(50% - 36px);
+  left: calc(50% - 110px);
+
+  > img {
+    height: 60px;
+  }
 }
 
 // Fonts
