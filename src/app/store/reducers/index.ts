@@ -8,11 +8,13 @@ import { environment } from '../../../environments/environment';
 import * as fromRouter from '@ngrx/router-store';
 import * as fromAuth from './auth';
 import * as fromDeed from './deed';
+import * as fromGroup from './group';
 import * as fromLayout from './layout';
 
 export interface State {
   auth: fromAuth.State;
   deed: fromDeed.State;
+  group: fromGroup.State;
   layout: fromLayout.State;
   router: fromRouter.RouterState;
 }
@@ -20,6 +22,7 @@ export interface State {
 const reducers = {
   auth: fromAuth.reducer,
   deed: fromDeed.reducer,
+  group: fromGroup.reducer,
   layout: fromLayout.reducer,
   router: fromRouter.routerReducer,
 };
@@ -43,6 +46,9 @@ export const getDeedIsLoading = createSelector(getDeedState, fromDeed.getIsLoadi
 export const getDeedIsLoaded = createSelector(getDeedState, fromDeed.getIsLoaded);
 export const getDeeds = createSelector(getDeedState, fromDeed.getDeeds);
 export const getCurrentDeed = createSelector(getDeedState, fromDeed.getCurrent);
+
+export function getGroupState(state: State) { return state.group; }
+export const getCurrentGroup = createSelector(getGroupState, fromGroup.getCurrent);
 
 export function getLayoutState(state: State) { return state.layout; }
 export const getIsMenuOpen = createSelector(getLayoutState, fromLayout.getIsMenuOpen);

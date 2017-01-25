@@ -1,0 +1,76 @@
+<liow-jumbotron
+  image="/images/group.png"
+  [background]="(group$ | async)?.coverImage"
+>
+  <div jumbotron-title>{{ (group$ | async)?.name }}</div>
+  <div jumbotron-text>
+    <span class="f-lg">
+      <!-- TODO: get counter -->
+      34,765
+    </span>
+    acts of love
+  </div>
+</liow-jumbotron>
+
+<div class="container container-pad">
+  <div class="row">
+    <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
+      <p>Current Campaign Info</p>
+      <p>A stack of buttons</p>
+    </div>
+
+    <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
+      <!--<div uib-alert
+           class="alert-info"
+           ng-if="$ctrl.showCampaignAlert"
+           close="$ctrl.showCampaignAlert = false">
+        You haven't got an active campaign, would you like to set one up now?&nbsp;
+        <button class="btn btn-info btn-inline m-t-xxs p-xs"
+                ng-click="$ctrl.editCampaign('create', $ctrl.group)">
+          Setup Campaign
+        </button>
+      </div>-->
+
+      <tabset type="pills">
+        <tab>
+          <template tabHeading>
+            <i class="fa fa-fw fa-commenting"></i>
+            Welcome
+          </template>
+
+          <blockquote *ngIf="(group$ | async)?.welcomeMessage">
+            <ui-marked [content]="(group$ | async)?.welcomeMessage"></ui-marked>
+          </blockquote>
+
+          <div *ngIf="!(group$ | async)?.welcomeMessage">
+            <h2>
+              The Love is our Weapon Campaign is a youth movement that exists to
+              change cities through the love of Jesus by doing strategic practical
+              acts of love.
+            </h2>
+            <p>
+              Thousands of people, doing thousands of acts of love, bringing
+              change, value, healing and hope throughout cities and communities
+              everywhere.
+            </p>
+          </div>
+        </tab>
+
+        <tab>
+          <template tabHeading>
+            <i class="fa fa-fw fa-list"></i>
+            Activity Feed
+          </template>
+
+          <!--<feed criteria="{ group: $ctrl.group._id }"
+                ng-if="$ctrl.User.isAuthenticated()"></feed>-->
+
+          <p *ngIf="!(isAuthenticated$ | async)">
+            You must <a (click)="$event.preventDefault()" href>login</a>
+            to see {{ (group$ | async)?.name }}'s Activity Feed.
+          </p>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

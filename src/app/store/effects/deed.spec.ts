@@ -1,60 +1,54 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { Http, Response, ResponseOptions } from '@angular/http';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { DeedEffects } from './deed';
 import * as deed from '../actions/deed';
-import { API_BASE_URL } from '../../core';
-import { apiBaseUrlTest, HttpStubService } from '../../../testing';
+import { DeedService } from '../services';
+import { DeedStubService } from '../../../testing';
 
 describe('DeedEffects', () => {
   let runner: EffectsRunner;
   let deedEffects: DeedEffects;
-  let http: Http;
+  let deedService: DeedService;
 
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      EffectsTestingModule,
-    ],
-    providers: [
-      DeedEffects,
-      { provide: Http, useClass: HttpStubService },
-      { provide: API_BASE_URL, useValue: apiBaseUrlTest  },
-    ],
+  beforeEach(() => {
+    TestBed
+      .configureTestingModule({
+        imports: [
+          EffectsTestingModule,
+        ],
+        providers: [
+          DeedEffects,
+          { provide: DeedService, useClass: DeedStubService },
+        ],
+      });
+  });
+
+  beforeEach(inject([EffectsRunner, DeedEffects], (_runner, _deedEffects) => {
+    runner = _runner;
+    deedEffects = _deedEffects;
+    deedService = TestBed.get(DeedService);
   }));
-
-  beforeEach(inject([
-      EffectsRunner,
-      DeedEffects,
-    ],
-    (_runner, _deedEffects) => {
-      runner = _runner;
-      deedEffects = _deedEffects;
-      http = TestBed.get(Http);
-    }
-  ));
 
   it(`should trigger FIND_SUCCESS after FIND action and successful http request`, () => {
     const payload = [];
-    const response = new Response(new ResponseOptions({ body: payload }));
-    const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
-
+    spyOn(deedService, 'find').and.returnValue(Observable.of(payload));
     runner.queue(new deed.FindAction());
-    deedEffects.find$.subscribe(result => {
+    deedEffects.find$.subscribe((result: Action) => {
       expect(result.type).toBe(deed.ActionTypes.FIND_SUCCESS);
       expect(result.payload).toBe(payload);
-      expect(httpSpy).toHaveBeenCalledWith(`${apiBaseUrlTest}/deeds`);
     });
   });
 
   it(`should trigger FIND_FAIL after FIND action and failed http request`, () => {
-    const response = new Response(new ResponseOptions({ status: 500 }));
-    spyOn(http, 'get').and.returnValue(Observable.throw(response));
-
+    const error = {};
+    spyOn(deedService, 'find').and.returnValue(Observable.throw(error));
     runner.queue(new deed.FindAction());
-    deedEffects.find$.subscribe(result => {
+    deedEffects.find$.subscribe((result: Action) => {
       expect(result.type).toBe(deed.ActionTypes.FIND_FAIL);
+      expect(result.payload).toBe(error);
     });
   });
 });

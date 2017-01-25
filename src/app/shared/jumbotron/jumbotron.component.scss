@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 
 .jumbotron {
-  background-position: center;
+  background: black center;
   background-size: cover;
   margin: 0;
   color: white;
@@ -13,7 +13,6 @@
 
   &.videotron {
     height: auto;
-    background-color: black;
 
     .container {
       @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {

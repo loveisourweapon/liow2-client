@@ -6,6 +6,6 @@ export interface Deed {
   logo: string;
   videoUrl: string;
   coverImage: string;
-  created: string;
-  modified: string;
+  created: Date;
+  modified: Date;
 }

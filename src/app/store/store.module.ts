@@ -5,6 +5,7 @@ import { StoreModule as NgrxStoreModule } from '@ngrx/store';
 
 import { DeedEffects } from './effects/deed';
 import { reducer } from './reducers';
+import { DeedService, GroupService } from './services';
 
 @NgModule({
   imports: [
@@ -12,6 +13,10 @@ import { reducer } from './reducers';
     RouterStoreModule.connectRouter(),
 
     EffectsModule.run(DeedEffects),
+  ],
+  providers: [
+    DeedService,
+    GroupService,
   ],
 })
 export class StoreModule { }

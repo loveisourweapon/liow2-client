@@ -52,3 +52,32 @@
 // Utility classes
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/utilities";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+
+/**
+ * Buttons
+ */
+.btn-facebook {
+  @include button-variant(white, #3b5998, #335190);
+}
+.btn-inline {
+  vertical-align: baseline;
+}
+.img-btn {
+  width: 25px;
+  display: inline;
+  vertical-align: text-bottom;
+}
+
+/**
+ * Tabs
+ */
+.nav-pills {
+  margin-bottom: 10px;
+}
+
+/**
+ * Modals
+ */
+.modal-body {
+  overflow-y: auto;
+}

@@ -1,5 +1,5 @@
 import { NgModule, Optional, LOCALE_ID, SkipSelf } from '@angular/core';
-import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
+import { CollapseModule, DropdownModule, TabsModule } from 'ng2-bootstrap';
 
 import { SharedModule } from '../shared';
 
@@ -10,6 +10,7 @@ import { NavbarComponent } from './navbar';
   imports: [
     CollapseModule.forRoot(),
     DropdownModule.forRoot(),
+    TabsModule.forRoot(),
 
     SharedModule,
   ],

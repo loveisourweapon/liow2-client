@@ -22,6 +22,7 @@ import {
   RouterOutletStubComponent,
 } from './router-stubs';
 import {
+  DeedStubService,
   HttpStubService,
   StoreStubService,
 } from './service-stubs';
@@ -42,6 +43,7 @@ import {
   providers: [
     ActivatedRouteStubService,
 
+    DeedStubService,
     HttpStubService,
     StoreStubService,
   ],

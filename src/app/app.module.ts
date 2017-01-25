@@ -5,6 +5,7 @@ import { CoreModule } from './core';
 import { StoreModule } from './store';
 import { HomeModule } from './home';
 import { DeedModule } from './deed';
+import { GroupModule } from './group';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { AppComponent } from './app.component';
     StoreModule,
     HomeModule,
     DeedModule,
+    GroupModule,
     AppRoutingModule,
   ],
   declarations: [
