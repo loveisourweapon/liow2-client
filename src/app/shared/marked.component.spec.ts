@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { MarkedComponent } from './marked.component';
 
-describe('MarkedComponent', () => {
+describe(`MarkedComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHost: TestHostComponent;
   let element: DebugElement;
@@ -26,7 +26,7 @@ describe('MarkedComponent', () => {
     element = fixture.debugElement.query(By.directive(MarkedComponent)).query(By.css('div'));
   });
 
-  it('should render raw string content as markdown', () => {
+  it(`should render raw string content as markdown`, () => {
     const testCases = [
       { input: `Foo Bar`, expected: `<p>Foo Bar</p>` },
       { input: `# Foo Bar`, expected: `<h1 id="foo-bar">Foo Bar</h1>` },

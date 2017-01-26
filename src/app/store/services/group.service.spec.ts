@@ -7,7 +7,7 @@ import { Group } from '../models';
 import { API_BASE_URL } from '../../core';
 import { apiBaseUrlTest, HttpStubService } from '../../../testing';
 
-describe('GroupService', () => {
+describe(`GroupService`, () => {
   let service: GroupService;
   let http: Http;
 
@@ -31,7 +31,7 @@ describe('GroupService', () => {
     http = TestBed.get(Http);
   }));
 
-  describe('#find', () => {
+  describe(`#find`, () => {
     it(`should pass search params to http.get`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup] }));
       const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
@@ -60,7 +60,7 @@ describe('GroupService', () => {
     });
   });
 
-  describe('#findOne', () => {
+  describe(`#findOne`, () => {
     it(`should return a single Group`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
@@ -70,13 +70,13 @@ describe('GroupService', () => {
     it(`should throw an error if no Groups found`, () => {
       const response = new Response(new ResponseOptions({ body: [] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe('Group not found'));
+      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Group not found`));
     });
 
     it(`should throw an error if more than one Group found`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup, testGroup] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe('Group not found'));
+      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Group not found`));
     });
   });
 });

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { DeedListComponent } from './deed-list.component';
 import { StoreStubService } from '../../../testing';
 
-describe('DeedListComponent', () => {
+describe(`DeedListComponent`, () => {
   let component: DeedListComponent;
   let fixture: ComponentFixture<DeedListComponent>;
   let element: DebugElement;
@@ -81,7 +81,7 @@ describe('DeedListComponent', () => {
 
 @Component({
   selector: 'liow-deed-list-horizontal',
-  template: '',
+  template: ``,
 })
 class DeedListHorizontalStubComponent {
   @Input() deeds: any;
@@ -89,7 +89,7 @@ class DeedListHorizontalStubComponent {
 
 @Component({
   selector: 'liow-deed-list-vertical',
-  template: '',
+  template: ``,
 })
 class DeedListVerticalStubComponent {
   @Input() deeds: any;

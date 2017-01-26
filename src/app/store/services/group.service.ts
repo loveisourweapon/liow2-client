@@ -38,7 +38,7 @@ export class GroupService {
     return this.find(search)
       .map((groups: Group[]) => {
         if (groups.length !== 1) {
-          throw new Error('Group not found');
+          throw new Error(`Group not found`);
         }
 
         return groups[0];

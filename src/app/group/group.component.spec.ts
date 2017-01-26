@@ -6,7 +6,7 @@ import { GroupComponent } from './group.component';
 // I'm giving up on tests for now because this component uses multiple `store.select` calls
 // Simple spies won't work here, need more complicated spies or testing methods
 
-xdescribe('GroupComponent', () => {
+xdescribe(`GroupComponent`, () => {
   let component: GroupComponent;
   let fixture: ComponentFixture<GroupComponent>;
 

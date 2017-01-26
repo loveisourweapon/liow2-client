@@ -7,7 +7,7 @@ import { Deed } from '../models';
 import { API_BASE_URL } from '../../core';
 import { apiBaseUrlTest, HttpStubService } from '../../../testing';
 
-describe('TestService', () => {
+describe(`DeedService`, () => {
   let service: DeedService;
   let http: Http;
 
@@ -31,7 +31,7 @@ describe('TestService', () => {
     http = TestBed.get(Http);
   }));
 
-  describe('#find', () => {
+  describe(`#find`, () => {
     it(`should pass search params to http.get`, () => {
       const response = new Response(new ResponseOptions({ body: [testDeed] }));
       const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));

@@ -1,7 +1,7 @@
 import * as auth from '../actions/auth';
 import * as fromAuth from './auth';
 
-describe('auth reducer', () => {
+describe(`auth reducer`, () => {
   const initialState: fromAuth.State = {
     isAuthenticated: false,
     user: null,

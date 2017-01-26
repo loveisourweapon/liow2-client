@@ -4,7 +4,7 @@ import { Component, NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { JumbtronStubComponent } from '../../testing';
 
-describe('HomeComponent', () => {
+describe(`HomeComponent`, () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
@@ -26,14 +26,14 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it(`should create`, () => {
     expect(component).toBeTruthy();
   });
 });
 
 @Component({
   selector: 'liow-welcome',
-  template: '',
+  template: ``,
 })
 class WelcomeStubComponent { }
 

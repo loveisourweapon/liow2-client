@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DeedListHorizontalComponent } from './deed-list-horizontal.component';
 import { RouterLinkStubDirective } from '../../../testing';
 
-describe('DeedListHorizontalComponent', () => {
+describe(`DeedListHorizontalComponent`, () => {
   let component: DeedListHorizontalComponent;
   let fixture: ComponentFixture<DeedListHorizontalComponent>;
 
@@ -28,7 +28,7 @@ describe('DeedListHorizontalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it(`should create`, () => {
     expect(component).toBeTruthy();
   });
 });

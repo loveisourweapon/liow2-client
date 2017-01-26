@@ -16,7 +16,7 @@ import {
   StoreStubService,
 } from '../../../testing';
 
-describe('NavbarComponent', () => {
+describe(`NavbarComponent`, () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let element: DebugElement;

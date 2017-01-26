@@ -2,7 +2,7 @@ import { Deed } from '../models';
 import * as deed from '../actions/deed';
 import * as fromDeed from './deed';
 
-describe('deed reducer', () => {
+describe(`deed reducer`, () => {
   const initialState: fromDeed.State = {
     isLoading: false,
     isLoaded: false,

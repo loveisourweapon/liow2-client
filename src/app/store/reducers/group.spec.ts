@@ -2,7 +2,7 @@ import { Group } from '../models';
 import * as group from '../actions/group';
 import * as fromGroup from './group';
 
-describe('group reducer', () => {
+describe(`group reducer`, () => {
   const initialState: fromGroup.State = {
     current: null,
   };

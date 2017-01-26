@@ -8,7 +8,7 @@ import * as deed from '../actions/deed';
 import { DeedService } from '../services';
 import { DeedStubService } from '../../../testing';
 
-describe('DeedEffects', () => {
+describe(`DeedEffects`, () => {
   let runner: EffectsRunner;
   let deedEffects: DeedEffects;
   let deedService: DeedService;

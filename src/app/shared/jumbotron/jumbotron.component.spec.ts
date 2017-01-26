@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { JumbotronComponent } from './jumbotron.component';
 
-describe('JumbotronComponent', () => {
+describe(`JumbotronComponent`, () => {
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
@@ -17,7 +17,7 @@ describe('JumbotronComponent', () => {
       .compileComponents();
   }));
 
-  describe(`without '[jumbotron-content]`, () => {
+  describe(`without [jumbotron-content]`, () => {
     let fixture: ComponentFixture<TestHost1Component>;
     let testHost: TestHost1Component;
     let element: DebugElement;
@@ -50,7 +50,7 @@ describe('JumbotronComponent', () => {
     });
   });
 
-  describe(`with '[jumbotron-content]`, () => {
+  describe(`with [jumbotron-content]`, () => {
     let fixture: ComponentFixture<TestHost2Component>;
     let testHost: TestHost2Component;
     let element: DebugElement;

@@ -1,7 +1,7 @@
 import * as layout from '../actions/layout';
 import * as fromLayout from './layout';
 
-describe('layout reducer', () => {
+describe(`layout reducer`, () => {
   const initialState: fromLayout.State = {
     isMenuOpen: false,
   };

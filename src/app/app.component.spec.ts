@@ -6,7 +6,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { RouterStubService, RouterOutletStubComponent } from '../testing';
 
-describe('AppComponent', () => {
+describe(`AppComponent`, () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
@@ -49,7 +49,7 @@ describe('AppComponent', () => {
 
 @Component({
   selector: 'liow-navbar',
-  template: '',
+  template: ``,
 })
 class NavbarStubComponent { }
 
