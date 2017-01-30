@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap';
 import { has } from 'lodash';
@@ -12,10 +12,12 @@ import * as fromRoot from '../../store/reducers';
 @Component({
   selector: 'liow-login-modal',
   templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginModalComponent implements OnChanges {
-  // TODO: fix issue with this line
-  @Input() state: fromLoginModal.State;
+  // Issue with exported interface 'fromLoginModal.State'
+  // https://github.com/angular/angular-cli/issues/2034
+  @Input() state = <fromLoginModal.State>null;
   @Input() group: Group;
   @ViewChild('modal') modal: ModalDirective;
 
