@@ -14,7 +14,8 @@ import * as fromRoot from '../../store/reducers';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  currentUser$: Observable<User>;
+  authUser$: Observable<User>;
+  authGroup$: Observable<Group>;
   isAuthenticated$: Observable<boolean>;
   isMenuOpen$: Observable<boolean>;
 
@@ -23,7 +24,8 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.currentUser$ = this.store.select(fromRoot.getAuthUser);
+    this.authUser$ = this.store.select(fromRoot.getAuthUser);
+    this.authGroup$ = this.store.select(fromRoot.getAuthGroup);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
   }
@@ -49,7 +51,7 @@ export class NavbarComponent implements OnInit {
   }
 
   setCurrentGroup(group: Group): void {
-    // this.store.dispatch(new auth.SetCurrentGroupAction(group));
+    this.store.dispatch(new auth.SetCurrentGroupAction(group));
   }
 
   logout(): void {

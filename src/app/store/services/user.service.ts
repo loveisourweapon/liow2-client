@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
+import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../models';
@@ -9,6 +10,7 @@ import { User } from '../models';
 @Injectable()
 export class UserService {
   private baseUrl: string;
+  private numberOfPicture = 12;
 
   constructor(
     private http: JwtHttp,
@@ -24,6 +26,11 @@ export class UserService {
         if (user.created) { user.created = new Date(user.created); }
         if (user.modified) { user.modified = new Date(user.modified); }
         if (user.lastSeen) { user.lastSeen = new Date(user.lastSeen); }
+
+        // Set a random picture seeded by the group ID
+        if (!user.picture) {
+          user.picture = `/images/user${Math.floor(seedrandom(user._id)() * this.numberOfPicture)}.png`;
+        }
 
         return user;
       });

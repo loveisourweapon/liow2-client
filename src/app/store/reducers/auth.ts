@@ -3,23 +3,34 @@ import * as auth from '../actions/auth';
 export interface State {
   isAuthenticated: boolean;
   user: any|null;
+  group: any|null;
 }
 
 const initialState: State = {
   isAuthenticated: false,
   user: null,
+  group: null,
 };
 
 export function reducer(state = initialState, action: auth.Actions): State {
   switch (action.type) {
     case auth.ActionTypes.LOGIN_SUCCESS:
+      const user = action.payload;
+      const group = user.groups.length ? user.groups[0] : null;
+
       return {
         isAuthenticated: true,
-        user: action.payload,
+        user,
+        group,
       };
 
     case auth.ActionTypes.LOGOUT_SUCCESS:
       return Object.assign({}, initialState);
+
+    case auth.ActionTypes.SET_CURRENT_GROUP:
+      return Object.assign({}, state, {
+        group: action.payload,
+      });
 
     default:
       return state;
@@ -28,3 +39,4 @@ export function reducer(state = initialState, action: auth.Actions): State {
 
 export function getIsAuthenticated(state: State) { return state.isAuthenticated; }
 export function getUser(state: State) { return state.user; }
+export function getGroup(state: State) { return state.group; }

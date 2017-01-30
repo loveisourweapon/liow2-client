@@ -43,6 +43,7 @@ export function reducer(state: any, action: any): State {
 export function getAuthState(state: State) { return state.auth; }
 export const getIsAuthenticated = createSelector(getAuthState, fromAuth.getIsAuthenticated);
 export const getAuthUser = createSelector(getAuthState, fromAuth.getUser);
+export const getAuthGroup = createSelector(getAuthState, fromAuth.getGroup);
 
 export function getDeedState(state: State) { return state.deed; }
 export const getDeedIsLoading = createSelector(getDeedState, fromDeed.getIsLoading);

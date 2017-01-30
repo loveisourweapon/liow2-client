@@ -12,6 +12,7 @@ describe(`UserService`, () => {
   let http: JwtHttp;
 
   const testUser = {
+    _id: 'abc123',
     created: new Date().toDateString(),
     modified: new Date().toDateString(),
   };
@@ -45,6 +46,14 @@ describe(`UserService`, () => {
       service.loadCurrent().subscribe((user: User) => {
         expect(user.created instanceof Date).toBe(true);
         expect(user.modified instanceof Date).toBe(true);
+      });
+    });
+
+    it(`should set the picture property if not set`, () => {
+      const response = new Response(new ResponseOptions({ body: testUser }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.loadCurrent().subscribe((user: User) => {
+        expect(user.picture).toMatch(/^\/images\/user(\d|1[01]).png/);
       });
     });
   });

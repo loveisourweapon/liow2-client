@@ -80,15 +80,15 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img [src]="(currentUser$ | async)?.picture || '/images/user0.png'" class="img-circle">
+            <img [src]="(authUser$ | async)?.picture || '/images/user0.png'" class="img-circle">
             <span class="caret"></span>
           </a>
           <ul dropdownMenu>
             <li class="dropdown-header" *ngIf="isAuthenticated$ | async">
-              {{ (currentUser$ | async)?.name }}
+              {{ (authUser$ | async)?.name }}
             </li>
             <li *ngIf="isAuthenticated$ | async">
-              <a [routerLink]="['/u', (currentUser$ | async)?._id]" (click)="closeMenu()">
+              <a [routerLink]="['/u', (authUser$ | async)?._id]" (click)="closeMenu()">
                 <i class="fa fa-fw fa-user"></i>
                 Your Profile
               </a>
@@ -122,10 +122,11 @@
               <i class="fa fa-fw fa-users"></i>
               Groups
             </li>
-            <li *ngFor="let group of (currentUser$ | async)?.groups; trackBy: group?._id">
-                <!--[class.active]="(currentGroup$ | async)?._id === group._id">-->
-              <a [routerLink]="['/g', group.urlName]" (click)="closeMenu()">
-              <!--<a (click)="setCurrentGroup(group); closeMenu(); $event.preventDefault()" href>-->
+            <li
+              *ngFor="let group of (authUser$ | async)?.groups; trackBy: group?._id"
+              [class.active]="(authGroup$ | async)?._id === group._id"
+            >
+              <a [routerLink]="['/g', group.urlName]" (click)="setCurrentGroup(group); closeMenu()">
                 {{ group.name }}
               </a>
             </li>
