@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { HomeComponent } from './home.component';
 import { JumbtronStubComponent } from '../../testing';
@@ -36,7 +36,3 @@ describe(`HomeComponent`, () => {
   template: ``,
 })
 class WelcomeStubComponent { }
-
-// Required for AOT compiler
-@NgModule({ declarations: [ WelcomeStubComponent ] })
-class TestingModule { }

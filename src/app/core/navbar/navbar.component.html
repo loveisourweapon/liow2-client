@@ -14,7 +14,7 @@
       </button>
 
       <a
-        [routerLink]="'/'"
+        routerLink="/"
         (click)="closeMenu()"
         class="navbar-brand"
         title="Love is our Weapon"
@@ -58,7 +58,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a
-            [routerLink]="'/global'"
+            routerLink="/global"
             (click)="closeMenu()"
             title="Global Activity Feed"
           >
@@ -80,61 +80,57 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img src="/images/user0.png" class="img-circle"><!-- TODO: use user image -->
+            <img [src]="(currentUser$ | async)?.picture || '/images/user0.png'" class="img-circle">
             <span class="caret"></span>
           </a>
           <ul dropdownMenu>
-            <!--<li class="dropdown-header"
-                ng-if="$ctrl.User.isAuthenticated()">
-              {{ $ctrl.User.current.name }}
+            <li class="dropdown-header" *ngIf="isAuthenticated$ | async">
+              {{ (currentUser$ | async)?.name }}
             </li>
-            <li ng-if="$ctrl.User.isAuthenticated()">
-              <a ng-href="/u/{{ $ctrl.User.current._id }}"
-                 ng-click="$ctrl.collapseMenu()">
+            <li *ngIf="isAuthenticated$ | async">
+              <a [routerLink]="['/u', (currentUser$ | async)?._id]" (click)="closeMenu()">
                 <i class="fa fa-fw fa-user"></i>
                 Your Profile
               </a>
             </li>
-            <li ng-if="$ctrl.User.isAuthenticated()">
-              <a ng-href="/control-panel"
-                 ng-click="$ctrl.collapseMenu()">
+            <li *ngIf="isAuthenticated$ | async">
+              <a routerLink="/control-panel" (click)="closeMenu()">
                 <i class="fa fa-fw fa-cogs"></i>
                 Control Panel
               </a>
             </li>
-            <li ng-if="$ctrl.User.isAuthenticated()">
-              <a ng-click="$ctrl.User.logout() && $ctrl.collapseMenu()" href>
+            <li *ngIf="isAuthenticated$ | async">
+              <a (click)="logout(); closeMenu(); $event.preventDefault()" href><!-- TODO: logout -->
                 <i class="fa fa-fw fa-sign-out"></i>
                 Logout
               </a>
-            </li>-->
-            <li><!-- TODO: only if not logged in -->
-              <a (click)="$event.preventDefault()" href><!-- TODO: open login modal -->
+            </li>
+            <li *ngIf="!(isAuthenticated$ | async)">
+              <a (click)="openLogin(); closeMenu(); $event.preventDefault()" href>
                 <i class="fa fa-fw fa-sign-in"></i>
                 Login
               </a>
             </li>
-            <li><!-- TODO: only if not logged in -->
-              <a (click)="$event.preventDefault()" href><!-- TODO: open signup modal -->
+            <li *ngIf="!(isAuthenticated$ | async)">
+              <a (click)="openSignup(); closeMenu(); $event.preventDefault()" href><!-- TODO: open signup modal -->
                 <i class="fa fa-fw fa-user-plus"></i>
                 Sign up
               </a>
             </li>
-            <!--<li class="divider" ng-if="$ctrl.User.isAuthenticated()" role="separator"></li>
-            <li class="dropdown-header"
-                ng-if="$ctrl.User.isAuthenticated()">
+            <li class="divider" *ngIf="isAuthenticated$ | async" role="separator"></li>
+            <li class="dropdown-header" *ngIf="isAuthenticated$ | async">
               <i class="fa fa-fw fa-users"></i>
               Groups
             </li>
-            <li ng-repeat="group in $ctrl.User.current.groups track by group._id"
-                ng-if="$ctrl.User.isAuthenticated()"
-                ng-class="{ 'active': $ctrl.User.group._id === group._id }">
-              <a ng-click="$ctrl.setUserGroup(group)" href>
+            <li *ngFor="let group of (currentUser$ | async)?.groups; trackBy: group?._id">
+                <!--[class.active]="(currentGroup$ | async)?._id === group._id">-->
+              <a [routerLink]="['/g', group.urlName]" (click)="closeMenu()">
+              <!--<a (click)="setCurrentGroup(group); closeMenu(); $event.preventDefault()" href>-->
                 {{ group.name }}
               </a>
-            </li>-->
+            </li>
             <li>
-              <a (click)="$event.preventDefault()" href><!-- TODO: open group edit modal -->
+              <a (click)="openGroupEdit(); closeMenu(); $event.preventDefault()" href><!-- TODO: open group edit modal -->
                 <i class="fa fa-fw fa-pencil-square-o"></i>
                 Group sign up
               </a>

@@ -1,26 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { DeedComponent } from './deed.component';
-import * as fromDeed from '../store/reducers/deed';
+import * as fromRoot from '../store/reducers';
 import {
   ActivatedRouteStubService,
   DeedListStubComponent,
   JumbtronStubComponent,
+  MarkedStubComponent,
   StoreStubService,
 } from '../../testing';
 
-// TODO: Add tests!
-// I'm giving up on tests for now because this component uses multiple `store.select` calls
-// Simple spies won't work here, need more complicated spies or testing methods
+// TODO: Add proper tests!
+// Simple store spies won't work here because this component uses multiple `store.select` calls
+// need more complicated spies or testing methods
 
-xdescribe(`DeedComponent`, () => {
+describe(`DeedComponent`, () => {
   let component: DeedComponent;
   let fixture: ComponentFixture<DeedComponent>;
-  let store: Store<fromDeed.State>;
-
-  const deeds = [];
+  let store: Store<fromRoot.State>;
 
   beforeEach(async(() => {
     TestBed
@@ -29,6 +29,7 @@ xdescribe(`DeedComponent`, () => {
           DeedComponent,
           DeedListStubComponent,
           JumbtronStubComponent,
+          MarkedStubComponent,
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
@@ -43,7 +44,7 @@ xdescribe(`DeedComponent`, () => {
     component = fixture.componentInstance;
 
     store = TestBed.get(Store);
-    spyOn(TestBed.get(Store), 'select').and.returnValue(deeds);
+    spyOn(TestBed.get(Store), 'select').and.returnValue(Observable.of([]));
 
     fixture.detectChanges();
   });

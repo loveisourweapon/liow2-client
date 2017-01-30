@@ -1,22 +1,25 @@
-import { NgModule, Optional, LOCALE_ID, SkipSelf } from '@angular/core';
-import { CollapseModule, DropdownModule, TabsModule } from 'ng2-bootstrap';
+import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
+import { Ng2UiAuthModule } from 'ng2-ui-auth';
+import { CollapseModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
 
 import { SharedModule } from '../shared';
 
-import { API_BASE_URL, apiBaseUrlFactory } from './config';
+import { AuthConfig } from './auth-config';
 import { NavbarComponent } from './navbar';
 
 @NgModule({
   imports: [
+    Ng2UiAuthModule.forRoot(AuthConfig),
+
     CollapseModule.forRoot(),
     DropdownModule.forRoot(),
+    ModalModule.forRoot(),
     TabsModule.forRoot(),
 
     SharedModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-AU' },
-    { provide: API_BASE_URL, useFactory: apiBaseUrlFactory },
   ],
   declarations: [
     NavbarComponent,

@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 
-export const apiBaseUrlTest = 'http://localhost';
+@Injectable()
+export class AuthStubService {
+  authenticateEmail() { }
+  isAuthenticated() { }
+}
 
 @Injectable()
 export class DeedStubService {
   find() { }
+}
+
+@Injectable()
+export class GroupStubService {
+  find() { }
+  findOne() { }
 }
 
 @Injectable()
@@ -13,7 +23,18 @@ export class HttpStubService {
 }
 
 @Injectable()
+export class Ng2AuthStubService {
+  isAuthenticated() { }
+  login() { }
+}
+
+@Injectable()
 export class StoreStubService<T> {
   select() { }
   dispatch() { }
+}
+
+@Injectable()
+export class UserStubService {
+  loadCurrent() { }
 }

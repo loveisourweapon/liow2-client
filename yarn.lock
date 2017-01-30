@@ -3335,6 +3335,10 @@ ng2-bootstrap@^1.2.5:
   dependencies:
     moment "2.17.1"
 
+ng2-ui-auth@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/ng2-ui-auth/-/ng2-ui-auth-6.1.1.tgz#a3a59ed8a2e7c9280356131b197a04310a806220"
+
 ngrx-store-freeze@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ngrx-store-freeze/-/ngrx-store-freeze-0.1.6.tgz#69acddf0c28172349d6d21a084fd4428235e82b8"

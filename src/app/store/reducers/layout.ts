@@ -14,7 +14,10 @@ export function reducer(state = initialState, action: layout.Actions): State {
       return { isMenuOpen: !state.isMenuOpen };
 
     case layout.ActionTypes.CLOSE_MENU:
-      return state.isMenuOpen ? { isMenuOpen: false } : state;
+      return state.isMenuOpen
+        ? { isMenuOpen: false }
+        : state
+        ;
 
     default:
       return state;

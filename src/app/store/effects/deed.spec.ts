@@ -32,7 +32,7 @@ describe(`DeedEffects`, () => {
     deedService = TestBed.get(DeedService);
   }));
 
-  it(`should trigger FIND_SUCCESS after FIND action and successful http request`, () => {
+  it(`should dispatch FIND_SUCCESS after FIND action and successful http request`, () => {
     const payload = [];
     spyOn(deedService, 'find').and.returnValue(Observable.of(payload));
     runner.queue(new deed.FindAction());
@@ -42,7 +42,7 @@ describe(`DeedEffects`, () => {
     });
   });
 
-  it(`should trigger FIND_FAIL after FIND action and failed http request`, () => {
+  it(`should dispatch FIND_FAIL after FIND action and failed http request`, () => {
     const error = {};
     spyOn(deedService, 'find').and.returnValue(Observable.throw(error));
     runner.queue(new deed.FindAction());

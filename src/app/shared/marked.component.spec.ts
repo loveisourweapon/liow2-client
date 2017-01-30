@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, NgModule } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { MarkedComponent } from './marked.component';
@@ -49,6 +49,3 @@ describe(`MarkedComponent`, () => {
 class TestHostComponent {
   rawContent: string;
 }
-
-@NgModule({ declarations: [ TestHostComponent ] })
-class TestingModule { }

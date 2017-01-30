@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, Input, NgModule } from '@angular/core';
+import { Component, DebugElement, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -94,12 +94,3 @@ class DeedListHorizontalStubComponent {
 class DeedListVerticalStubComponent {
   @Input() deeds: any;
 }
-
-// Required for AOT compiler
-@NgModule({
-  declarations: [
-    DeedListHorizontalStubComponent,
-    DeedListVerticalStubComponent,
-  ],
-})
-class TestingModule { }

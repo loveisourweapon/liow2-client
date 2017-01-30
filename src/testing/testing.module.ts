@@ -11,20 +11,29 @@ import {
   DropdownStubDirective,
   DropdownMenuStubDirective,
   DropdownToggleStubDirective,
+  ModalStubDirective,
+  TabsetStubComponent,
+  TabStubComponent,
 } from './bootstrap-stubs';
 import {
   DeedListStubComponent,
   JumbtronStubComponent,
+  MarkedStubComponent,
 } from './component-stubs';
 import {
   ActivatedRouteStubService,
   RouterLinkStubDirective,
   RouterOutletStubComponent,
+  RouterStubService,
 } from './router-stubs';
 import {
+  AuthStubService,
   DeedStubService,
+  GroupStubService,
   HttpStubService,
+  Ng2AuthStubService,
   StoreStubService,
+  UserStubService,
 } from './service-stubs';
 
 @NgModule({
@@ -33,19 +42,28 @@ import {
     DropdownStubDirective,
     DropdownMenuStubDirective,
     DropdownToggleStubDirective,
+    ModalStubDirective,
+    TabsetStubComponent,
+    TabStubComponent,
 
     DeedListStubComponent,
     JumbtronStubComponent,
+    MarkedStubComponent,
 
     RouterLinkStubDirective,
     RouterOutletStubComponent,
   ],
   providers: [
     ActivatedRouteStubService,
+    RouterStubService,
 
+    AuthStubService,
     DeedStubService,
+    GroupStubService,
     HttpStubService,
+    Ng2AuthStubService,
     StoreStubService,
+    UserStubService,
   ],
 })
 export class TestingModule { }

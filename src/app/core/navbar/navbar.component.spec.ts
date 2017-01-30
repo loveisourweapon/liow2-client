@@ -61,14 +61,14 @@ describe(`NavbarComponent`, () => {
     });
   });
 
-  it(`should trigger TOGGLE_MENU when clicking the navbar toggle button`, () => {
+  it(`should dispatch TOGGLE_MENU when clicking the navbar toggle button`, () => {
     const dispatchSpy = spyOn(store, 'dispatch');
     const toggleButton = element.query(By.css('button.navbar-toggle'));
     toggleButton.triggerEventHandler('click', new MouseEvent('click'));
     expect(dispatchSpy.calls.mostRecent().args[0].type).toBe(layout.ActionTypes.TOGGLE_MENU);
   });
 
-  it(`should trigger CLOSE_MENU when clicking a router link`, () => {
+  it(`should dispatch CLOSE_MENU when clicking a router link`, () => {
     const dispatchSpy = spyOn(store, 'dispatch');
     const routerLink = element.query(By.css('ul.navbar-right > li:first-child > a'));
     routerLink.triggerEventHandler('click', new MouseEvent('click'));

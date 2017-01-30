@@ -1,15 +1,15 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { Http, Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
 import { GroupService } from './group.service';
 import { Group } from '../models';
-import { API_BASE_URL } from '../../core';
-import { apiBaseUrlTest, HttpStubService } from '../../../testing';
+import { HttpStubService } from '../../../testing';
 
 describe(`GroupService`, () => {
   let service: GroupService;
-  let http: Http;
+  let http: JwtHttp;
 
   const testGroup = {
     created: new Date().toDateString(),
@@ -20,15 +20,14 @@ describe(`GroupService`, () => {
     TestBed.configureTestingModule({
       providers: [
         GroupService,
-        { provide: Http, useClass: HttpStubService },
-        { provide: API_BASE_URL, useValue: apiBaseUrlTest  },
+        { provide: JwtHttp, useClass: HttpStubService },
       ],
     });
   });
 
   beforeEach(inject([GroupService], (_service: GroupService) => {
     service = _service;
-    http = TestBed.get(Http);
+    http = TestBed.get(JwtHttp);
   }));
 
   describe(`#find`, () => {

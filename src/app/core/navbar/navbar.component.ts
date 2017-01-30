@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import { Group, User } from '../../store/models';
 import * as layout from '../../store/actions/layout';
+import * as loginModal from '../../store/actions/modal/login';
 import * as fromRoot from '../../store/reducers';
 
 @Component({
@@ -11,6 +13,8 @@ import * as fromRoot from '../../store/reducers';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  currentUser$: Observable<User>;
+  isAuthenticated$: Observable<boolean>;
   isMenuOpen$: Observable<boolean>;
 
   constructor(
@@ -18,6 +22,8 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.currentUser$ = this.store.select(fromRoot.getAuthUser);
+    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
   }
 
@@ -27,5 +33,25 @@ export class NavbarComponent implements OnInit {
 
   closeMenu(): void {
     this.store.dispatch(new layout.CloseMenuAction());
+  }
+
+  openLogin(): void {
+    this.store.dispatch(new loginModal.OpenAction());
+  }
+
+  openSignup(): void {
+    // this.store.dispatch(new signupModal.OpenAction());
+  }
+
+  openGroupEdit(): void {
+    // this.store.dispatch(new groupEditModal.OpenAction());
+  }
+
+  setCurrentGroup(group: Group): void {
+    // this.store.dispatch(new auth.SetCurrentGroupAction(group));
+  }
+
+  logout(): void {
+    // this.store.dispatch(new auth.LogoutAction());
   }
 }

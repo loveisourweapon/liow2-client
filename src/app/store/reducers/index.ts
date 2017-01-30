@@ -10,12 +10,14 @@ import * as fromAuth from './auth';
 import * as fromDeed from './deed';
 import * as fromGroup from './group';
 import * as fromLayout from './layout';
+import * as fromLoginModal from './modal/login';
 
 export interface State {
   auth: fromAuth.State;
   deed: fromDeed.State;
   group: fromGroup.State;
   layout: fromLayout.State;
+  modalLogin: fromLoginModal.State;
   router: fromRouter.RouterState;
 }
 
@@ -24,6 +26,7 @@ const reducers = {
   deed: fromDeed.reducer,
   group: fromGroup.reducer,
   layout: fromLayout.reducer,
+  modalLogin: fromLoginModal.reducer,
   router: fromRouter.routerReducer,
 };
 
@@ -52,3 +55,5 @@ export const getCurrentGroup = createSelector(getGroupState, fromGroup.getCurren
 
 export function getLayoutState(state: State) { return state.layout; }
 export const getIsMenuOpen = createSelector(getLayoutState, fromLayout.getIsMenuOpen);
+
+export function getLoginModal(state: State) { return state.modalLogin; }

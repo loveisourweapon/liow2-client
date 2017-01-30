@@ -1,15 +1,15 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { Http, Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
 import { DeedService } from './deed.service';
 import { Deed } from '../models';
-import { API_BASE_URL } from '../../core';
-import { apiBaseUrlTest, HttpStubService } from '../../../testing';
+import { HttpStubService } from '../../../testing';
 
 describe(`DeedService`, () => {
   let service: DeedService;
-  let http: Http;
+  let http: JwtHttp;
 
   const testDeed = {
     created: new Date().toDateString(),
@@ -20,15 +20,14 @@ describe(`DeedService`, () => {
     TestBed.configureTestingModule({
       providers: [
         DeedService,
-        { provide: Http, useClass: HttpStubService },
-        { provide: API_BASE_URL, useValue: apiBaseUrlTest  },
+        { provide: JwtHttp, useClass: HttpStubService },
       ],
     });
   });
 
   beforeEach(inject([DeedService], (_service: DeedService) => {
     service = _service;
-    http = TestBed.get(Http);
+    http = TestBed.get(JwtHttp);
   }));
 
   describe(`#find`, () => {

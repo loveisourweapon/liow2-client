@@ -12,7 +12,7 @@ export class DeedEffects {
   @Effect()
   find$: Observable<Action> = this.actions$
     .ofType(deed.ActionTypes.FIND)
-    .startWith(new deed.FindAction()) // trigger initial load on startup
+    .startWith(new deed.FindAction()) // dispatch on startup
     .switchMap((action: Action) =>
       this.deedService.find(action.payload)
         .map((deeds: Deed[]) => new deed.FindSuccessAction(deeds))

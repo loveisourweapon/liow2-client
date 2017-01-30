@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Deed } from '../store';
+import { Deed } from '../store/models';
 import * as deed from '../store/actions/deed';
 import * as fromRoot from '../store/reducers';
 

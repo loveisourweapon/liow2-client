@@ -18,7 +18,9 @@ const initialState: State = {
 export function reducer(state = initialState, action: deed.Actions): State {
   switch (action.type) {
     case deed.ActionTypes.FIND:
-      return Object.assign({}, state, { isLoading: true });
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
 
     case deed.ActionTypes.FIND_SUCCESS:
       return {
@@ -29,10 +31,14 @@ export function reducer(state = initialState, action: deed.Actions): State {
       };
 
     case deed.ActionTypes.FIND_FAIL:
-      return Object.assign({}, state, { isLoading: false });
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
 
     case deed.ActionTypes.SET_CURRENT:
-      return Object.assign({}, state, { current: action.payload });
+      return Object.assign({}, state, {
+        current: action.payload,
+      });
 
     default:
       return state;

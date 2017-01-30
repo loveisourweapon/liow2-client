@@ -1,0 +1,137 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Login"
+  aria-hidden="true"
+  (onHide)="onClose()"
+  (onShown)="autofocus.focus()"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <liow-modal-header
+        modalTitle="Login"
+        (close)="onClose()"
+      ></liow-modal-header>
+
+      <div class="modal-body">
+        <div *ngIf="state.showJoinGroup">
+          <p>
+            <!--<ui-switch
+              [checked]="joinGroup"
+              (change)="joinGroup = $event"
+              id="joinGroup"
+              name="joinGroup"
+              class="m-r-xs"
+            >
+              Join {{ (group$ | async)?.name }}
+            </ui-switch>-->
+            Join {{ group?.name }}
+          </p>
+          <hr>
+        </div>
+
+        <p>
+          <button
+            (click)="authenticateFacebook(state.joinGroup)"
+            class="btn btn-facebook btn-block"
+            [disabled]="state.isLoggingIn"
+          >
+            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
+            <i class="fa fa-fw fa-facebook-official" [hidden]="state.isLoggingIn"></i>
+            Sign in with Facebook
+          </button>
+        </p>
+
+        <hr>
+
+        <form (ngSubmit)="authenticateEmail(state.credentials, state.joinGroup)">
+          <!--<div uib-alert
+               class="alert-danger p-sm"
+               ng-if="$ctrl.error">
+            <i class="fa fa-fw fa-exclamation-triangle"></i>
+            {{ $ctrl.error }}
+            <span ng-if="$ctrl.error.indexOf('Please confirm') === 0">
+              <i class="fa fa-fw"></i>
+              <a ng-click="$ctrl.sendConfirmEmail($ctrl.email)" href>
+                Re-send confirmation email?
+                <i ng-show="$ctrl.sending" class="fa fa-cog fa-spin"></i>
+              </a>
+            </span>
+          </div>-->
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-fw fa-at"></i>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                [ngModel]="state.credentials.email"
+                (ngModelChange)="onUpdateEmail($event)"
+                placeholder="Email"
+                #autofocus
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-fw fa-key"></i>
+              </div>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                [ngModel]="state.credentials.password"
+                (ngModelChange)="onUpdatePassword($event)"
+                placeholder="Password"
+              >
+            </div>
+            <span class="help-block">
+              <button
+                type="button"
+                (click)="onClose(); openForgotPassword(state.credentials.email)"
+                class="btn btn-link btn-sm"
+              >
+                Forgot your password?
+              </button>
+            </span>
+          </div>
+
+          <button type="submit" hidden></button>
+        </form>
+
+        <p>
+          Don't have an account?
+          <button
+            type="button"
+            (click)="onClose(); openSignup()"
+            class="btn btn-link btn-inline"
+          >
+            Sign up now
+          </button>
+        </p>
+      </div><!-- .modal-body -->
+
+      <div class="modal-footer">
+        <button
+          type="submit"
+          (click)="authenticateEmail(state.credentials, state.joinGroup)"
+          class="btn btn-primary btn-block"
+          [disabled]="state.isLoggingIn"
+        >
+          <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
+          Login
+        </button>
+      </div><!-- .modal-footer -->
+    </div>
+  </div>
+</div>

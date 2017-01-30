@@ -12,6 +12,10 @@ a {
   transition: color 0.3s;
 }
 
+p:last-child {
+  margin-bottom: 0;
+}
+
 .container-pad {
   padding-top: 40px;
   padding-bottom: 50px;
@@ -37,6 +41,10 @@ a {
   > img {
     height: 60px;
   }
+}
+
+[hidden] {
+  display: none !important;
 }
 
 // Fonts

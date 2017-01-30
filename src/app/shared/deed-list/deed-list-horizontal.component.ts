@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Deed } from '../../store';
+import { Deed } from '../../store/models';
 
 @Component({
   selector: 'liow-deed-list-horizontal',

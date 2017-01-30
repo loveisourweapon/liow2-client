@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
 
-import { Deed } from '../../store';
+import { Deed } from '../../store/models';
 import * as fromRoot from '../../store/reducers';
 
 @Component({

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, NgModule } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { JumbotronComponent } from './jumbotron.component';
@@ -98,12 +98,3 @@ class TestHost1Component {
   `,
 })
 class TestHost2Component { }
-
-// Required for AOT compiler
-@NgModule({
-  declarations: [
-    TestHost1Component,
-    TestHost2Component,
-  ],
-})
-class TestingModule { }

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'liow-deed-list',
-  template: '',
+  template: ``,
 })
 export class DeedListStubComponent {
   @Input() layout: string;
@@ -10,10 +10,18 @@ export class DeedListStubComponent {
 
 @Component({
   selector: 'liow-jumbotron',
-  template: '',
+  template: ``,
 })
 export class JumbtronStubComponent {
   @Input() image: string;
   @Input() background: string;
   @Input() classes: string;
+}
+
+@Component({
+  selector: 'ui-marked',
+  template: ``,
+})
+export class MarkedStubComponent {
+  @Input() content: string;
 }

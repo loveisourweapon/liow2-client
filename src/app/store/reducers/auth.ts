@@ -12,10 +12,11 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: auth.Actions): State {
   switch (action.type) {
-    case auth.ActionTypes.LOGIN:
-      const isAuthenticated = true;
-      const user = {};
-      return { isAuthenticated, user };
+    case auth.ActionTypes.LOGIN_SUCCESS:
+      return {
+        isAuthenticated: true,
+        user: action.payload,
+      };
 
     case auth.ActionTypes.LOGOUT:
       return Object.assign({}, initialState);
@@ -26,5 +27,4 @@ export function reducer(state = initialState, action: auth.Actions): State {
 }
 
 export function getIsAuthenticated(state: State) { return state.isAuthenticated; }
-
 export function getUser(state: State) { return state.user; }

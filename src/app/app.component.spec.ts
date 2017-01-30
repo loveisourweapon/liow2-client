@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -15,6 +15,7 @@ describe(`AppComponent`, () => {
       .configureTestingModule({
         declarations: [
           AppComponent,
+          ModalsStubComponent,
           NavbarStubComponent,
           RouterOutletStubComponent,
         ],
@@ -48,11 +49,13 @@ describe(`AppComponent`, () => {
 });
 
 @Component({
+  selector: 'liow-modals',
+  template: ``,
+})
+class ModalsStubComponent { }
+
+@Component({
   selector: 'liow-navbar',
   template: ``,
 })
 class NavbarStubComponent { }
-
-// Required for AOT compiler
-@NgModule({ declarations: [ NavbarStubComponent ] })
-class TestingModule { }

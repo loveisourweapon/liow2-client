@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Response, URLSearchParams } from '@angular/http';
+import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import * as seedrandom from 'seedrandom';
 
-import { API_BASE_URL } from '../../core';
+import { environment } from '../../../environments/environment';
 import { Group } from '../models';
 
 @Injectable()
@@ -12,10 +13,9 @@ export class GroupService {
   private numberOfCoverImages = 6;
 
   constructor(
-    private http: Http,
-    @Inject(API_BASE_URL) apiBaseUrl: string,
+    private http: JwtHttp,
   ) {
-    this.baseUrl = `${apiBaseUrl}/groups`;
+    this.baseUrl = `${environment.apiBaseUrl}/groups`;
   }
 
   find(search = new URLSearchParams()): Observable<Group[]> {
