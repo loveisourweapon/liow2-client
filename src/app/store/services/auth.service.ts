@@ -24,4 +24,8 @@ export class AuthService {
   isAuthenticated(): boolean {
     return this.auth.isAuthenticated();
   }
+
+  logout(): Observable<void> {
+    return this.auth.logout();
+  }
 }

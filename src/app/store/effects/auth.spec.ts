@@ -84,4 +84,15 @@ describe(`AuthEffects`, () => {
       });
     });
   });
+
+  describe(`logout$`, () => {
+    it(`should dispatch LOGOUT_SUCCESS action after logging out`, () => {
+      const logoutSpy = spyOn(authService, 'logout').and.returnValue(Observable.of(undefined));
+      runner.queue(new auth.LogoutAction());
+      authEffects.logout$.subscribe((result: Action) => {
+        expect(logoutSpy).toHaveBeenCalled();
+        expect(result.type).toBe(auth.ActionTypes.LOGOUT_SUCCESS);
+      });
+    });
+  });
 });

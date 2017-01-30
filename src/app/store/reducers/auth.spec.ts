@@ -16,8 +16,8 @@ describe(`auth reducer`, () => {
     expect(state.user).toBe(user);
   });
 
-  it(`should reset to new clone of initialState with LOGOUT action`, () => {
-    const state = fromAuth.reducer(initialState, new auth.LogoutAction());
+  it(`should reset to new clone of initialState with LOGOUT_SUCCESS action`, () => {
+    const state = fromAuth.reducer(initialState, new auth.LogoutSuccessAction());
     expect(state).not.toBe(initialState);
     expect(state.isAuthenticated).toBe(false);
     expect(state.user).toBeNull();

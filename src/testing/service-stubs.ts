@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class AuthStubService {
   authenticateEmail() { }
   isAuthenticated() { }
+  logout() { }
 }
 
 @Injectable()
@@ -26,6 +27,7 @@ export class HttpStubService {
 export class Ng2AuthStubService {
   isAuthenticated() { }
   login() { }
+  logout() { }
 }
 
 @Injectable()

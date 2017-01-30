@@ -30,6 +30,12 @@ export class AuthEffects {
     .map((user: User) => new auth.LoginSuccessAction(user))
     .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
 
+  @Effect()
+  logout$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.LOGOUT)
+    .switchMap(() => this.authService.logout())
+    .map(() => new auth.LogoutSuccessAction());
+
   constructor(
     private actions$: Actions,
     private authService: AuthService,

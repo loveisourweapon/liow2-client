@@ -25,16 +25,6 @@ describe(`DeedService`, () => {
     ng2Auth = TestBed.get(Ng2AuthService);
   }));
 
-  describe(`#isAuthenticated`, () => {
-    it(`should pass directly through to Ng2AuthService.isAuthenticated`, () => {
-      const isAuthenticated = true;
-      const isAuthSpy = spyOn(ng2Auth, 'isAuthenticated').and.returnValue(isAuthenticated);
-      const result = service.isAuthenticated();
-      expect(isAuthSpy).toHaveBeenCalled();
-      expect(result).toBe(isAuthenticated);
-    });
-  });
-
   describe(`#authenticateEmail`, () => {
     it(`should throw if email and password not provided`, () => {
       const credentials = <Credentials>{};
@@ -55,6 +45,24 @@ describe(`DeedService`, () => {
         expect(authSpy).toHaveBeenCalledWith(credentials);
         expect(token).toBe(tokenResponse.token);
       });
+    });
+  });
+
+  describe(`#isAuthenticated`, () => {
+    it(`should pass directly through to Ng2AuthService.isAuthenticated`, () => {
+      const isAuthenticated = true;
+      const isAuthSpy = spyOn(ng2Auth, 'isAuthenticated').and.returnValue(isAuthenticated);
+      const result = service.isAuthenticated();
+      expect(isAuthSpy).toHaveBeenCalled();
+      expect(result).toBe(isAuthenticated);
+    });
+  });
+
+  describe(`#logout`, () => {
+    it(`should pass directly through to Ng2AuthService.logout`, () => {
+      const logoutSpy = spyOn(ng2Auth, 'logout').and.returnValue(Observable.of(undefined));
+      service.logout();
+      expect(logoutSpy).toHaveBeenCalled();
     });
   });
 });

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { Group, User } from '../../store/models';
+import * as auth from '../../store/actions/auth';
 import * as layout from '../../store/actions/layout';
 import * as loginModal from '../../store/actions/modal/login';
 import * as fromRoot from '../../store/reducers';
@@ -52,6 +53,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    // this.store.dispatch(new auth.LogoutAction());
+    this.store.dispatch(new auth.LogoutAction());
   }
 }

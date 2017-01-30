@@ -10,6 +10,7 @@ export class ActionTypes {
   static readonly LOGIN_SUCCESS = actionType('[Auth] Login Success');
   static readonly LOGIN_FAIL = actionType('[Auth] Login Fail');
   static readonly LOGOUT = actionType('[Auth] Logout');
+  static readonly LOGOUT_SUCCESS = actionType('[Auth] Logout Success');
 }
 
 export class LoginWithEmailAction implements Action {
@@ -52,6 +53,10 @@ export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
 }
 
+export class LogoutSuccessAction implements Action {
+  type = ActionTypes.LOGOUT_SUCCESS;
+}
+
 export type Actions
   = LoginWithEmailAction
   | LoginWithFacebookAction
@@ -59,4 +64,5 @@ export type Actions
   | LoginSuccessAction
   | LoginFailAction
   | LogoutAction
+  | LogoutSuccessAction
   ;

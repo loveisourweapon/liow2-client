@@ -18,7 +18,7 @@ export function reducer(state = initialState, action: auth.Actions): State {
         user: action.payload,
       };
 
-    case auth.ActionTypes.LOGOUT:
+    case auth.ActionTypes.LOGOUT_SUCCESS:
       return Object.assign({}, initialState);
 
     default:

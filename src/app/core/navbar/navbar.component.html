@@ -100,7 +100,7 @@
               </a>
             </li>
             <li *ngIf="isAuthenticated$ | async">
-              <a (click)="logout(); closeMenu(); $event.preventDefault()" href><!-- TODO: logout -->
+              <a (click)="logout(); closeMenu(); $event.preventDefault()" href>
                 <i class="fa fa-fw fa-sign-out"></i>
                 Logout
               </a>
