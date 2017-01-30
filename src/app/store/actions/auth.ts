@@ -25,7 +25,7 @@ export class LoginWithFacebookAction implements Action {
   type = ActionTypes.LOGIN_WITH_FACEBOOK;
 
   constructor(
-    public payload: { group: string },
+    public payload?: { group: string },
   ) { }
 }
 
