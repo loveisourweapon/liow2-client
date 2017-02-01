@@ -13,10 +13,9 @@ export class DeedEffects {
   find$: Observable<Action> = this.actions$
     .ofType(deed.ActionTypes.FIND)
     .startWith(new deed.FindAction()) // dispatch on startup
-    .switchMap((action: Action) =>
-      this.deedService.find(action.payload)
-        .map((deeds: Deed[]) => new deed.FindSuccessAction(deeds))
-        .catch(error => Observable.of(new deed.FindFailAction(error))));
+    .flatMap((action: Action) => this.deedService.find(action.payload))
+    .map((deeds: Deed[]) => new deed.FindSuccessAction(deeds))
+    .catch(error => Observable.of(new deed.FindFailAction(error)));
 
   constructor(
     private actions$: Actions,

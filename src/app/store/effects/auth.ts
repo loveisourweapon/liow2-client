@@ -12,8 +12,8 @@ export class AuthEffects {
   @Effect()
   loginEmail$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.LOGIN_WITH_EMAIL)
-    .switchMap((action: Action) => this.authService.authenticateEmail(action.payload))
-    .switchMap(() => this.userService.loadCurrent())
+    .flatMap((action: Action) => this.authService.authenticateEmail(action.payload))
+    .flatMap(() => this.userService.loadCurrent())
     .map((user: User) => new auth.LoginSuccessAction(user))
     .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
 
@@ -26,14 +26,14 @@ export class AuthEffects {
         throw new Error('Not authenticated');
       }
     })
-    .switchMap(() => this.userService.loadCurrent())
+    .flatMap(() => this.userService.loadCurrent())
     .map((user: User) => new auth.LoginSuccessAction(user))
     .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
 
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.LOGOUT)
-    .switchMap(() => this.authService.logout())
+    .flatMap(() => this.authService.logout())
     .map(() => new auth.LogoutSuccessAction());
 
   constructor(

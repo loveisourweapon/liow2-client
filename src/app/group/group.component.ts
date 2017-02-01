@@ -39,7 +39,7 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.isLoading = true;
         this.isLoaded = false;
       })
-      .switchMap((groupSlug: string) => this.groupService.findOne(new URLSearchParams(`urlName=${groupSlug}`)))
+      .flatMap((groupSlug: string) => this.groupService.findOne(new URLSearchParams(`urlName=${groupSlug}`)))
       .do(() => this.isLoaded = true)
       .subscribe((currentGroup: Group) => {
         this.store.dispatch(new group.SetCurrentAction(currentGroup));
