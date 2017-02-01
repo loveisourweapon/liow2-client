@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Deed } from '../../store/models';
+import { Counters, Deed } from '../../store/models';
 
 @Component({
   selector: 'liow-deed-list-vertical',
@@ -10,4 +10,11 @@ import { Deed } from '../../store/models';
 })
 export class DeedListVerticalComponent {
   @Input() deeds: Deed[];
+  @Input() currentDeed: Deed;
+  @Input() counters: Counters;
+
+  getDeedCount(counters: Counters, deedId: string): number|null {
+    const counter = counters[deedId];
+    return typeof counter === 'number' ? counter : null;
+  }
 }

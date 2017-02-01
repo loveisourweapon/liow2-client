@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
+export class ActStubService {
+  count() { }
+}
+
+@Injectable()
 export class AuthStubService {
   authenticateEmail() { }
   isAuthenticated() { }
@@ -9,11 +14,13 @@ export class AuthStubService {
 
 @Injectable()
 export class DeedStubService {
+  countAll() { }
   find() { }
 }
 
 @Injectable()
 export class GroupStubService {
+  count() { }
   find() { }
   findOne() { }
 }
@@ -38,5 +45,6 @@ export class StoreStubService<T> {
 
 @Injectable()
 export class UserStubService {
+  count() { }
   loadCurrent() { }
 }

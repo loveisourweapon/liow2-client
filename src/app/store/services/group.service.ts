@@ -44,4 +44,10 @@ export class GroupService {
         return groups[0];
       });
   }
+
+  count(search = new URLSearchParams()): Observable<number> {
+    search.set('count', 'true');
+    return this.http.get(this.baseUrl, { search })
+      .map((response: Response) => response.json());
+  }
 }

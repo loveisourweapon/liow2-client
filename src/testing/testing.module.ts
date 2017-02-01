@@ -27,6 +27,7 @@ import {
   RouterStubService,
 } from './router-stubs';
 import {
+  ActStubService,
   AuthStubService,
   DeedStubService,
   GroupStubService,
@@ -57,6 +58,7 @@ import {
     ActivatedRouteStubService,
     RouterStubService,
 
+    ActStubService,
     AuthStubService,
     DeedStubService,
     GroupStubService,

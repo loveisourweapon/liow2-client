@@ -8,8 +8,8 @@ import { DeedListComponent } from './deed-list.component';
 import { StoreStubService } from '../../../testing';
 
 describe(`DeedListComponent`, () => {
-  let component: DeedListComponent;
-  let fixture: ComponentFixture<DeedListComponent>;
+  let fixture: ComponentFixture<TestHostComponent>;
+  let testHost: TestHostComponent;
   let element: DebugElement;
 
   const deeds = [];
@@ -19,6 +19,7 @@ describe(`DeedListComponent`, () => {
       .configureTestingModule({
         declarations: [
           DeedListComponent,
+          TestHostComponent,
           DeedListHorizontalStubComponent,
           DeedListVerticalStubComponent,
         ],
@@ -30,8 +31,8 @@ describe(`DeedListComponent`, () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeedListComponent);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(TestHostComponent);
+    testHost = fixture.componentInstance;
     element = fixture.debugElement;
 
     spyOn(TestBed.get(Store), 'select').and.returnValue(Observable.of(deeds));
@@ -48,7 +49,7 @@ describe(`DeedListComponent`, () => {
   });
 
   it(`should show DeedListHorizontalComponent from 'horizontal' layout`, () => {
-    component.layout = 'horizontal';
+    testHost.layout = 'horizontal';
     fixture.detectChanges();
 
     const horizontalElement = element.query(By.directive(DeedListHorizontalStubComponent));
@@ -59,7 +60,7 @@ describe(`DeedListComponent`, () => {
   });
 
   it(`should show DeedListVerticalComponent from 'vertical' layout`, () => {
-    component.layout = 'vertical';
+    testHost.layout = 'vertical';
     fixture.detectChanges();
 
     const horizontalElement = element.query(By.directive(DeedListHorizontalStubComponent));
@@ -70,7 +71,7 @@ describe(`DeedListComponent`, () => {
   });
 
   it(`should pass resolved deeds property through to sub-component`, () => {
-    component.layout = 'horizontal';
+    testHost.layout = 'horizontal';
     fixture.detectChanges();
 
     const horizontalElement = element.query(By.directive(DeedListHorizontalStubComponent));
@@ -80,11 +81,19 @@ describe(`DeedListComponent`, () => {
 });
 
 @Component({
+  template: `<liow-deed-list [layout]="layout"></liow-deed-list>`,
+})
+class TestHostComponent {
+  layout: string;
+}
+
+@Component({
   selector: 'liow-deed-list-horizontal',
   template: ``,
 })
 class DeedListHorizontalStubComponent {
   @Input() deeds: any;
+  @Input() counters: any;
 }
 
 @Component({
@@ -93,4 +102,6 @@ class DeedListHorizontalStubComponent {
 })
 class DeedListVerticalStubComponent {
   @Input() deeds: any;
+  @Input() currentDeed: any;
+  @Input() counters: any;
 }

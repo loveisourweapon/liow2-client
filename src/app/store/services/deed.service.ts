@@ -28,4 +28,9 @@ export class DeedService {
           return deed;
         }));
   }
+
+  countAll(search = new URLSearchParams()): Observable<any> {
+    return this.http.get(`${this.baseUrl}/counters`, { search })
+      .map((response: Response) => response.json() || {});
+  }
 }

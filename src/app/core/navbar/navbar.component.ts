@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,12 +12,14 @@ import * as fromRoot from '../../store/reducers';
   selector: 'liow-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit {
   authUser$: Observable<User>;
   authGroup$: Observable<Group>;
   isAuthenticated$: Observable<boolean>;
   isMenuOpen$: Observable<boolean>;
+  globalCounter$: Observable<number>;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -28,6 +30,7 @@ export class NavbarComponent implements OnInit {
     this.authGroup$ = this.store.select(fromRoot.getAuthGroup);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
+    this.globalCounter$ = this.store.select(fromRoot.getGlobalCount);
   }
 
   toggleMenu(): void {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -11,9 +11,11 @@ import * as fromRoot from '../store/reducers';
 @Component({
   templateUrl: './deed.component.html',
   styleUrls: ['./deed.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeedComponent implements OnDestroy, OnInit {
   deed$: Observable<Deed>;
+  deedCounter$: Observable<number>;
   isAuthenticated$: Observable<boolean>;
   isDoing$: Observable<boolean>;
 
@@ -26,6 +28,7 @@ export class DeedComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.deed$ = this.store.select(fromRoot.getCurrentDeed);
+    this.deedCounter$ = this.store.select(fromRoot.getCurrentDeedCount);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     // this.isDoing$ = this.store.select(fromRoot.getDeedIsDoing);
 

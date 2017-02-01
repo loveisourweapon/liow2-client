@@ -17,8 +17,7 @@
       </h2>
 
       <h1 class="pull-right text-right m-b-none">
-        <!-- TODO: get counter -->
-        32,456
+        {{ deedCounter$ | async | number }}
       </h1>
     </div>
   </div>

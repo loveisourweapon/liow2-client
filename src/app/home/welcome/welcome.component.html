@@ -57,28 +57,19 @@
 
       <div class="col-sm-3">
         <h1 class="text-primary m-b-none">
-          <span>
-            <!-- TODO: show global counter -->
-            61,072
-          </span>
+          <span>{{ actsCount$ | async | number }}</span>
         </h1>
         <h4 class="m-none">acts of love</h4>
         <p class="m-t-none">done around the world</p>
 
         <h1 class="text-primary m-b-none">
-          <span>
-            <!-- TODO: show number of groups -->
-            164
-          </span>
+          <span>{{ groupsCount$ | async | number }}</span>
         </h1>
         <h4 class="m-none">groups</h4>
         <p class="m-t-none">serving together</p>
 
         <h1 class="text-primary m-b-none">
-          <span>
-            <!-- TODO: show number of users -->
-            2,830
-          </span>
+          <span>{{ usersCount$ | async | number }}</span>
         </h1>
         <h4 class="m-none">individuals</h4>
         <p class="m-t-none">causing change</p>

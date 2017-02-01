@@ -22,8 +22,7 @@
         <img src="/images/logo-navbar.png" alt="Love is our Weapon">
         <div class="navbar-brand-label">
           <span class="text-primary">
-            <!-- TODO: show global counter -->
-            61,072
+            {{ globalCounter$ | async | number }}
           </span>
           <br><small>acts of love</small>
         </div>

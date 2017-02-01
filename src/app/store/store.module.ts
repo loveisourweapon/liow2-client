@@ -3,8 +3,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreModule as NgrxStoreModule } from '@ngrx/store';
 
-import { AuthEffects, DeedEffects } from './effects';
-import { AuthService, DeedService, GroupService, UserService } from './services';
+import { AuthEffects, CounterEffects, DeedEffects, GroupEffects, UserEffects } from './effects';
+import { ActService, AuthService, DeedService, GroupService, UserService } from './services';
 import { reducer } from './reducers';
 
 @NgModule({
@@ -13,9 +13,13 @@ import { reducer } from './reducers';
     RouterStoreModule.connectRouter(),
 
     EffectsModule.run(AuthEffects),
+    EffectsModule.run(CounterEffects),
     EffectsModule.run(DeedEffects),
+    EffectsModule.run(GroupEffects),
+    EffectsModule.run(UserEffects),
   ],
   providers: [
+    ActService,
     AuthService,
     DeedService,
     GroupService,

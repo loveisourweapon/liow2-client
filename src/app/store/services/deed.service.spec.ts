@@ -50,4 +50,14 @@ describe(`DeedService`, () => {
       });
     });
   });
+
+  describe(`#countAll`, () => {
+    it(`should call /deeds/counters endpoint`, () => {
+      const response = new Response(new ResponseOptions({ body: {} }));
+      const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.countAll().subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(/\/deeds\/counters$/);
+      });
+    });
+  });
 });

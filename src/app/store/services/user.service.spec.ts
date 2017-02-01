@@ -57,4 +57,27 @@ describe(`UserService`, () => {
       });
     });
   });
+
+  describe(`#count`, () => {
+    it(`should call /users endpoint with '?count=true' query`, () => {
+      const response = new Response(new ResponseOptions({ body: '123' }));
+      const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.count().subscribe(() => {
+        const url = httpSpy.calls.mostRecent().args[0];
+        const search = httpSpy.calls.mostRecent().args[1]['search'];
+        expect(url).toMatch(/\/users$/);
+        expect(search.get('count')).toBe('true');
+      });
+    });
+
+    it(`should convert text response to number`, () => {
+      const count = '123';
+      const response = new Response(new ResponseOptions({ body: count }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.count().subscribe((result: number) => {
+        expect(typeof result).toBe('number');
+        expect(result).toBe(Number(count));
+      });
+    });
+  });
 });

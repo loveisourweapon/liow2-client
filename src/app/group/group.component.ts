@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -11,6 +11,7 @@ import * as fromRoot from '../store/reducers';
 
 @Component({
   templateUrl: './group.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnDestroy, OnInit {
   group$: Observable<Group>;

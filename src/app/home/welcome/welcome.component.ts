@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
+import * as fromRoot from '../../store/reducers';
 
 @Component({
   selector: 'liow-welcome',
@@ -6,4 +10,18 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./welcome.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WelcomeComponent { }
+export class WelcomeComponent implements OnInit {
+  actsCount$: Observable<number>;
+  groupsCount$: Observable<number>;
+  usersCount$: Observable<number>;
+
+  constructor(
+    private store: Store<fromRoot.State>,
+  ) { }
+
+  ngOnInit(): void {
+    this.actsCount$ = this.store.select(fromRoot.getGlobalCount);
+    this.groupsCount$ = this.store.select(fromRoot.getGroupsCount);
+    this.usersCount$ = this.store.select(fromRoot.getUsersCount);
+  }
+}

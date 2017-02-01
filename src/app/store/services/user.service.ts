@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, URLSearchParams } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import * as seedrandom from 'seedrandom';
@@ -34,5 +34,11 @@ export class UserService {
 
         return user;
       });
+  }
+
+  count(search = new URLSearchParams()): Observable<number> {
+    search.set('count', 'true');
+    return this.http.get(this.baseUrl, { search })
+      .map((response: Response) => response.json());
   }
 }

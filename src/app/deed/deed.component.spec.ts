@@ -17,7 +17,7 @@ import {
 // Simple store spies won't work here because this component uses multiple `store.select` calls
 // need more complicated spies or testing methods
 
-describe(`DeedComponent`, () => {
+xdescribe(`DeedComponent`, () => {
   let component: DeedComponent;
   let fixture: ComponentFixture<DeedComponent>;
   let store: Store<fromRoot.State>;
