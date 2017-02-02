@@ -25,3 +25,12 @@ export class JumbtronStubComponent {
 export class MarkedStubComponent {
   @Input() content: string;
 }
+
+@Component({
+  selector: 'ui-youtube-player',
+  template: ``,
+})
+export class YoutubePlayerStubComponent {
+  @Input() videoId: string;
+  @Input() videoUrl: string;
+}

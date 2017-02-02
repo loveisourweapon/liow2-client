@@ -11,6 +11,7 @@ import {
   JumbtronStubComponent,
   MarkedStubComponent,
   StoreStubService,
+  YoutubePlayerStubComponent,
 } from '../../testing';
 
 // TODO: Add proper tests!
@@ -30,6 +31,7 @@ xdescribe(`DeedComponent`, () => {
           DeedListStubComponent,
           JumbtronStubComponent,
           MarkedStubComponent,
+          YoutubePlayerStubComponent,
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },

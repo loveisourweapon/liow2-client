@@ -19,6 +19,7 @@ import {
   DeedListStubComponent,
   JumbtronStubComponent,
   MarkedStubComponent,
+  YoutubePlayerStubComponent,
 } from './component-stubs';
 import {
   ActivatedRouteStubService,
@@ -50,6 +51,7 @@ import {
     DeedListStubComponent,
     JumbtronStubComponent,
     MarkedStubComponent,
+    YoutubePlayerStubComponent,
 
     RouterLinkStubDirective,
     RouterOutletStubComponent,

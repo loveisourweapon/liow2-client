@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 
 import { HomeComponent } from './home.component';
-import { JumbtronStubComponent } from '../../testing';
+import { JumbtronStubComponent, YoutubePlayerStubComponent } from '../../testing';
 
 describe(`HomeComponent`, () => {
   let component: HomeComponent;
@@ -15,6 +15,7 @@ describe(`HomeComponent`, () => {
           HomeComponent,
           JumbtronStubComponent,
           WelcomeStubComponent,
+          YoutubePlayerStubComponent,
         ],
       })
       .compileComponents();

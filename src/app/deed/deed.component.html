@@ -1,9 +1,10 @@
 <liow-jumbotron [classes]="['videotron']">
   <div jumbotron-content>
     <div class="embed-responsive embed-responsive-16by9" *ngIf="(deed$ | async)?.videoUrl">
-      <p>VIDEO URL: {{ (deed$ | async)?.videoUrl }}</p>
-      <!--<youtube-video video-url="::$ctrl.deed.videoUrl"
-                     class="embed-responsive-item"></youtube-video>-->
+      <ui-youtube-player
+        [videoUrl]="(deed$ | async)?.videoUrl"
+        class="embed-responsive-item"
+      ></ui-youtube-player>
     </div>
 
     <div class="deed-header">
