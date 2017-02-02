@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 
 import { environment } from '../../../environments/environment';
 
-import { Deed } from '../models';
+import { Counters, Deed, User } from '../models';
 import * as fromRouter from '@ngrx/router-store';
 import * as fromAuth from './auth';
 import * as fromCounter from './counter';
@@ -13,6 +13,7 @@ import * as fromDeed from './deed';
 import * as fromGroup from './group';
 import * as fromLayout from './layout';
 import * as fromLoginModal from './modal/login';
+import * as fromUser from './user';
 
 export interface State {
   auth: fromAuth.State;
@@ -22,6 +23,7 @@ export interface State {
   layout: fromLayout.State;
   modalLogin: fromLoginModal.State;
   router: fromRouter.RouterState;
+  user: fromUser.State;
 }
 
 const reducers = {
@@ -32,6 +34,7 @@ const reducers = {
   layout: fromLayout.reducer,
   modalLogin: fromLoginModal.reducer,
   router: fromRouter.routerReducer,
+  user: fromUser.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -93,10 +96,22 @@ export function getLoginModal(state: State) { return state.modalLogin; }
 
 
 /**
+ * User state selectors
+ */
+export function getUserState(state: State) { return state.user; }
+export const getCurrentUser = createSelector(getUserState, fromUser.getCurrent);
+
+
+/**
  * Combined selectors
  */
 export const getCurrentDeedCount = createSelector(
   getCountersState,
   getCurrentDeed,
-  (counters: { [key: string]: number }, deed: Deed) => deed && counters[deed._id],
+  (counters: Counters, deed: Deed) => deed && counters[deed._id],
+);
+export const getCurrentUserCount = createSelector(
+  getCountersState,
+  getCurrentUser,
+  (counters: Counters, user: User) => user && counters[user._id],
 );

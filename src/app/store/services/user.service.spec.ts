@@ -31,19 +31,21 @@ describe(`UserService`, () => {
     http = TestBed.get(JwtHttp);
   }));
 
-  describe(`#loadCurrent`, () => {
-    it(`should call /users/me endpoint`, () => {
+  describe(`#get`, () => {
+    const userId = 'abc123';
+
+    it(`should call /users/:userId endpoint`, () => {
       const response = new Response(new ResponseOptions({ body: testUser }));
       const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.loadCurrent().subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(/\/users\/me$/);
+      service.get(userId).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`\/users\/${userId}`));
       });
     });
 
     it(`should convert User date strings to Date objects`, () => {
       const response = new Response(new ResponseOptions({ body: testUser }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.loadCurrent().subscribe((user: User) => {
+      service.get(userId).subscribe((user: User) => {
         expect(user.created instanceof Date).toBe(true);
         expect(user.modified instanceof Date).toBe(true);
       });
@@ -52,8 +54,26 @@ describe(`UserService`, () => {
     it(`should set the picture property if not set`, () => {
       const response = new Response(new ResponseOptions({ body: testUser }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.loadCurrent().subscribe((user: User) => {
-        expect(user.picture).toMatch(/^\/images\/user(\d|1[01]).png/);
+      service.get(userId).subscribe((user: User) => {
+        expect(user.picture).toMatch(/^\/images\/user(\d|1[01]).png$/);
+      });
+    });
+
+    it(`should generate a User coverImage`, () => {
+      const response = new Response(new ResponseOptions({ body: testUser }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.get(userId).subscribe((user: User) => {
+        expect(user.coverImage).toMatch(/^\/images\/header[0-5].jpg$/);
+      });
+    });
+  });
+
+  describe(`#getCurrent`, () => {
+    it(`should call /users/me endpoint`, () => {
+      const response = new Response(new ResponseOptions({ body: testUser }));
+      const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.getCurrent().subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(/\/users\/me$/);
       });
     });
   });

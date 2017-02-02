@@ -43,7 +43,7 @@ describe(`AuthEffects`, () => {
 
     it(`should get the authenticated user then dispatch LOGIN_SUCCESS action on successful authentication`, () => {
       const authSpy = spyOn(authService, 'authenticateEmail').and.returnValue(Observable.of({}));
-      const userSpy = spyOn(userService, 'loadCurrent').and.returnValue(Observable.of({}));
+      const userSpy = spyOn(userService, 'getCurrent').and.returnValue(Observable.of({}));
       runner.queue(new auth.LoginWithEmailAction(credentials));
       authEffects.loginEmail$.subscribe((result: Action) => {
         expect(authSpy).toHaveBeenCalled();
@@ -66,7 +66,7 @@ describe(`AuthEffects`, () => {
   describe(`loginFacebook$`, () => {
     it(`should get the authenticated user then dispatch LOGIN_SUCCESS action on facebook authentication`, () => {
       const authSpy = spyOn(authService, 'authenticateFacebook').and.returnValue(Observable.of({}));
-      const userSpy = spyOn(userService, 'loadCurrent').and.returnValue(Observable.of({}));
+      const userSpy = spyOn(userService, 'getCurrent').and.returnValue(Observable.of({}));
       runner.queue(new auth.LoginWithFacebookAction());
       authEffects.loginFacebook$.subscribe((result: Action) => {
         expect(authSpy).toHaveBeenCalled();
@@ -89,7 +89,7 @@ describe(`AuthEffects`, () => {
   describe(`loginToken$`, () => {
     it(`should get the authenticated user then dispatch LOGIN_SUCCESS action for existing valid token`, () => {
       const authSpy = spyOn(authService, 'isAuthenticated').and.returnValue(true);
-      const userSpy = spyOn(userService, 'loadCurrent').and.returnValue(Observable.of({}));
+      const userSpy = spyOn(userService, 'getCurrent').and.returnValue(Observable.of({}));
       runner.queue(new auth.LoginWithTokenAction());
       authEffects.loginToken$.subscribe((result: Action) => {
         expect(authSpy).toHaveBeenCalled();

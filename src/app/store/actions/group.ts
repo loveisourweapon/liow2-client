@@ -34,7 +34,7 @@ export class SetCurrentAction implements Action {
   type = ActionTypes.SET_CURRENT;
 
   constructor(
-    public payload?: Group,
+    public payload: Group,
   ) { }
 }
 

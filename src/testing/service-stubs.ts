@@ -47,6 +47,7 @@ export class StoreStubService<T> {
 
 @Injectable()
 export class UserStubService {
+  get() { }
+  getCurrent() { }
   count() { }
-  loadCurrent() { }
 }

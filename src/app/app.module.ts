@@ -7,6 +7,7 @@ import { ModalModule } from './modal';
 import { HomeModule } from './home';
 import { DeedModule } from './deed';
 import { GroupModule } from './group';
+import { UserModule } from './user';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { AppComponent } from './app.component';
     HomeModule,
     DeedModule,
     GroupModule,
+    UserModule,
     AppRoutingModule,
   ],
   declarations: [

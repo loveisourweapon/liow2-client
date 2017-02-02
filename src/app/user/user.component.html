@@ -1,0 +1,32 @@
+<liow-jumbotron
+  [image]="(user$ | async)?.picture"
+  [background]="(user$ | async)?.coverImage"
+  [classes]="['jumbotron-small']"
+>
+  <div jumbotron-title>{{ (user$ | async)?.name }}</div>
+  <div jumbotron-text>
+    <span class="f-lg">{{ userCounter$ | async | number }}</span>
+    acts of love
+  </div>
+</liow-jumbotron>
+
+<div class="container container-pad">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="m-t-none m-b-md">
+        <i class="fa fa-fw fa-list"></i>
+        Activity Feed
+      </h3>
+
+      <!-- TODO: add feed -->
+      <p *ngIf="isAuthenticated$ | async">Feed goes here...</p>
+      <!--<feed criteria="{ user: $ctrl.user._id }"
+            ng-if="$ctrl.User.isAuthenticated()"></feed>-->
+
+      <p *ngIf="!(isAuthenticated$ | async)">
+        You must <a (click)="openLogin(); $event.preventDefault()" href>login</a>
+        to see {{ (user$ | async)?.firstName }}'s Activity Feed.
+      </p>
+    </div>
+  </div>
+</div>

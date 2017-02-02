@@ -54,7 +54,7 @@ describe(`GroupService`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
       service.find().subscribe((groups: Group[]) => {
-        expect(groups[0].coverImage).toMatch(/\/images\/header[0-5].jpg/);
+        expect(groups[0].coverImage).toMatch(/^\/images\/header[0-5].jpg$/);
       });
     });
   });
