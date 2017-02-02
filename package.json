@@ -22,8 +22,9 @@
     "build:dev": "ng build --dev",
     "build:prod": "ng build --prod --aot",
     "build": "npm run build:prod",
-    "prebuild": "npm run lint && npm run test -- --single-run",
-    "lint": "tslint \"src/**/*.ts\" --exclude \"src/testing/**\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
+    "prebuild": "npm run tslint && npm run test -- --single-run",
+    "lint": "ng lint",
+    "tslint": "tslint \"src/**/*.ts\" --exclude \"src/testing/**\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor"
@@ -57,13 +58,13 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
+    "@angular/cli": "1.0.0-beta.29",
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
-    "@types/lodash": "^4.14.50",
+    "@types/lodash": "4.14.50",
     "@types/marked": "^0.0.28",
     "@types/node": "^6.0.42",
     "@types/seedrandom": "^2.4.27",
-    "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
