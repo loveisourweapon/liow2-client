@@ -18,6 +18,14 @@ export class AuthEffects {
     .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
 
   @Effect()
+  loginFacebook$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.LOGIN_WITH_FACEBOOK)
+    .flatMap((action: Action) => this.authService.authenticateFacebook(action.payload))
+    .flatMap(() => this.userService.loadCurrent())
+    .map((user: User) => new auth.LoginSuccessAction(user))
+    .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
+
+  @Effect()
   loginToken$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.LOGIN_WITH_TOKEN)
     .startWith(new auth.LoginWithTokenAction()) // dispatch on startup

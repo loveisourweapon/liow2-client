@@ -8,7 +8,7 @@ import * as user from '../actions/user';
 import { UserService } from '../services';
 import { UserStubService } from '../../../testing';
 
-describe(`DeedEffects`, () => {
+describe(`UserEffects`, () => {
   let runner: EffectsRunner;
   let userEffects: UserEffects;
   let userService: UserService;

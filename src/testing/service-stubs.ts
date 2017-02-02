@@ -8,6 +8,7 @@ export class ActStubService {
 @Injectable()
 export class AuthStubService {
   authenticateEmail() { }
+  authenticateFacebook() { }
   isAuthenticated() { }
   logout() { }
 }
@@ -32,6 +33,7 @@ export class HttpStubService {
 
 @Injectable()
 export class Ng2AuthStubService {
+  authenticate() { }
   isAuthenticated() { }
   login() { }
   logout() { }

@@ -63,6 +63,29 @@ describe(`AuthEffects`, () => {
     });
   });
 
+  describe(`loginFacebook$`, () => {
+    it(`should get the authenticated user then dispatch LOGIN_SUCCESS action on facebook authentication`, () => {
+      const authSpy = spyOn(authService, 'authenticateFacebook').and.returnValue(Observable.of({}));
+      const userSpy = spyOn(userService, 'loadCurrent').and.returnValue(Observable.of({}));
+      runner.queue(new auth.LoginWithFacebookAction());
+      authEffects.loginFacebook$.subscribe((result: Action) => {
+        expect(authSpy).toHaveBeenCalled();
+        expect(userSpy).toHaveBeenCalled();
+        expect(result.type).toBe(auth.ActionTypes.LOGIN_SUCCESS);
+      });
+    });
+
+    it(`should dispatch LOGIN_FAIL action on unsuccessful facebook authentication`, () => {
+      const errorMessage = 'Test error';
+      spyOn(authService, 'authenticateFacebook').and.returnValue(Observable.throw(new Error(errorMessage)));
+      runner.queue(new auth.LoginWithFacebookAction());
+      authEffects.loginEmail$.subscribe((result: Action) => {
+        expect(result.type).toBe(auth.ActionTypes.LOGIN_FAIL);
+        expect(result.payload).toBe(errorMessage);
+      });
+    });
+  });
+
   describe(`loginToken$`, () => {
     it(`should get the authenticated user then dispatch LOGIN_SUCCESS action for existing valid token`, () => {
       const authSpy = spyOn(authService, 'isAuthenticated').and.returnValue(true);

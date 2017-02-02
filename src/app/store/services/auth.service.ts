@@ -21,6 +21,12 @@ export class AuthService {
       .map((tokenReponse: { token: string }) => tokenReponse.token);
   }
 
+  authenticateFacebook(userData?: { group: string }): Observable<string> {
+    return this.auth.authenticate('facebook', userData)
+      .map((response: Response) => response.json() || {})
+      .map((tokenReponse: { token: string }) => tokenReponse.token);
+  }
+
   isAuthenticated(): boolean {
     return this.auth.isAuthenticated();
   }

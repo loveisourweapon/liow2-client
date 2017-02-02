@@ -8,7 +8,7 @@ import * as group from '../actions/group';
 import { GroupService } from '../services';
 import { GroupStubService } from '../../../testing';
 
-describe(`DeedEffects`, () => {
+describe(`GroupEffects`, () => {
   let runner: EffectsRunner;
   let groupEffects: GroupEffects;
   let groupService: GroupService;

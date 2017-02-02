@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 import { Credentials } from '../models';
 import { Ng2AuthStubService } from '../../../testing';
 
-describe(`DeedService`, () => {
+describe(`AuthService`, () => {
   let service: AuthService;
   let ng2Auth: Ng2AuthService;
 
@@ -43,6 +43,18 @@ describe(`DeedService`, () => {
       const authSpy = spyOn(ng2Auth, 'login').and.returnValue(Observable.of(response));
       service.authenticateEmail(credentials).subscribe((token: string) => {
         expect(authSpy).toHaveBeenCalledWith(credentials);
+        expect(token).toBe(tokenResponse.token);
+      });
+    });
+  });
+
+  describe(`#authenticateFacebook`, () => {
+    it(`should call Ng2AuthService.authenticate with 'facebook' param`, () => {
+      const tokenResponse = { token: 'abc123' };
+      const response = new Response(new ResponseOptions({ body: tokenResponse }));
+      const authSpy = spyOn(ng2Auth, 'authenticate').and.returnValue(Observable.of(response));
+      service.authenticateFacebook().subscribe((token: string) => {
+        expect(authSpy.calls.mostRecent().args[0]).toBe('facebook');
         expect(token).toBe(tokenResponse.token);
       });
     });
