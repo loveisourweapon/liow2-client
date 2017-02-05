@@ -10,6 +10,7 @@ import * as fromRouter from '@ngrx/router-store';
 import * as fromAuth from './auth';
 import * as fromCounter from './counter';
 import * as fromDeed from './deed';
+import * as fromFeed from './feed';
 import * as fromGroup from './group';
 import * as fromLayout from './layout';
 import * as fromLoginModal from './modal/login';
@@ -19,6 +20,7 @@ export interface State {
   auth: fromAuth.State;
   counters: fromCounter.State;
   deed: fromDeed.State;
+  feed: fromFeed.State;
   group: fromGroup.State;
   layout: fromLayout.State;
   modalLogin: fromLoginModal.State;
@@ -30,6 +32,7 @@ const reducers = {
   auth: fromAuth.reducer,
   counters: fromCounter.reducer,
   deed: fromDeed.reducer,
+  feed: fromFeed.reducer,
   group: fromGroup.reducer,
   layout: fromLayout.reducer,
   modalLogin: fromLoginModal.reducer,
@@ -73,6 +76,14 @@ export const getDeedIsLoading = createSelector(getDeedState, fromDeed.getIsLoadi
 export const getDeedIsLoaded = createSelector(getDeedState, fromDeed.getIsLoaded);
 export const getDeeds = createSelector(getDeedState, fromDeed.getDeeds);
 export const getCurrentDeed = createSelector(getDeedState, fromDeed.getCurrent);
+
+
+/**
+ * Feed state selectors
+ */
+export function getFeedState(state: State) { return state.feed; }
+export const getFeedItems = createSelector(getFeedState, fromFeed.getFeedItems);
+export const getFeedIsLoading = createSelector(getFeedState, fromFeed.getIsLoading);
 
 
 /**

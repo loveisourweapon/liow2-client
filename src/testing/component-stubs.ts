@@ -9,6 +9,14 @@ export class DeedListStubComponent {
 }
 
 @Component({
+  selector: 'liow-feed',
+  template: ``,
+})
+export class FeedStubComponent {
+  @Input() criteria: any;
+}
+
+@Component({
   selector: 'liow-jumbotron',
   template: ``,
 })

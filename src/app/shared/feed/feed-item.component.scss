@@ -1,0 +1,44 @@
+@import "../../../styles/variables";
+
+.feed-item {
+  position: relative;
+  background: white;
+  border-radius: $border-radius-large;
+  border: 1px solid $gray-lighter;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  &.feed-item-narrow {
+    width: 80px;
+    margin-left: calc(50% - 40px);
+  }
+}
+
+.feed-item-type {
+  position: absolute;
+  right: -7px;
+  top: -7px;
+}
+
+.feed-item-image {
+  float: left;
+  width: 55px;
+
+  img {
+    width: 40px;
+    border: 1px solid;
+  }
+}
+
+.feed-item-content {
+  float: right;
+  width: calc(100% - 80px);
+  margin-right: 25px;
+}
+
+.feed-item-comment {
+  background: $gray-lighter;
+  padding: 3px 6px;
+  border-radius: $border-radius-small;
+  margin: 0 0 10px;
+}

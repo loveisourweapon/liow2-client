@@ -1,0 +1,30 @@
+<div class="feed-refresh-button">
+  <button
+    type="button"
+    (click)="loadNewerItems()"
+    [disabled]="isLoading$ | async"
+    class="btn btn-link"
+  >
+    <i class="fa fa-refresh fa-lg" [class.fa-spin]="isLoading$ | async"></i>
+  </button>
+</div>
+
+<div class="feed-wrapper">
+  <liow-feed-item
+    *ngFor="let feedItem of (feedItems$ | async); trackBy: item?._id"
+    [item]="feedItem"
+    [authUser]="authUser$ | async"
+  ></liow-feed-item>
+  <!-- TODO: add infinite scrolling -->
+
+  <div
+    class="feed-item feed-item-narrow text-center"
+    [hidden]="!(isLoading$ | async)"
+  >
+    <i class="fa fa-ellipsis-h fa-2x"></i>
+  </div>
+
+  <div class="feed-item" *ngIf="(feedItems$ | async)?.length === 0">
+    No feed items to show.
+  </div>
+</div>

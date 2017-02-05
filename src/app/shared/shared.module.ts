@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
+import { FeedComponent, FeedItemComponent } from './feed';
 import { JumbotronComponent } from './jumbotron';
 import { MarkedComponent } from './marked.component';
 import { YoutubePlayerComponent } from './youtube-player.component';
@@ -18,6 +19,8 @@ import { YoutubePlayerComponent } from './youtube-player.component';
     DeedListComponent,
     DeedListHorizontalComponent,
     DeedListVerticalComponent,
+    FeedComponent,
+    FeedItemComponent,
     JumbotronComponent,
     MarkedComponent,
     YoutubePlayerComponent,
@@ -29,6 +32,7 @@ import { YoutubePlayerComponent } from './youtube-player.component';
     RouterModule,
 
     DeedListComponent,
+    FeedComponent,
     JumbotronComponent,
     MarkedComponent,
     YoutubePlayerComponent,

@@ -1,0 +1,65 @@
+<div class="feed-item clearfix">
+  <div class="feed-item-type">
+    <span class="fa-stack fa-lg">
+      <i class="fa fa-circle fa-stack-2x text-muted"></i>
+      <i
+        class="fa fa-stack-1x fa-inverse"
+        [ngClass]="{
+          'fa-heart': item.act,
+          'fa-quote-right': item.comment && item.target.deed,
+          'fa-bullhorn': item.comment && item.target.group
+        }"
+      ></i>
+    </span>
+  </div>
+
+  <div class="feed-item-image">
+    <img [src]="item.user.picture" class="img-circle">
+  </div>
+
+  <div class="feed-item-content">
+    <h6 class="m-t-none">
+      <a
+        [routerLink]="['/u', item.user._id]"
+        *ngIf="isLoggedInUser(item.user) || isMemberOfGroup(item.group)"
+      >
+        {{ item.user.firstName }}
+      </a>
+      <span *ngIf="!(isLoggedInUser(item.user) || isMemberOfGroup(item.group))">
+        Someone
+      </span>
+
+      <span *ngIf="item.group && !item.target.group">
+        from
+        <a [routerLink]="['/g', item.group.urlName]">{{ item.group.name }}</a>
+      </span>
+
+      <span *ngIf="item.act">did the act of love</span>
+      <span *ngIf="item.comment && item.target.deed">left a testimony on</span>
+      <span *ngIf="item.comment && item.target.group">wrote a message to</span>
+
+      <a [routerLink]="['/d', item.target.deed.urlTitle]" *ngIf="item.target.deed">
+        {{ item.target.deed.title }}
+      </a>
+
+      <a [routerLink]="['/g', item.target.group.urlName]" *ngIf="item.target.group">
+        {{ item.target.group.name }}
+      </a>
+    </h6>
+
+    <ui-marked
+      [content]="item.comment?.content.text"
+      class="feed-item-comment"
+      *ngIf="item.comment?.content.text"
+    ></ui-marked>
+
+    <p class="small m-b-none">
+      <!--{{ item.created | fromNow }}-->
+      &middot;
+      <span class="text-muted">
+        {{ item.created | date:'medium' }}
+        <!--{{ item.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}-->
+      </span>
+    </p>
+  </div>
+</div>

@@ -20,6 +20,11 @@ export class DeedStubService {
 }
 
 @Injectable()
+export class FeedStubService {
+  load() { }
+}
+
+@Injectable()
 export class GroupStubService {
   count() { }
   find() { }

@@ -3,8 +3,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreModule as NgrxStoreModule } from '@ngrx/store';
 
-import { AuthEffects, CounterEffects, DeedEffects, GroupEffects, UserEffects } from './effects';
-import { ActService, AuthService, DeedService, GroupService, UserService } from './services';
+import { AuthEffects, CounterEffects, DeedEffects, FeedEffects, GroupEffects, UserEffects } from './effects';
+import { ActService, AuthService, DeedService, FeedService, GroupService, UserService } from './services';
 import { reducer } from './reducers';
 
 @NgModule({
@@ -17,11 +17,13 @@ import { reducer } from './reducers';
     EffectsModule.run(DeedEffects),
     EffectsModule.run(GroupEffects),
     EffectsModule.run(UserEffects),
+    EffectsModule.run(FeedEffects), // ordering appears to be important here
   ],
   providers: [
     ActService,
     AuthService,
     DeedService,
+    FeedService,
     GroupService,
     UserService,
   ],

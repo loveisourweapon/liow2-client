@@ -17,6 +17,7 @@ import {
 } from './bootstrap-stubs';
 import {
   DeedListStubComponent,
+  FeedStubComponent,
   JumbtronStubComponent,
   MarkedStubComponent,
   YoutubePlayerStubComponent,
@@ -31,6 +32,7 @@ import {
   ActStubService,
   AuthStubService,
   DeedStubService,
+  FeedStubService,
   GroupStubService,
   HttpStubService,
   Ng2AuthStubService,
@@ -49,6 +51,7 @@ import {
     TabStubComponent,
 
     DeedListStubComponent,
+    FeedStubComponent,
     JumbtronStubComponent,
     MarkedStubComponent,
     YoutubePlayerStubComponent,
@@ -63,6 +66,7 @@ import {
     ActStubService,
     AuthStubService,
     DeedStubService,
+    FeedStubService,
     GroupStubService,
     HttpStubService,
     Ng2AuthStubService,
