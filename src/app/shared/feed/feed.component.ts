@@ -41,6 +41,8 @@ export class FeedComponent implements OnChanges, OnInit {
       .take(1)
       .map((feedItems: FeedItem[]) => feedItems[0])
       .subscribe((newestFeedItem: FeedItem) => {
+        if (!newestFeedItem) { return; }
+
         const newerCriteria = Object.assign({}, this.criteria, {
           after: newestFeedItem._id,
         });
@@ -54,6 +56,8 @@ export class FeedComponent implements OnChanges, OnInit {
       .take(1)
       .map((feedItems: FeedItem[]) => feedItems[feedItems.length - 1])
       .subscribe((oldestFeedItem: FeedItem) => {
+        if (!oldestFeedItem) { return; }
+
         const olderCriteria = Object.assign({}, this.criteria, {
           before: oldestFeedItem._id,
         });

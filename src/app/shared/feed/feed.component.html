@@ -9,13 +9,16 @@
   </button>
 </div>
 
-<div class="feed-wrapper">
+<div
+  class="feed-wrapper"
+  infinite-scroll
+  (scrolled)="loadOlderItems()"
+>
   <liow-feed-item
-    *ngFor="let feedItem of (feedItems$ | async); trackBy: item?._id"
+    *ngFor="let feedItem of (feedItems$ | async); trackBy: item?._id; let isLastItem = first"
     [item]="feedItem"
     [authUser]="authUser$ | async"
   ></liow-feed-item>
-  <!-- TODO: add infinite scrolling -->
 
   <div
     class="feed-item feed-item-narrow text-center"
