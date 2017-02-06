@@ -54,11 +54,10 @@
     ></ui-marked>
 
     <p class="small m-b-none">
-      <!--{{ item.created | fromNow }}-->
+      {{ item.created | fromNow }}
       &middot;
       <span class="text-muted">
-        {{ item.created | date:'medium' }}
-        <!--{{ item.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}-->
+        {{ item.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}
       </span>
     </p>
   </div>

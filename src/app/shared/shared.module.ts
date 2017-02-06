@@ -10,6 +10,8 @@ import { FeedComponent, FeedItemComponent } from './feed';
 import { JumbotronComponent } from './jumbotron';
 import { MarkedComponent } from './marked.component';
 import { YoutubePlayerComponent } from './youtube-player.component';
+import { FromNowPipe } from './from-now.pipe';
+import { MomentPipe } from './moment.pipe';
 
 @NgModule({
   imports: [
@@ -26,6 +28,9 @@ import { YoutubePlayerComponent } from './youtube-player.component';
     JumbotronComponent,
     MarkedComponent,
     YoutubePlayerComponent,
+
+    FromNowPipe,
+    MomentPipe,
   ],
   exports: [
     CommonModule,
@@ -38,6 +43,9 @@ import { YoutubePlayerComponent } from './youtube-player.component';
     JumbotronComponent,
     MarkedComponent,
     YoutubePlayerComponent,
+
+    FromNowPipe,
+    MomentPipe,
   ],
 })
 export class SharedModule { }

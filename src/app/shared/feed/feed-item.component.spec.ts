@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { FeedItemComponent } from './feed-item.component';
 import { FeedItem, User } from '../../store/models';
+import { FromNowPipe, MomentPipe } from '../../shared';
 import { MarkedStubComponent, RouterLinkStubDirective } from '../../../testing';
 
 describe(`FeedItemComponent`, () => {
@@ -26,6 +27,8 @@ describe(`FeedItemComponent`, () => {
         declarations: [
           FeedItemComponent,
           TestHostComponent,
+          FromNowPipe,
+          MomentPipe,
           MarkedStubComponent,
           RouterLinkStubDirective,
         ],
