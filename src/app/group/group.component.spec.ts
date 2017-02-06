@@ -6,6 +6,7 @@ import { GroupComponent } from './group.component';
 import { GroupService } from '../store/services';
 import {
   ActivatedRouteStubService,
+  FeedStubComponent,
   GroupStubService,
   JumbtronStubComponent,
   MarkedStubComponent,
@@ -27,6 +28,7 @@ describe(`GroupComponent`, () => {
       .configureTestingModule({
         declarations: [
           GroupComponent,
+          FeedStubComponent,
           JumbtronStubComponent,
           MarkedStubComponent,
           TabsetStubComponent,

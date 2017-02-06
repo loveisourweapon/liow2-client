@@ -1,0 +1,19 @@
+.group-list {
+  $img-width: 40px;
+  $img-spacer: 15px;
+
+  .group-list-img {
+    float: left;
+    width: $img-width + $img-spacer;
+
+    > img {
+      width: $img-width;
+      border: 1px solid;
+    }
+  }
+
+  .group-list-content {
+    float: right;
+    width: calc(100% - 55px);
+  }
+}

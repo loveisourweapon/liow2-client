@@ -5,7 +5,7 @@ import * as fromFeed from './feed';
 describe(`feed reducer`, () => {
   const initialState: fromFeed.State = {
     isLoading: false,
-    feedItems: null,
+    feedItems: [],
   };
 
   let feedItem;
@@ -21,7 +21,7 @@ describe(`feed reducer`, () => {
     const state = fromFeed.reducer(initialState, new feed.LoadAction(criteria));
     expect(state).not.toBe(initialState);
     expect(state.isLoading).toBe(true);
-    expect(state.feedItems).toBeNull();
+    expect(state.feedItems).toEqual(initialState.feedItems);
   });
 
   it(`should leave feedItems with LOAD action and 'before' or 'after' criteria`, () => {

@@ -10,7 +10,7 @@ export interface State {
 
 const initialState: State = {
   isLoading: false,
-  feedItems: null,
+  feedItems: [],
 };
 
 export function reducer(state = initialState, action: feed.Actions): State {
@@ -18,7 +18,7 @@ export function reducer(state = initialState, action: feed.Actions): State {
     case feed.ActionTypes.LOAD:
       const isInitialLoad = !(has(action.payload, 'after') || has(action.payload, 'before'));
       return {
-        feedItems: isInitialLoad ? null : state.feedItems,
+        feedItems: isInitialLoad ? [] : state.feedItems,
         isLoading: true,
       };
 

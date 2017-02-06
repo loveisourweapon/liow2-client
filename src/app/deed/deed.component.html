@@ -61,7 +61,7 @@
                     placeholder="Leave a testimony..."
                     ng-if="$ctrl.User.isAuthenticated()"></comment-form>-->
 
-      <!--<feed criteria="{ 'target.deed': $ctrl.deed._id }"></feed>-->
+      <liow-feed [criteria]="{ 'target.deed': (deed$ | async)?._id }"></liow-feed>
     </div>
   </div>
 </div>

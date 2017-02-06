@@ -24,6 +24,10 @@
   </div>
 </liow-jumbotron>
 
-<liow-welcome></liow-welcome>
+<liow-welcome *ngIf="!(isAuthenticated$ | async)"></liow-welcome>
 
-<!--<liow-home-feed></liow-home-feed>-->
+<liow-home-feed
+  [authUser]="authUser$ | async"
+  [counters]="counters$ | async"
+  *ngIf="isAuthenticated$ | async"
+></liow-home-feed>

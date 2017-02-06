@@ -62,8 +62,10 @@
             Activity Feed
           </template>
 
-          <!--<feed criteria="{ group: $ctrl.group._id }"
-                ng-if="$ctrl.User.isAuthenticated()"></feed>-->
+          <liow-feed
+            [criteria]="{ group: (group$ | async)?._id }"
+            *ngIf="(isAuthenticated$ | async)"
+          ></liow-feed>
 
           <p *ngIf="!(isAuthenticated$ | async)">
             You must <a (click)="$event.preventDefault()" href>login</a>

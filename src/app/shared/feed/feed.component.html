@@ -27,7 +27,7 @@
     <i class="fa fa-ellipsis-h fa-2x"></i>
   </div>
 
-  <div class="feed-item" *ngIf="(feedItems$ | async)?.length === 0">
+  <div class="feed-item" *ngIf="!(isLoading$ | async) && (feedItems$ | async)?.length === 0">
     No feed items to show.
   </div>
 </div>
