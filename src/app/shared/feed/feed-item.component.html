@@ -47,11 +47,9 @@
       </a>
     </h6>
 
-    <ui-marked
-      [content]="item.comment?.content.text"
-      class="feed-item-comment"
-      *ngIf="item.comment?.content.text"
-    ></ui-marked>
+    <div class="feed-item-comment" *ngIf="item.comment?.content.text">
+      <ui-marked [content]="item.comment?.content.text"></ui-marked>
+    </div>
 
     <p class="small m-b-none">
       {{ item.created | fromNow }}
