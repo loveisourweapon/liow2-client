@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import * as loginModal from '../../store/actions/modal/login';
 import * as fromRoot from '../../store/reducers';
 
 @Component({
@@ -23,5 +24,9 @@ export class WelcomeComponent implements OnInit {
     this.actsCount$ = this.store.select(fromRoot.getGlobalCount);
     this.groupsCount$ = this.store.select(fromRoot.getGroupsCount);
     this.usersCount$ = this.store.select(fromRoot.getUsersCount);
+  }
+
+  openLoginModal(): void {
+    this.store.dispatch(new loginModal.OpenAction());
   }
 }

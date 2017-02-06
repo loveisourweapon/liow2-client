@@ -5,8 +5,7 @@
   <div jumbotron-title>{{ (group$ | async)?.name }}</div>
   <div jumbotron-text>
     <span class="f-lg">
-      <!-- TODO: get counter -->
-      34,765
+      {{ groupCounter$ | async | number }}
     </span>
     acts of love
   </div>
@@ -68,7 +67,7 @@
           ></liow-feed>
 
           <p *ngIf="!(isAuthenticated$ | async)">
-            You must <a (click)="$event.preventDefault()" href>login</a>
+            You must <a (click)="openLoginModal(); $event.preventDefault()" href>login</a>
             to see {{ (group$ | async)?.name }}'s Activity Feed.
           </p>
         </tab>

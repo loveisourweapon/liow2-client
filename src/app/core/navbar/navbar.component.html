@@ -58,19 +58,21 @@
         <li>
           <a
             routerLink="/global"
-            (click)="closeMenu()"
             title="Global Activity Feed"
+            (click)="closeMenu()"
           >
             Global
           </a>
         </li>
-        <!--<li ng-if="$ctrl.User.isAuthenticated() && $ctrl.User.group">
-          <a ng-href="/g/{{ $ctrl.User.group.urlName }}"
-             ng-click="$ctrl.collapseMenu()"
-             title="{{ $ctrl.User.group.name }}">
+        <li *ngIf="(isAuthenticated$ | async) && (authGroup$ | async)">
+          <a
+            [routerLink]="['/g', (authGroup$ | async)?.urlName]"
+            [title]="(authGroup$ | async)?.name"
+            (click)="closeMenu()"
+          >
             Campaign
           </a>
-        </li>-->
+        </li>
         <li dropdown>
           <a
             class="user-dropdown"

@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 
 import { environment } from '../../../environments/environment';
 
-import { Counters, Deed, User } from '../models';
+import { Counters, Deed, Group, User } from '../models';
 import * as fromRouter from '@ngrx/router-store';
 import * as fromAuth from './auth';
 import * as fromCounter from './counter';
@@ -120,6 +120,11 @@ export const getCurrentDeedCount = createSelector(
   getCountersState,
   getCurrentDeed,
   (counters: Counters, deed: Deed) => deed && counters[deed._id],
+);
+export const getCurrentGroupCount = createSelector(
+  getCountersState,
+  getCurrentGroup,
+  (counters: Counters, group: Group) => group && counters[group._id],
 );
 export const getCurrentUserCount = createSelector(
   getCountersState,

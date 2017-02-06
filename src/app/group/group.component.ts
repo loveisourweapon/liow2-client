@@ -6,7 +6,9 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Group, GroupService } from '../store';
+import * as act from '../store/actions/act';
 import * as group from '../store/actions/group';
+import * as loginModal from '../store/actions/modal/login';
 import * as fromRoot from '../store/reducers';
 
 @Component({
@@ -15,6 +17,7 @@ import * as fromRoot from '../store/reducers';
 })
 export class GroupComponent implements OnDestroy, OnInit {
   group$: Observable<Group>;
+  groupCounter$: Observable<number>;
   isAuthenticated$: Observable<boolean>;
 
   // TODO: do something useful with these
@@ -32,6 +35,7 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.group$ = this.store.select(fromRoot.getCurrentGroup);
+    this.groupCounter$ = this.store.select(fromRoot.getCurrentGroupCount);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
 
     this.subscription = this.route.params
@@ -44,11 +48,16 @@ export class GroupComponent implements OnDestroy, OnInit {
       .do(() => this.isLoaded = true)
       .subscribe((currentGroup: Group) => {
         this.store.dispatch(new group.SetCurrentAction(currentGroup));
+        this.store.dispatch(new act.CountAction({ group: currentGroup._id }));
         this.isLoading = false;
       }, () => null);
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  openLoginModal(): void {
+    this.store.dispatch(new loginModal.OpenAction());
   }
 }

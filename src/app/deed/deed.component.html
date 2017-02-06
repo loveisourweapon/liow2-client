@@ -41,10 +41,10 @@
 
       <button
         type="button"
-        (click)="null"
+        (click)="openLoginModal()"
         class="btn btn-primary btn-block btn-lg"
         *ngIf="!(isAuthenticated$ | async)"
-      ><!-- TODO: open login modal -->
+      >
         <i class="fa fa-fw fa-user"></i>
         Login
       </button>
