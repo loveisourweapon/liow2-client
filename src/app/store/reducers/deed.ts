@@ -1,5 +1,6 @@
 import { Deed } from '../models';
 import * as deed from '../actions/deed';
+import { assign } from 'lodash';
 
 export interface State {
   isLoading: boolean;
@@ -18,7 +19,7 @@ const initialState: State = {
 export function reducer(state = initialState, action: deed.Actions): State {
   switch (action.type) {
     case deed.ActionTypes.FIND:
-      return Object.assign({}, state, {
+      return assign({}, state, {
         isLoading: true,
       });
 
@@ -31,12 +32,12 @@ export function reducer(state = initialState, action: deed.Actions): State {
       };
 
     case deed.ActionTypes.FIND_FAIL:
-      return Object.assign({}, state, {
+      return assign({}, state, {
         isLoading: false,
       });
 
     case deed.ActionTypes.SET_CURRENT:
-      return Object.assign({}, state, {
+      return assign({}, state, {
         current: action.payload,
       });
 

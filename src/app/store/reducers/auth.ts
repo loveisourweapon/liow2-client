@@ -1,4 +1,5 @@
 import * as auth from '../actions/auth';
+import { assign } from 'lodash';
 
 export interface State {
   isAuthenticated: boolean;
@@ -25,10 +26,10 @@ export function reducer(state = initialState, action: auth.Actions): State {
       };
 
     case auth.ActionTypes.LOGOUT_SUCCESS:
-      return Object.assign({}, initialState);
+      return assign({}, initialState);
 
     case auth.ActionTypes.SET_CURRENT_GROUP:
-      return Object.assign({}, state, {
+      return assign({}, state, {
         group: action.payload,
       });
 
