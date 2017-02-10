@@ -68,12 +68,11 @@
                 <i class="fa fa-fw fa-at"></i>
               </div>
               <input
-                type="text"
+                type="email"
                 class="form-control"
-                id="email"
                 name="email"
                 [ngModel]="state.credentials.email"
-                (ngModelChange)="onUpdateEmail($event)"
+                (ngModelChange)="onUpdatePropertyAction('Email', $event)"
                 placeholder="Email"
                 #autofocus
               >
@@ -88,10 +87,9 @@
               <input
                 type="password"
                 class="form-control"
-                id="password"
                 name="password"
                 [ngModel]="state.credentials.password"
-                (ngModelChange)="onUpdatePassword($event)"
+                (ngModelChange)="onUpdatePropertyAction('Password', $event)"
                 placeholder="Password"
               >
             </div>

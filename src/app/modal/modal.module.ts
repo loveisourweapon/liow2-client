@@ -6,6 +6,7 @@ import { ModalHeaderComponent } from './modal-header.component';
 import { ModalsComponent } from './modals.component';
 
 import { LoginModalComponent } from './login';
+import { SignupModalComponent } from './signup';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { LoginModalComponent } from './login';
     ModalsComponent,
 
     LoginModalComponent,
+    SignupModalComponent,
   ],
   exports: [
     ModalsComponent,

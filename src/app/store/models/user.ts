@@ -1,5 +1,7 @@
 import { Group } from './group';
 
+export type UserId = string;
+
 export interface User {
   _id: UserId;
   email: string;
@@ -17,4 +19,11 @@ export interface User {
   lastSeen: Date;
 }
 
-export type UserId = string;
+export interface NewUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  picture?: string;
+  groups?: string[];
+}

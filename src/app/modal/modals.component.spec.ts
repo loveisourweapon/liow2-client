@@ -19,6 +19,7 @@ describe(`ModalsComponent`, () => {
         declarations: [
           ModalsComponent,
           LoginModalStubComponent,
+          SignupModalStubComponent,
         ],
         providers: [
           { provide: Store, useClass: StoreStubService },
@@ -43,6 +44,15 @@ describe(`ModalsComponent`, () => {
   template: ``,
 })
 class LoginModalStubComponent {
+  @Input() state: any;
+  @Input() group: any;
+}
+
+@Component({
+  selector: 'liow-signup-modal',
+  template: ``,
+})
+class SignupModalStubComponent {
   @Input() state: any;
   @Input() group: any;
 }

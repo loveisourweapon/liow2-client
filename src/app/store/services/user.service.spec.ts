@@ -2,6 +2,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
+import { assign } from 'lodash';
 
 import { UserService } from './user.service';
 import { User } from '../models';
@@ -74,6 +75,34 @@ describe(`UserService`, () => {
       const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
       service.getCurrent().subscribe(() => {
         expect(httpSpy.calls.mostRecent().args[0]).toMatch(/\/users\/me$/);
+      });
+    });
+  });
+
+  describe(`#save`, () => {
+    const newUser = {
+      email: 'tester@example.com',
+      password: 'testing123',
+      firstName: 'Test',
+      lastName: 'User',
+    };
+
+    it(`should POST to /users if passed in user doesn't have an ID`, () => {
+      const response = new Response(new ResponseOptions({ body: newUser }));
+      const httpSpy = spyOn(http, 'post').and.returnValue(Observable.of(response));
+      service.save(newUser).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(/\/users$/);
+        expect(httpSpy.calls.mostRecent().args[1]).toBe(newUser);
+      });
+    });
+
+    it(`should PUT to /users/:userId if passed in user has an ID`, () => {
+      const updatedUser = assign({}, newUser, { _id: 'abc123' });
+      const response = new Response(new ResponseOptions({ body: updatedUser }));
+      const httpSpy = spyOn(http, 'put').and.returnValue(Observable.of(response));
+      service.save(updatedUser).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/users/${updatedUser._id}$`));
+        expect(httpSpy.calls.mostRecent().args[1]).toBe(updatedUser);
       });
     });
   });

@@ -1,0 +1,197 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Sign up"
+  aria-hidden="true"
+  (onHide)="onClose()"
+  (onShown)="autofocus.focus()"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <liow-modal-header
+        modalTitle="Sign up"
+        (close)="onClose()"
+      ></liow-modal-header>
+
+      <div class="modal-body">
+        <!-- TODO: handle join group -->
+
+        <p>
+          <button
+            (click)="authenticateFacebook(state.joinGroup)"
+            class="btn btn-facebook btn-block"
+            [disabled]="state.isSigningUp"
+          >
+            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
+            <i class="fa fa-fw fa-facebook-official" [hidden]="state.isSigningUp"></i>
+            Sign up with Facebook
+          </button>
+        </p>
+
+        <hr>
+
+        <form
+          (ngSubmit)="signup(state.user, state.joinGroup)"
+          name="userEdit"
+          #form="ngForm"
+          class="form-horizontal"
+          novalidate
+        >
+          <!-- TODO: handle alerts -->
+
+          <!-- TODO: add validation -->
+          <div class="form-group" [class.has-error]="false">
+            <label for="firstName" class="col-xs-3 control-label">Name</label>
+            <div class="col-xs-9 col-sm-8">
+              <div class="row">
+                <div class="col-xs-6">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    name="firstName"
+                    [ngModel]="state.user.firstName"
+                    (ngModelChange)="onUpdatePropertyAction('FirstName', $event)"
+                    placeholder="First..."
+                    required
+                    #autofocus
+                  >
+                </div>
+                <div class="col-xs-6">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    name="lastName"
+                    [ngModel]="state.user.lastName"
+                    (ngModelChange)="onUpdatePropertyAction('LastName', $event)"
+                    placeholder="Last..."
+                  >
+                </div>
+              </div>
+            </div>
+            <!--<span class="help-block col-xs-9 col-xs-push-3"
+                        ng-messages="$ctrl.form.$submitted && $ctrl.form.firstName.$error">
+              <span ng-message="required">First name is required</span>
+            </span>-->
+          </div>
+
+          <!-- TODO: add validation -->
+          <div class="form-group" [class.has-error]="false">
+            <label for="email" class="col-xs-3 control-label">Email</label>
+            <div class="col-xs-9 col-sm-8">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                [ngModel]="state.user.email"
+                (ngModelChange)="onUpdatePropertyAction('Email', $event)"
+                placeholder="Email address..."
+                required
+              >
+              <!--<span class="help-block"
+                          ng-messages="!$ctrl.error.errors.email && $ctrl.form.$submitted && $ctrl.form.email.$error">
+                <span ng-message-exp="['required', 'email']">Please enter a valid email address</span>
+              </span>
+                    <span class="help-block"
+                          ng-messages="$ctrl.error.errors">
+                <span ng-message="email">
+                  {{ $ctrl.error.errors.email[0].message }}
+                </span>
+              </span>-->
+            </div>
+          </div>
+
+          <!-- TODO: add validation -->
+          <div class="form-group" [class.has-error]="false">
+            <label for="password" class="col-xs-3 control-label">Password</label>
+            <div class="col-xs-9 col-sm-8">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                [ngModel]="state.user.password"
+                (ngModelChange)="onUpdatePropertyAction('Password', $event)"
+                placeholder="Enter a password..."
+                required
+              >
+              <!-- TODO: check minlength validator -->
+              <!--<span class="help-block"
+                    ng-messages="!$ctrl.error.errors.password && $ctrl.form.$submitted && $ctrl.form.password.$error">
+                <span ng-message="required">Password is required</span>
+                <span ng-message="minlength">Password must be at least 8 characters</span>
+              </span>
+                    <span class="help-block"
+                          ng-messages="$ctrl.error.errors">
+                <span ng-message="password">
+                  {{ $ctrl.error.errors.password[0].message }}
+                </span>
+              </span>-->
+            </div>
+          </div>
+
+          <!-- TODO: add validation -->
+          <div class="form-group" [class.has-error]="false">
+            <label for="picture" class="col-xs-3 control-label">Picture</label>
+            <div class="col-xs-9 col-sm-8">
+              <input
+                type="text"
+                class="form-control"
+                id="picture"
+                name="picture"
+                [ngModel]="state.user.picture"
+                (ngModelChange)="onUpdatePropertyAction('Picture', $event)"
+                placeholder="Image upload coming soon..."
+                disabled
+              >
+              <!--<span class="help-block"
+                    ng-if="!$ctrl.error.errors.picture">
+                Ideally 200px x 200px
+              </span>
+                    <span class="help-block"
+                          ng-messages="$ctrl.error.errors">
+                <span ng-message="picture">
+                  {{ $ctrl.error.errors.picture[0].message }}
+                </span>
+              </span>-->
+            </div>
+          </div>
+
+          <button type="submit" hidden></button>
+        </form>
+
+        <div class="row">
+          <div class="col-xs-9 col-xs-push-3">
+            <p>
+              Already have an account?
+              <button
+                type="button"
+                (click)="onClose(); openLogin()"
+                class="btn btn-link btn-inline"
+              >
+                Login now
+              </button>
+            </p>
+          </div>
+        </div>
+      </div><!-- .modal-body -->
+
+      <div class="modal-footer">
+        <button
+          type="submit"
+          (click)="signup(state.user, state.joinGroup)"
+          class="btn btn-primary btn-block"
+          [disabled]="state.isSigningUp"
+        >
+          <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
+          Sign up
+        </button>
+      </div><!-- .modal-footer -->
+    </div>
+  </div>
+</div>

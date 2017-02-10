@@ -2,13 +2,24 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { pick } from 'lodash';
 
 import { AuthService, UserService } from '../services';
-import { User } from '../models';
+import { Credentials, User } from '../models';
 import * as auth from '../actions/auth';
 
 @Injectable()
 export class AuthEffects {
+  @Effect()
+  signup$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.SIGNUP)
+    .flatMap((action: Action) => this.userService.save(action.payload)
+      .mergeMap(() => Observable.from([
+        new auth.LoginWithEmailAction(<Credentials>pick(action.payload, ['email', 'password'])),
+        new auth.SignupSuccessAction(),
+      ])))
+    .catch((error: Error) => Observable.of(new auth.SignupFailAction(error.message)));
+
   @Effect()
   loginEmail$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.LOGIN_WITH_EMAIL)

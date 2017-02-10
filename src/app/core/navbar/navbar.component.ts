@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Group, User } from '../../store/models';
 import * as auth from '../../store/actions/auth';
 import * as layout from '../../store/actions/layout';
-import * as loginModal from '../../store/actions/modal/login';
+import * as modal from '../../store/actions/modal';
 import * as fromRoot from '../../store/reducers';
 
 @Component({
@@ -42,11 +42,11 @@ export class NavbarComponent implements OnInit {
   }
 
   openLogin(): void {
-    this.store.dispatch(new loginModal.OpenAction());
+    this.store.dispatch(new modal.OpenLoginAction());
   }
 
   openSignup(): void {
-    // this.store.dispatch(new signupModal.OpenAction());
+    this.store.dispatch(new modal.OpenSignupAction());
   }
 
   openGroupEdit(): void {

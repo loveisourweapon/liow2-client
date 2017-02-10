@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Deed } from '../store/models';
 import * as deed from '../store/actions/deed';
-import * as loginModal from '../store/actions/modal/login';
+import * as modal from '../store/actions/modal';
 import * as fromRoot from '../store/reducers';
 
 @Component({
@@ -49,6 +49,6 @@ export class DeedComponent implements OnDestroy, OnInit {
   }
 
   openLoginModal(): void {
-    this.store.dispatch(new loginModal.OpenAction());
+    this.store.dispatch(new modal.OpenLoginAction());
   }
 }

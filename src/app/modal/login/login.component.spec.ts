@@ -59,7 +59,7 @@ describe(`LoginModalComponent`, () => {
   it(`should dispatch UPDATE_EMAIL when typing into email input`, () => {
     const newValue = 'test@example.com';
     const emailSpy = spyOn(store, 'dispatch');
-    const emailInput = element.query(By.css('#email'));
+    const emailInput = element.query(By.css('[name=email]'));
 
     emailInput.nativeElement.value = newValue;
     // TODO: should be able to use native input or change event?
@@ -74,7 +74,7 @@ describe(`LoginModalComponent`, () => {
   it(`should dispatch UPDATE_PASSWORD when typing into password input`, () => {
     const newValue = 'testing123';
     const passwordSpy = spyOn(store, 'dispatch');
-    const passwordInput = element.query(By.css('#password'));
+    const passwordInput = element.query(By.css('[name=password]'));
 
     passwordInput.nativeElement.value = newValue;
     // TODO: should be able to use native input or change event?

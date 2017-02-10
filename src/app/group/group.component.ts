@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Group, GroupService } from '../store';
 import * as act from '../store/actions/act';
 import * as group from '../store/actions/group';
-import * as loginModal from '../store/actions/modal/login';
+import * as modal from '../store/actions/modal';
 import * as fromRoot from '../store/reducers';
 
 @Component({
@@ -58,6 +58,6 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   openLoginModal(): void {
-    this.store.dispatch(new loginModal.OpenAction());
+    this.store.dispatch(new modal.OpenLoginAction());
   }
 }

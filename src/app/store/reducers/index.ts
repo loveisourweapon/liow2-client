@@ -14,6 +14,7 @@ import * as fromFeed from './feed';
 import * as fromGroup from './group';
 import * as fromLayout from './layout';
 import * as fromLoginModal from './modal/login';
+import * as fromSignupModal from './modal/signup';
 import * as fromUser from './user';
 
 export interface State {
@@ -24,6 +25,7 @@ export interface State {
   group: fromGroup.State;
   layout: fromLayout.State;
   modalLogin: fromLoginModal.State;
+  modalSignup: fromSignupModal.State;
   router: fromRouter.RouterState;
   user: fromUser.State;
 }
@@ -36,6 +38,7 @@ const reducers = {
   group: fromGroup.reducer,
   layout: fromLayout.reducer,
   modalLogin: fromLoginModal.reducer,
+  modalSignup: fromSignupModal.reducer,
   router: fromRouter.routerReducer,
   user: fromUser.reducer,
 };
@@ -104,6 +107,7 @@ export const getIsMenuOpen = createSelector(getLayoutState, fromLayout.getIsMenu
  * Modal state selectors
  */
 export function getLoginModal(state: State) { return state.modalLogin; }
+export function getSignupModal(state: State) { return state.modalSignup; }
 
 
 /**

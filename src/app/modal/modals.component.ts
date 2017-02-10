@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { Group } from '../store/models';
 import * as fromRoot from '../store/reducers';
-import * as fromLoginModal from '../store/reducers/modal/login';
+import { State as LoginModalState } from '../store/reducers/modal/login';
+import { State as SignupModalState } from '../store/reducers/modal/signup';
 
 @Component({
   selector: 'liow-modals',
@@ -13,7 +14,8 @@ import * as fromLoginModal from '../store/reducers/modal/login';
 })
 export class ModalsComponent implements OnInit {
   currentGroup$: Observable<Group>;
-  loginModal$: Observable<fromLoginModal.State>;
+  loginModal$: Observable<LoginModalState>;
+  signupModal$: Observable<SignupModalState>;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -22,5 +24,6 @@ export class ModalsComponent implements OnInit {
   ngOnInit(): void {
     this.currentGroup$ = this.store.select(fromRoot.getCurrentGroup);
     this.loginModal$ = this.store.select(fromRoot.getLoginModal);
+    this.signupModal$ = this.store.select(fromRoot.getSignupModal);
   }
 }

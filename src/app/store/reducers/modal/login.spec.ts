@@ -1,3 +1,5 @@
+import { assign } from 'lodash';
+
 import { Credentials, User } from '../../models';
 import * as auth from '../../actions/auth';
 import * as loginModal from '../../actions/modal/login';
@@ -30,7 +32,7 @@ describe(`login modal reducer`, () => {
   });
 
   it(`should set isOpen to false with CLOSE action`, () => {
-    const openState = Object.assign({}, initialState, { isOpen: true });
+    const openState = assign({}, initialState, { isOpen: true });
     const state = fromLoginModal.reducer(openState, new loginModal.CloseAction());
     expect(state).not.toBe(openState);
     expect(state.isOpen).toBe(false);
@@ -59,7 +61,7 @@ describe(`login modal reducer`, () => {
   });
 
   it(`should set isOpen to false with LOGIN_SUCCESS action`, () => {
-    const loggingInState = Object.assign({}, initialState, { isLoggingIn: true });
+    const loggingInState = assign({}, initialState, { isLoggingIn: true });
     const state = fromLoginModal.reducer(loggingInState, new auth.LoginSuccessAction(<User>{}));
     expect(state).not.toBe(loggingInState);
     expect(state.isOpen).toBe(false);
@@ -67,7 +69,7 @@ describe(`login modal reducer`, () => {
 
   it(`should set isLoggingIn to false and errorMessage with LOGIN_FAIL action`, () => {
     const errorMessage = 'Test error';
-    const loggingInState = Object.assign({}, initialState, { isLoggingIn: true });
+    const loggingInState = assign({}, initialState, { isLoggingIn: true });
     const state = fromLoginModal.reducer(loggingInState, new auth.LoginFailAction(errorMessage));
     expect(state).not.toBe(loggingInState);
     expect(state.isLoggingIn).toBe(false);

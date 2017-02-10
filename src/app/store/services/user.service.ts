@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Response, URLSearchParams } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
+import { has } from 'lodash';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
-import { User, UserId } from '../models';
+import { NewUser, User, UserId } from '../models';
 
 @Injectable()
 export class UserService {
@@ -27,6 +28,17 @@ export class UserService {
 
   getCurrent(): Observable<User> {
     return this.http.get(`${this.baseUrl}/me`)
+      .map((response: Response) => response.json() || {})
+      .map((user: User) => this.transformUser(user));
+  }
+
+  save(user: NewUser|User): Observable<User> {
+    const request = has(user, '_id')
+      ? this.http.put(`${this.baseUrl}/${user['_id']}`, user)
+      : this.http.post(this.baseUrl, user)
+      ;
+
+    return request
       .map((response: Response) => response.json() || {})
       .map((user: User) => this.transformUser(user));
   }

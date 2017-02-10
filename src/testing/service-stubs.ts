@@ -34,6 +34,8 @@ export class GroupStubService {
 @Injectable()
 export class HttpStubService {
   get() { }
+  post() { }
+  put() { }
 }
 
 @Injectable()
@@ -54,5 +56,6 @@ export class StoreStubService<T> {
 export class UserStubService {
   get() { }
   getCurrent() { }
+  save() { }
   count() { }
 }

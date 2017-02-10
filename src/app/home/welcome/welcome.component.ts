@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import * as loginModal from '../../store/actions/modal/login';
+import * as modal from '../../store/actions/modal';
 import * as fromRoot from '../../store/reducers';
 
 @Component({
@@ -27,6 +27,10 @@ export class WelcomeComponent implements OnInit {
   }
 
   openLoginModal(): void {
-    this.store.dispatch(new loginModal.OpenAction());
+    this.store.dispatch(new modal.OpenLoginAction());
+  }
+
+  openSignupModal(): void {
+    this.store.dispatch(new modal.OpenSignupAction());
   }
 }

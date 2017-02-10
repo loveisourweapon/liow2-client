@@ -1,12 +1,12 @@
-import { Credentials } from '../../models';
+import { NewUser } from '../../models';
 import * as auth from '../../actions/auth';
-import * as loginModal from '../../actions/modal/login';
+import * as signupModal from '../../actions/modal/signup';
 import { assign, merge } from 'lodash';
 
 export interface State {
   isOpen: boolean;
-  isLoggingIn: boolean;
-  credentials: Credentials;
+  isSigningUp: boolean;
+  user: NewUser;
   joinGroup: boolean;
   showJoinGroup: boolean;
   errorMessage: string;
@@ -14,19 +14,21 @@ export interface State {
 
 const initialState: State = {
   isOpen: false,
-  isLoggingIn: false,
-  credentials: {
+  isSigningUp: false,
+  user: {
     email: '',
     password: '',
+    firstName: '',
+    lastName: '',
   },
   joinGroup: false,
   showJoinGroup: false,
   errorMessage: '',
 };
 
-export function reducer(state = initialState, action: loginModal.Actions|auth.Actions): State {
+export function reducer(state = initialState, action: signupModal.Actions|auth.Actions): State {
   switch (action.type) {
-    case loginModal.ActionTypes.OPEN:
+    case signupModal.ActionTypes.OPEN:
       const showJoinGroup = action.payload != null
         ? action.payload.showJoinGroup
         : initialState.showJoinGroup
@@ -38,41 +40,62 @@ export function reducer(state = initialState, action: loginModal.Actions|auth.Ac
         showJoinGroup: showJoinGroup,
       });
 
-    case loginModal.ActionTypes.CLOSE:
+    case signupModal.ActionTypes.CLOSE:
       return assign({}, state, {
         isOpen: false,
       });
 
-    case loginModal.ActionTypes.UPDATE_EMAIL:
+    case signupModal.ActionTypes.UPDATE_FIRST_NAME:
       return merge({}, state, {
-        credentials: {
+        user: {
+          firstName: action.payload,
+        },
+      });
+
+    case signupModal.ActionTypes.UPDATE_LAST_NAME:
+      return merge({}, state, {
+        user: {
+          lastName: action.payload,
+        },
+      });
+
+    case signupModal.ActionTypes.UPDATE_EMAIL:
+      return merge({}, state, {
+        user: {
           email: action.payload,
         },
       });
 
-    case loginModal.ActionTypes.UPDATE_PASSWORD:
+    case signupModal.ActionTypes.UPDATE_PASSWORD:
       return merge({}, state, {
-        credentials: {
+        user: {
           password: action.payload,
         },
       });
 
-    case auth.ActionTypes.LOGIN_WITH_EMAIL:
+    case signupModal.ActionTypes.UPDATE_PICTURE:
+      return merge({}, state, {
+        user: {
+          picture: action.payload,
+        },
+      });
+
+    case auth.ActionTypes.SIGNUP:
     case auth.ActionTypes.LOGIN_WITH_FACEBOOK:
       return assign({}, state, {
-        isLoggingIn: true,
+        isSigningUp: true,
         errorMessage: '',
       });
 
-    case auth.ActionTypes.LOGIN_SUCCESS:
+    case auth.ActionTypes.SIGNUP_SUCCESS:
       return assign({}, state, {
         isOpen: false,
-        isLoggingIn: false,
+        isSigningUp: false,
       });
 
-    case auth.ActionTypes.LOGIN_FAIL:
+    case auth.ActionTypes.SIGNUP_FAIL:
       return assign({}, state, {
-        isLoggingIn: false,
+        isSigningUp: false,
         errorMessage: action.payload,
       });
 
