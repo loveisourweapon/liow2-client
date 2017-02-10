@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { UserComponent } from './user.component';
-import { ActivatedRouteStubService, JumbtronStubComponent, StoreStubService } from '../../testing';
+import { ActivatedRouteStubService, FeedStubComponent, JumbtronStubComponent, StoreStubService } from '../../testing';
 
 describe(`UserComponent`, () => {
   let component: UserComponent;
@@ -14,6 +14,7 @@ describe(`UserComponent`, () => {
       .configureTestingModule({
         declarations: [
           UserComponent,
+          FeedStubComponent,
           JumbtronStubComponent,
         ],
         providers: [
