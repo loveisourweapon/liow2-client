@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { has, some } from 'lodash';
 
 import { FeedItem, Group, User } from '../../store/models';
 
@@ -12,13 +13,11 @@ export class FeedItemComponent {
   @Input() item: FeedItem;
   @Input() authUser: User;
 
-  isLoggedInUser(user: User): boolean {
-    // TODO: implement this
-    return true;
-  }
-
-  isMemberOfGroup(group: Group): boolean {
-    // TODO: implement this
-    return true;
+  isMemberOfGroup(authUser: User, group: Group): boolean {
+    return (
+      has(authUser, 'groups') &&
+      has(group, '_id') &&
+      some(authUser.groups, (userGroup: Group) => userGroup._id === group._id)
+    );
   }
 }

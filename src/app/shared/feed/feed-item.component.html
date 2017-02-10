@@ -19,14 +19,16 @@
 
   <div class="feed-item-content">
     <h6 class="m-t-none">
-      <a
-        [routerLink]="['/u', item.user._id]"
-        *ngIf="isLoggedInUser(item.user) || isMemberOfGroup(item.group)"
-      >
-        {{ item.user.firstName }}
-      </a>
-      <span *ngIf="!(isLoggedInUser(item.user) || isMemberOfGroup(item.group))">
-        Someone
+      <span [ngSwitch]="authUser?._id === item.user._id || isMemberOfGroup(authUser, item.group)">
+        <a
+          [routerLink]="['/u', item.user._id]"
+          *ngSwitchCase="true"
+        >
+          {{ item.user.firstName }}
+        </a>
+        <span *ngSwitchCase="false">
+          Someone
+        </span>
       </span>
 
       <span *ngIf="item.group && !item.target.group">
