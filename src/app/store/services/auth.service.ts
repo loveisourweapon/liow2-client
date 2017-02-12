@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { AuthService as Ng2AuthService } from 'ng2-ui-auth';
+import { AuthService as Ng2AuthService, JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
+import { environment } from '../../../environments/environment';
 import { Credentials } from '../models';
 
 @Injectable()
 export class AuthService {
+  private baseUrl: string;
+
   constructor(
     private auth: Ng2AuthService,
-  ) { }
+    private http: JwtHttp,
+  ) {
+    this.baseUrl = `${environment.apiBaseUrl}/auth`;
+  }
 
   authenticateEmail(credentials: Credentials): Observable<string> {
     if (!(credentials.email && credentials.password)) {
@@ -25,6 +31,11 @@ export class AuthService {
     return this.auth.authenticate('facebook', userData)
       .map((response: Response) => response.json() || {})
       .map((tokenReponse: { token: string }) => tokenReponse.token);
+  }
+
+  confirmEmail(token: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/confirm`, { token })
+      .map((response: Response) => response.json() || {});
   }
 
   isAuthenticated(): boolean {

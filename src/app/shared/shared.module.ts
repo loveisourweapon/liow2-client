@@ -8,6 +8,7 @@ import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { FeedComponent, FeedItemComponent } from './feed';
 import { JumbotronComponent } from './jumbotron';
+import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
 import { YoutubePlayerComponent } from './youtube-player.component';
 import { FromNowPipe } from './from-now.pipe';
@@ -26,6 +27,7 @@ import { MomentPipe } from './moment.pipe';
     FeedComponent,
     FeedItemComponent,
     JumbotronComponent,
+    LoadingSpinnerComponent,
     MarkedComponent,
     YoutubePlayerComponent,
 
@@ -41,6 +43,7 @@ import { MomentPipe } from './moment.pipe';
     DeedListComponent,
     FeedComponent,
     JumbotronComponent,
+    LoadingSpinnerComponent,
     MarkedComponent,
     YoutubePlayerComponent,
 

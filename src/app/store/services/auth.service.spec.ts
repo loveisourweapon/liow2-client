@@ -1,21 +1,23 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
-import { AuthService as Ng2AuthService } from 'ng2-ui-auth';
+import { AuthService as Ng2AuthService, JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
 import { Credentials } from '../models';
-import { Ng2AuthStubService } from '../../../testing';
+import { HttpStubService, Ng2AuthStubService } from '../../../testing';
 
 describe(`AuthService`, () => {
   let service: AuthService;
   let ng2Auth: Ng2AuthService;
+  let http: JwtHttp;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         AuthService,
         { provide: Ng2AuthService, useClass: Ng2AuthStubService },
+        { provide: JwtHttp, useClass: HttpStubService },
       ],
     });
   });
@@ -23,6 +25,7 @@ describe(`AuthService`, () => {
   beforeEach(inject([AuthService], (_service: AuthService) => {
     service = _service;
     ng2Auth = TestBed.get(Ng2AuthService);
+    http = TestBed.get(JwtHttp);
   }));
 
   describe(`#authenticateEmail`, () => {
@@ -56,6 +59,20 @@ describe(`AuthService`, () => {
       service.authenticateFacebook().subscribe((token: string) => {
         expect(authSpy.calls.mostRecent().args[0]).toBe('facebook');
         expect(token).toBe(tokenResponse.token);
+      });
+    });
+  });
+
+  describe(`#confirmEmail`, () => {
+    it(`should POST token to /auth/confirm endpoint`, () => {
+      const token = 'abc123';
+      const response = new Response(new ResponseOptions({ body: null }));
+      const httpSpy = spyOn(http, 'post').and.returnValue(Observable.of(response));
+      service.confirmEmail(token).subscribe(() => {
+        const url = httpSpy.calls.mostRecent().args[0];
+        const data = httpSpy.calls.mostRecent().args[1];
+        expect(url).toMatch(/\/auth\/confirm$/);
+        expect(data['token']).toBe(token);
       });
     });
   });

@@ -19,6 +19,7 @@ import {
   DeedListStubComponent,
   FeedStubComponent,
   JumbtronStubComponent,
+  LoadingSpinnerStubComponent,
   MarkedStubComponent,
   YoutubePlayerStubComponent,
 } from './component-stubs';
@@ -53,6 +54,7 @@ import {
     DeedListStubComponent,
     FeedStubComponent,
     JumbtronStubComponent,
+    LoadingSpinnerStubComponent,
     MarkedStubComponent,
     YoutubePlayerStubComponent,
 

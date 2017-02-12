@@ -27,6 +27,15 @@ export class JumbtronStubComponent {
 }
 
 @Component({
+  selector: 'ui-loading-spinner',
+  template: ``,
+})
+export class LoadingSpinnerStubComponent {
+  @Input() size: string;
+  @Input() classes: string[];
+}
+
+@Component({
   selector: 'ui-marked',
   template: ``,
 })

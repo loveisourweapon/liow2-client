@@ -1,4 +1,5 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -7,13 +8,14 @@ import { pick } from 'lodash';
 import { AuthEffects } from './auth';
 import * as auth from '../actions/auth';
 import { AuthService, UserService } from '../services';
-import { AuthStubService, UserStubService } from '../../../testing';
+import { AuthStubService, RouterStubService, UserStubService } from '../../../testing';
 
 describe(`AuthEffects`, () => {
   let runner: EffectsRunner;
   let authEffects: AuthEffects;
   let authService: AuthService;
   let userService: UserService;
+  let router: Router;
 
   beforeEach(() => {
     TestBed
@@ -24,6 +26,7 @@ describe(`AuthEffects`, () => {
         providers: [
           AuthEffects,
           { provide: AuthService, useClass: AuthStubService },
+          { provide: Router, useClass: RouterStubService },
           { provide: UserService, useClass: UserStubService },
         ],
       });
@@ -34,38 +37,32 @@ describe(`AuthEffects`, () => {
     authEffects = _deedEffects;
     authService = TestBed.get(AuthService);
     userService = TestBed.get(UserService);
+    router = TestBed.get(Router);
   }));
 
-  describe(`signup$`, () => {
-    const newUser = {
-      email: 'tester@example.com',
-      password: 'testing123',
-      firstName: 'Test',
-      lastName: 'User',
-    };
+  describe(`confirmEmail$`, () => {
+    const token = 'abc123';
 
-    it(`should dispatch SIGNUP_SUCCESS and LOGIN_WITH_EMAIL actions after saving new user`, () => {
-      const saveSpy = spyOn(userService, 'save').and.returnValue(Observable.of(newUser));
-      runner.queue(new auth.SignupAction(newUser));
-      authEffects.signup$
-        .take(2)
-        .scan((results: Action[], result: Action) => [...results, result], [])
-        .skip(1)
-        .subscribe((results: Action[]) => {
-          expect(saveSpy).toHaveBeenCalledWith(newUser);
-          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_WITH_EMAIL);
-          expect(results[0].payload).toEqual(pick(newUser, ['email', 'password']));
-          expect(results[1].type).toBe(auth.ActionTypes.SIGNUP_SUCCESS);
-        });
+    it(`should dispatch CONFIRM_EMAIL_SUCCESS and navigate after successful email confirmation`, () => {
+      const authSpy = spyOn(authService, 'confirmEmail').and.returnValue(Observable.of({}));
+      const routerSpy = spyOn(router, 'navigate');
+      runner.queue(new auth.ConfirmEmailAction(token));
+      authEffects.confirmEmail$.subscribe((result: Action) => {
+        expect(authSpy.calls.mostRecent().args[0]).toBe(token);
+        expect(routerSpy).toHaveBeenCalledWith(['/']);
+        expect(result.type).toBe(auth.ActionTypes.CONFIRM_EMAIL_SUCCESS);
+      });
     });
 
-    it(`should dispatch SIGNUP_FAIL action after failing to save user`, () => {
+    it(`should dispatch CONFIRM_EMAIL_FAIL and navigate after failed email confirmation`, () => {
       const errorMessage = 'Test error';
-      spyOn(userService, 'save').and.returnValue(Observable.throw(new Error(errorMessage)));
-      runner.queue(new auth.SignupAction(newUser));
-      authEffects.signup$.subscribe((result: Action) => {
-        expect(result.type).toBe(auth.ActionTypes.SIGNUP_FAIL);
-        expect(result.payload).toBe(errorMessage);
+      const authSpy = spyOn(authService, 'confirmEmail').and.returnValue(Observable.throw(new Error(errorMessage)));
+      const routerSpy = spyOn(router, 'navigate');
+      runner.queue(new auth.ConfirmEmailAction(token));
+      authEffects.confirmEmail$.subscribe((result: Action) => {
+        expect(authSpy.calls.mostRecent().args[0]).toBe(token);
+        expect(routerSpy).toHaveBeenCalledWith(['/']);
+        expect(result.type).toBe(auth.ActionTypes.CONFIRM_EMAIL_FAIL);
       });
     });
   });
@@ -150,6 +147,40 @@ describe(`AuthEffects`, () => {
       authEffects.logout$.subscribe((result: Action) => {
         expect(logoutSpy).toHaveBeenCalled();
         expect(result.type).toBe(auth.ActionTypes.LOGOUT_SUCCESS);
+      });
+    });
+  });
+
+  describe(`signup$`, () => {
+    const newUser = {
+      email: 'tester@example.com',
+      password: 'testing123',
+      firstName: 'Test',
+      lastName: 'User',
+    };
+
+    it(`should dispatch SIGNUP_SUCCESS and LOGIN_WITH_EMAIL actions after saving new user`, () => {
+      const saveSpy = spyOn(userService, 'save').and.returnValue(Observable.of(newUser));
+      runner.queue(new auth.SignupAction(newUser));
+      authEffects.signup$
+        .take(2)
+        .scan((results: Action[], result: Action) => [...results, result], [])
+        .skip(1)
+        .subscribe((results: Action[]) => {
+          expect(saveSpy).toHaveBeenCalledWith(newUser);
+          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_WITH_EMAIL);
+          expect(results[0].payload).toEqual(pick(newUser, ['email', 'password']));
+          expect(results[1].type).toBe(auth.ActionTypes.SIGNUP_SUCCESS);
+        });
+    });
+
+    it(`should dispatch SIGNUP_FAIL action after failing to save user`, () => {
+      const errorMessage = 'Test error';
+      spyOn(userService, 'save').and.returnValue(Observable.throw(new Error(errorMessage)));
+      runner.queue(new auth.SignupAction(newUser));
+      authEffects.signup$.subscribe((result: Action) => {
+        expect(result.type).toBe(auth.ActionTypes.SIGNUP_FAIL);
+        expect(result.payload).toBe(errorMessage);
       });
     });
   });

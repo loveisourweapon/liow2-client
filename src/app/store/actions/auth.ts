@@ -4,9 +4,9 @@ import { actionType } from '../utils';
 import { Credentials, Group, NewUser, User } from '../models';
 
 export class ActionTypes {
-  static readonly SIGNUP = actionType('[Auth] Signup');
-  static readonly SIGNUP_SUCCESS = actionType('[Auth] Signup Success');
-  static readonly SIGNUP_FAIL = actionType('[Auth] Signup Fail');
+  static readonly CONFIRM_EMAIL = actionType('[Auth] Confirm Email');
+  static readonly CONFIRM_EMAIL_SUCCESS = actionType('[Auth] Confirm Email Success');
+  static readonly CONFIRM_EMAIL_FAIL = actionType('[Auth] Confirm Email Fail');
   static readonly LOGIN_WITH_EMAIL = actionType('[Auth] Login Email');
   static readonly LOGIN_WITH_FACEBOOK = actionType('[Auth] Login Facebook');
   static readonly LOGIN_WITH_TOKEN = actionType('[Auth] Login Token');
@@ -15,22 +15,25 @@ export class ActionTypes {
   static readonly LOGOUT = actionType('[Auth] Logout');
   static readonly LOGOUT_SUCCESS = actionType('[Auth] Logout Success');
   static readonly SET_CURRENT_GROUP = actionType('[Auth] Set Current Group');
+  static readonly SIGNUP = actionType('[Auth] Signup');
+  static readonly SIGNUP_SUCCESS = actionType('[Auth] Signup Success');
+  static readonly SIGNUP_FAIL = actionType('[Auth] Signup Fail');
 }
 
-export class SignupAction implements Action {
-  type = ActionTypes.SIGNUP;
+export class ConfirmEmailAction implements Action {
+  type = ActionTypes.CONFIRM_EMAIL;
 
   constructor(
-    public payload: NewUser,
+    public payload: string,
   ) { }
 }
 
-export class SignupSuccessAction implements Action {
-  type = ActionTypes.SIGNUP_SUCCESS;
+export class ConfirmEmailSuccessAction implements Action {
+  type = ActionTypes.CONFIRM_EMAIL_SUCCESS;
 }
 
-export class SignupFailAction implements Action {
-  type = ActionTypes.SIGNUP_FAIL;
+export class ConfirmEmailFailAction implements Action {
+  type = ActionTypes.CONFIRM_EMAIL_FAIL;
 
   constructor(
     public payload: string,
@@ -89,10 +92,30 @@ export class SetCurrentGroupAction implements Action {
   ) { }
 }
 
+export class SignupAction implements Action {
+  type = ActionTypes.SIGNUP;
+
+  constructor(
+    public payload: NewUser,
+  ) { }
+}
+
+export class SignupSuccessAction implements Action {
+  type = ActionTypes.SIGNUP_SUCCESS;
+}
+
+export class SignupFailAction implements Action {
+  type = ActionTypes.SIGNUP_FAIL;
+
+  constructor(
+    public payload: string,
+  ) { }
+}
+
 export type Actions
-  = SignupAction
-  | SignupSuccessAction
-  | SignupFailAction
+  = ConfirmEmailAction
+  | ConfirmEmailSuccessAction
+  | ConfirmEmailFailAction
   | LoginWithEmailAction
   | LoginWithFacebookAction
   | LoginWithTokenAction
@@ -101,4 +124,7 @@ export type Actions
   | LogoutAction
   | LogoutSuccessAction
   | SetCurrentGroupAction
+  | SignupAction
+  | SignupSuccessAction
+  | SignupFailAction
   ;

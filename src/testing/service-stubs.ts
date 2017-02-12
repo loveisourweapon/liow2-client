@@ -9,6 +9,7 @@ export class ActStubService {
 export class AuthStubService {
   authenticateEmail() { }
   authenticateFacebook() { }
+  confirmEmail() { }
   isAuthenticated() { }
   logout() { }
 }

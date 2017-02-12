@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -11,14 +12,12 @@ import * as auth from '../actions/auth';
 @Injectable()
 export class AuthEffects {
   @Effect()
-  signup$: Observable<Action> = this.actions$
-    .ofType(auth.ActionTypes.SIGNUP)
-    .flatMap((action: Action) => this.userService.save(action.payload)
-      .mergeMap(() => Observable.from([
-        new auth.LoginWithEmailAction(<Credentials>pick(action.payload, ['email', 'password'])),
-        new auth.SignupSuccessAction(),
-      ])))
-    .catch((error: Error) => Observable.of(new auth.SignupFailAction(error.message)));
+  confirmEmail$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.CONFIRM_EMAIL)
+    .flatMap((action: Action) => this.authService.confirmEmail(action.payload))
+    .map(() => new auth.ConfirmEmailSuccessAction())
+    .catch((error: Error) => Observable.of(new auth.ConfirmEmailFailAction(error.message)))
+    .do(() => this.router.navigate(['/']));
 
   @Effect()
   loginEmail$: Observable<Action> = this.actions$
@@ -55,9 +54,20 @@ export class AuthEffects {
     .flatMap(() => this.authService.logout())
     .map(() => new auth.LogoutSuccessAction());
 
+  @Effect()
+  signup$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.SIGNUP)
+    .flatMap((action: Action) => this.userService.save(action.payload)
+      .mergeMap(() => Observable.from([
+        new auth.LoginWithEmailAction(<Credentials>pick(action.payload, ['email', 'password'])),
+        new auth.SignupSuccessAction(),
+      ])))
+    .catch((error: Error) => Observable.of(new auth.SignupFailAction(error.message)));
+
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private router: Router,
     private userService: UserService,
   ) { }
 }
