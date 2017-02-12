@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { NavbarComponent } from './navbar.component';
-import * as layout from '../../store/actions/layout';
-import * as fromLayout from '../../store/reducers/layout';
+import { State as LayoutState } from '../../store/layout';
+import * as layout from '../../store/layout/layout.actions';
 import {
   CollapseStubDirective,
   DropdownStubDirective,
@@ -20,7 +20,7 @@ describe(`NavbarComponent`, () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let element: DebugElement;
-  let store: Store<fromLayout.State>;
+  let store: Store<LayoutState>;
 
   // const isMenuOpen = false;
   // let isMenuOpen$: BehaviorSubject<boolean>;

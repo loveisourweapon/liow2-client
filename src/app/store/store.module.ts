@@ -3,9 +3,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreModule as NgrxStoreModule } from '@ngrx/store';
 
-import { AuthEffects, CounterEffects, DeedEffects, FeedEffects, GroupEffects, UserEffects } from './effects';
-import { ActService, AuthService, DeedService, FeedService, GroupService, UserService } from './services';
-import { reducer } from './reducers';
+import { reducer } from './reducer';
+import { ActService, CounterEffects } from './act';
+import { AuthEffects, AuthService } from './auth';
+import { DeedEffects, DeedService } from './deed';
+import { FeedEffects, FeedService } from './feed';
+import { GroupEffects, GroupService } from './group';
+import { UserEffects, UserService } from './user';
 
 @NgModule({
   imports: [

@@ -6,10 +6,10 @@ import { Store } from '@ngrx/store';
 
 import { SignupModalComponent } from './signup.component';
 import { ModalHeaderComponent } from '../modal-header.component';
-import { Group } from '../../store/models';
-import * as auth from '../../store/actions/auth';
-import * as fromSignupModal from '../../store/reducers/modal/signup';
-import { State as AppState } from '../../store/reducers';
+import { Group } from '../../store/group';
+import * as auth from '../../store/auth/auth.actions';
+import { State as SignupModalState } from '../../store/signup-modal';
+import { State as AppState } from '../../store/reducer';
 import { ModalStubDirective, StoreStubService } from '../../../testing';
 
 describe(`SignupModalComponent`, () => {
@@ -70,7 +70,7 @@ class TestHostComponent {
   group = <Group>{
     _id: 'abc123',
   };
-  state = <fromSignupModal.State>{
+  state = <SignupModalState>{
     isOpen: false,
     isSigningUp: false,
     user: {

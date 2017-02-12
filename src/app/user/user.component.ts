@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { User, UserId } from '../store/models';
-import * as loginModal from '../store/actions/modal/login';
-import * as user from '../store/actions/user';
-import * as fromRoot from '../store/reducers';
+import { User, UserId } from '../store/user';
+import * as modal from '../store/modal.actions';
+import * as user from '../store/user/user.actions';
+import * as fromRoot from '../store/reducer';
 
 @Component({
   templateUrl: './user.component.html',
@@ -36,6 +36,6 @@ export class UserComponent implements OnInit {
   }
 
   openLogin(): void {
-    this.store.dispatch(new loginModal.OpenAction());
+    this.store.dispatch(new modal.OpenLoginAction());
   }
 }

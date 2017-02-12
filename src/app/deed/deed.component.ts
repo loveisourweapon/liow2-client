@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Deed } from '../store/models';
-import * as deed from '../store/actions/deed';
-import * as modal from '../store/actions/modal';
-import * as fromRoot from '../store/reducers';
+import { Deed } from '../store/deed';
+import * as deed from '../store/deed/deed.actions';
+import * as modal from '../store/modal.actions';
+import * as fromRoot from '../store/reducer';
 
 @Component({
   templateUrl: './deed.component.html',

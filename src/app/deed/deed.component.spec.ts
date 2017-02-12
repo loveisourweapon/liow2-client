@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { DeedComponent } from './deed.component';
-import * as fromRoot from '../store/reducers';
+import { State as AppState } from '../store/reducer';
 import {
   ActivatedRouteStubService,
   DeedListStubComponent,
@@ -21,7 +21,7 @@ import {
 xdescribe(`DeedComponent`, () => {
   let component: DeedComponent;
   let fixture: ComponentFixture<DeedComponent>;
-  let store: Store<fromRoot.State>;
+  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed

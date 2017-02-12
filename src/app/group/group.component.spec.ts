@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { GroupComponent } from './group.component';
-import { GroupService } from '../store/services';
+import { GroupService } from '../store/group';
 import {
   ActivatedRouteStubService,
   FeedStubComponent,

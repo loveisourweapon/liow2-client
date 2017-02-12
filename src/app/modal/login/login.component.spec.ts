@@ -6,11 +6,11 @@ import { Store } from '@ngrx/store';
 
 import { LoginModalComponent } from './login.component';
 import { ModalHeaderComponent } from '../modal-header.component';
-import { Group } from '../../store/models';
-import * as auth from '../../store/actions/auth';
-import * as loginModal from '../../store/actions/modal/login';
-import * as fromLoginModal from '../../store/reducers/modal/login';
-import * as fromRoot from '../../store/reducers';
+import { Group } from '../../store/group';
+import * as auth from '../../store/auth/auth.actions';
+import { State as LoginModal } from '../../store/login-modal';
+import * as loginModal from '../../store/login-modal/login-modal.actions';
+import { State as AppState } from '../../store/reducer';
 import { ModalStubDirective, StoreStubService } from '../../../testing';
 
 describe(`LoginModalComponent`, () => {
@@ -18,7 +18,7 @@ describe(`LoginModalComponent`, () => {
   let testHost: TestHostComponent;
   let component: LoginModalComponent;
   let element: DebugElement;
-  let store: Store<fromRoot.State>;
+  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -126,7 +126,7 @@ class TestHostComponent {
   group = <Group>{
     _id: 'abc123',
   };
-  state = <fromLoginModal.State>{
+  state = <LoginModal>{
     isOpen: false,
     isLoggingIn: false,
     credentials: {

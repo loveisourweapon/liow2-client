@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeFeedComponent } from './home-feed.component';
-import { Group } from '../../store/models';
+import { Group } from '../../store/group';
 import { FeedStubComponent, RouterLinkStubDirective } from '../../../testing';
 
 describe(`HomeFeedComponent`, () => {

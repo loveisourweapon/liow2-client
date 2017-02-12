@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Counters, Group, User } from '../../store/models';
+import { Counters } from '../../store/act';
+import { Group } from '../../store/group';
+import { User } from '../../store/user';
 
 @Component({
   selector: 'liow-home-feed',

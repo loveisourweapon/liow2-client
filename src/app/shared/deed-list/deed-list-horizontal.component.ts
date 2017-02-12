@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Counters, Deed } from '../../store/models';
+import { Counters } from '../../store/act';
+import { Deed } from '../../store/deed';
 
 @Component({
   selector: 'liow-deed-list-horizontal',

@@ -3,12 +3,13 @@ import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap';
 import { has } from 'lodash';
 
-import { NewUser, Group } from '../../store/models';
-import * as auth from '../../store/actions/auth';
-import * as modal from '../../store/actions/modal';
-import * as signupModal from '../../store/actions/modal/signup';
-import { State as SignupModalState } from '../../store/reducers/modal/signup';
-import { State as AppState } from '../../store/reducers';
+import { NewUser } from '../../store/user';
+import { Group } from '../../store/group';
+import * as auth from '../../store/auth/auth.actions';
+import * as modal from '../../store/modal.actions';
+import { State as SignupModalState } from '../../store/signup-modal';
+import * as signupModal from '../../store/signup-modal/signup-modal.actions';
+import { State as AppState } from '../../store/reducer';
 
 @Component({
   selector: 'liow-signup-modal',

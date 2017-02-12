@@ -3,7 +3,9 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { FeedItemComponent } from './feed-item.component';
-import { FeedItem, Group, User } from '../../store/models';
+import { FeedItem } from '../../store/feed';
+import { Group } from '../../store/group';
+import { User } from '../../store/user';
 import { FromNowPipe, MomentPipe } from '../../shared';
 import { MarkedStubComponent, RouterLinkStubDirective } from '../../../testing';
 

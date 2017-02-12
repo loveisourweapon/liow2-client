@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
 
-import { Deed } from '../../store/models';
-import * as fromRoot from '../../store/reducers';
+import { Deed } from '../../store/deed';
+import * as fromRoot from '../../store/reducer';
 
 @Component({
   selector: 'liow-deed-list',

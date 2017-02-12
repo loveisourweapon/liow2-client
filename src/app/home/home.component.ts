@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Group, User } from '../store/models';
-import * as act from '../store/actions/act';
-import * as fromRoot from '../store/reducers';
+import { Group } from '../store/group';
+import { User } from '../store/user';
+import * as act from '../store/act/act.actions';
+import * as fromRoot from '../store/reducer';
 
 @Component({
   templateUrl: './home.component.html',

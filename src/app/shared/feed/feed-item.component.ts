@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { has, some } from 'lodash';
 
-import { FeedItem, Group, User } from '../../store/models';
+import { FeedItem } from '../../store/feed';
+import { Group } from '../../store/group';
+import { User } from '../../store/user';
 
 @Component({
   selector: 'liow-feed-item',

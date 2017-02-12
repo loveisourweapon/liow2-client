@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Group, GroupService } from '../store';
-import * as act from '../store/actions/act';
-import * as group from '../store/actions/group';
-import * as modal from '../store/actions/modal';
-import * as fromRoot from '../store/reducers';
+import { Group, GroupService } from '../store/group';
+import * as act from '../store/act/act.actions';
+import * as group from '../store/group/group.actions';
+import * as modal from '../store/modal.actions';
+import * as fromRoot from '../store/reducer';
 
 @Component({
   templateUrl: './group.component.html',

@@ -4,13 +4,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
-import * as fromRoot from '../store/reducers';
+import { State as AppState } from '../store/reducer';
 import { JumbtronStubComponent, StoreStubService, YoutubePlayerStubComponent } from '../../testing';
 
 describe(`HomeComponent`, () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let store: Store<fromRoot.State>;
+  let store: Store<AppState>;
 
   const testUser = { groups: [] };
 

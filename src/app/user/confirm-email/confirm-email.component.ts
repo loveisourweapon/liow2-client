@@ -3,8 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { has } from 'lodash';
 
-import * as auth from '../../store/actions/auth';
-import { State as AppState } from '../../store/reducers';
+import * as auth from '../../store/auth/auth.actions';
+import { State as AppState } from '../../store/reducer';
 
 @Component({
   templateUrl: './confirm-email.component.html',
