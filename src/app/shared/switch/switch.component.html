@@ -1,14 +1,14 @@
 <span
-  class="switch"
+  class="switch switch-{{ size }}"
   [class.checked]="checked"
   [class.disabled]="disabled"
-  [class.switch-large]="size === 'large'"
-  [class.switch-medium]="size === 'medium'"
-  [class.switch-small]="size === 'small'"
-  [style.background-color]="getColor()"
-  [style.border-color]="getColor('borderColor')"
+  [style.background-color]="getBackgroundColor()"
+  [style.border-color]="borderColor"
 >
-  <small [style.background]="getColor('switchColor')"></small>
+  <span
+    class="switch-handle"
+    [style.background]="getHandleColor()"
+  ></span>
 </span>
 
 <div class="switch-label">

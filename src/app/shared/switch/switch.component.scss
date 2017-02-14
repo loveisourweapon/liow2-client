@@ -12,7 +12,7 @@
   transition: 0.3s ease-out all;
   vertical-align: middle;
 
-  small {
+  .switch-handle {
     border-radius: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     position: absolute;
@@ -37,11 +37,11 @@
   height: 40px;
   border-radius: 40px;
 
-  small {
+  .switch-handle {
     width: 40px;
     height: 40px;
   }
-  &.checked small {
+  &.checked .switch-handle {
     left: 26px;
   }
 }
@@ -51,11 +51,11 @@
   height: 30px;
   border-radius: 30px;
 
-  small {
+  .switch-handle {
     width: 30px;
     height: 30px;
   }
-  &.checked small {
+  &.checked .switch-handle {
     left: 20px;
   }
 }
@@ -65,11 +65,11 @@
   height: 20px;
   border-radius: 20px;
 
-  small {
+  .switch-handle {
     width: 20px;
     height: 20px;
   }
-  &.checked small {
+  &.checked .switch-handle {
     left: 13px;
   }
 }
