@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap';
-import { has } from 'lodash';
+import { assign, has } from 'lodash';
 
 import { NewUser } from '../../store/user';
 import { Group } from '../../store/group';
@@ -37,15 +37,17 @@ export class SignupModalComponent implements OnChanges {
     }
   }
 
-  signup(newUser: NewUser, joinGroup: boolean): void {
-    if (joinGroup) { newUser.groups = [this.group._id]; }
+  signup(newUser: NewUser, joinGroup: boolean, group: Group): void {
+    if (group && joinGroup) {
+      newUser = assign({}, newUser, { groups: [group._id] });
+    }
 
     this.store.dispatch(new auth.SignupAction(newUser));
   }
 
-  authenticateFacebook(joinGroup: boolean): void {
+  authenticateFacebook(joinGroup: boolean, group: Group): void {
     const userData: any = {};
-    if (joinGroup) { userData.group = this.group._id; }
+    if (group && joinGroup) { userData.group = group._id; }
 
     this.store.dispatch(new auth.LoginWithFacebookAction(userData));
   }

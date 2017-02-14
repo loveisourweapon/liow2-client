@@ -13,17 +13,24 @@ import * as fromRoot from '../store/reducer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalsComponent implements OnInit {
-  currentGroup$: Observable<Group>;
   loginModal$: Observable<LoginModalState>;
   signupModal$: Observable<SignupModalState>;
+  currentGroup$: Observable<Group>;
 
   constructor(
     private store: Store<fromRoot.State>,
   ) { }
 
   ngOnInit(): void {
-    this.currentGroup$ = this.store.select(fromRoot.getCurrentGroup);
     this.loginModal$ = this.store.select(fromRoot.getLoginModal);
     this.signupModal$ = this.store.select(fromRoot.getSignupModal);
+
+    // Set the current group only if currently on a group page
+    this.currentGroup$ = Observable.combineLatest(
+      this.store.select(fromRoot.getCurrentGroup),
+      this.store.select(fromRoot.getRouterPath).map((path: string) => /^\/g\//.test(path)),
+    )
+      .map(([currentGroup, isGroupPage]: [Group, boolean]) => isGroupPage ? currentGroup : null)
+      .distinctUntilChanged();
   }
 }

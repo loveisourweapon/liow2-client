@@ -14,8 +14,7 @@ describe(`login modal reducer`, () => {
       email: '',
       password: '',
     },
-    joinGroup: false,
-    showJoinGroup: false,
+    joinGroup: true,
     errorMessage: '',
   };
 
@@ -31,12 +30,12 @@ describe(`login modal reducer`, () => {
     expect(state.isOpen).toBe(false);
   });
 
-  it(`should set isOpen and showJoinGroup properties with OPEN action`, () => {
-    const showJoinGroup = true;
-    const state = reducer(initialState, new loginModal.OpenAction({ showJoinGroup }));
-    expect(state).not.toBe(initialState);
+  it(`should set isOpen to true and reset form with OPEN action`, () => {
+    const modifiedState = assign({}, initialState, { joinGroup: false });
+    const state = reducer(modifiedState, new loginModal.OpenAction());
+    expect(state).not.toBe(modifiedState);
     expect(state.isOpen).toBe(true);
-    expect(state.showJoinGroup).toBe(showJoinGroup);
+    expect(state.joinGroup).toBe(initialState.joinGroup);
   });
 
   it(`should update credentials.email with UPDATE_EMAIL action`, () => {

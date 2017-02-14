@@ -115,6 +115,12 @@ export function getSignupModal(state: State) { return state.modalSignup; }
 
 
 /**
+ * Router state selectors
+ */
+export function getRouterPath(state: State) { return state.router.path; }
+
+
+/**
  * User state selectors
  */
 export function getUserState(state: State) { return state.user; }

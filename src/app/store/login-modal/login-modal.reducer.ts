@@ -9,7 +9,6 @@ export interface State {
   isLoggingIn: boolean;
   credentials: Credentials;
   joinGroup: boolean;
-  showJoinGroup: boolean;
   errorMessage: string;
 }
 
@@ -20,8 +19,7 @@ const initialState: State = {
     email: '',
     password: '',
   },
-  joinGroup: false,
-  showJoinGroup: false,
+  joinGroup: true,
   errorMessage: '',
 };
 
@@ -33,15 +31,13 @@ export function reducer(state = initialState, action: loginModal.Actions|auth.Ac
       });
 
     case loginModal.ActionTypes.OPEN:
-      const showJoinGroup = action.payload != null
-        ? action.payload.showJoinGroup
-        : initialState.showJoinGroup
-        ;
-
       return assign({}, initialState, {
         isOpen: true,
-        joinGroup: showJoinGroup,
-        showJoinGroup: showJoinGroup,
+      });
+
+    case loginModal.ActionTypes.UPDATE_JOIN_GROUP:
+      return assign({}, state, {
+        joinGroup: action.payload,
       });
 
     case loginModal.ActionTypes.UPDATE_EMAIL:

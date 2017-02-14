@@ -10,7 +10,7 @@ import { Group } from '../../store/group';
 import * as auth from '../../store/auth/auth.actions';
 import { State as SignupModalState } from '../../store/signup-modal';
 import { State as AppState } from '../../store/reducer';
-import { ModalStubDirective, StoreStubService } from '../../../testing';
+import { ModalStubDirective, StoreStubService, SwitchStubComponent } from '../../../testing';
 
 describe(`SignupModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
@@ -27,6 +27,7 @@ describe(`SignupModalComponent`, () => {
           TestHostComponent,
           ModalHeaderComponent,
           ModalStubDirective,
+          SwitchStubComponent,
         ],
         imports: [
           FormsModule,
@@ -80,6 +81,5 @@ class TestHostComponent {
       lastName: '',
     },
     joinGroup: false,
-    showJoinGroup: false,
   };
 }

@@ -10,6 +10,7 @@ import { FeedComponent, FeedItemComponent } from './feed';
 import { JumbotronComponent } from './jumbotron';
 import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
+import { SwitchComponent } from './switch';
 import { YoutubePlayerComponent } from './youtube-player.component';
 import { FromNowPipe } from './from-now.pipe';
 import { MomentPipe } from './moment.pipe';
@@ -29,6 +30,7 @@ import { MomentPipe } from './moment.pipe';
     JumbotronComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
+    SwitchComponent,
     YoutubePlayerComponent,
 
     FromNowPipe,
@@ -45,6 +47,7 @@ import { MomentPipe } from './moment.pipe';
     JumbotronComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
+    SwitchComponent,
     YoutubePlayerComponent,
 
     FromNowPipe,

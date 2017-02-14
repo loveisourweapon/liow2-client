@@ -17,25 +17,19 @@
       ></liow-modal-header>
 
       <div class="modal-body">
-        <div *ngIf="state.showJoinGroup">
-          <p>
-            <!--<ui-switch
-              [checked]="joinGroup"
-              (change)="joinGroup = $event"
-              id="joinGroup"
-              name="joinGroup"
-              class="m-r-xs"
-            >
-              Join {{ (group$ | async)?.name }}
-            </ui-switch>-->
-            Join {{ group?.name }}
-          </p>
+        <div *ngIf="group">
+          <ui-switch
+            [checked]="state.joinGroup"
+            (change)="onUpdatePropertyAction('JoinGroup', $event)"
+          >
+            Join {{ group.name }}
+          </ui-switch>
           <hr>
         </div>
 
         <p>
           <button
-            (click)="authenticateFacebook(state.joinGroup)"
+            (click)="authenticateFacebook(state.joinGroup, group)"
             class="btn btn-facebook btn-block"
             [disabled]="state.isLoggingIn"
           >
@@ -47,7 +41,7 @@
 
         <hr>
 
-        <form (ngSubmit)="authenticateEmail(state.credentials, state.joinGroup)">
+        <form (ngSubmit)="authenticateEmail(state.credentials, state.joinGroup, group)">
           <!--<div uib-alert
                class="alert-danger p-sm"
                ng-if="$ctrl.error">
@@ -122,7 +116,7 @@
       <div class="modal-footer">
         <button
           type="submit"
-          (click)="authenticateEmail(state.credentials, state.joinGroup)"
+          (click)="authenticateEmail(state.credentials, state.joinGroup, group)"
           class="btn btn-primary btn-block"
           [disabled]="state.isLoggingIn"
         >

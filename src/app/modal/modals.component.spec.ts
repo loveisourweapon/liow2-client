@@ -9,7 +9,7 @@ import { StoreStubService } from '../../testing';
 // Simple store spies won't work here because this component uses multiple `store.select` calls
 // need more complicated spies or testing methods
 
-describe(`ModalsComponent`, () => {
+xdescribe(`ModalsComponent`, () => {
   let component: ModalsComponent;
   let fixture: ComponentFixture<ModalsComponent>;
 

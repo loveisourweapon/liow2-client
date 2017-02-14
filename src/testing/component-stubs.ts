@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'liow-deed-list',
@@ -41,6 +41,15 @@ export class LoadingSpinnerStubComponent {
 })
 export class MarkedStubComponent {
   @Input() content: string;
+}
+
+@Component({
+  selector: 'ui-switch',
+  template: ``,
+})
+export class SwitchStubComponent {
+  @Input() checked: boolean;
+  @Output() change = new EventEmitter();
 }
 
 @Component({

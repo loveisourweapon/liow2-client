@@ -5,6 +5,7 @@ import { actionType } from '../utils';
 export class ActionTypes {
   static readonly CLOSE = actionType('[Signup Modal] Close');
   static readonly OPEN = actionType('[Signup Modal] Open');
+  static readonly UPDATE_JOIN_GROUP = actionType('[Signup Modal] Update Join Group');
   static readonly UPDATE_EMAIL = actionType('[Signup Modal] Update Email');
   static readonly UPDATE_FIRST_NAME = actionType('[Signup Modal] Update First Name');
   static readonly UPDATE_LAST_NAME = actionType('[Signup Modal] Update Last Name');
@@ -18,9 +19,13 @@ export class CloseAction implements Action {
 
 export class OpenAction implements Action {
   type = ActionTypes.OPEN;
+}
+
+export class UpdateJoinGroupAction implements Action {
+  type = ActionTypes.UPDATE_JOIN_GROUP;
 
   constructor(
-    public payload?: { showJoinGroup: boolean },
+    public payload: boolean,
   ) { }
 }
 
@@ -67,6 +72,7 @@ export class UpdatePictureAction implements Action {
 export type Actions
   = CloseAction
   | OpenAction
+  | UpdateJoinGroupAction
   | UpdateEmailAction
   | UpdateFirstNameAction
   | UpdateLastNameAction

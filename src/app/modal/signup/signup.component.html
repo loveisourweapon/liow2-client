@@ -17,11 +17,19 @@
       ></liow-modal-header>
 
       <div class="modal-body">
-        <!-- TODO: handle join group -->
+        <div *ngIf="group">
+          <ui-switch
+            [checked]="state.joinGroup"
+            (change)="onUpdatePropertyAction('JoinGroup', $event)"
+          >
+            Join {{ group.name }}
+          </ui-switch>
+          <hr>
+        </div>
 
         <p>
           <button
-            (click)="authenticateFacebook(state.joinGroup)"
+            (click)="authenticateFacebook(state.joinGroup, group)"
             class="btn btn-facebook btn-block"
             [disabled]="state.isSigningUp"
           >
@@ -34,7 +42,7 @@
         <hr>
 
         <form
-          (ngSubmit)="signup(state.user, state.joinGroup)"
+          (ngSubmit)="signup(state.user, state.joinGroup, group)"
           name="userEdit"
           #form="ngForm"
           class="form-horizontal"
@@ -184,7 +192,7 @@
       <div class="modal-footer">
         <button
           type="submit"
-          (click)="signup(state.user, state.joinGroup)"
+          (click)="signup(state.user, state.joinGroup, group)"
           class="btn btn-primary btn-block"
           [disabled]="state.isSigningUp"
         >

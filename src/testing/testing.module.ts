@@ -21,6 +21,7 @@ import {
   JumbtronStubComponent,
   LoadingSpinnerStubComponent,
   MarkedStubComponent,
+  SwitchStubComponent,
   YoutubePlayerStubComponent,
 } from './component-stubs';
 import {
@@ -56,6 +57,7 @@ import {
     JumbtronStubComponent,
     LoadingSpinnerStubComponent,
     MarkedStubComponent,
+    SwitchStubComponent,
     YoutubePlayerStubComponent,
 
     RouterLinkStubDirective,

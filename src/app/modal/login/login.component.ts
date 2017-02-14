@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap';
-import { has } from 'lodash';
+import { assign, has } from 'lodash';
 
 import { Credentials } from '../../store/auth';
 import { Group } from '../../store/group';
@@ -37,15 +37,17 @@ export class LoginModalComponent implements OnChanges {
     }
   }
 
-  authenticateEmail(credentials: Credentials, joinGroup: boolean): void {
-    if (joinGroup) { credentials.group = this.group._id; }
+  authenticateEmail(credentials: Credentials, joinGroup: boolean, group: Group): void {
+    if (group && joinGroup) {
+      credentials = assign({}, credentials, { group: group._id });
+    }
 
     this.store.dispatch(new auth.LoginWithEmailAction(credentials));
   }
 
-  authenticateFacebook(joinGroup: boolean): void {
+  authenticateFacebook(joinGroup: boolean, group: Group): void {
     const userData: any = {};
-    if (joinGroup) { userData.group = this.group._id; }
+    if (group && joinGroup) { userData.group = group._id; }
 
     this.store.dispatch(new auth.LoginWithFacebookAction(userData));
   }
