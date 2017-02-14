@@ -113,7 +113,7 @@
               </a>
             </li>
             <li *ngIf="!(isAuthenticated$ | async)">
-              <a (click)="openSignup(); closeMenu(); $event.preventDefault()" href><!-- TODO: open signup modal -->
+              <a (click)="openSignup(); closeMenu(); $event.preventDefault()" href>
                 <i class="fa fa-fw fa-user-plus"></i>
                 Sign up
               </a>
