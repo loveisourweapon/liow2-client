@@ -6,6 +6,7 @@ import { has } from 'lodash';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
+import { buildUrlSearchParams, SearchParams } from '../utils';
 import { NewUser, User, UserId } from './index';
 
 @Injectable()
@@ -43,9 +44,9 @@ export class UserService {
       .map((user: User) => this.transformUser(user));
   }
 
-  count(search = new URLSearchParams()): Observable<number> {
-    search.set('count', 'true');
-    return this.http.get(this.baseUrl, { search })
+  count(params: SearchParams = {}): Observable<number> {
+    params['count'] = true;
+    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
   }
 

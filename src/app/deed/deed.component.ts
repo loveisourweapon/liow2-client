@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Deed } from '../store/deed';
+import { Deed, DeedSlug } from '../store/deed';
 import * as deed from '../store/deed/deed.actions';
 import * as modal from '../store/modal.actions';
 import * as fromRoot from '../store/reducer';
@@ -33,15 +33,11 @@ export class DeedComponent implements OnDestroy, OnInit {
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     // this.isDoing$ = this.store.select(fromRoot.getDeedIsDoing);
 
-    this.subscription = Observable.combineLatest(
-      this.store.select(fromRoot.getDeeds),
-      this.route.params.map((params: Params) => params['deedSlug']),
-    )
+    this.subscription = this.route.params
+      .map((params: Params) => params['deedSlug'])
+      .filter((deedSlug: DeedSlug) => Boolean(deedSlug))
       .distinctUntilChanged()
-      .subscribe(([deeds, deedSlug]: [Deed[], string]) => {
-        const currentDeed = deeds.find((deed: Deed) => deed.urlTitle === deedSlug);
-        if (currentDeed) { this.store.dispatch(new deed.SetCurrentAction(currentDeed)); }
-      });
+      .subscribe((deedSlug: DeedSlug) => this.store.dispatch(new deed.FindAndSetCurrentAction({ urlTitle: deedSlug })));
   }
 
   ngOnDestroy(): void {

@@ -8,6 +8,7 @@ import { State as AppState } from '../store/reducer';
 import {
   ActivatedRouteStubService,
   DeedListStubComponent,
+  FeedStubComponent,
   JumbtronStubComponent,
   MarkedStubComponent,
   StoreStubService,
@@ -29,6 +30,7 @@ xdescribe(`DeedComponent`, () => {
         declarations: [
           DeedComponent,
           DeedListStubComponent,
+          FeedStubComponent,
           JumbtronStubComponent,
           MarkedStubComponent,
           YoutubePlayerStubComponent,

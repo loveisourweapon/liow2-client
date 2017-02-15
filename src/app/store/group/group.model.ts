@@ -1,7 +1,10 @@
+export type GroupId = string;
+export type GroupSlug = string;
+
 export interface Group {
-  _id: string;
+  _id: GroupId;
   name: string;
-  urlName: string;
+  urlName: GroupSlug;
   owner: string;
   admins: string[];
   country: string;

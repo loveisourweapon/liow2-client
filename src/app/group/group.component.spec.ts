@@ -3,11 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { GroupComponent } from './group.component';
-import { GroupService } from '../store/group';
 import {
   ActivatedRouteStubService,
   FeedStubComponent,
-  GroupStubService,
   JumbtronStubComponent,
   MarkedStubComponent,
   StoreStubService,
@@ -36,7 +34,6 @@ describe(`GroupComponent`, () => {
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: GroupService, useClass: GroupStubService },
           { provide: Store, useClass: StoreStubService },
         ],
       })

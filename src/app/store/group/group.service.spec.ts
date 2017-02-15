@@ -33,10 +33,10 @@ describe(`GroupService`, () => {
     it(`should pass search params to http.get`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup] }));
       const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
-      const search = new URLSearchParams();
-      service.find(search).subscribe(() => {
+      const params = { property: 'value' };
+      service.find(params).subscribe(() => {
         const requestOptions = httpSpy.calls.mostRecent().args[1];
-        expect(requestOptions.search).toBe(search);
+        expect(requestOptions.search.get('property')).toBe(params.property);
       });
     });
 
@@ -86,7 +86,7 @@ describe(`GroupService`, () => {
         const url = httpSpy.calls.mostRecent().args[0];
         const search = httpSpy.calls.mostRecent().args[1]['search'];
         expect(url).toMatch(/\/groups$/);
-        expect(search.get('count')).toBe('true');
+        expect(search.get('count')).toBe(true);
       });
     });
 

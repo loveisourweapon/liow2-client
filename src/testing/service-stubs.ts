@@ -18,6 +18,7 @@ export class AuthStubService {
 export class DeedStubService {
   countAll() { }
   find() { }
+  findOne() { }
 }
 
 @Injectable()

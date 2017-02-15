@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { actionType } from '../utils';
+import { actionType, SearchParams } from '../utils';
 import { Deed } from './index';
 import { DeedCounterResult } from '../act';
 
@@ -8,9 +8,11 @@ export class ActionTypes {
   static readonly ALL_COUNTERS = actionType('[Deed] All Counters');
   static readonly ALL_COUNTERS_SUCCESS = actionType('[Deed] All Counters Success');
   static readonly ALL_COUNTERS_FAIL = actionType('[Deed] All Counters Fail');
-  static readonly FIND = actionType('[Deed] Find');
-  static readonly FIND_SUCCESS = actionType('[Deed] Find Success');
-  static readonly FIND_FAIL = actionType('[Deed] Find Fail');
+  static readonly FIND_ALL = actionType('[Deed] Find All');
+  static readonly FIND_ALL_SUCCESS = actionType('[Deed] Find All Success');
+  static readonly FIND_ALL_FAIL = actionType('[Deed] Find All Fail');
+  static readonly FIND_AND_SET_CURRENT = actionType('[Deed] Find and Set Current');
+  static readonly FIND_AND_SET_CURRENT_FAIL = actionType('[Deed] Find and Set Current Fail');
   static readonly SET_CURRENT = actionType('[Deed] Set Current');
 }
 
@@ -34,23 +36,39 @@ export class AllCountersFailAction implements Action {
   ) { }
 }
 
-export class FindAction implements Action {
-  type = ActionTypes.FIND;
+export class FindAllAction implements Action {
+  type = ActionTypes.FIND_ALL;
 }
 
-export class FindSuccessAction implements Action {
-  type = ActionTypes.FIND_SUCCESS;
+export class FindAllSuccessAction implements Action {
+  type = ActionTypes.FIND_ALL_SUCCESS;
 
   constructor(
     public payload: Deed[],
   ) { }
 }
 
-export class FindFailAction implements Action {
-  type = ActionTypes.FIND_FAIL;
+export class FindAllFailAction implements Action {
+  type = ActionTypes.FIND_ALL_FAIL;
 
   constructor(
-    public payload: any,
+    public payload: string,
+  ) { }
+}
+
+export class FindAndSetCurrentAction implements Action {
+  type = ActionTypes.FIND_AND_SET_CURRENT;
+
+  constructor(
+    public payload: SearchParams,
+  ) { }
+}
+
+export class FindAndSetCurrentFailAction implements Action {
+  type = ActionTypes.FIND_AND_SET_CURRENT_FAIL;
+
+  constructor(
+    public payload: string,
   ) { }
 }
 
@@ -66,8 +84,10 @@ export type Actions
   = AllCountersAction
   | AllCountersSuccessAction
   | AllCountersFailAction
-  | FindAction
-  | FindSuccessAction
-  | FindFailAction
+  | FindAllAction
+  | FindAllSuccessAction
+  | FindAllFailAction
+  | FindAndSetCurrentAction
+  | FindAndSetCurrentFailAction
   | SetCurrentAction
   ;

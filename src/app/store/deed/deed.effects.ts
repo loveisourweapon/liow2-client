@@ -10,12 +10,19 @@ import * as deed from './deed.actions';
 @Injectable()
 export class DeedEffects {
   @Effect()
-  find$: Observable<Action> = this.actions$
-    .ofType(deed.ActionTypes.FIND)
-    .startWith(new deed.FindAction()) // dispatch on startup
-    .flatMap((action: Action) => this.deedService.find(action.payload))
-    .map((deeds: Deed[]) => new deed.FindSuccessAction(deeds))
-    .catch(error => Observable.of(new deed.FindFailAction(error)));
+  findAll$: Observable<Action> = this.actions$
+    .ofType(deed.ActionTypes.FIND_ALL)
+    .startWith(new deed.FindAllAction()) // dispatch on startup
+    .flatMap(() => this.deedService.find())
+    .map((deeds: Deed[]) => new deed.FindAllSuccessAction(deeds))
+    .catch(error => Observable.of(new deed.FindAllFailAction(error.message)));
+
+  @Effect()
+  findAndSetCurrent$: Observable<Action> = this.actions$
+    .ofType(deed.ActionTypes.FIND_AND_SET_CURRENT)
+    .flatMap((action: Action) => this.deedService.findOne(action.payload))
+    .map((foundDeed: Deed) => new deed.SetCurrentAction(foundDeed))
+    .catch(error => Observable.of(new deed.FindAndSetCurrentFailAction(error.message)));
 
   constructor(
     private actions$: Actions,

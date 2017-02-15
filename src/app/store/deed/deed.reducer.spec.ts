@@ -9,26 +9,34 @@ describe(`deed reducer`, () => {
     current: null,
   };
 
-  it(`should set isLoading to true with FIND action`, () => {
-    const state = reducer(initialState, new deed.FindAction());
+  it(`should set isLoading to true with FIND_ALL action`, () => {
+    const state = reducer(initialState, new deed.FindAllAction());
     expect(state).not.toBe(initialState);
     expect(state.isLoading).toBe(true);
   });
 
-  it(`should set deeds to payload with FIND_SUCCESS action`, () => {
+  it(`should set deeds to payload with FIND_ALL_SUCCESS action`, () => {
     const payload = [];
-    const state = reducer(initialState, new deed.FindSuccessAction(payload));
+    const state = reducer(initialState, new deed.FindAllSuccessAction(payload));
     expect(state).not.toBe(initialState);
     expect(state.isLoading).toBe(false);
     expect(state.isLoaded).toBe(true);
     expect(state.deeds).toBe(payload);
   });
 
-  it(`should set isLoading to false with FIND_FAIL action`, () => {
+  it(`should set isLoading to false with FIND_ALL_FAIL action`, () => {
+    const errorMessage = 'Test error';
     const loadingState = Object.assign({}, initialState, { isLoading: true });
-    const state = reducer(loadingState, new deed.FindFailAction(new Error()));
+    const state = reducer(loadingState, new deed.FindAllFailAction(errorMessage));
     expect(state).not.toBe(loadingState);
     expect(state.isLoading).toBe(false);
+  });
+
+  it(`should clear current group with FIND_AND_SET_CURRENT action`, () => {
+    const deedState = <State>{ current: <Deed>{} };
+    const state = reducer(deedState, new deed.FindAndSetCurrentAction({}));
+    expect(state).not.toBe(deedState);
+    expect(state.current).toBeNull();
   });
 
   it(`should set current deed with SET_CURRENT action`, () => {

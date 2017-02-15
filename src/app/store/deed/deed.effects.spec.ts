@@ -3,7 +3,7 @@ import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { DeedEffects, DeedService } from './index';
+import { Deed, DeedEffects, DeedService } from './index';
 import * as deed from './deed.actions';
 import { DeedStubService } from '../../../testing';
 
@@ -32,23 +32,45 @@ describe(`DeedEffects`, () => {
   }));
 
   describe(`find$`, () => {
-    it(`should dispatch FIND_SUCCESS after successful find HTTP request`, () => {
+    it(`should dispatch FIND_ALL_SUCCESS after successful find HTTP request`, () => {
       const payload = [];
       spyOn(deedService, 'find').and.returnValue(Observable.of(payload));
-      runner.queue(new deed.FindAction());
-      deedEffects.find$.subscribe((result: Action) => {
-        expect(result.type).toBe(deed.ActionTypes.FIND_SUCCESS);
+      runner.queue(new deed.FindAllAction());
+      deedEffects.findAll$.subscribe((result: Action) => {
+        expect(result.type).toBe(deed.ActionTypes.FIND_ALL_SUCCESS);
         expect(result.payload).toBe(payload);
       });
     });
 
-    it(`should dispatch FIND_FAIL after failed find HTTP request`, () => {
-      const error = {};
-      spyOn(deedService, 'find').and.returnValue(Observable.throw(error));
-      runner.queue(new deed.FindAction());
-      deedEffects.find$.subscribe((result: Action) => {
-        expect(result.type).toBe(deed.ActionTypes.FIND_FAIL);
-        expect(result.payload).toBe(error);
+    it(`should dispatch FIND_ALL_FAIL after failed find HTTP request`, () => {
+      const errorMessage = 'Test error';
+      spyOn(deedService, 'find').and.returnValue(Observable.throw(new Error(errorMessage)));
+      runner.queue(new deed.FindAllAction());
+      deedEffects.findAll$.subscribe((result: Action) => {
+        expect(result.type).toBe(deed.ActionTypes.FIND_ALL_FAIL);
+        expect(result.payload).toBe(errorMessage);
+      });
+    });
+  });
+
+  describe(`findAndSetCurrent$`, () => {
+    it(`should dispatch SET_CURRENT after finding current deed`, () => {
+      const foundDeed = <Deed>{};
+      spyOn(deedService, 'findOne').and.returnValue(Observable.of(foundDeed));
+      runner.queue(new deed.FindAndSetCurrentAction({}));
+      deedEffects.findAndSetCurrent$.subscribe((result: Action) => {
+        expect(result.type).toBe(deed.ActionTypes.SET_CURRENT);
+        expect(result.payload).toBe(foundDeed);
+      });
+    });
+
+    it(`should dispatch FIND_AND_SET_CURRENT_FAIL after failing to find current deed`, () => {
+      const errorMessage = 'Test error';
+      spyOn(deedService, 'findOne').and.returnValue(Observable.throw(new Error(errorMessage)));
+      runner.queue(new deed.FindAndSetCurrentAction({}));
+      deedEffects.findAndSetCurrent$.subscribe((result: Action) => {
+        expect(result.type).toBe(deed.ActionTypes.FIND_AND_SET_CURRENT_FAIL);
+        expect(result.payload).toBe(errorMessage);
       });
     });
   });

@@ -33,10 +33,10 @@ describe(`DeedService`, () => {
     it(`should pass search params to http.get`, () => {
       const response = new Response(new ResponseOptions({ body: [testDeed] }));
       const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
-      const search = new URLSearchParams();
-      service.find(search).subscribe(() => {
+      const params = { property: 'value' };
+      service.find(params).subscribe(() => {
         const requestOptions = httpSpy.calls.mostRecent().args[1];
-        expect(requestOptions.search).toBe(search);
+        expect(requestOptions.search.get('property')).toBe(params.property);
       });
     });
 
@@ -47,6 +47,26 @@ describe(`DeedService`, () => {
         expect(deeds[0].created instanceof Date).toBe(true);
         expect(deeds[0].modified instanceof Date).toBe(true);
       });
+    });
+  });
+
+  describe(`#findOne`, () => {
+    it(`should return a single Deed`, () => {
+      const response = new Response(new ResponseOptions({ body: [testDeed] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.findOne().subscribe((deed: Deed) => expect(deed).toBe(testDeed));
+    });
+
+    it(`should throw an error if no Deeds found`, () => {
+      const response = new Response(new ResponseOptions({ body: [] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Deed not found`));
+    });
+
+    it(`should throw an error if more than one Deed found`, () => {
+      const response = new Response(new ResponseOptions({ body: [testDeed, testDeed] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Deed not found`));
     });
   });
 

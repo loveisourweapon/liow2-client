@@ -11,6 +11,9 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: group.Actions): State {
   switch (action.type) {
+    case group.ActionTypes.FIND_AND_SET_CURRENT:
+      return { current: null };
+
     case group.ActionTypes.SET_CURRENT:
       return { current: action.payload };
 

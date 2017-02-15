@@ -1,12 +1,14 @@
 import { Action } from '@ngrx/store';
 
-import { actionType } from '../utils';
+import { actionType, SearchParams } from '../utils';
 import { Group } from './index';
 
 export class ActionTypes {
   static readonly COUNT = actionType('[Group] Count');
   static readonly COUNT_SUCCESS = actionType('[Group] Count Success');
   static readonly COUNT_FAIL = actionType('[Group] Count Fail');
+  static readonly FIND_AND_SET_CURRENT = actionType('[Group] Find and Set Current');
+  static readonly FIND_AND_SET_CURRENT_FAIL = actionType('[Group] Find and Set Current Fail');
   static readonly SET_CURRENT = actionType('[Group] Set Current');
 }
 
@@ -30,6 +32,22 @@ export class CountFailAction implements Action {
   ) { }
 }
 
+export class FindAndSetCurrentAction implements Action {
+  type = ActionTypes.FIND_AND_SET_CURRENT;
+
+  constructor(
+    public payload: SearchParams,
+  ) { }
+}
+
+export class FindAndSetCurrentFailAction implements Action {
+  type = ActionTypes.FIND_AND_SET_CURRENT_FAIL;
+
+  constructor(
+    public payload: string,
+  ) { }
+}
+
 export class SetCurrentAction implements Action {
   type = ActionTypes.SET_CURRENT;
 
@@ -42,5 +60,7 @@ export type Actions
   = CountAction
   | CountSuccessAction
   | CountFailAction
+  | FindAndSetCurrentAction
+  | FindAndSetCurrentFailAction
   | SetCurrentAction
   ;

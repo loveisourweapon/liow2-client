@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Response, URLSearchParams } from '@angular/http';
+import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
+import { buildUrlSearchParams } from '../utils';
 import { FeedCriteria, FeedItem } from './index';
 
 @Injectable()
@@ -19,10 +20,7 @@ export class FeedService {
   }
 
   load(criteria: FeedCriteria): Observable<FeedItem[]> {
-    const search = new URLSearchParams();
-    Object.keys(criteria).forEach((key: string) => search.set(key, criteria[key]));
-
-    return this.http.get(this.baseUrl, { search })
+    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(criteria) })
       .map((response: Response) => response.json() || [])
       .map((feedItems: FeedItem[]) =>
         feedItems.map((feedItem: FeedItem) => {

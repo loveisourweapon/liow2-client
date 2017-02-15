@@ -3,7 +3,7 @@
     *ngFor="let deed of deeds; trackBy: deed?._id"
     class="deed-wrapper"
     [routerLink]="['/d', deed.urlTitle]"
-    [class.deed-current]="deed._id === currentDeed._id"
+    [class.deed-current]="deed._id === currentDeed?._id"
   >
     <div class="deed-image">
       <img [src]="deed.logo || 'images/deed.png'" class="img-responsive img-circle">

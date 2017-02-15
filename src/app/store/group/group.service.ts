@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Response, URLSearchParams } from '@angular/http';
+import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
+import { buildUrlSearchParams, SearchParams } from '../utils';
 import { Group } from './index';
 
 @Injectable()
@@ -18,8 +19,8 @@ export class GroupService {
     this.baseUrl = `${environment.apiBaseUrl}/groups`;
   }
 
-  find(search = new URLSearchParams()): Observable<Group[]> {
-    return this.http.get(this.baseUrl, { search })
+  find(params: SearchParams = {}): Observable<Group[]> {
+    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
       .map((groups: Group[]) =>
         groups.map((group: Group) => {
@@ -34,8 +35,8 @@ export class GroupService {
         }));
   }
 
-  findOne(search = new URLSearchParams()): Observable<Group> {
-    return this.find(search)
+  findOne(params: SearchParams = {}): Observable<Group> {
+    return this.find(params)
       .map((groups: Group[]) => {
         if (groups.length !== 1) {
           throw new Error(`Group not found`);
@@ -45,9 +46,9 @@ export class GroupService {
       });
   }
 
-  count(search = new URLSearchParams()): Observable<number> {
-    search.set('count', 'true');
-    return this.http.get(this.baseUrl, { search })
+  count(params: SearchParams = {}): Observable<number> {
+    params['count'] = true;
+    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
   }
 }

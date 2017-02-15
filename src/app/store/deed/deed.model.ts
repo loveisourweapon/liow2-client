@@ -1,7 +1,10 @@
+export type DeedId = string;
+export type DeedSlug = string;
+
 export interface Deed {
-  _id: string;
+  _id: DeedId;
   title: string;
-  urlTitle: string;
+  urlTitle: DeedSlug;
   content: string;
   logo: string;
   videoUrl: string;

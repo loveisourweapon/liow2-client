@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
 
+import { Counters } from '../../store/act';
 import { Deed } from '../../store/deed';
 import * as fromRoot from '../../store/reducer';
 
@@ -16,7 +17,7 @@ export class DeedListComponent implements OnInit {
 
   deeds$: Observable<Deed[]>;
   currentDeed$: Observable<Deed>;
-  counters$: Observable<{ [key: string]: number }>;
+  counters$: Observable<Counters>;
 
   constructor(
     private store: Store<fromRoot.State>,

@@ -19,22 +19,26 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: deed.Actions): State {
   switch (action.type) {
-    case deed.ActionTypes.FIND:
+    case deed.ActionTypes.FIND_ALL:
       return assign({}, state, {
         isLoading: true,
       });
 
-    case deed.ActionTypes.FIND_SUCCESS:
-      return {
+    case deed.ActionTypes.FIND_ALL_SUCCESS:
+      return assign({}, state, {
         isLoading: false,
         isLoaded: true,
         deeds: action.payload,
-        current: state.current,
-      };
+      });
 
-    case deed.ActionTypes.FIND_FAIL:
+    case deed.ActionTypes.FIND_ALL_FAIL:
       return assign({}, state, {
         isLoading: false,
+      });
+
+    case deed.ActionTypes.FIND_AND_SET_CURRENT:
+      return assign({}, state, {
+        current: null,
       });
 
     case deed.ActionTypes.SET_CURRENT:

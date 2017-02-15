@@ -114,7 +114,7 @@ describe(`UserService`, () => {
         const url = httpSpy.calls.mostRecent().args[0];
         const search = httpSpy.calls.mostRecent().args[1]['search'];
         expect(url).toMatch(/\/users$/);
-        expect(search.get('count')).toBe('true');
+        expect(search.get('count')).toBe(true);
       });
     });
 
