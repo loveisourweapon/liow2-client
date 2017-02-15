@@ -32,7 +32,7 @@ export class AllCountersFailAction implements Action {
   type = ActionTypes.ALL_COUNTERS_FAIL;
 
   constructor(
-    public payload: any,
+    public payload: string,
   ) { }
 }
 

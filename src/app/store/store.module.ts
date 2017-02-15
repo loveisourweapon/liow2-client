@@ -4,7 +4,7 @@ import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreModule as NgrxStoreModule } from '@ngrx/store';
 
 import { reducer } from './reducer';
-import { ActService, CounterEffects } from './act';
+import { ActService, ActEffects, CounterEffects } from './act';
 import { AuthEffects, AuthService } from './auth';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
@@ -17,6 +17,7 @@ import { UserEffects, UserService } from './user';
     RouterStoreModule.connectRouter(),
 
     EffectsModule.run(AuthEffects),
+    EffectsModule.run(ActEffects),
     EffectsModule.run(CounterEffects),
     EffectsModule.run(DeedEffects),
     EffectsModule.run(GroupEffects),

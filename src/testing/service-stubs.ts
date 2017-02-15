@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ActStubService {
   count() { }
+  done() { }
 }
 
 @Injectable()

@@ -1,4 +1,5 @@
 export * from './act.actions';
+export * from './act.effects';
 export * from './counter.effects';
 export * from './counter.reducer';
 export * from './act.service';

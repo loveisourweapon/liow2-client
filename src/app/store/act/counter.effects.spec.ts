@@ -49,12 +49,12 @@ describe(`CounterEffects`, () => {
     });
 
     it(`should dispatch COUNT_FAIL after failing to retrieve counter`, () => {
-      const error = {};
-      spyOn(actService, 'count').and.returnValue(Observable.throw(error));
+      const errorMessage = 'Test error';
+      spyOn(actService, 'count').and.returnValue(Observable.throw(new Error(errorMessage)));
       runner.queue(new act.CountAction());
       counterEffects.count$.subscribe((result: Action) => {
         expect(result.type).toBe(act.ActionTypes.COUNT_FAIL);
-        expect(result.payload).toBe(error);
+        expect(result.payload).toBe(errorMessage);
       });
     });
   });
@@ -75,12 +75,12 @@ describe(`CounterEffects`, () => {
     });
 
     it(`should dispatch ALL_COUNTERS_FAIL after failing to retrieve deed counters`, () => {
-      const error = {};
-      spyOn(deedService, 'countAll').and.returnValue(Observable.throw(error));
+      const errorMessage = 'Test error';
+      spyOn(deedService, 'countAll').and.returnValue(Observable.throw(new Error(errorMessage)));
       runner.queue(new deed.AllCountersAction());
       counterEffects.allDeedCounters$.subscribe((result: Action) => {
         expect(result.type).toBe(deed.ActionTypes.ALL_COUNTERS_FAIL);
-        expect(result.payload).toBe(error);
+        expect(result.payload).toBe(errorMessage);
       });
     });
   });

@@ -17,7 +17,7 @@ export class CounterEffects {
     .startWith(new act.CountAction()) // dispatch global count on startup
     .flatMap((action: Action) => this.actService.count(action.payload))
     .map((counter: CounterResult) => new act.CountSuccessAction(counter))
-    .catch((error: Error) => Observable.of(new act.CountFailAction(error)));
+    .catch((error: Error) => Observable.of(new act.CountFailAction(error.message)));
 
   @Effect()
   allDeedCounters$: Observable<Action> = this.actions$
@@ -25,7 +25,7 @@ export class CounterEffects {
     .startWith(new deed.AllCountersAction()) // dispatch on startup
     .flatMap(() => this.deedService.countAll())
     .map((counters: DeedCounterResult[]) => new deed.AllCountersSuccessAction(counters))
-    .catch((error: Error) => Observable.of(new deed.AllCountersFailAction(error)));
+    .catch((error: Error) => Observable.of(new deed.AllCountersFailAction(error.message)));
 
   constructor(
     private actions$: Actions,

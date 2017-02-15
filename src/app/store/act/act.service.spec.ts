@@ -3,7 +3,9 @@ import { Response, ResponseOptions, URLSearchParams } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
-import { ActService, CounterQuery, CounterResult } from './index';
+import { Act, ActService, CounterQuery, CounterResult } from './index';
+import { Deed } from '../deed';
+import { Group } from '../group';
 import { HttpStubService } from '../../../testing';
 
 describe(`ActService`, () => {
@@ -45,6 +47,30 @@ describe(`ActService`, () => {
       service.count(query).subscribe((result: CounterResult) => {
         expect(result.counterId).toBe(query.group);
         expect(result.count).toBe(count);
+      });
+    });
+  });
+
+  describe(`#done`, () => {
+    const testDeed = <Deed>{ _id: 'abc123' };
+    const testGroup = <Group>{ _id: 'def456' };
+
+    it(`should pass deed and group ID's to API endpoint`, () => {
+      const response = new Response(new ResponseOptions({ body: <Act>{} }));
+      const httpSpy = spyOn(http, 'post').and.returnValue(Observable.of(response));
+      service.done(testDeed, testGroup).subscribe(() => {
+        const data = httpSpy.calls.mostRecent().args[1];
+        expect(data.deed).toBe(testDeed._id);
+        expect(data.group).toBe(testGroup._id);
+      });
+    });
+
+    it(`should null group if not provided`, () => {
+      const response = new Response(new ResponseOptions({ body: <Act>{} }));
+      const httpSpy = spyOn(http, 'post').and.returnValue(Observable.of(response));
+      service.done(testDeed).subscribe(() => {
+        const data = httpSpy.calls.mostRecent().args[1];
+        expect(data.group).toBeNull();
       });
     });
   });
