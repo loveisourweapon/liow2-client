@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { User, UserEffects, UserService } from './index';
 import * as user from './user.actions';
 import * as act from '../act/act.actions';
-import { UserStubService } from '../../../testing';
+import { UserStubService, takeAndScan } from '../../../testing';
 
 describe(`UserEffects`, () => {
   let runner: EffectsRunner;
@@ -38,10 +38,7 @@ describe(`UserEffects`, () => {
       const foundUser = <User>{ _id: userId };
       const getSpy = spyOn(userService, 'get').and.returnValue(Observable.of(foundUser));
       runner.queue(new user.GetAndSetCurrentAction(userId));
-      userEffects.getAndSetCurrent$
-        .take(2)
-        .scan((results: Action[], result: Action) => [...results, result], [])
-        .skip(1)
+      takeAndScan(userEffects.getAndSetCurrent$, 2)
         .subscribe((results: Action[]) => {
           expect(getSpy).toHaveBeenCalledWith(userId);
           expect(results[0].type).toBe(user.ActionTypes.SET_CURRENT);

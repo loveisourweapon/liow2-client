@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Group, GroupEffects, GroupService } from './index';
 import * as act from '../act/act.actions';
 import * as group from './group.actions';
-import { GroupStubService } from '../../../testing';
+import { GroupStubService, takeAndScan } from '../../../testing';
 
 describe(`GroupEffects`, () => {
   let runner: EffectsRunner;
@@ -60,10 +60,7 @@ describe(`GroupEffects`, () => {
       const foundGroup = <Group>{};
       spyOn(groupService, 'findOne').and.returnValue(Observable.of(foundGroup));
       runner.queue(new group.FindAndSetCurrentAction({}));
-      groupEffects.findAndSetCurrent$
-        .take(2)
-        .scan((results: Action[], result: Action) => [...results, result], [])
-        .skip(1)
+      takeAndScan(groupEffects.findAndSetCurrent$, 2)
         .subscribe((results: Action[]) => {
           expect(results[0].type).toBe(group.ActionTypes.SET_CURRENT);
           expect(results[0].payload).toBe(foundGroup);

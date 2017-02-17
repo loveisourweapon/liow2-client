@@ -7,8 +7,6 @@ import { NewUser, User } from '../user';
 
 export class ActionTypes {
   static readonly CONFIRM_EMAIL = actionType('[Auth] Confirm Email');
-  static readonly CONFIRM_EMAIL_SUCCESS = actionType('[Auth] Confirm Email Success');
-  static readonly CONFIRM_EMAIL_FAIL = actionType('[Auth] Confirm Email Fail');
   static readonly LOGIN_WITH_EMAIL = actionType('[Auth] Login Email');
   static readonly LOGIN_WITH_FACEBOOK = actionType('[Auth] Login Facebook');
   static readonly LOGIN_WITH_TOKEN = actionType('[Auth] Login Token');
@@ -24,18 +22,6 @@ export class ActionTypes {
 
 export class ConfirmEmailAction implements Action {
   type = ActionTypes.CONFIRM_EMAIL;
-
-  constructor(
-    public payload: string,
-  ) { }
-}
-
-export class ConfirmEmailSuccessAction implements Action {
-  type = ActionTypes.CONFIRM_EMAIL_SUCCESS;
-}
-
-export class ConfirmEmailFailAction implements Action {
-  type = ActionTypes.CONFIRM_EMAIL_FAIL;
 
   constructor(
     public payload: string,
@@ -116,8 +102,6 @@ export class SignupFailAction implements Action {
 
 export type Actions
   = ConfirmEmailAction
-  | ConfirmEmailSuccessAction
-  | ConfirmEmailFailAction
   | LoginWithEmailAction
   | LoginWithFacebookAction
   | LoginWithTokenAction

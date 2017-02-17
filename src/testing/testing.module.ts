@@ -32,6 +32,7 @@ import {
 } from './router-stubs';
 import {
   ActStubService,
+  AlertifyStubService,
   AuthStubService,
   DeedStubService,
   FeedStubService,
@@ -68,6 +69,7 @@ import {
     RouterStubService,
 
     ActStubService,
+    AlertifyStubService,
     AuthStubService,
     DeedStubService,
     FeedStubService,

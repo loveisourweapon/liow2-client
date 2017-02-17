@@ -7,8 +7,9 @@ import { pick } from 'lodash';
 
 import { AuthEffects, AuthService } from './index';
 import * as auth from './auth.actions';
+import * as alertify from '../alertify/alertify.actions';
 import { UserService } from '../user';
-import { AuthStubService, RouterStubService, UserStubService } from '../../../testing';
+import { AuthStubService, RouterStubService, UserStubService, takeAndScan } from '../../../testing';
 
 describe(`AuthEffects`, () => {
   let runner: EffectsRunner;
@@ -50,7 +51,7 @@ describe(`AuthEffects`, () => {
       authEffects.confirmEmail$.subscribe((result: Action) => {
         expect(authSpy.calls.mostRecent().args[0]).toBe(token);
         expect(routerSpy).toHaveBeenCalledWith(['/']);
-        expect(result.type).toBe(auth.ActionTypes.CONFIRM_EMAIL_SUCCESS);
+        expect(result.type).toBe(alertify.ActionTypes.SUCCESS);
       });
     });
 
@@ -62,7 +63,7 @@ describe(`AuthEffects`, () => {
       authEffects.confirmEmail$.subscribe((result: Action) => {
         expect(authSpy.calls.mostRecent().args[0]).toBe(token);
         expect(routerSpy).toHaveBeenCalledWith(['/']);
-        expect(result.type).toBe(auth.ActionTypes.CONFIRM_EMAIL_FAIL);
+        expect(result.type).toBe(alertify.ActionTypes.ERROR);
       });
     });
   });
@@ -77,21 +78,25 @@ describe(`AuthEffects`, () => {
       const authSpy = spyOn(authService, 'authenticateEmail').and.returnValue(Observable.of({}));
       const userSpy = spyOn(userService, 'getCurrent').and.returnValue(Observable.of({}));
       runner.queue(new auth.LoginWithEmailAction(credentials));
-      authEffects.loginEmail$.subscribe((result: Action) => {
-        expect(authSpy).toHaveBeenCalled();
-        expect(userSpy).toHaveBeenCalled();
-        expect(result.type).toBe(auth.ActionTypes.LOGIN_SUCCESS);
-      });
+      takeAndScan(authEffects.loginEmail$, 2)
+        .subscribe((results: Action[]) => {
+          expect(authSpy).toHaveBeenCalled();
+          expect(userSpy).toHaveBeenCalled();
+          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_SUCCESS);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
     });
 
     it(`should dispatch LOGIN_FAIL action on unsuccessful authentication`, () => {
       const errorMessage = 'Test error';
       spyOn(authService, 'authenticateEmail').and.returnValue(Observable.throw(new Error(errorMessage)));
       runner.queue(new auth.LoginWithEmailAction(credentials));
-      authEffects.loginEmail$.subscribe((result: Action) => {
-        expect(result.type).toBe(auth.ActionTypes.LOGIN_FAIL);
-        expect(result.payload).toBe(errorMessage);
-      });
+      takeAndScan(authEffects.loginEmail$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_FAIL);
+          expect(results[0].payload).toBe(errorMessage);
+          expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
+        });
     });
   });
 
@@ -100,20 +105,24 @@ describe(`AuthEffects`, () => {
       const authSpy = spyOn(authService, 'authenticateFacebook').and.returnValue(Observable.of({}));
       const userSpy = spyOn(userService, 'getCurrent').and.returnValue(Observable.of({}));
       runner.queue(new auth.LoginWithFacebookAction());
-      authEffects.loginFacebook$.subscribe((result: Action) => {
-        expect(authSpy).toHaveBeenCalled();
-        expect(userSpy).toHaveBeenCalled();
-        expect(result.type).toBe(auth.ActionTypes.LOGIN_SUCCESS);
-      });
+      takeAndScan(authEffects.loginFacebook$, 2)
+        .subscribe((results: Action[]) => {
+          expect(authSpy).toHaveBeenCalled();
+          expect(userSpy).toHaveBeenCalled();
+          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_SUCCESS);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
     });
 
     it(`should dispatch LOGIN_FAIL action on unsuccessful facebook authentication`, () => {
       const errorMessage = 'Test error';
       spyOn(authService, 'authenticateFacebook').and.returnValue(Observable.throw(new Error(errorMessage)));
       runner.queue(new auth.LoginWithFacebookAction());
-      authEffects.loginEmail$.subscribe((result: Action) => {
-        expect(result.type).toBe(auth.ActionTypes.LOGIN_FAIL);
-        expect(result.payload).toBe(errorMessage);
+      takeAndScan(authEffects.loginEmail$, 2)
+      .subscribe((results: Action[]) => {
+        expect(results[0].type).toBe(auth.ActionTypes.LOGIN_FAIL);
+        expect(results[0].payload).toBe(errorMessage);
+        expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
       });
     });
   });
@@ -144,10 +153,12 @@ describe(`AuthEffects`, () => {
     it(`should dispatch LOGOUT_SUCCESS action after logging out`, () => {
       const logoutSpy = spyOn(authService, 'logout').and.returnValue(Observable.of(undefined));
       runner.queue(new auth.LogoutAction());
-      authEffects.logout$.subscribe((result: Action) => {
-        expect(logoutSpy).toHaveBeenCalled();
-        expect(result.type).toBe(auth.ActionTypes.LOGOUT_SUCCESS);
-      });
+      takeAndScan(authEffects.logout$, 2)
+        .subscribe((results: Action[]) => {
+          expect(logoutSpy).toHaveBeenCalled();
+          expect(results[0].type).toBe(auth.ActionTypes.LOGOUT_SUCCESS);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
     });
   });
 
@@ -162,10 +173,7 @@ describe(`AuthEffects`, () => {
     it(`should dispatch SIGNUP_SUCCESS and LOGIN_WITH_EMAIL actions after saving new user`, () => {
       const saveSpy = spyOn(userService, 'save').and.returnValue(Observable.of(newUser));
       runner.queue(new auth.SignupAction(newUser));
-      authEffects.signup$
-        .take(2)
-        .scan((results: Action[], result: Action) => [...results, result], [])
-        .skip(1)
+      takeAndScan(authEffects.signup$, 2)
         .subscribe((results: Action[]) => {
           expect(saveSpy).toHaveBeenCalledWith(newUser);
           expect(results[0].type).toBe(auth.ActionTypes.LOGIN_WITH_EMAIL);

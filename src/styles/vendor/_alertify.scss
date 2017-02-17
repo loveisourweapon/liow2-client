@@ -1,0 +1,15 @@
+/**
+ * Alertify.js overrides
+ */
+
+.alertify-logs.top.right {
+  top: $navbar-height;
+  right: 10px;
+  z-index: 10000;
+}
+
+// Bootstrap sets !important styles on .show and .hide
+.alertify-logs .show,
+.alertify-logs .hide {
+  display: inherit !important;
+}

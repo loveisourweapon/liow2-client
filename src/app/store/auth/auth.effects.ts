@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
@@ -8,33 +8,46 @@ import { pick } from 'lodash';
 import { Credentials } from './index';
 import { AuthService } from './auth.service';
 import * as auth from './auth.actions';
-import { User, UserService } from '../user';
+import * as alertify from '../alertify/alertify.actions';
+import { NewUser, User, UserService } from '../user';
 
 @Injectable()
 export class AuthEffects {
   @Effect()
   confirmEmail$: Observable<Action> = this.actions$
-    .ofType(auth.ActionTypes.CONFIRM_EMAIL)
-    .flatMap((action: Action) => this.authService.confirmEmail(action.payload))
-    .map(() => new auth.ConfirmEmailSuccessAction())
-    .catch((error: Error) => Observable.of(new auth.ConfirmEmailFailAction(error.message)))
+    .ofType(auth.ActionTypes.CONFIRM_EMAIL).map(toPayload)
+    .flatMap((token: string) => this.authService.confirmEmail(token))
+    .map(() => new alertify.SuccessAction(`Confirmed email address`))
+    .catch(() => Observable.of(new alertify.ErrorAction(`Failed confirming email address`)))
     .do(() => this.router.navigate(['/']));
 
   @Effect()
   loginEmail$: Observable<Action> = this.actions$
-    .ofType(auth.ActionTypes.LOGIN_WITH_EMAIL)
-    .flatMap((action: Action) => this.authService.authenticateEmail(action.payload))
-    .flatMap(() => this.userService.getCurrent())
-    .map((user: User) => new auth.LoginSuccessAction(user))
-    .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
+    .ofType(auth.ActionTypes.LOGIN_WITH_EMAIL).map(toPayload)
+    .flatMap((credentials: Credentials) => this.authService.authenticateEmail(credentials)
+      .flatMap(() => this.userService.getCurrent())
+      .mergeMap((user: User) => Observable.from([
+        new auth.LoginSuccessAction(user),
+        new alertify.SuccessAction(`Signed in` + (!user.confirmed ? `. Please confirm your email address` : ``)),
+      ]))
+      .catch((error: Error) => Observable.from([
+        new auth.LoginFailAction(error.message),
+        new alertify.ErrorAction(`Failed signing in`),
+      ])));
 
   @Effect()
   loginFacebook$: Observable<Action> = this.actions$
-    .ofType(auth.ActionTypes.LOGIN_WITH_FACEBOOK)
-    .flatMap((action: Action) => this.authService.authenticateFacebook(action.payload))
-    .flatMap(() => this.userService.getCurrent())
-    .map((user: User) => new auth.LoginSuccessAction(user))
-    .catch((error: Error) => Observable.of(new auth.LoginFailAction(error.message)));
+    .ofType(auth.ActionTypes.LOGIN_WITH_FACEBOOK).map(toPayload)
+    .flatMap((userData?: { group: string }) => this.authService.authenticateFacebook(userData)
+      .flatMap(() => this.userService.getCurrent())
+      .mergeMap((user: User) => Observable.from([
+        new auth.LoginSuccessAction(user),
+        new alertify.SuccessAction(`Signed in`),
+      ]))
+      .catch((error: Error) => Observable.from([
+        new auth.LoginFailAction(error.message),
+        new alertify.ErrorAction(`Failed signing in`),
+      ])));
 
   @Effect()
   loginToken$: Observable<Action> = this.actions$
@@ -53,14 +66,17 @@ export class AuthEffects {
   logout$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.LOGOUT)
     .flatMap(() => this.authService.logout())
-    .map(() => new auth.LogoutSuccessAction());
+    .mergeMap(() => Observable.from([
+      new auth.LogoutSuccessAction(),
+      new alertify.SuccessAction(`Logged out`),
+    ]));
 
   @Effect()
   signup$: Observable<Action> = this.actions$
-    .ofType(auth.ActionTypes.SIGNUP)
-    .flatMap((action: Action) => this.userService.save(action.payload)
+    .ofType(auth.ActionTypes.SIGNUP).map(toPayload)
+    .flatMap((newUser: NewUser) => this.userService.save(newUser)
       .mergeMap(() => Observable.from([
-        new auth.LoginWithEmailAction(<Credentials>pick(action.payload, ['email', 'password'])),
+        new auth.LoginWithEmailAction(<Credentials>pick(newUser, ['email', 'password'])),
         new auth.SignupSuccessAction(),
       ])))
     .catch((error: Error) => Observable.of(new auth.SignupFailAction(error.message)));

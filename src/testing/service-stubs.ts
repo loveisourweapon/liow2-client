@@ -7,6 +7,13 @@ export class ActStubService {
 }
 
 @Injectable()
+export class AlertifyStubService {
+  error() { }
+  log() { }
+  success() { }
+}
+
+@Injectable()
 export class AuthStubService {
   authenticateEmail() { }
   authenticateFacebook() { }
