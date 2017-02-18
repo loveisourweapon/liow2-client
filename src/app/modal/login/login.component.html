@@ -41,23 +41,26 @@
 
         <hr>
 
-        <form (ngSubmit)="authenticateEmail(state.credentials, state.joinGroup, group)">
-          <!--<div uib-alert
-               class="alert-danger p-sm"
-               ng-if="$ctrl.error">
+        <form
+          (ngSubmit)="form.valid && authenticateEmail(state.credentials, state.joinGroup, group)"
+          #form="ngForm"
+          novalidate
+        >
+          <alert type="danger" *ngIf="state.errorMessage">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
-            {{ $ctrl.error }}
-            <span ng-if="$ctrl.error.indexOf('Please confirm') === 0">
+            {{ state.errorMessage }}
+
+            <span *ngIf="state.errorMessage.includes('Please confirm')">
               <i class="fa fa-fw"></i>
-              <a ng-click="$ctrl.sendConfirmEmail($ctrl.email)" href>
+              <a (click)="sendConfirmEmail(state.credentials.email); $event.preventDefault()" href>
                 Re-send confirmation email?
-                <i ng-show="$ctrl.sending" class="fa fa-cog fa-spin"></i>
+                <i class="fa fa-cog fa-spin" [hidden]="!state.isSendingConfirmEmail"></i>
               </a>
             </span>
-          </div>-->
+          </alert>
 
           <div class="form-group">
-            <div class="input-group">
+            <div class="input-group" [class.has-error]="form.submitted && email.invalid">
               <div class="input-group-addon">
                 <i class="fa fa-fw fa-at"></i>
               </div>
@@ -65,16 +68,18 @@
                 type="email"
                 class="form-control"
                 name="email"
+                #email="ngModel"
                 [ngModel]="state.credentials.email"
                 (ngModelChange)="onUpdatePropertyAction('Email', $event)"
                 placeholder="Email"
+                required
                 #autofocus
               >
             </div>
           </div>
 
           <div class="form-group">
-            <div class="input-group">
+            <div class="input-group" [class.has-error]="form.submitted && password.invalid">
               <div class="input-group-addon">
                 <i class="fa fa-fw fa-key"></i>
               </div>
@@ -82,8 +87,10 @@
                 type="password"
                 class="form-control"
                 name="password"
+                #password="ngModel"
                 [ngModel]="state.credentials.password"
                 (ngModelChange)="onUpdatePropertyAction('Password', $event)"
+                required
                 placeholder="Password"
               >
             </div>
@@ -116,7 +123,7 @@
       <div class="modal-footer">
         <button
           type="submit"
-          (click)="authenticateEmail(state.credentials, state.joinGroup, group)"
+          (click)="form.valid && authenticateEmail(state.credentials, state.joinGroup, group)"
           class="btn btn-primary btn-block"
           [disabled]="state.isLoggingIn"
         >

@@ -11,7 +11,7 @@ import * as auth from '../../store/auth/auth.actions';
 import { State as LoginModal } from '../../store/login-modal';
 import * as loginModal from '../../store/login-modal/login-modal.actions';
 import { State as AppState } from '../../store/reducer';
-import { ModalStubDirective, StoreStubService, SwitchStubComponent } from '../../../testing';
+import { AlertStubComponent, ModalStubDirective, StoreStubService, SwitchStubComponent } from '../../../testing';
 
 describe(`LoginModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
@@ -26,6 +26,7 @@ describe(`LoginModalComponent`, () => {
         declarations: [
           LoginModalComponent,
           TestHostComponent,
+          AlertStubComponent,
           ModalHeaderComponent,
           ModalStubDirective,
           SwitchStubComponent,

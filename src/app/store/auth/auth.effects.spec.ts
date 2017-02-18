@@ -162,6 +162,31 @@ describe(`AuthEffects`, () => {
     });
   });
 
+  describe(`sendConfirmEmail$`, () => {
+    const testEmail = 'test@example.com';
+
+    it(`should dispatch SEND_CONFIRM_EMAIL_DONE and alertify SUCCESS actions after sending email`, () => {
+      const confirmSpy = spyOn(authService, 'sendConfirmEmail').and.returnValue(Observable.of({}));
+      runner.queue(new auth.SendConfirmEmailAction(testEmail));
+      takeAndScan(authEffects.sendConfirmEmail$, 2)
+        .subscribe((results: Action[]) => {
+          expect(confirmSpy).toHaveBeenCalledWith(testEmail);
+          expect(results[0].type).toBe(auth.ActionTypes.SEND_CONFIRM_EMAIL_DONE);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
+    });
+
+    it(`should dispatch SEND_CONFIRM_EMAIL_DONE and alertify ERROR actions after failed sending email`, () => {
+      spyOn(authService, 'sendConfirmEmail').and.returnValue(Observable.throw({}));
+      runner.queue(new auth.SendConfirmEmailAction(testEmail));
+      takeAndScan(authEffects.sendConfirmEmail$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(auth.ActionTypes.SEND_CONFIRM_EMAIL_DONE);
+          expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
+        });
+    });
+  });
+
   describe(`signup$`, () => {
     const newUser = {
       email: 'tester@example.com',

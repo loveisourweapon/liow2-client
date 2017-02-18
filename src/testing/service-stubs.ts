@@ -20,6 +20,7 @@ export class AuthStubService {
   confirmEmail() { }
   isAuthenticated() { }
   logout() { }
+  sendConfirmEmail() { }
 }
 
 @Injectable()

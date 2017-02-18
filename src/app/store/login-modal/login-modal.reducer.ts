@@ -7,6 +7,7 @@ import * as auth from '../auth/auth.actions';
 export interface State {
   isOpen: boolean;
   isLoggingIn: boolean;
+  isSendingConfirmEmail: boolean;
   credentials: Credentials;
   joinGroup: boolean;
   errorMessage: string;
@@ -15,6 +16,7 @@ export interface State {
 const initialState: State = {
   isOpen: false,
   isLoggingIn: false,
+  isSendingConfirmEmail: false,
   credentials: {
     email: '',
     password: '',
@@ -71,6 +73,16 @@ export function reducer(state = initialState, action: loginModal.Actions|auth.Ac
       return assign({}, state, {
         isLoggingIn: false,
         errorMessage: action.payload,
+      });
+
+    case auth.ActionTypes.SEND_CONFIRM_EMAIL:
+      return assign({}, state, {
+        isSendingConfirmEmail: true,
+      });
+
+    case auth.ActionTypes.SEND_CONFIRM_EMAIL_DONE:
+      return assign({}, state, {
+        isSendingConfirmEmail: false,
       });
 
     default:

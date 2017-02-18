@@ -7,6 +7,7 @@
 import { NgModule } from '@angular/core';
 
 import {
+  AlertStubComponent,
   CollapseStubDirective,
   DropdownStubDirective,
   DropdownMenuStubDirective,
@@ -45,6 +46,7 @@ import {
 
 @NgModule({
   declarations: [
+    AlertStubComponent,
     CollapseStubDirective,
     DropdownStubDirective,
     DropdownMenuStubDirective,

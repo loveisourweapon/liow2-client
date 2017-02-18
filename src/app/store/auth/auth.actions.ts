@@ -14,6 +14,8 @@ export class ActionTypes {
   static readonly LOGIN_FAIL = actionType('[Auth] Login Fail');
   static readonly LOGOUT = actionType('[Auth] Logout');
   static readonly LOGOUT_SUCCESS = actionType('[Auth] Logout Success');
+  static readonly SEND_CONFIRM_EMAIL = actionType('[Auth] Send Confirm Email');
+  static readonly SEND_CONFIRM_EMAIL_DONE = actionType('[Auth] Send Confirm Email Done');
   static readonly SET_CURRENT_GROUP = actionType('[Auth] Set Current Group');
   static readonly SIGNUP = actionType('[Auth] Signup');
   static readonly SIGNUP_SUCCESS = actionType('[Auth] Signup Success');
@@ -35,7 +37,6 @@ export class LoginWithEmailAction implements Action {
     public payload: Credentials,
   ) { }
 }
-
 export class LoginWithFacebookAction implements Action {
   type = ActionTypes.LOGIN_WITH_FACEBOOK;
 
@@ -43,11 +44,9 @@ export class LoginWithFacebookAction implements Action {
     public payload?: { group: string },
   ) { }
 }
-
 export class LoginWithTokenAction implements Action {
   type = ActionTypes.LOGIN_WITH_TOKEN;
 }
-
 export class LoginSuccessAction implements Action {
   type = ActionTypes.LOGIN_SUCCESS;
 
@@ -55,7 +54,6 @@ export class LoginSuccessAction implements Action {
     public payload: User,
   ) { }
 }
-
 export class LoginFailAction implements Action {
   type = ActionTypes.LOGIN_FAIL;
 
@@ -67,9 +65,19 @@ export class LoginFailAction implements Action {
 export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
 }
-
 export class LogoutSuccessAction implements Action {
   type = ActionTypes.LOGOUT_SUCCESS;
+}
+
+export class SendConfirmEmailAction implements Action {
+  type = ActionTypes.SEND_CONFIRM_EMAIL;
+
+  constructor(
+    public payload: string,
+  ) { }
+}
+export class SendConfirmEmailDoneAction implements Action {
+  type = ActionTypes.SEND_CONFIRM_EMAIL_DONE;
 }
 
 export class SetCurrentGroupAction implements Action {
@@ -87,11 +95,9 @@ export class SignupAction implements Action {
     public payload: NewUser,
   ) { }
 }
-
 export class SignupSuccessAction implements Action {
   type = ActionTypes.SIGNUP_SUCCESS;
 }
-
 export class SignupFailAction implements Action {
   type = ActionTypes.SIGNUP_FAIL;
 
@@ -109,6 +115,8 @@ export type Actions
   | LoginFailAction
   | LogoutAction
   | LogoutSuccessAction
+  | SendConfirmEmailAction
+  | SendConfirmEmailDoneAction
   | SetCurrentGroupAction
   | SignupAction
   | SignupSuccessAction

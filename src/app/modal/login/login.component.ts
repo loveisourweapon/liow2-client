@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap';
 import { assign, has } from 'lodash';
@@ -22,6 +23,7 @@ export class LoginModalComponent implements OnChanges {
   @Input() state = <LoginModalState>null;
   @Input() group: Group;
   @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('form') form: NgForm;
 
   constructor(
     private store: Store<AppState>,
@@ -30,6 +32,7 @@ export class LoginModalComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (has(changes, 'state.currentValue')) {
       if (this.state.isOpen && !this.modal.isShown) {
+        this.form.resetForm();
         this.modal.show();
       } else if (!this.state.isOpen && this.modal.isShown) {
         this.modal.hide();
@@ -52,7 +55,7 @@ export class LoginModalComponent implements OnChanges {
     this.store.dispatch(new auth.LoginWithFacebookAction(userData));
   }
 
-  onUpdatePropertyAction(property: string, value: string): void {
+  onUpdatePropertyAction(property: string, value: string|boolean): void {
     this.store.dispatch(new loginModal[`Update${property}Action`](value));
   }
 
@@ -66,5 +69,9 @@ export class LoginModalComponent implements OnChanges {
 
   openSignup(): void {
     this.store.dispatch(new modal.OpenSignupAction());
+  }
+
+  sendConfirmEmail(emailAddress: string): void {
+    this.store.dispatch(new auth.SendConfirmEmailAction(emailAddress));
   }
 }

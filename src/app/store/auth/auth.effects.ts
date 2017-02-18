@@ -30,10 +30,7 @@ export class AuthEffects {
         new auth.LoginSuccessAction(user),
         new alertify.SuccessAction(`Signed in` + (!user.confirmed ? `. Please confirm your email address` : ``)),
       ]))
-      .catch((error: Error) => Observable.from([
-        new auth.LoginFailAction(error.message),
-        new alertify.ErrorAction(`Failed signing in`),
-      ])));
+      .catch((errorMessage: string) => Observable.of(new auth.LoginFailAction(errorMessage))));
 
   @Effect()
   loginFacebook$: Observable<Action> = this.actions$
@@ -70,6 +67,19 @@ export class AuthEffects {
       new auth.LogoutSuccessAction(),
       new alertify.SuccessAction(`Logged out`),
     ]));
+
+  @Effect()
+  sendConfirmEmail$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.SEND_CONFIRM_EMAIL).map(toPayload)
+    .flatMap((emailAddress: string) => this.authService.sendConfirmEmail(emailAddress)
+      .mergeMap(() => Observable.from([
+        new auth.SendConfirmEmailDoneAction(),
+        new alertify.SuccessAction(`Sent confirmation email to <strong>${emailAddress}</strong>`),
+      ]))
+      .catch(() => Observable.from([
+        new auth.SendConfirmEmailDoneAction(),
+        new alertify.ErrorAction(`Failed sending confirmation email`),
+      ])));
 
   @Effect()
   signup$: Observable<Action> = this.actions$

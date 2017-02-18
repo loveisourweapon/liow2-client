@@ -1,5 +1,13 @@
 import { Component, Directive, EventEmitter, Input, Output } from '@angular/core';
 
+@Component({
+  selector: 'alert',
+  template: ``
+})
+export class AlertStubComponent {
+  @Input() type: string;
+}
+
 @Directive({ selector: '[collapse]' })
 export class CollapseStubDirective {
   @Input('collapse') isCollapsed: boolean;

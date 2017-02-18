@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, URLSearchParams } from '@angular/http';
 import { AuthService as Ng2AuthService, JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
@@ -24,7 +24,10 @@ export class AuthService {
 
     return this.auth.login(credentials)
       .map((response: Response) => response.json() || {})
-      .map((tokenReponse: { token: string }) => tokenReponse.token);
+      .map((tokenReponse: { token: string }) => tokenReponse.token)
+      .catch((response: Response) => {
+        throw response.json().message;
+      });
   }
 
   authenticateFacebook(userData?: { group: string }): Observable<string> {
@@ -35,6 +38,14 @@ export class AuthService {
 
   confirmEmail(token: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/confirm`, { token })
+      .map((response: Response) => response.json() || {});
+  }
+
+  sendConfirmEmail(emailAddress: string): Observable<any> {
+    const search = new URLSearchParams();
+    search.set('email', emailAddress);
+
+    return this.http.get(`${this.baseUrl}/confirm`, { search })
       .map((response: Response) => response.json() || {});
   }
 

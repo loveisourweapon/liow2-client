@@ -10,6 +10,7 @@ describe(`login modal reducer`, () => {
   const initialState: State = {
     isOpen: false,
     isLoggingIn: false,
+    isSendingConfirmEmail: false,
     credentials: {
       email: '',
       password: '',
@@ -74,5 +75,19 @@ describe(`login modal reducer`, () => {
     expect(state).not.toBe(loggingInState);
     expect(state.isLoggingIn).toBe(false);
     expect(state.errorMessage).toBe(errorMessage);
+  });
+
+  it(`should set isSendingConfirmEmail to true with SEND_CONFIRM_EMAIL action`, () => {
+    const testEmail = 'test@example.com';
+    const state = reducer(initialState, new auth.SendConfirmEmailAction(testEmail));
+    expect(state).not.toBe(initialState);
+    expect(state.isSendingConfirmEmail).toBe(true);
+  });
+
+  it(`should set isSendingConfirmEmail to false with SEND_CONFIRM_EMAIL_DONE action`, () => {
+    const sendingState = assign({}, initialState, { isSendingConfirmEmail: true });
+    const state = reducer(sendingState, new auth.SendConfirmEmailDoneAction());
+    expect(state).not.toBe(sendingState);
+    expect(state.isSendingConfirmEmail).toBe(false);
   });
 });

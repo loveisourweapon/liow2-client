@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
-import { CollapseModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
+import { AlertModule, CollapseModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
 
 import { SharedModule } from '../shared';
 
@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar';
   imports: [
     Ng2UiAuthModule.forRoot(AuthConfig),
 
+    AlertModule.forRoot(),
     CollapseModule.forRoot(),
     DropdownModule.forRoot(),
     ModalModule.forRoot(),
