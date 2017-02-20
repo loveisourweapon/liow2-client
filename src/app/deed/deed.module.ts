@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared';
 import { DeedRoutingModule } from './deed-routing.module';
+
 import { DeedComponent } from './deed.component';
+import { CommentFormComponent } from './comment-form';
 
 @NgModule({
   imports: [
@@ -11,6 +13,7 @@ import { DeedComponent } from './deed.component';
   ],
   declarations: [
     DeedComponent,
+    CommentFormComponent,
   ],
 })
 export class DeedModule { }

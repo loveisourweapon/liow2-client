@@ -7,6 +7,7 @@ import { reducer } from './reducer';
 import { ActEffects, ActService, CounterEffects } from './act';
 import { AlertifyEffects, AlertifyService } from './alertify';
 import { AuthEffects, AuthService } from './auth';
+import { CommentEffects, CommentService } from './comment';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
 import { GroupEffects, GroupService } from './group';
@@ -20,6 +21,7 @@ import { UserEffects, UserService } from './user';
     EffectsModule.run(AuthEffects),
     EffectsModule.run(ActEffects),
     EffectsModule.run(AlertifyEffects),
+    EffectsModule.run(CommentEffects),
     EffectsModule.run(CounterEffects),
     EffectsModule.run(DeedEffects),
     EffectsModule.run(GroupEffects),
@@ -30,6 +32,7 @@ import { UserEffects, UserService } from './user';
     ActService,
     AlertifyService,
     AuthService,
+    CommentService,
     DeedService,
     FeedService,
     GroupService,

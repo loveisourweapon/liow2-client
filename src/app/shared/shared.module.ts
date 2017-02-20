@@ -10,6 +10,7 @@ import { FeedComponent, FeedItemComponent } from './feed';
 import { JumbotronComponent } from './jumbotron';
 import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
+import { MediumEditorComponent } from './medium-editor';
 import { SwitchComponent } from './switch';
 import { YoutubePlayerComponent } from './youtube-player.component';
 import { FromNowPipe } from './from-now.pipe';
@@ -18,6 +19,7 @@ import { MomentPipe } from './moment.pipe';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     InfiniteScrollModule,
   ],
@@ -30,6 +32,7 @@ import { MomentPipe } from './moment.pipe';
     JumbotronComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
+    MediumEditorComponent,
     SwitchComponent,
     YoutubePlayerComponent,
 
@@ -47,6 +50,7 @@ import { MomentPipe } from './moment.pipe';
     JumbotronComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
+    MediumEditorComponent,
     SwitchComponent,
     YoutubePlayerComponent,
 

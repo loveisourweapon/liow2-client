@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { buildUrlSearchParams, SearchParams } from '../utils';
 import { Deed } from './index';
+import { DeedCounterResult } from '../act';
 
 @Injectable()
 export class DeedService {
@@ -41,8 +42,8 @@ export class DeedService {
       });
   }
 
-  countAll(params: SearchParams = {}): Observable<any> {
+  countAll(params: SearchParams = {}): Observable<DeedCounterResult[]> {
     return this.http.get(`${this.baseUrl}/counters`, { search: buildUrlSearchParams(params) })
-      .map((response: Response) => response.json() || {});
+      .map((response: Response) => response.json() || []);
   }
 }

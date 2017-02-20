@@ -82,8 +82,10 @@ export function getDeedState(state: State) { return state.deed; }
 export const getDeedIsLoading = createSelector(getDeedState, fromDeed.getIsLoading);
 export const getDeedIsLoaded = createSelector(getDeedState, fromDeed.getIsLoaded);
 export const getDeedIsDoing = createSelector(getDeedState, fromDeed.getIsDoing);
+export const getIsSavingTestimony = createSelector(getDeedState, fromDeed.getIsSavingTestimony);
 export const getDeeds = createSelector(getDeedState, fromDeed.getDeeds);
 export const getCurrentDeed = createSelector(getDeedState, fromDeed.getCurrent);
+export const getTestimony = createSelector(getDeedState, fromDeed.getTestimony);
 
 
 /**

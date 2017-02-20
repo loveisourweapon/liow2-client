@@ -1,10 +1,9 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions } from '@angular/http';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { Act, ActEffects, ActService } from './index';
+import { ActEffects, ActService } from './index';
 import * as act from './act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import { Deed } from '../deed';
@@ -38,8 +37,7 @@ describe(`ActEffects`, () => {
     const testDeed = <Deed>{ _id: 'abc123' };
 
     it(`should dispatch 2x COUNT, DONE_SUCCESS and SUCCESS actions after successful done request`, () => {
-      const response = new Response(new ResponseOptions({ body: <Act>{} }));
-      spyOn(actService, 'done').and.returnValue(Observable.of(response));
+      spyOn(actService, 'done').and.returnValue(Observable.of({}));
       runner.queue(new act.DoneAction({ deed: testDeed }));
       takeAndScan(actEffects.done$, 4)
         .subscribe((results: Action[]) => {

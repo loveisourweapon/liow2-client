@@ -36,17 +36,17 @@ export class AuthService {
       .map((tokenReponse: { token: string }) => tokenReponse.token);
   }
 
-  confirmEmail(token: string): Observable<any> {
+  confirmEmail(token: string): Observable<null> {
     return this.http.post(`${this.baseUrl}/confirm`, { token })
-      .map((response: Response) => response.json() || {});
+      .map((response: Response) => response.json());
   }
 
-  sendConfirmEmail(emailAddress: string): Observable<any> {
+  sendConfirmEmail(emailAddress: string): Observable<null> {
     const search = new URLSearchParams();
     search.set('email', emailAddress);
 
     return this.http.get(`${this.baseUrl}/confirm`, { search })
-      .map((response: Response) => response.json() || {});
+      .do(response => response.json());
   }
 
   isAuthenticated(): boolean {

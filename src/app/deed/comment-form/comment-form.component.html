@@ -1,0 +1,18 @@
+<form (ngSubmit)="content && save.emit(content)">
+  <div class="form-group">
+    <ui-medium-editor
+      [content]="content"
+      (change)="change.emit($event)"
+      placeholder="Leave a testimony..."
+    ></ui-medium-editor>
+
+    <button
+      type="submit"
+      class="btn btn-primary m-t-xs"
+      [disabled]="!content || isSaving"
+    >
+      <i class="fa fa-fw fa-cog fa-spin" [hidden]="!isSaving"></i>
+      Save
+    </button>
+  </div>
+</form>

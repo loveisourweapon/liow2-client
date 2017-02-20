@@ -29,7 +29,7 @@
     <div class="col-sm-3 col-sm-push-9 m-b-sm">
       <button
         type="button"
-        (click)="done(deed$, authGroup$)"
+        (click)="onDeedDone(deed$, authGroup$)"
         class="btn btn-primary btn-block btn-lg"
         *ngIf="isAuthenticated$ | async"
         [disabled]="isDoing$ | async"
@@ -55,13 +55,22 @@
     <div class="col-sm-9 col-sm-pull-3">
       <h2 class="m-t-none">Devotional</h2>
 
-      <ui-marked [content]="(deed$ | async)?.content"></ui-marked>
+      <ui-marked
+        [content]="(deed$ | async)?.content"
+        class="m-b-md"
+      ></ui-marked>
 
-      <!--<comment-form deed="::$ctrl.deed"
-                    placeholder="Leave a testimony..."
-                    ng-if="$ctrl.User.isAuthenticated()"></comment-form>-->
+      <liow-comment-form
+        [content]="testimony$ | async"
+        (change)="onUpdateTestimony($event)"
+        (save)="onSaveTestimony($event, deed$, authGroup$)"
+        [isSaving]="isSavingTestimony$ | async"
+        *ngIf="isAuthenticated$ | async"
+      ></liow-comment-form>
 
-      <liow-feed [criteria]="{ 'target.deed': (deed$ | async)?._id }"></liow-feed>
+      <liow-feed
+        [criteria]="{ 'target.deed': (deed$ | async)?._id }"
+      ></liow-feed>
     </div>
   </div>
 </div>

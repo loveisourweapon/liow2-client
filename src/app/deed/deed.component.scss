@@ -38,3 +38,12 @@
     }
   }
 }
+
+ui-marked,
+liow-comment-form,
+liow-feed {
+  display: block;
+}
+ui-marked + liow-feed {
+  margin-top: 50px;
+}

@@ -1,5 +1,5 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { Response, ResponseOptions } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 

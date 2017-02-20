@@ -2,6 +2,8 @@ import { assign } from 'lodash';
 
 import { Deed, reducer, State } from './index';
 import * as act from '../act/act.actions';
+import { NewComment } from '../comment';
+import * as comment from '../comment/comment.actions';
 import * as deed from './deed.actions';
 
 describe(`deed reducer`, () => {
@@ -9,8 +11,10 @@ describe(`deed reducer`, () => {
     isLoading: false,
     isLoaded: false,
     isDoing: false,
+    isSavingTestimony: false,
     deeds: [],
     current: null,
+    testimony: '',
   };
 
   it(`should set isDoing to true with DONE action`, () => {
@@ -29,6 +33,26 @@ describe(`deed reducer`, () => {
     state = reducer(doingState, new act.DoneFailAction(''));
     expect(state).not.toBe(doingState);
     expect(state.isDoing).toBe(false);
+  });
+
+  it(`should set isSavingTestimony to true with COMMENT action`, () => {
+    const state = reducer(initialState, new comment.CommentAction(<NewComment>{}));
+    expect(state).not.toBe(initialState);
+    expect(state.isSavingTestimony).toBe(true);
+  });
+
+  it(`should reset testimony and set isSavingTestimony to false with COMMENT_SUCCESS`, () => {
+    const savingState = assign({}, initialState, { isSavingTestimony: true });
+    const state = reducer(savingState, new comment.CommentSuccessAction());
+    expect(state).not.toBe(savingState);
+    expect(state.isSavingTestimony).toBe(false);
+  });
+
+  it(`should set isSavingTestimony to false and testimony with COMMENT_FAIL`, () => {
+    const savingState = assign({}, initialState, { isSavingTestimony: true });
+    const state = reducer(savingState, new comment.CommentFailAction());
+    expect(state).not.toBe(savingState);
+    expect(state.isSavingTestimony).toBe(false);
   });
 
   it(`should set isLoading to true with FIND_ALL action`, () => {
@@ -66,5 +90,12 @@ describe(`deed reducer`, () => {
     const state = reducer(initialState, new deed.SetCurrentAction(currentDeed));
     expect(state).not.toBe(initialState);
     expect(state.current).toBe(currentDeed);
+  });
+
+  it(`should set testimony with UPDATE_TESTIMONY action`, () => {
+    const testimony = 'A testimony';
+    const state = reducer(initialState, new deed.UpdateTestimonyAction(testimony));
+    expect(state).not.toBe(initialState);
+    expect(state.testimony).toBe(testimony);
   });
 });

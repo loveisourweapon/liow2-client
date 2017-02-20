@@ -44,6 +44,16 @@ export class MarkedStubComponent {
 }
 
 @Component({
+  selector: 'ui-medium-editor',
+  template: ``,
+})
+export class MediumEditorStubComponent {
+  @Input() content: string;
+  @Input() placeholder: string;
+  @Output() change = new EventEmitter();
+}
+
+@Component({
   selector: 'ui-switch',
   template: ``,
 })

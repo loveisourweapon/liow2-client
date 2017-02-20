@@ -24,6 +24,11 @@ export class AuthStubService {
 }
 
 @Injectable()
+export class CommentStubService {
+  save() { }
+}
+
+@Injectable()
 export class DeedStubService {
   countAll() { }
   find() { }

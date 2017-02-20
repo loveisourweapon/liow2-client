@@ -1,4 +1,5 @@
-import { Act, Comment } from './index';
+import { Act } from './index';
+import { Comment } from '../comment';
 import { Campaign, Group } from '../group';
 import { User } from '../user';
 

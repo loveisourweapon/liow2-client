@@ -14,6 +14,7 @@ export class ActionTypes {
   static readonly FIND_AND_SET_CURRENT = actionType('[Deed] Find and Set Current');
   static readonly FIND_AND_SET_CURRENT_FAIL = actionType('[Deed] Find and Set Current Fail');
   static readonly SET_CURRENT = actionType('[Deed] Set Current');
+  static readonly UPDATE_TESTIMONY = actionType('[Deed] Update Testimony');
 }
 
 export class AllCountersAction implements Action {
@@ -79,6 +80,13 @@ export class SetCurrentAction implements Action {
     public payload: Deed,
   ) { }
 }
+export class UpdateTestimonyAction implements Action {
+  type = ActionTypes.UPDATE_TESTIMONY;
+
+  constructor(
+    public payload: string,
+  ) { }
+}
 
 export type Actions
   = AllCountersAction
@@ -90,4 +98,5 @@ export type Actions
   | FindAndSetCurrentAction
   | FindAndSetCurrentFailAction
   | SetCurrentAction
+  | UpdateTestimonyAction
   ;

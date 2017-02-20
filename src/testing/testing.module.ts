@@ -22,6 +22,7 @@ import {
   JumbtronStubComponent,
   LoadingSpinnerStubComponent,
   MarkedStubComponent,
+  MediumEditorStubComponent,
   SwitchStubComponent,
   YoutubePlayerStubComponent,
 } from './component-stubs';
@@ -35,6 +36,7 @@ import {
   ActStubService,
   AlertifyStubService,
   AuthStubService,
+  CommentStubService,
   DeedStubService,
   FeedStubService,
   GroupStubService,
@@ -60,6 +62,7 @@ import {
     JumbtronStubComponent,
     LoadingSpinnerStubComponent,
     MarkedStubComponent,
+    MediumEditorStubComponent,
     SwitchStubComponent,
     YoutubePlayerStubComponent,
 
@@ -73,6 +76,7 @@ import {
     ActStubService,
     AlertifyStubService,
     AuthStubService,
+    CommentStubService,
     DeedStubService,
     FeedStubService,
     GroupStubService,

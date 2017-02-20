@@ -1,0 +1,7 @@
+<div class="well well-sm medium-editor m-none">
+  <textarea
+    [ngModel]="content"
+    (ngModelChange)="change.emit($event)"
+    title="Comment form"
+  ></textarea>
+</div>
