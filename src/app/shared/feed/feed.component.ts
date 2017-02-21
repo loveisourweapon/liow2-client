@@ -27,7 +27,7 @@ export class FeedComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (has(changes, 'criteria.currentValue') && changes['criteria'].currentValue) {
-      this.store.dispatch(new feed.LoadAction(this.criteria));
+      this.store.dispatch(new feed.LoadInitialAction(this.criteria));
     }
   }
 
@@ -38,32 +38,10 @@ export class FeedComponent implements OnChanges, OnInit {
   }
 
   loadNewerItems(): void {
-    this.feedItems$
-      .take(1)
-      .map((feedItems: FeedItem[]) => feedItems[0])
-      .subscribe((newestFeedItem: FeedItem) => {
-        if (!newestFeedItem) { return; }
-
-        const newerCriteria = Object.assign({}, this.criteria, {
-          after: newestFeedItem._id,
-        });
-
-        this.store.dispatch(new feed.LoadAction(newerCriteria));
-      });
+    this.store.dispatch(new feed.LoadNewerAction());
   }
 
   loadOlderItems(): void {
-    this.feedItems$
-      .take(1)
-      .map((feedItems: FeedItem[]) => feedItems[feedItems.length - 1])
-      .subscribe((oldestFeedItem: FeedItem) => {
-        if (!oldestFeedItem) { return; }
-
-        const olderCriteria = Object.assign({}, this.criteria, {
-          before: oldestFeedItem._id,
-        });
-
-        this.store.dispatch(new feed.LoadAction(olderCriteria));
-      });
+    this.store.dispatch(new feed.LoadOlderAction());
   }
 }

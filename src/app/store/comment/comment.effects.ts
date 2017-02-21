@@ -5,8 +5,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { CommentService } from './comment.service';
 import { NewComment } from './index';
-import * as comment from './comment.actions';
 import * as alertify from '../alertify/alertify.actions';
+import * as comment from './comment.actions';
+import * as feed from '../feed/feed.actions';
 
 @Injectable()
 export class CommentEffects {
@@ -15,9 +16,8 @@ export class CommentEffects {
     .ofType(comment.ActionTypes.COMMENT).map(toPayload)
     .flatMap((newComment: NewComment) => this.commentService.save(newComment)
       .mergeMap(() => Observable.from([
-        // TODO: refresh feed?
-        // new feed.LoadAction(),
         new comment.CommentSuccessAction(),
+        new feed.LoadNewerAction(),
         new alertify.SuccessAction(`Comment saved`),
       ]))
       .catch(() => Observable.from([

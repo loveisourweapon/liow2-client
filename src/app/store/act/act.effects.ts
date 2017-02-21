@@ -7,6 +7,7 @@ import { ActService } from './act.service';
 import * as act from './act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import { Deed } from '../deed';
+import * as feed from '../feed/feed.actions';
 import { Group } from '../group';
 
 @Injectable()
@@ -18,9 +19,8 @@ export class ActEffects {
       .mergeMap(() => Observable.from([
         new act.CountAction(),
         new act.CountAction({ deed: payload.deed._id }),
-        // TODO: refresh feed?
-        // new feed.LoadAction(),
         new act.DoneSuccessAction(),
+        new feed.LoadNewerAction(),
         new alertify.SuccessAction(`Deed done!`),
       ]))
       .catch((error: Error) => Observable.from([

@@ -1,11 +1,12 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { FeedCriteria, FeedEffects, FeedItem, FeedService } from './index';
+import * as alertify from '../alertify/alertify.actions';
 import * as feed from './feed.actions';
-import { FeedStubService } from '../../../testing';
+import { FeedStubService, StoreStubService, takeAndScan } from '../../../testing';
 
 describe(`FeedEffects`, () => {
   let runner: EffectsRunner;
@@ -21,6 +22,7 @@ describe(`FeedEffects`, () => {
         providers: [
           FeedEffects,
           { provide: FeedService, useClass: FeedStubService },
+          { provide: Store, useClass: StoreStubService },
         ],
       });
   });
@@ -34,72 +36,28 @@ describe(`FeedEffects`, () => {
   describe(`loadInitial$`, () => {
     const criteria = <FeedCriteria>{};
 
-    it(`should dispatch LOAD_INITIAL_SUCCESS after successful HTTP request`, () => {
+    it(`should dispatch LOAD_INITIAL_SUCCESS action after successful HTTP request`, () => {
       const payload = <FeedItem[]>[];
       spyOn(feedService, 'load').and.returnValue(Observable.of(payload));
-      runner.queue(new feed.LoadAction(criteria));
+      runner.queue(new feed.LoadInitialAction(criteria));
       feedEffects.loadInitial$.subscribe((result: Action) => {
         expect(result.type).toBe(feed.ActionTypes.LOAD_INITIAL_SUCCESS);
         expect(result.payload).toBe(payload);
       });
     });
 
-    it(`should dispatch LOAD_FAIL after failed HTTP request`, () => {
-      const error = <Error>{};
-      spyOn(feedService, 'load').and.returnValue(Observable.throw(error));
-      runner.queue(new feed.LoadAction(criteria));
-      feedEffects.loadInitial$.subscribe((result: Action) => {
-        expect(result.type).toBe(feed.ActionTypes.LOAD_FAIL);
-        expect(result.payload).toBe(error);
-      });
+    it(`should dispatch LOAD_FAIL and alertify ERROR actions after failed HTTP request`, () => {
+      spyOn(feedService, 'load').and.returnValue(Observable.throw(new Error()));
+      runner.queue(new feed.LoadInitialAction(criteria));
+      takeAndScan(feedEffects.loadInitial$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(feed.ActionTypes.LOAD_FAIL);
+          expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
+        });
     });
   });
 
-  describe(`loadNewer$`, () => {
-    const criteria = <FeedCriteria>{ after: 'abc123' };
-
-    it(`should dispatch LOAD_NEWER_SUCCESS after successful HTTP request`, () => {
-      const payload = <FeedItem[]>[];
-      spyOn(feedService, 'load').and.returnValue(Observable.of(payload));
-      runner.queue(new feed.LoadAction(criteria));
-      feedEffects.loadNewer$.subscribe((result: Action) => {
-        expect(result.type).toBe(feed.ActionTypes.LOAD_NEWER_SUCCESS);
-        expect(result.payload).toBe(payload);
-      });
-    });
-
-    it(`should dispatch LOAD_FAIL after failed HTTP request`, () => {
-      const error = <Error>{};
-      spyOn(feedService, 'load').and.returnValue(Observable.throw(error));
-      runner.queue(new feed.LoadAction(criteria));
-      feedEffects.loadNewer$.subscribe((result: Action) => {
-        expect(result.type).toBe(feed.ActionTypes.LOAD_FAIL);
-        expect(result.payload).toBe(error);
-      });
-    });
-  });
-
-  describe(`loadOlder$`, () => {
-    const criteria = <FeedCriteria>{ before: 'abc123' };
-
-    it(`should dispatch LOAD_OLDER_SUCCESS after successful HTTP request`, () => {
-      const payload = <FeedItem[]>[];
-      spyOn(feedService, 'load').and.returnValue(Observable.of(payload));
-      runner.queue(new feed.LoadAction(criteria));
-      feedEffects.loadOlder$.subscribe((result: Action) => {
-        expect(result.type).toBe(feed.ActionTypes.LOAD_OLDER_SUCCESS);
-        expect(result.payload).toBe(payload);
-      });
-    });
-
-    it(`should dispatch LOAD_FAIL after failed HTTP request`, () => {
-      const error = <Error>{};
-      spyOn(feedService, 'load').and.returnValue(Observable.throw(error));
-      runner.queue(new feed.LoadAction(criteria));
-      feedEffects.loadOlder$.subscribe((result: Action) => {
-        expect(result.type).toBe(feed.ActionTypes.LOAD_FAIL);
-        expect(result.payload).toBe(error);
-      });
-    });
-  });
+  // TODO: need to test these
+  describe(`loadNewer$`, () => { });
+  describe(`loadOlder$`, () => { });
 });

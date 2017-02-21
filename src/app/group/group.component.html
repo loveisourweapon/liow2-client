@@ -63,7 +63,7 @@
 
           <liow-feed
             [criteria]="{ group: (group$ | async)?._id }"
-            *ngIf="(isAuthenticated$ | async)"
+            *ngIf="(isAuthenticated$ | async) && (group$ | async)"
           ></liow-feed>
 
           <p *ngIf="!(isAuthenticated$ | async)">

@@ -4,15 +4,21 @@ import { actionType } from '../utils';
 import { FeedCriteria, FeedItem } from './index';
 
 export class ActionTypes {
-  static readonly LOAD = actionType('[Feed] Load');
-  static readonly LOAD_INITIAL_SUCCESS = actionType('[Feed] Load Initial Success');
-  static readonly LOAD_NEWER_SUCCESS = actionType('[Feed] Load Newer Success');
-  static readonly LOAD_OLDER_SUCCESS = actionType('[Feed] Load Older Success');
   static readonly LOAD_FAIL = actionType('[Feed] Load Fail');
+  static readonly LOAD_INITIAL = actionType('[Feed] Load Initial');
+  static readonly LOAD_INITIAL_SUCCESS = actionType('[Feed] Load Initial Success');
+  static readonly LOAD_NEWER = actionType('[Feed] Load Newer');
+  static readonly LOAD_NEWER_SUCCESS = actionType('[Feed] Load Newer Success');
+  static readonly LOAD_OLDER = actionType('[Feed] Load Older');
+  static readonly LOAD_OLDER_SUCCESS = actionType('[Feed] Load Older Success');
 }
 
-export class LoadAction implements Action {
-  type = ActionTypes.LOAD;
+export class LoadFailAction implements Action {
+  type = ActionTypes.LOAD_FAIL;
+}
+
+export class LoadInitialAction implements Action {
+  type = ActionTypes.LOAD_INITIAL;
 
   constructor(
     public payload: FeedCriteria,
@@ -27,12 +33,20 @@ export class LoadInitialSuccessAction implements Action {
   ) { }
 }
 
+export class LoadNewerAction implements Action {
+  type = ActionTypes.LOAD_NEWER;
+}
+
 export class LoadNewerSuccessAction implements Action {
   type = ActionTypes.LOAD_NEWER_SUCCESS;
 
   constructor(
     public payload: FeedItem[],
   ) { }
+}
+
+export class LoadOlderAction implements Action {
+  type = ActionTypes.LOAD_OLDER;
 }
 
 export class LoadOlderSuccessAction implements Action {
@@ -43,18 +57,12 @@ export class LoadOlderSuccessAction implements Action {
   ) { }
 }
 
-export class LoadFailAction implements Action {
-  type = ActionTypes.LOAD_FAIL;
-
-  constructor(
-    public payload: any,
-  ) { }
-}
-
 export type Actions
-  = LoadAction
+  = LoadFailAction
+  | LoadInitialAction
   | LoadInitialSuccessAction
+  | LoadNewerAction
   | LoadNewerSuccessAction
+  | LoadOlderAction
   | LoadOlderSuccessAction
-  | LoadFailAction
   ;

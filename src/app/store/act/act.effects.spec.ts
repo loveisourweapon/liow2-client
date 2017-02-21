@@ -7,6 +7,7 @@ import { ActEffects, ActService } from './index';
 import * as act from './act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import { Deed } from '../deed';
+import * as feed from '../feed/feed.actions';
 import { ActStubService, takeAndScan } from '../../../testing';
 
 describe(`ActEffects`, () => {
@@ -36,15 +37,16 @@ describe(`ActEffects`, () => {
   describe(`done$`, () => {
     const testDeed = <Deed>{ _id: 'abc123' };
 
-    it(`should dispatch 2x COUNT, DONE_SUCCESS and SUCCESS actions after successful done request`, () => {
+    it(`should dispatch 2x COUNT, DONE_SUCCESS, LOAD NEWER and SUCCESS actions after successful done request`, () => {
       spyOn(actService, 'done').and.returnValue(Observable.of({}));
       runner.queue(new act.DoneAction({ deed: testDeed }));
-      takeAndScan(actEffects.done$, 4)
+      takeAndScan(actEffects.done$, 5)
         .subscribe((results: Action[]) => {
           expect(results[0].type).toBe(act.ActionTypes.COUNT);
           expect(results[1].type).toBe(act.ActionTypes.COUNT);
           expect(results[2].type).toBe(act.ActionTypes.DONE_SUCCESS);
-          expect(results[3].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[3].type).toBe(feed.ActionTypes.LOAD_NEWER);
+          expect(results[4].type).toBe(alertify.ActionTypes.SUCCESS);
         });
     });
 

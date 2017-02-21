@@ -33,10 +33,13 @@
         Activity Feed
       </h3>
 
-      <liow-feed [criteria]="{
-        user: authUser?._id,
-        group: listGroupIds(authUser?.groups)
-      }"></liow-feed>
+      <liow-feed
+        [criteria]="{
+          user: authUser?._id,
+          group: listGroupIds(authUser?.groups)
+        }"
+        *ngIf="authUser"
+      ></liow-feed>
     </div>
   </div>
 </div>

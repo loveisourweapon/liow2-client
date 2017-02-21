@@ -4,8 +4,9 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { CommentEffects, CommentService, NewComment } from './index';
-import * as comment from './comment.actions';
 import * as alertify from '../alertify/alertify.actions';
+import * as comment from './comment.actions';
+import * as feed from '../feed/feed.actions';
 import { CommentStubService, takeAndScan } from '../../../testing';
 
 describe(`CommentEffects`, () => {
@@ -42,10 +43,11 @@ describe(`CommentEffects`, () => {
     it(`should dispatch COMMENT_SUCCESS and alertify SUCCESS actions after successful save request`, () => {
       spyOn(commentService, 'save').and.returnValue(Observable.of({}));
       runner.queue(new comment.CommentAction(testComment));
-      takeAndScan(commentEffects.comment$, 2)
+      takeAndScan(commentEffects.comment$, 3)
         .subscribe((results: Action[]) => {
           expect(results[0].type).toBe(comment.ActionTypes.COMMENT_SUCCESS);
-          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].type).toBe(feed.ActionTypes.LOAD_NEWER);
+          expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
         });
     });
 

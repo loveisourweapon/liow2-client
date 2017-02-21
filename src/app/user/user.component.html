@@ -20,7 +20,7 @@
 
       <liow-feed
         [criteria]="{ user: (user$ | async)?._id }"
-        *ngIf="isAuthenticated$ | async"
+        *ngIf="(isAuthenticated$ | async) && (user$ | async)"
       ></liow-feed>
 
       <p *ngIf="!(isAuthenticated$ | async)">

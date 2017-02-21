@@ -92,6 +92,7 @@ export const getTestimony = createSelector(getDeedState, fromDeed.getTestimony);
  * Feed state selectors
  */
 export function getFeedState(state: State) { return state.feed; }
+export const getCriteria = createSelector(getFeedState, fromFeed.getCriteria);
 export const getFeedItems = createSelector(getFeedState, fromFeed.getFeedItems);
 export const getFeedIsLoading = createSelector(getFeedState, fromFeed.getIsLoading);
 
