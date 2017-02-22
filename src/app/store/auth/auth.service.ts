@@ -4,6 +4,7 @@ import { AuthService as Ng2AuthService, JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 
 import { environment } from '../../../environments/environment';
+import { NativeQueryEncoder } from '../utils';
 import { Credentials } from './index';
 
 @Injectable()
@@ -42,16 +43,12 @@ export class AuthService {
   }
 
   sendConfirmEmail(emailAddress: string): Observable<null> {
-    const search = new URLSearchParams();
-    search.set('email', emailAddress);
-
+    const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/confirm`, { search });
   }
 
   sendForgotPassword(emailAddress: string): Observable<null> {
-    const search = new URLSearchParams();
-    search.set('email', emailAddress);
-
+    const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/forgot`, { search });
   }
 

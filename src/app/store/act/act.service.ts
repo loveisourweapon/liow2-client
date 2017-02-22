@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { has, keys } from 'lodash';
 
 import { environment } from '../../../environments/environment';
+import { buildUrlSearchParams } from '../utils';
 import { Act, CounterQuery, CounterResult } from './index';
 import { Deed } from '../deed';
 import { Group } from '../group';
@@ -27,8 +28,7 @@ export class ActService {
       (query.deed || '');
     if (counterId === '') { counterId = 'global'; }
 
-    const search = new URLSearchParams();
-    keys(query).forEach((key: string) => search.set(key, query[key]));
+    const search = buildUrlSearchParams(query);
     search.set('count', 'true');
 
     return this.http.get(this.baseUrl, { search })
