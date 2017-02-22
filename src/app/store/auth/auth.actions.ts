@@ -16,6 +16,9 @@ export class ActionTypes {
   static readonly LOGOUT_SUCCESS = actionType('[Auth] Logout Success');
   static readonly SEND_CONFIRM_EMAIL = actionType('[Auth] Send Confirm Email');
   static readonly SEND_CONFIRM_EMAIL_DONE = actionType('[Auth] Send Confirm Email Done');
+  static readonly SEND_FORGOT_PASSWORD = actionType('[Auth] Send Forgot Password');
+  static readonly SEND_FORGOT_PASSWORD_SUCCESS = actionType('[Auth] Send Forgot Password Success');
+  static readonly SEND_FORGOT_PASSWORD_FAIL = actionType('[Auth] Send Forgot Password Fail');
   static readonly SET_CURRENT_GROUP = actionType('[Auth] Set Current Group');
   static readonly SIGNUP = actionType('[Auth] Signup');
   static readonly SIGNUP_SUCCESS = actionType('[Auth] Signup Success');
@@ -80,6 +83,20 @@ export class SendConfirmEmailDoneAction implements Action {
   type = ActionTypes.SEND_CONFIRM_EMAIL_DONE;
 }
 
+export class SendForgotPasswordAction implements Action {
+  type = ActionTypes.SEND_FORGOT_PASSWORD;
+
+  constructor(
+    public payload: string,
+  ) { }
+}
+export class SendForgotPasswordSuccessAction implements Action {
+  type = ActionTypes.SEND_FORGOT_PASSWORD_SUCCESS;
+}
+export class SendForgotPasswordFailAction implements Action {
+  type = ActionTypes.SEND_FORGOT_PASSWORD_FAIL;
+}
+
 export class SetCurrentGroupAction implements Action {
   type = ActionTypes.SET_CURRENT_GROUP;
 
@@ -120,6 +137,9 @@ export type Actions
   | LogoutSuccessAction
   | SendConfirmEmailAction
   | SendConfirmEmailDoneAction
+  | SendForgotPasswordAction
+  | SendForgotPasswordFailAction
+  | SendForgotPasswordSuccessAction
   | SetCurrentGroupAction
   | SignupAction
   | SignupSuccessAction

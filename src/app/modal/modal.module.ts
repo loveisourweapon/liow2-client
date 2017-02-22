@@ -5,6 +5,7 @@ import { SharedModule } from '../shared';
 import { ModalHeaderComponent } from './modal-header.component';
 import { ModalsComponent } from './modals.component';
 
+import { ForgotPasswordModalComponent } from './forgot-password';
 import { LoginModalComponent } from './login';
 import { SignupModalComponent } from './signup';
 
@@ -18,6 +19,7 @@ import { SignupModalComponent } from './signup';
     ModalHeaderComponent,
     ModalsComponent,
 
+    ForgotPasswordModalComponent,
     LoginModalComponent,
     SignupModalComponent,
   ],

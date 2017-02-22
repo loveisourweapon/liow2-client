@@ -63,8 +63,8 @@ export class LoginModalComponent implements OnChanges {
     this.store.dispatch(new loginModal.CloseAction());
   }
 
-  openForgotPassword(email: string): void {
-    // this.store.dispatch(new modal.OpenForgotPassword(email));
+  openForgotPassword(emailAddress: string): void {
+    this.store.dispatch(new modal.OpenForgotPasswordAction(emailAddress));
   }
 
   openSignup(): void {

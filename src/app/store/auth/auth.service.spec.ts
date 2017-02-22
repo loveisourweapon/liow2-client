@@ -90,6 +90,20 @@ describe(`AuthService`, () => {
     });
   });
 
+  describe(`#sendForgotPassword`, () => {
+    it(`should call /auth/forgot endpoint with 'email' param`, () => {
+      const testEmail = 'test@example.com';
+      const response = new Response(new ResponseOptions({ body: null }));
+      const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.sendForgotPassword(testEmail).subscribe(() => {
+        const url = httpSpy.calls.mostRecent().args[0];
+        const options = httpSpy.calls.mostRecent().args[1];
+        expect(url).toMatch(/\/auth\/forgot/);
+        expect(options['search'].get('email')).toBe(testEmail);
+      });
+    });
+  });
+
   describe(`#isAuthenticated`, () => {
     it(`should pass directly through to Ng2AuthService.isAuthenticated`, () => {
       const isAuthenticated = true;

@@ -21,6 +21,7 @@ export class AuthStubService {
   isAuthenticated() { }
   logout() { }
   sendConfirmEmail() { }
+  sendForgotPassword() { }
 }
 
 @Injectable()

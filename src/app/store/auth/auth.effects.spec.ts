@@ -188,6 +188,31 @@ describe(`AuthEffects`, () => {
     });
   });
 
+  describe(`sendForgotPassword$`, () => {
+    const testEmail = 'test@example.com';
+
+    it(`should dispatch SEND_FORGOT_PASSWORD_SUCCESS and alertify SUCCESS actions after sending email`, () => {
+      const forgotSpy = spyOn(authService, 'sendForgotPassword').and.returnValue(Observable.of({}));
+      runner.queue(new auth.SendForgotPasswordAction(testEmail));
+      takeAndScan(authEffects.sendForgotPassword$, 2)
+        .subscribe((results: Action[]) => {
+          expect(forgotSpy).toHaveBeenCalledWith(testEmail);
+          expect(results[0].type).toBe(auth.ActionTypes.SEND_FORGOT_PASSWORD_SUCCESS);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
+    });
+
+    it(`should dispatch SEND_FORGOT_PASSWORD_FAIL and alertify ERROR actions after failed sending email`, () => {
+      spyOn(authService, 'sendForgotPassword').and.returnValue(Observable.throw({}));
+      runner.queue(new auth.SendForgotPasswordAction(testEmail));
+      takeAndScan(authEffects.sendForgotPassword$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(auth.ActionTypes.SEND_FORGOT_PASSWORD_FAIL);
+          expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
+        });
+    });
+  });
+
   describe(`signup$`, () => {
     const newUser = {
       email: 'tester@example.com',

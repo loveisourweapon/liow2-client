@@ -83,6 +83,19 @@ export class AuthEffects {
       ])));
 
   @Effect()
+  sendForgotPassword$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.SEND_FORGOT_PASSWORD).map(toPayload)
+    .flatMap((emailAddress: string) => this.authService.sendForgotPassword(emailAddress)
+      .mergeMap(() => Observable.from([
+        new auth.SendForgotPasswordSuccessAction(),
+        new alertify.SuccessAction(`Sent password recovery email to <strong>${emailAddress}</strong>`),
+      ]))
+      .catch(() => Observable.from([
+        new auth.SendForgotPasswordFailAction(),
+        new alertify.ErrorAction(`Failed sending password recovery email`),
+      ])));
+
+  @Effect()
   signup$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.SIGNUP).map(toPayload)
     .flatMap((newUser: NewUser) => this.userService.save(newUser)

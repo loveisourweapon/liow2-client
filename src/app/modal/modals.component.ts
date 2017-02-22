@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { Group } from '../store/group';
+import { State as ForgotPasswordModalState } from '../store/forgot-password-modal';
 import { State as LoginModalState } from '../store/login-modal';
 import { State as SignupModalState } from '../store/signup-modal';
 import * as fromRoot from '../store/reducer';
@@ -13,6 +14,7 @@ import * as fromRoot from '../store/reducer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalsComponent implements OnInit {
+  forgotPasswordModal$: Observable<ForgotPasswordModalState>;
   loginModal$: Observable<LoginModalState>;
   signupModal$: Observable<SignupModalState>;
   currentGroup$: Observable<Group>;
@@ -22,6 +24,7 @@ export class ModalsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.forgotPasswordModal$ = this.store.select(fromRoot.getForgotPasswordModal);
     this.loginModal$ = this.store.select(fromRoot.getLoginModal);
     this.signupModal$ = this.store.select(fromRoot.getSignupModal);
 

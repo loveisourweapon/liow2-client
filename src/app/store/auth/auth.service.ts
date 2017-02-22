@@ -45,8 +45,14 @@ export class AuthService {
     const search = new URLSearchParams();
     search.set('email', emailAddress);
 
-    return this.http.get(`${this.baseUrl}/confirm`, { search })
-      .do(response => response.json());
+    return this.http.get(`${this.baseUrl}/confirm`, { search });
+  }
+
+  sendForgotPassword(emailAddress: string): Observable<null> {
+    const search = new URLSearchParams();
+    search.set('email', emailAddress);
+
+    return this.http.get(`${this.baseUrl}/forgot`, { search });
   }
 
   isAuthenticated(): boolean {
