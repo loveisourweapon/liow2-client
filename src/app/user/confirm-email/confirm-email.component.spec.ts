@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { ConfirmEmailComponent } from './confirm-email.component';
+import { TitleService } from '../../core';
 import {
   ActivatedRouteStubService,
   JumbtronStubComponent,
   LoadingSpinnerStubComponent,
   StoreStubService,
+  TitleStubService,
 } from '../../../testing';
 
 describe(`ConfirmEmailComponent`, () => {
@@ -25,6 +27,7 @@ describe(`ConfirmEmailComponent`, () => {
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
           { provide: Store, useClass: StoreStubService },
+          { provide: TitleService, useClass: TitleStubService },
         ],
       })
       .compileComponents();

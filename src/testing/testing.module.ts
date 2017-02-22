@@ -43,6 +43,7 @@ import {
   HttpStubService,
   Ng2AuthStubService,
   StoreStubService,
+  TitleStubService,
   UserStubService,
 } from './service-stubs';
 
@@ -83,6 +84,7 @@ import {
     HttpStubService,
     Ng2AuthStubService,
     StoreStubService,
+    TitleStubService,
     UserStubService,
   ],
 })

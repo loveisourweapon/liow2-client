@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { DeedComponent } from './deed.component';
+import { TitleService } from '../core';
 import { State as AppState } from '../store/reducer';
 import {
   ActivatedRouteStubService,
@@ -12,6 +13,7 @@ import {
   JumbtronStubComponent,
   MarkedStubComponent,
   StoreStubService,
+  TitleStubService,
   YoutubePlayerStubComponent,
 } from '../../testing';
 
@@ -38,6 +40,7 @@ xdescribe(`DeedComponent`, () => {
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
           { provide: Store, useClass: StoreStubService },
+          { provide: TitleService, useClass: TitleStubService },
         ],
       })
       .compileComponents();

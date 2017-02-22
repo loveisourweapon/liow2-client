@@ -3,7 +3,8 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { GlobalFeedComponent } from './global-feed.component';
-import { FeedStubComponent, JumbtronStubComponent } from '../../../testing';
+import { TitleService } from '../../core';
+import { FeedStubComponent, JumbtronStubComponent, TitleStubService } from '../../../testing';
 
 describe(`GlobalFeedComponent`, () => {
   let fixture: ComponentFixture<GlobalFeedComponent>;
@@ -17,6 +18,9 @@ describe(`GlobalFeedComponent`, () => {
           GlobalFeedComponent,
           FeedStubComponent,
           JumbtronStubComponent,
+        ],
+        providers: [
+          { provide: TitleService, useClass: TitleStubService },
         ],
       })
       .compileComponents();

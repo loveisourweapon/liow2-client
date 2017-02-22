@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { TitleService } from '../core';
 import { Group, GroupSlug } from '../store/group';
 import * as group from '../store/group/group.actions';
 import * as modal from '../store/modal.actions';
@@ -18,11 +19,13 @@ export class GroupComponent implements OnDestroy, OnInit {
   groupCounter$: Observable<number>;
   isAuthenticated$: Observable<boolean>;
 
-  private subscription: Subscription;
+  private routeSubscription: Subscription;
+  private groupSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<fromRoot.State>,
+    private title: TitleService,
   ) { }
 
   ngOnInit(): void {
@@ -30,15 +33,20 @@ export class GroupComponent implements OnDestroy, OnInit {
     this.groupCounter$ = this.store.select(fromRoot.getCurrentGroupCount);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
 
-    this.subscription = this.route.params
+    this.routeSubscription = this.route.params
       .map((params: Params) => params['groupSlug'])
       .filter((groupSlug: GroupSlug) => Boolean(groupSlug))
       .distinctUntilChanged()
       .subscribe((groupSlug: GroupSlug) => this.store.dispatch(new group.FindAndSetCurrentAction({ urlName: groupSlug })));
+
+    this.groupSubscription = this.group$
+      .filter((group: Group) => group !== null)
+      .subscribe((group: Group) => this.title.set(group.name));
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
+    this.groupSubscription.unsubscribe();
   }
 
   openLoginModal(): void {

@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
+import { TitleService } from '../core';
 import { State as AppState } from '../store/reducer';
-import { JumbtronStubComponent, StoreStubService, YoutubePlayerStubComponent } from '../../testing';
+import { JumbtronStubComponent, StoreStubService, TitleStubService, YoutubePlayerStubComponent } from '../../testing';
 
 describe(`HomeComponent`, () => {
   let component: HomeComponent;
@@ -26,6 +27,7 @@ describe(`HomeComponent`, () => {
         ],
         providers: [
           { provide: Store, useClass: StoreStubService },
+          { provide: TitleService, useClass: TitleStubService },
         ],
       })
       .compileComponents();

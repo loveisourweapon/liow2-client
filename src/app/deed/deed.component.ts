@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { TitleService } from '../core';
 import { Deed, DeedSlug } from '../store/deed';
 import { Group } from '../store/group';
 import { NewComment } from '../store/comment';
@@ -27,11 +28,13 @@ export class DeedComponent implements OnDestroy, OnInit {
   isSavingTestimony$: Observable<boolean>;
   testimony$: Observable<string>;
 
-  private subscription: Subscription;
+  private routeSubscription: Subscription;
+  private deedSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<fromRoot.State>,
+    private title: TitleService,
   ) { }
 
   ngOnInit(): void {
@@ -43,15 +46,20 @@ export class DeedComponent implements OnDestroy, OnInit {
     this.isDoing$ = this.store.select(fromRoot.getDeedIsDoing);
     this.isSavingTestimony$ = this.store.select(fromRoot.getIsSavingTestimony);
 
-    this.subscription = this.route.params
+    this.routeSubscription = this.route.params
       .map((params: Params) => params['deedSlug'])
       .filter((deedSlug: DeedSlug) => Boolean(deedSlug))
       .distinctUntilChanged()
       .subscribe((deedSlug: DeedSlug) => this.store.dispatch(new deed.FindAndSetCurrentAction({ urlTitle: deedSlug })));
+
+    this.deedSubscription = this.deed$
+      .filter((deed: Deed) => deed !== null)
+      .subscribe((deed: Deed) => this.title.set(deed.title));
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
+    this.deedSubscription.unsubscribe();
   }
 
   onUpdateTestimony(content: string): void {

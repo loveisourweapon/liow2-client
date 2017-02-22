@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 
 import { CoreModule } from './core';
 import { StoreModule } from './store';
@@ -23,6 +23,9 @@ import { AppComponent } from './app.component';
     GroupModule,
     UserModule,
     AppRoutingModule,
+  ],
+  providers: [
+    Title,
   ],
   declarations: [
     AppComponent,

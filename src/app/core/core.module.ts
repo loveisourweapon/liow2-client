@@ -6,6 +6,7 @@ import { SharedModule } from '../shared';
 
 import { AuthConfig } from './auth-config';
 import { NavbarComponent } from './navbar';
+import { TitleService } from './title.service';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { NavbarComponent } from './navbar';
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-AU' },
+    TitleService,
   ],
   declarations: [
     NavbarComponent,

@@ -69,6 +69,12 @@ export class StoreStubService<T> {
 }
 
 @Injectable()
+export class TitleStubService {
+  clear() { }
+  set() { }
+}
+
+@Injectable()
 export class UserStubService {
   get() { }
   getCurrent() { }

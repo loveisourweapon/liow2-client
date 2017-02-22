@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { TitleService } from '../core';
 import { Group } from '../store/group';
 import { User } from '../store/user';
 import * as act from '../store/act/act.actions';
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<fromRoot.State>,
+    private title: TitleService,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((user: User) =>
         user.groups.forEach((group: Group) =>
           this.store.dispatch(new act.CountAction({ group: group._id }))));
+
+    this.title.clear();
   }
 
   ngOnDestroy(): void {
