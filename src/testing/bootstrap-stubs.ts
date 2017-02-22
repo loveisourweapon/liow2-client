@@ -1,3 +1,4 @@
+/* tslint:disable:component-selector directive-selector no-input-rename */
 import { Component, Directive, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({

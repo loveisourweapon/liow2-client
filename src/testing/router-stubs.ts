@@ -1,3 +1,4 @@
+/* tslint:disable:component-selector directive-selector no-input-rename */
 import { Component, Directive, Injectable, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
