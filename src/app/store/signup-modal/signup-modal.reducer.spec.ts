@@ -17,6 +17,7 @@ describe(`signup modal reducer`, () => {
     },
     joinGroup: true,
     errorMessage: '',
+    errors: {},
   };
 
   const newUser: NewUser = {
@@ -65,29 +66,45 @@ describe(`signup modal reducer`, () => {
     expect(state.user.password).toBe(newUser.password);
   });
 
-  it(`should set isSigningUp to true with SIGNUP and LOGIN_WITH_FACEBOOK actions`, () => {
-    let state = reducer(initialState, new auth.SignupAction(newUser));
-    expect(state).not.toBe(initialState);
+  it(`should set reset errors and isSigningUp to true with SIGNUP and LOGIN_WITH_FACEBOOK actions`, () => {
+    let errorState = assign({}, initialState, { errorMessage: 'Test message' });
+    let state = reducer(errorState, new auth.SignupAction(newUser));
+    expect(state).not.toBe(errorState);
     expect(state.isSigningUp).toBe(true);
+    expect(state.errorMessage).toBe('');
 
-    state = reducer(initialState, new auth.LoginWithFacebookAction());
-    expect(state).not.toBe(initialState);
+    errorState = assign({}, initialState, { errors: { email: {} } });
+    state = reducer(errorState, new auth.LoginWithFacebookAction());
+    expect(state).not.toBe(errorState);
     expect(state.isSigningUp).toBe(true);
+    expect(state.errors).toEqual({});
   });
 
-  it(`should set isOpen to false with SIGNUP_SUCCESS action`, () => {
+  it(`should set isOpen and isSigningUp to false with SIGNUP_SUCCESS action`, () => {
     const signingUpState = assign({}, initialState, { isSigningUp: true });
     const state = reducer(signingUpState, new auth.SignupSuccessAction());
     expect(state).not.toBe(signingUpState);
     expect(state.isOpen).toBe(false);
+    expect(state.isSigningUp).toBe(false);
   });
 
-  it(`should set isSigningUp to false and errorMessage with SIGNUP_FAIL action`, () => {
-    const errorMessage = 'Test error';
+  it(`should set isSigningUp to false and errorMessage with SIGNUP_FAIL action and empty errors object`, () => {
+    const response = { errors: {}, message: 'Test error' };
     const signingUpState = assign({}, initialState, { isSigningUp: true });
-    const state = reducer(signingUpState, new auth.SignupFailAction(errorMessage));
+    const state = reducer(signingUpState, new auth.SignupFailAction(response));
     expect(state).not.toBe(signingUpState);
     expect(state.isSigningUp).toBe(false);
-    expect(state.errorMessage).toBe(errorMessage);
+    expect(state.errorMessage).toBe(response.message);
+    expect(state.errors).toEqual(signingUpState.errors);
+  });
+
+  it(`should set isSigningUp to false and errors with SIGNUP_FAIL action and errors object`, () => {
+    const response = { errors: { email: {} }, message: 'Test error' };
+    const signingUpState = assign({}, initialState, { isSigningUp: true });
+    const state = reducer(signingUpState, new auth.SignupFailAction(response));
+    expect(state).not.toBe(signingUpState);
+    expect(state.isSigningUp).toBe(false);
+    expect(state.errors).toBe(response.errors);
+    expect(state.errorMessage).toBe(signingUpState.errorMessage);
   });
 });

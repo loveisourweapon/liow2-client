@@ -102,7 +102,10 @@ export class SignupFailAction implements Action {
   type = ActionTypes.SIGNUP_FAIL;
 
   constructor(
-    public payload: string,
+    public payload: {
+      errors: { [key: string]: any },
+      message: string,
+    },
   ) { }
 }
 

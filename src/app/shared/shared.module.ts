@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
+import { EmailValidatorDirective } from './email-validator.directive';
 import { FeedComponent, FeedItemComponent } from './feed';
 import { JumbotronComponent } from './jumbotron';
 import { LoadingSpinnerComponent } from './loading-spinner';
@@ -27,6 +28,7 @@ import { MomentPipe } from './moment.pipe';
     DeedListComponent,
     DeedListHorizontalComponent,
     DeedListVerticalComponent,
+    EmailValidatorDirective,
     FeedComponent,
     FeedItemComponent,
     JumbotronComponent,
@@ -46,6 +48,7 @@ import { MomentPipe } from './moment.pipe';
     RouterModule,
 
     DeedListComponent,
+    EmailValidatorDirective,
     FeedComponent,
     JumbotronComponent,
     LoadingSpinnerComponent,

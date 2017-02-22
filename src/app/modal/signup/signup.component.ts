@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap';
 import { assign, has } from 'lodash';
@@ -22,6 +23,7 @@ export class SignupModalComponent implements OnChanges {
   @Input() state = <SignupModalState>null;
   @Input() group: Group;
   @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('form') form: NgForm;
 
   constructor(
     private store: Store<AppState>,
@@ -30,6 +32,7 @@ export class SignupModalComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (has(changes, 'state.currentValue')) {
       if (this.state.isOpen && !this.modal.isShown) {
+        this.form.resetForm();
         this.modal.show();
       } else if (!this.state.isOpen && this.modal.isShown) {
         this.modal.hide();

@@ -1,4 +1,5 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { Response, ResponseOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
@@ -208,12 +209,13 @@ describe(`AuthEffects`, () => {
     });
 
     it(`should dispatch SIGNUP_FAIL action after failing to save user`, () => {
-      const errorMessage = 'Test error';
-      spyOn(userService, 'save').and.returnValue(Observable.throw(new Error(errorMessage)));
+      const error = { errors: {}, message: 'Test error' };
+      const response = new Response(new ResponseOptions({ body: { error } }));
+      spyOn(userService, 'save').and.returnValue(Observable.throw(response));
       runner.queue(new auth.SignupAction(newUser));
       authEffects.signup$.subscribe((result: Action) => {
         expect(result.type).toBe(auth.ActionTypes.SIGNUP_FAIL);
-        expect(result.payload).toBe(errorMessage);
+        expect(result.payload).toBe(error);
       });
     });
   });

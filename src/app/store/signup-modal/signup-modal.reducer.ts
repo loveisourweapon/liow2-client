@@ -1,4 +1,4 @@
-import { assign, merge } from 'lodash';
+import { assign, has, keys, merge } from 'lodash';
 
 import * as signupModal from './signup-modal.actions';
 import * as auth from '../auth/auth.actions';
@@ -10,6 +10,7 @@ export interface State {
   user: NewUser;
   joinGroup: boolean;
   errorMessage: string;
+  errors: { [key: string]: any };
 }
 
 const initialState: State = {
@@ -23,6 +24,7 @@ const initialState: State = {
   },
   joinGroup: true,
   errorMessage: '',
+  errors: {},
 };
 
 export function reducer(state = initialState, action: signupModal.Actions|auth.Actions): State {
@@ -82,6 +84,7 @@ export function reducer(state = initialState, action: signupModal.Actions|auth.A
       return assign({}, state, {
         isSigningUp: true,
         errorMessage: '',
+        errors: {},
       });
 
     case auth.ActionTypes.SIGNUP_SUCCESS:
@@ -91,10 +94,14 @@ export function reducer(state = initialState, action: signupModal.Actions|auth.A
       });
 
     case auth.ActionTypes.SIGNUP_FAIL:
-      return assign({}, state, {
-        isSigningUp: false,
-        errorMessage: action.payload,
-      });
+      const newProps = <State>{ isSigningUp: false };
+      if (has(action.payload, 'errors') && keys(action.payload.errors).length) {
+        newProps.errors = action.payload.errors;
+      } else {
+        newProps.errorMessage = action.payload.message;
+      }
+
+      return assign({}, state, newProps);
 
     default:
       return state;

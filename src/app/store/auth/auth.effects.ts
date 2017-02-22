@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -88,8 +89,8 @@ export class AuthEffects {
       .mergeMap(() => Observable.from([
         new auth.LoginWithEmailAction(<Credentials>pick(newUser, ['email', 'password'])),
         new auth.SignupSuccessAction(),
-      ])))
-    .catch((error: Error) => Observable.of(new auth.SignupFailAction(error.message)));
+      ]))
+      .catch((response: Response) => Observable.of(new auth.SignupFailAction(response.json().error || {}))));
 
   constructor(
     private actions$: Actions,
