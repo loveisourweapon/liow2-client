@@ -55,7 +55,7 @@ export class LoginModalComponent implements OnChanges {
     this.store.dispatch(new auth.LoginWithFacebookAction(userData));
   }
 
-  onUpdatePropertyAction(property: string, value: string|boolean): void {
+  onUpdatePropertyAction(property: string, value: boolean|string): void {
     this.store.dispatch(new loginModal[`Update${property}Action`](value));
   }
 

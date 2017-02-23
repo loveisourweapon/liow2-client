@@ -2,7 +2,7 @@ import { Directive } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
-  selector: '[validEmail]',
+  selector: '[validateEmail]',
   providers: [{ provide: NG_VALIDATORS, useExisting: EmailValidatorDirective, multi: true }],
 })
 export class EmailValidatorDirective implements Validator {
@@ -12,7 +12,7 @@ export class EmailValidatorDirective implements Validator {
 
   validate(control: AbstractControl): { [key: string]: any } {
     return !this.validEmailRe.test(control.value)
-      ? { validEmail: true }
+      ? { email: true }
       : null
       ;
   }

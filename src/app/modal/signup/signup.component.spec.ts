@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { SignupModalComponent } from './signup.component';
 import { ModalHeaderComponent } from '../modal-header.component';
+import { EmailValidatorDirective } from '../../shared';
 import { Group } from '../../store/group';
 import * as auth from '../../store/auth/auth.actions';
 import { State as SignupModalState } from '../../store/signup-modal';
@@ -29,6 +30,7 @@ describe(`SignupModalComponent`, () => {
           ModalHeaderComponent,
           ModalStubDirective,
           SwitchStubComponent,
+          EmailValidatorDirective,
         ],
         imports: [
           FormsModule,

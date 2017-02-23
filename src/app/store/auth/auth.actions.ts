@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { actionType } from '../utils';
 import { Credentials } from './index';
 import { Group } from '../group';
+import { ResetPasswordRequest } from '../reset-password';
 import { NewUser, User } from '../user';
 
 export class ActionTypes {
@@ -14,6 +15,8 @@ export class ActionTypes {
   static readonly LOGIN_FAIL = actionType('[Auth] Login Fail');
   static readonly LOGOUT = actionType('[Auth] Logout');
   static readonly LOGOUT_SUCCESS = actionType('[Auth] Logout Success');
+  static readonly RESET_PASSWORD = actionType('[Auth] Reset Password');
+  static readonly RESET_PASSWORD_DONE = actionType('[Auth] Reset Password Done');
   static readonly SEND_CONFIRM_EMAIL = actionType('[Auth] Send Confirm Email');
   static readonly SEND_CONFIRM_EMAIL_DONE = actionType('[Auth] Send Confirm Email Done');
   static readonly SEND_FORGOT_PASSWORD = actionType('[Auth] Send Forgot Password');
@@ -70,6 +73,17 @@ export class LogoutAction implements Action {
 }
 export class LogoutSuccessAction implements Action {
   type = ActionTypes.LOGOUT_SUCCESS;
+}
+
+export class ResetPasswordAction implements Action {
+  type = ActionTypes.RESET_PASSWORD;
+
+  constructor(
+    public payload: ResetPasswordRequest,
+  ) { }
+}
+export class ResetPasswordDoneAction implements Action {
+  type = ActionTypes.RESET_PASSWORD_DONE;
 }
 
 export class SendConfirmEmailAction implements Action {
@@ -135,6 +149,8 @@ export type Actions
   | LoginFailAction
   | LogoutAction
   | LogoutSuccessAction
+  | ResetPasswordAction
+  | ResetPasswordDoneAction
   | SendConfirmEmailAction
   | SendConfirmEmailDoneAction
   | SendForgotPasswordAction

@@ -12,6 +12,7 @@ import { JumbotronComponent } from './jumbotron';
 import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
 import { MediumEditorComponent } from './medium-editor';
+import { SameAsValidatorDirective } from './same-as-validator.directive';
 import { SwitchComponent } from './switch';
 import { YoutubePlayerComponent } from './youtube-player.component';
 import { FromNowPipe } from './from-now.pipe';
@@ -35,6 +36,7 @@ import { MomentPipe } from './moment.pipe';
     LoadingSpinnerComponent,
     MarkedComponent,
     MediumEditorComponent,
+    SameAsValidatorDirective,
     SwitchComponent,
     YoutubePlayerComponent,
 
@@ -54,6 +56,7 @@ import { MomentPipe } from './moment.pipe';
     LoadingSpinnerComponent,
     MarkedComponent,
     MediumEditorComponent,
+    SameAsValidatorDirective,
     SwitchComponent,
     YoutubePlayerComponent,
 

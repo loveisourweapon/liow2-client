@@ -10,6 +10,8 @@ import { Credentials } from './index';
 import { AuthService } from './auth.service';
 import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
+import * as modal from '../modal.actions';
+import { ResetPasswordRequest } from '../reset-password';
 import { NewUser, User, UserService } from '../user';
 
 @Injectable()
@@ -68,6 +70,21 @@ export class AuthEffects {
       new auth.LogoutSuccessAction(),
       new alertify.SuccessAction(`Logged out`),
     ]));
+
+  @Effect()
+  resetPassword$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.RESET_PASSWORD).map(toPayload)
+    .flatMap((request: ResetPasswordRequest) => this.authService.resetPassword(request.password, request.token)
+      .mergeMap(() => Observable.from([
+        new auth.ResetPasswordDoneAction(),
+        new modal.OpenLoginAction(),
+        new alertify.SuccessAction(`Password reset`),
+      ]))
+      .catch(() => Observable.from([
+        new auth.ResetPasswordDoneAction(),
+        new alertify.ErrorAction(`Password reset link has expired. Please try again or contact us`),
+      ]))
+      .do(() => this.router.navigate(['/'])));
 
   @Effect()
   sendConfirmEmail$: Observable<Action> = this.actions$

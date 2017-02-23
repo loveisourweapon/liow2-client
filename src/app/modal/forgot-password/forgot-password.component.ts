@@ -41,7 +41,7 @@ export class ForgotPasswordModalComponent implements OnChanges {
     this.store.dispatch(new auth.SendForgotPasswordAction(emailAddress));
   }
 
-  onUpdatePropertyAction(property: string, value: string|boolean): void {
+  onUpdatePropertyAction(property: string, value: string): void {
     this.store.dispatch(new forgotPasswordModal[`Update${property}Action`](value));
   }
 

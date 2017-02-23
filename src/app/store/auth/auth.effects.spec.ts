@@ -9,6 +9,7 @@ import { pick } from 'lodash';
 import { AuthEffects, AuthService } from './index';
 import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
+import * as loginModal from '../login-modal/login-modal.actions';
 import { UserService } from '../user';
 import { AuthStubService, RouterStubService, UserStubService, takeAndScan } from '../../../testing';
 
@@ -159,6 +160,37 @@ describe(`AuthEffects`, () => {
           expect(logoutSpy).toHaveBeenCalled();
           expect(results[0].type).toBe(auth.ActionTypes.LOGOUT_SUCCESS);
           expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
+    });
+  });
+
+  describe(`resetPassword$`, () => {
+    const password = 'Password123';
+    const token = 'abc123';
+
+    it(`should dispatch RESET_PASSWORD_DONE, login modal OPEN and alertify SUCCESS actions`, () => {
+      const resetSpy = spyOn(authService, 'resetPassword').and.returnValue(Observable.of({}));
+      const routerSpy = spyOn(router, 'navigate');
+      runner.queue(new auth.ResetPasswordAction({ password, token }));
+      takeAndScan(authEffects.resetPassword$, 3)
+        .subscribe((results: Action[]) => {
+          expect(resetSpy).toHaveBeenCalledWith(password, token);
+          expect(routerSpy).toHaveBeenCalledWith(['/']);
+          expect(results[0].type).toBe(auth.ActionTypes.RESET_PASSWORD_DONE);
+          expect(results[1].type).toBe(loginModal.ActionTypes.OPEN);
+          expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
+        });
+    });
+
+    it(`should dispatch RESET_PASSWORD_DONE and alertify ERROR actions after failed resetting password`, () => {
+      const routerSpy = spyOn(router, 'navigate');
+      spyOn(authService, 'resetPassword').and.returnValue(Observable.throw({}));
+      runner.queue(new auth.ResetPasswordAction({ password, token }));
+      takeAndScan(authEffects.resetPassword$, 2)
+        .subscribe((results: Action[]) => {
+          expect(routerSpy).toHaveBeenCalledWith(['/']);
+          expect(results[0].type).toBe(auth.ActionTypes.RESET_PASSWORD_DONE);
+          expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
         });
     });
   });

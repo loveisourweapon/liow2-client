@@ -76,6 +76,22 @@ describe(`AuthService`, () => {
     });
   });
 
+  describe(`#resetPassword`, () => {
+    it(`should call /auth/reset endpoint with 'email' and 'token' params`, () => {
+      const password = 'Password123';
+      const token = 'abc123';
+      const response = new Response(new ResponseOptions({ body: null }));
+      const httpSpy = spyOn(http, 'post').and.returnValue(Observable.of(response));
+      service.resetPassword(password, token).subscribe(() => {
+        const url = httpSpy.calls.mostRecent().args[0];
+        const data = httpSpy.calls.mostRecent().args[1];
+        expect(url).toMatch(/\/auth\/reset/);
+        expect(data.password).toBe(password);
+        expect(data.token).toBe(token);
+      });
+    });
+  });
+
   describe(`#sendConfirmEmail`, () => {
     it(`should call /auth/confirm endpoint with 'email' param`, () => {
       const testEmail = 'test@example.com';

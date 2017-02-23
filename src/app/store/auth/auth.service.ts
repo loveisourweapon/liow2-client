@@ -42,6 +42,10 @@ export class AuthService {
       .map((response: Response) => response.json());
   }
 
+  resetPassword(password: string, token: string): Observable<null> {
+    return this.http.post(`${this.baseUrl}/reset`, { password, token });
+  }
+
   sendConfirmEmail(emailAddress: string): Observable<null> {
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/confirm`, { search });

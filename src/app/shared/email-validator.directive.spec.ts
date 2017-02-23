@@ -15,10 +15,10 @@ describe(`EmailValidatorDirective`, () => {
     expect(result).toBeNull();
   });
 
-  it(`should return { validEmail: true } for an invalid email address`, () => {
+  it(`should return { email: true } for an invalid email address`, () => {
     const input = '';
     const result = directive.validate(<AbstractControl>{ value: input });
-    expect(result).toEqual({ validEmail: true });
+    expect(result).toEqual({ email: true });
   });
 
   it(`should validate email addresses`, () => {
@@ -41,7 +41,7 @@ describe(`EmailValidatorDirective`, () => {
       if (testCase.isValid) {
         expect(result).toBeNull();
       } else {
-        expect(result).toEqual({ validEmail: true });
+        expect(result).toEqual({ email: true });
       }
     });
   });
