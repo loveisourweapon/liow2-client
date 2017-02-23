@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Router } from '@angular/router';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
+import { go } from '@ngrx/router-store';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
@@ -19,10 +19,15 @@ export class AuthEffects {
   @Effect()
   confirmEmail$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.CONFIRM_EMAIL).map(toPayload)
-    .flatMap((token: string) => this.authService.confirmEmail(token))
-    .map(() => new alertify.SuccessAction(`Confirmed email address`))
-    .catch(() => Observable.of(new alertify.ErrorAction(`Failed confirming email address`)))
-    .do(() => this.router.navigate(['/']));
+    .flatMap((token: string) => this.authService.confirmEmail(token)
+      .mergeMap(() => Observable.from([
+        new alertify.SuccessAction(`Confirmed email address`),
+        go('/'),
+      ]))
+      .catch(() => Observable.from([
+        new alertify.ErrorAction(`Failed confirming email address`),
+        go('/'),
+      ])));
 
   @Effect()
   loginEmail$: Observable<Action> = this.actions$
@@ -75,16 +80,18 @@ export class AuthEffects {
   resetPassword$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.RESET_PASSWORD).map(toPayload)
     .flatMap((request: ResetPasswordRequest) => this.authService.resetPassword(request.password, request.token)
+      .finally(() => go('/'))
       .mergeMap(() => Observable.from([
         new auth.ResetPasswordDoneAction(),
         new modal.OpenLoginAction(),
         new alertify.SuccessAction(`Password reset`),
+        go('/'),
       ]))
       .catch(() => Observable.from([
         new auth.ResetPasswordDoneAction(),
         new alertify.ErrorAction(`Password reset link has expired. Please try again or contact us`),
-      ]))
-      .do(() => this.router.navigate(['/'])));
+        go('/'),
+      ])));
 
   @Effect()
   sendConfirmEmail$: Observable<Action> = this.actions$
@@ -125,7 +132,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router,
     private userService: UserService,
   ) { }
 }

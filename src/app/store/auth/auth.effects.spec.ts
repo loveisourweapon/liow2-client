@@ -1,7 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
-import { Router } from '@angular/router';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
+import { routerActions } from '@ngrx/router-store';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
@@ -11,14 +11,13 @@ import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
 import * as loginModal from '../login-modal/login-modal.actions';
 import { UserService } from '../user';
-import { AuthStubService, RouterStubService, UserStubService, takeAndScan } from '../../../testing';
+import { AuthStubService, UserStubService, takeAndScan } from '../../../testing';
 
 describe(`AuthEffects`, () => {
   let runner: EffectsRunner;
   let authEffects: AuthEffects;
   let authService: AuthService;
   let userService: UserService;
-  let router: Router;
 
   beforeEach(() => {
     TestBed
@@ -29,7 +28,6 @@ describe(`AuthEffects`, () => {
         providers: [
           AuthEffects,
           { provide: AuthService, useClass: AuthStubService },
-          { provide: Router, useClass: RouterStubService },
           { provide: UserService, useClass: UserStubService },
         ],
       });
@@ -40,7 +38,6 @@ describe(`AuthEffects`, () => {
     authEffects = _deedEffects;
     authService = TestBed.get(AuthService);
     userService = TestBed.get(UserService);
-    router = TestBed.get(Router);
   }));
 
   describe(`confirmEmail$`, () => {
@@ -48,25 +45,25 @@ describe(`AuthEffects`, () => {
 
     it(`should dispatch CONFIRM_EMAIL_SUCCESS and navigate after successful email confirmation`, () => {
       const authSpy = spyOn(authService, 'confirmEmail').and.returnValue(Observable.of({}));
-      const routerSpy = spyOn(router, 'navigate');
       runner.queue(new auth.ConfirmEmailAction(token));
-      authEffects.confirmEmail$.subscribe((result: Action) => {
-        expect(authSpy.calls.mostRecent().args[0]).toBe(token);
-        expect(routerSpy).toHaveBeenCalledWith(['/']);
-        expect(result.type).toBe(alertify.ActionTypes.SUCCESS);
-      });
+      takeAndScan(authEffects.confirmEmail$, 2)
+        .subscribe((results: Action[]) => {
+          expect(authSpy.calls.mostRecent().args[0]).toBe(token);
+          expect(results[0].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].type).toBe(routerActions.GO);
+        });
     });
 
     it(`should dispatch CONFIRM_EMAIL_FAIL and navigate after failed email confirmation`, () => {
       const errorMessage = 'Test error';
       const authSpy = spyOn(authService, 'confirmEmail').and.returnValue(Observable.throw(new Error(errorMessage)));
-      const routerSpy = spyOn(router, 'navigate');
       runner.queue(new auth.ConfirmEmailAction(token));
-      authEffects.confirmEmail$.subscribe((result: Action) => {
-        expect(authSpy.calls.mostRecent().args[0]).toBe(token);
-        expect(routerSpy).toHaveBeenCalledWith(['/']);
-        expect(result.type).toBe(alertify.ActionTypes.ERROR);
-      });
+      takeAndScan(authEffects.confirmEmail$, 2)
+        .subscribe((results: Action[]) => {
+          expect(authSpy.calls.mostRecent().args[0]).toBe(token);
+          expect(results[0].type).toBe(alertify.ActionTypes.ERROR);
+          expect(results[1].type).toBe(routerActions.GO);
+        });
     });
   });
 
@@ -170,27 +167,25 @@ describe(`AuthEffects`, () => {
 
     it(`should dispatch RESET_PASSWORD_DONE, login modal OPEN and alertify SUCCESS actions`, () => {
       const resetSpy = spyOn(authService, 'resetPassword').and.returnValue(Observable.of({}));
-      const routerSpy = spyOn(router, 'navigate');
       runner.queue(new auth.ResetPasswordAction({ password, token }));
-      takeAndScan(authEffects.resetPassword$, 3)
+      takeAndScan(authEffects.resetPassword$, 4)
         .subscribe((results: Action[]) => {
           expect(resetSpy).toHaveBeenCalledWith(password, token);
-          expect(routerSpy).toHaveBeenCalledWith(['/']);
           expect(results[0].type).toBe(auth.ActionTypes.RESET_PASSWORD_DONE);
           expect(results[1].type).toBe(loginModal.ActionTypes.OPEN);
           expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[3].type).toBe(routerActions.GO);
         });
     });
 
     it(`should dispatch RESET_PASSWORD_DONE and alertify ERROR actions after failed resetting password`, () => {
-      const routerSpy = spyOn(router, 'navigate');
       spyOn(authService, 'resetPassword').and.returnValue(Observable.throw({}));
       runner.queue(new auth.ResetPasswordAction({ password, token }));
-      takeAndScan(authEffects.resetPassword$, 2)
+      takeAndScan(authEffects.resetPassword$, 3)
         .subscribe((results: Action[]) => {
-          expect(routerSpy).toHaveBeenCalledWith(['/']);
           expect(results[0].type).toBe(auth.ActionTypes.RESET_PASSWORD_DONE);
           expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
+          expect(results[2].type).toBe(routerActions.GO);
         });
     });
   });

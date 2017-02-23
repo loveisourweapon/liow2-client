@@ -15,7 +15,9 @@ import { UserEffects, UserService } from './user';
 
 @NgModule({
   imports: [
-    NgrxStoreModule.provideStore(reducer),
+    NgrxStoreModule.provideStore(reducer, {
+      router: { path: window.location.pathname + window.location.search },
+    }),
     RouterStoreModule.connectRouter(),
 
     EffectsModule.run(AuthEffects),
