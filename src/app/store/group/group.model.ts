@@ -17,7 +17,7 @@ export interface Group {
 
 export interface NewGroup {
   name: string;
-  logo: string;
-  coverImage: string;
-  welcomeMessage: string;
+  logo?: string;
+  coverImage?: string;
+  welcomeMessage?: string;
 }

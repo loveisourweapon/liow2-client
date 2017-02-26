@@ -6,6 +6,7 @@ import { has } from 'lodash';
 
 import { State as GroupEditModalState } from '../../store/group-edit-modal';
 import * as groupEditModal from '../../store/group-edit-modal/group-edit-modal.actions';
+import * as group from '../../store/group/group.actions';
 import { Group, NewGroup } from '../../store/group';
 import * as modal from '../../store/modal.actions';
 import { State as AppState } from '../../store/reducer';
@@ -36,8 +37,8 @@ export class GroupEditModalComponent implements OnChanges {
     }
   }
 
-  save(group: Group|NewGroup): void {
-    // this.store.dispatch(new group.CreateAction(group);
+  save(groupToSave: Group|NewGroup, setupCampaign): void {
+    this.store.dispatch(new group.CreateAction({ group: groupToSave, setupCampaign }));
   }
 
   onUpdatePropertyAction(property: string, value: boolean|string): void {

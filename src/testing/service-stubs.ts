@@ -47,6 +47,7 @@ export class GroupStubService {
   count() { }
   find() { }
   findOne() { }
+  save() { }
 }
 
 @Injectable()

@@ -99,7 +99,7 @@ export class AuthEffects {
     .flatMap((emailAddress: string) => this.authService.sendConfirmEmail(emailAddress)
       .mergeMap(() => Observable.from([
         new auth.SendConfirmEmailDoneAction(),
-        new alertify.SuccessAction(`Sent confirmation email to <strong>${emailAddress}</strong>`),
+        new alertify.SuccessAction(`Sent confirmation email to <b>${emailAddress}</b>`),
       ]))
       .catch(() => Observable.from([
         new auth.SendConfirmEmailDoneAction(),
@@ -112,7 +112,7 @@ export class AuthEffects {
     .flatMap((emailAddress: string) => this.authService.sendForgotPassword(emailAddress)
       .mergeMap(() => Observable.from([
         new auth.SendForgotPasswordSuccessAction(),
-        new alertify.SuccessAction(`Sent password recovery email to <strong>${emailAddress}</strong>`),
+        new alertify.SuccessAction(`Sent password recovery email to <b>${emailAddress}</b>`),
       ]))
       .catch(() => Observable.from([
         new auth.SendForgotPasswordFailAction(),

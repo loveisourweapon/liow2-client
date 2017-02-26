@@ -1,7 +1,8 @@
-import { assign, merge } from 'lodash';
+import { assign, has, keys, merge } from 'lodash';
 
 import * as groupEditModal from './group-edit-modal.actions';
 import { GroupEditAction } from './group-edit-modal.model';
+import * as group from '../group/group.actions';
 import { Group, NewGroup } from '../group';
 
 export interface State {
@@ -29,7 +30,7 @@ const initialState: State = {
   errors: {},
 };
 
-export function reducer(state = initialState, action: groupEditModal.Actions): State {
+export function reducer(state = initialState, action: groupEditModal.Actions|group.Actions): State {
   switch (action.type) {
     case groupEditModal.ActionTypes.CLOSE:
       return assign({}, state, {
@@ -75,6 +76,29 @@ export function reducer(state = initialState, action: groupEditModal.Actions): S
     case groupEditModal.ActionTypes.UPDATE_SETUP_CAMPAIGN:
       return assign({}, state, {
         setupCampaign: action.payload,
+      });
+
+    case group.ActionTypes.CREATE:
+      return assign({}, state, {
+        isSaving: true,
+        errorMessage: '',
+        errors: {},
+      });
+
+    case group.ActionTypes.CREATE_FAIL:
+      const newProps = <State>{ isSaving: false };
+      if (has(action.payload, 'errors') && keys(action.payload.errors).length) {
+        newProps.errors = action.payload.errors;
+      } else {
+        newProps.errorMessage = action.payload.message;
+      }
+
+      return assign({}, state, newProps);
+
+    case group.ActionTypes.CREATE_SUCCESS:
+      return assign({}, state, {
+        isOpen: false,
+        isSavings: false,
       });
 
     default:

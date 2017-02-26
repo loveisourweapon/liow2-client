@@ -24,7 +24,7 @@
         </alert>
 
         <form
-          (ngSubmit)="form.valid && save(state.group)"
+          (ngSubmit)="form.valid && save(state.group, state.setupCampaign)"
           #form="ngForm"
           class="form-horizontal"
           [hidden]="!isAuthenticated"
@@ -32,7 +32,7 @@
         >
           <div
             class="form-group"
-            [class.has-error]="state.errors.name || state.errors.urlName"
+            [class.has-error]="form.submitted && (name.invalid || state.errors.name || state.errors.urlName)"
           >
             <label for="name" class="col-xs-3 control-label">Name</label>
             <div class="col-xs-9">
@@ -41,19 +41,26 @@
                 class="form-control"
                 id="name"
                 name="name"
+                #name="ngModel"
                 [ngModel]="state.group.name"
                 (ngModelChange)="onUpdatePropertyAction('Name', $event)"
                 placeholder="Group name..."
                 required
                 #autofocus
               >
-              <span class="help-block" *ngIf="!(state.errors.name || state.errors.urlName)">
+              <span
+                class="help-block"
+                *ngIf="!(form.submitted && (name.invalid || state.errors.name || state.errors.urlName))"
+              >
                 https://loveisourweapon.com/g/{{ state.group.name || '...' }}
                 <!-- TODO: add kebabCase pipe -->
                 <!--https://loveisourweapon.com/g/{{ (state.group.name | kebabCase) || '...' }}-->
               </span>
+              <span class="help-block" *ngIf="form.submitted && name.errors?.required">
+                Please enter a group name
+              </span>
               <span class="help-block" *ngIf="state.errors.name || state.errors.urlName">
-                Name is already taken
+                Entered name is already taken
               </span>
             </div>
           </div>
@@ -198,7 +205,7 @@
         </button>
         <button
           type="button"
-          (click)="form.valid && save(state.group)"
+          (click)="form.valid && save(state.group, state.setupCampaign)"
           class="btn btn-primary"
           [disabled]="!isAuthenticated || state.isSaving"
         >

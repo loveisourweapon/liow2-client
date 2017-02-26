@@ -18,7 +18,10 @@ export function reducer(state = initialState, action: auth.Actions): State {
   switch (action.type) {
     case auth.ActionTypes.LOGIN_SUCCESS:
       const user = action.payload;
-      const group = user.groups.length ? user.groups[0] : null;
+      const group = (!state.group && user.groups.length)
+        ? user.groups[0]
+        : state.group
+        ;
 
       return {
         isAuthenticated: true,

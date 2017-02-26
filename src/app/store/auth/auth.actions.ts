@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { actionType } from '../utils';
+import { actionType, ApiError } from '../utils';
 import { Credentials } from './index';
 import { Group } from '../group';
 import { ResetPasswordRequest } from '../reset-password';
@@ -133,10 +133,7 @@ export class SignupFailAction implements Action {
   type = ActionTypes.SIGNUP_FAIL;
 
   constructor(
-    public payload: {
-      errors: { [key: string]: any },
-      message: string,
-    },
+    public payload: ApiError,
   ) { }
 }
 

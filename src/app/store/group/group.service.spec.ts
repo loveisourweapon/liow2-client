@@ -1,7 +1,8 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions, URLSearchParams } from '@angular/http';
+import { Response, ResponseOptions } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
+import { assign } from 'lodash';
 
 import { Group, GroupService } from './index';
 import { HttpStubService } from '../../../testing';
@@ -75,6 +76,32 @@ describe(`GroupService`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup, testGroup] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
       service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Group not found`));
+    });
+  });
+
+  describe(`#save`, () => {
+    const newGroup = {
+      name: 'Test group name',
+      welcomeMessage: 'Test **welcome** message',
+    };
+
+    it(`should POST to /groups if passed in group doesn't have an ID`, () => {
+      const response = new Response(new ResponseOptions({ body: newGroup }));
+      const httpSpy = spyOn(http, 'post').and.returnValue(Observable.of(response));
+      service.save(newGroup).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(/\/groups/);
+        expect(httpSpy.calls.mostRecent().args[1]).toBe(newGroup);
+      });
+    });
+
+    it(`should PUT to /groups/:groupId if passed in user has an ID`, () => {
+      const updatedGroup = assign({}, newGroup, { _id: 'abc123' });
+      const response = new Response(new ResponseOptions({ body: updatedGroup }));
+      const httpSpy = spyOn(http, 'put').and.returnValue(Observable.of(response));
+      service.save(updatedGroup).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/groups/${updatedGroup._id}$`));
+        expect(httpSpy.calls.mostRecent().args[1]).toBe(updatedGroup);
+      });
     });
   });
 
