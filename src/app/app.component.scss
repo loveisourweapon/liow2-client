@@ -1,5 +1,20 @@
 @import "../styles/variables";
 
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  liow-navbar, footer {
+    flex: 0;
+  }
+}
+
 footer {
   height: 60px;
   border-top: 1px solid $gray-border;
