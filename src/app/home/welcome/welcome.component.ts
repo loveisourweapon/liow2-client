@@ -33,4 +33,8 @@ export class WelcomeComponent implements OnInit {
   openSignupModal(): void {
     this.store.dispatch(new modal.OpenSignupAction());
   }
+
+  openGroupEdit(): void {
+    this.store.dispatch(new modal.OpenGroupEditAction());
+  }
 }

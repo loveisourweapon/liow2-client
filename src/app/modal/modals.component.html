@@ -2,6 +2,11 @@
   [state]="forgotPasswordModal$ | async"
 ></liow-forgot-password-modal>
 
+<liow-group-edit-modal
+  [state]="groupEditModal$ | async"
+  [isAuthenticated]="isAuthenticated$ | async"
+></liow-group-edit-modal>
+
 <liow-login-modal
   [state]="loginModal$ | async"
   [group]="currentGroup$ | async"

@@ -20,6 +20,7 @@ import * as fromLayout from './layout/layout.reducer';
 import * as fromResetPassword from './reset-password/reset-password.reducer';
 import * as fromUser from './user/user.reducer';
 import * as fromForgotPasswordModal from './forgot-password-modal/forgot-password-modal.reducer';
+import * as fromGroupEditModal from './group-edit-modal/group-edit-modal.reducer';
 import * as fromLoginModal from './login-modal/login-modal.reducer';
 import * as fromSignupModal from './signup-modal/signup-modal.reducer';
 
@@ -34,6 +35,7 @@ export interface State {
   router: fromRouter.RouterState;
   user: fromUser.State;
   modalForgotPassword: fromForgotPasswordModal.State;
+  modalGroupEdit: fromGroupEditModal.State;
   modalLogin: fromLoginModal.State;
   modalSignup: fromSignupModal.State;
 }
@@ -49,6 +51,7 @@ const reducers = {
   router: fromRouter.routerReducer,
   user: fromUser.reducer,
   modalForgotPassword: fromForgotPasswordModal.reducer,
+  modalGroupEdit: fromGroupEditModal.reducer,
   modalLogin: fromLoginModal.reducer,
   modalSignup: fromSignupModal.reducer,
 };
@@ -140,6 +143,7 @@ export const getCurrentUser = createSelector(getUserState, fromUser.getCurrent);
  * Modal state selectors
  */
 export function getForgotPasswordModal(state: State) { return state.modalForgotPassword; }
+export function getGroupEditModal(state: State) { return state.modalGroupEdit; }
 export function getLoginModal(state: State) { return state.modalLogin; }
 export function getSignupModal(state: State) { return state.modalSignup; }
 

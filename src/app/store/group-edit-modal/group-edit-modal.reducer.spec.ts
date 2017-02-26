@@ -1,0 +1,80 @@
+import { assign } from 'lodash';
+
+import { GroupEditAction, reducer, State } from './index';
+import * as groupEditModal from './group-edit-modal.actions';
+import { Group } from '../group';
+
+describe(`group edit modal reducer`, () => {
+  const initialState: State = {
+    action: GroupEditAction.CREATE,
+    isOpen: false,
+    isSaving: false,
+    group: {
+      name: '',
+      logo: null,
+      coverImage: null,
+      welcomeMessage: '',
+    },
+    setupCampaign: true,
+    errorMessage: '',
+    errors: {},
+  };
+
+  it(`should set isOpen to false with CLOSE action`, () => {
+    const openState = assign({}, initialState, { isOpen: true });
+    const state = reducer(openState, new groupEditModal.CloseAction());
+    expect(state).not.toBe(openState);
+    expect(state.isOpen).toBe(false);
+  });
+
+  it(`should set itOpen to false and action property with OPEN action`, () => {
+    const action = GroupEditAction.EDIT;
+    const state = reducer(initialState, new groupEditModal.OpenAction({ action }));
+    expect(state).not.toBe(initialState);
+    expect(state.isOpen).toBe(true);
+    expect(state.action).toBe(action);
+  });
+
+  it(`should set the group and setupCampaign properties when opened with a group`, () => {
+    const initialise = { action: GroupEditAction.EDIT, group: <Group>{} };
+    const state = reducer(initialState, new groupEditModal.OpenAction(initialise));
+    expect(state).not.toBe(initialState);
+    expect(state.group).toBe(initialise.group);
+    expect(state.setupCampaign).toBe(false);
+  });
+
+  it(`should update the group.name property with UPDATE_NAME action`, () => {
+    const name = 'Test group name';
+    const state = reducer(initialState, new groupEditModal.UpdateNameAction(name));
+    expect(state).not.toBe(initialState);
+    expect(state.group.name).toBe(name);
+  });
+
+  it(`should update the group.logo property with UPDATE_LOGO action`, () => {
+    const logo = '/path/to/logo.png';
+    const state = reducer(initialState, new groupEditModal.UpdateLogoAction(logo));
+    expect(state).not.toBe(initialState);
+    expect(state.group.logo).toBe(logo);
+  });
+
+  it(`should update the group.coverImage property with UPDATE_COVER_IMAGE action`, () => {
+    const coverImage = '/path/to/cover-image.png';
+    const state = reducer(initialState, new groupEditModal.UpdateCoverImageAction(coverImage));
+    expect(state).not.toBe(initialState);
+    expect(state.group.coverImage).toBe(coverImage);
+  });
+
+  it(`should update the group.welcomeMessage property with UPDATE_WELCOME_MESSAGE action`, () => {
+    const welcomeMessage = 'Test **welcome message**';
+    const state = reducer(initialState, new groupEditModal.UpdateWelcomeMessageAction(welcomeMessage));
+    expect(state).not.toBe(initialState);
+    expect(state.group.welcomeMessage).toBe(welcomeMessage);
+  });
+
+  it(`should update the setupCampaign property with UPDATE_SETUP_CAMPAIGN action`, () => {
+    const setupCampaign = false;
+    const state = reducer(initialState, new groupEditModal.UpdateSetupCampaignAction(setupCampaign));
+    expect(state).not.toBe(initialState);
+    expect(state.setupCampaign).toBe(setupCampaign);
+  });
+});

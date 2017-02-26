@@ -14,3 +14,10 @@ export interface Group {
   created: Date;
   modified: Date;
 }
+
+export interface NewGroup {
+  name: string;
+  logo: string;
+  coverImage: string;
+  welcomeMessage: string;
+}

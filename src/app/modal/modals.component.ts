@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Group } from '../store/group';
 import { State as ForgotPasswordModalState } from '../store/forgot-password-modal';
+import { State as GroupEditModalState } from '../store/group-edit-modal';
 import { State as LoginModalState } from '../store/login-modal';
 import { State as SignupModalState } from '../store/signup-modal';
 import * as fromRoot from '../store/reducer';
@@ -14,7 +15,9 @@ import * as fromRoot from '../store/reducer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalsComponent implements OnInit {
+  isAuthenticated$: Observable<boolean>;
   forgotPasswordModal$: Observable<ForgotPasswordModalState>;
+  groupEditModal$: Observable<GroupEditModalState>;
   loginModal$: Observable<LoginModalState>;
   signupModal$: Observable<SignupModalState>;
   currentGroup$: Observable<Group>;
@@ -24,7 +27,9 @@ export class ModalsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.forgotPasswordModal$ = this.store.select(fromRoot.getForgotPasswordModal);
+    this.groupEditModal$ = this.store.select(fromRoot.getGroupEditModal);
     this.loginModal$ = this.store.select(fromRoot.getLoginModal);
     this.signupModal$ = this.store.select(fromRoot.getSignupModal);
 

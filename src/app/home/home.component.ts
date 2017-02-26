@@ -7,6 +7,7 @@ import { TitleService } from '../core';
 import { Group } from '../store/group';
 import { User } from '../store/user';
 import * as act from '../store/act/act.actions';
+import * as modal from '../store/modal.actions';
 import * as fromRoot from '../store/reducer';
 
 @Component({
@@ -42,5 +43,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+  }
+
+  openGroupEdit(): void {
+    this.store.dispatch(new modal.OpenGroupEditAction());
   }
 }

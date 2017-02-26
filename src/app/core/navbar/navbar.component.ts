@@ -51,7 +51,7 @@ export class NavbarComponent implements OnInit {
   }
 
   openGroupEdit(): void {
-    // this.store.dispatch(new groupEditModal.OpenAction());
+    this.store.dispatch(new modal.OpenGroupEditAction());
   }
 
   setCurrentGroup(group: Group): void {

@@ -6,6 +6,7 @@ import { ModalHeaderComponent } from './modal-header.component';
 import { ModalsComponent } from './modals.component';
 
 import { ForgotPasswordModalComponent } from './forgot-password';
+import { GroupEditModalComponent } from './group-edit';
 import { LoginModalComponent } from './login';
 import { SignupModalComponent } from './signup';
 
@@ -20,6 +21,7 @@ import { SignupModalComponent } from './signup';
     ModalsComponent,
 
     ForgotPasswordModalComponent,
+    GroupEditModalComponent,
     LoginModalComponent,
     SignupModalComponent,
   ],

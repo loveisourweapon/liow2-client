@@ -3,6 +3,10 @@ export {
   CloseAction as CloseForgotPasswordAction,
 } from './forgot-password-modal/forgot-password-modal.actions';
 export {
+  OpenAction as OpenGroupEditAction,
+  CloseAction as CloseGroupEditAction,
+} from './group-edit-modal/group-edit-modal.actions';
+export {
   OpenAction as OpenLoginAction,
   CloseAction as CloseLoginAction,
 } from './login-modal/login-modal.actions';
