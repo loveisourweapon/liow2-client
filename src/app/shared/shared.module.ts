@@ -16,6 +16,7 @@ import { SameAsValidatorDirective } from './same-as-validator.directive';
 import { SwitchComponent } from './switch';
 import { YoutubePlayerComponent } from './youtube-player.component';
 import { FromNowPipe } from './from-now.pipe';
+import { KebabCasePipe } from './kebab-case.pipe';
 import { MomentPipe } from './moment.pipe';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { MomentPipe } from './moment.pipe';
     YoutubePlayerComponent,
 
     FromNowPipe,
+    KebabCasePipe,
     MomentPipe,
   ],
   exports: [
@@ -61,6 +63,7 @@ import { MomentPipe } from './moment.pipe';
     YoutubePlayerComponent,
 
     FromNowPipe,
+    KebabCasePipe,
     MomentPipe,
   ],
 })

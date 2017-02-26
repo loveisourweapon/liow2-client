@@ -10,6 +10,7 @@ import * as auth from '../../store/auth/auth.actions';
 import { State as GroupEditModalState, GroupEditAction } from '../../store/group-edit-modal';
 import * as forgotPasswordModal from '../../store/forgot-password-modal/forgot-password-modal.actions';
 import { State as AppState } from '../../store/reducer';
+import { KebabCasePipe } from '../../shared';
 import {
   AlertStubComponent,
   MediumEditorStubComponent,
@@ -31,6 +32,7 @@ describe(`GroupEditModalComponent`, () => {
         declarations: [
           GroupEditModalComponent,
           TestHostComponent,
+          KebabCasePipe,
           AlertStubComponent,
           MediumEditorStubComponent,
           ModalHeaderComponent,
