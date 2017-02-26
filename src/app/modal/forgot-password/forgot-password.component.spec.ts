@@ -76,7 +76,7 @@ describe(`ForgotPasswordModalComponent`, () => {
 
     const sendSpy = spyOn(store, 'dispatch');
     const sendButton = element.query(By.css('.modal-footer > button.btn-primary'));
-    sendButton.triggerEventHandler('click', new MouseEvent('click'));
+    sendButton.nativeElement.click();
     const action = sendSpy.calls.mostRecent().args[0];
     expect(action.type).toBe(auth.ActionTypes.SEND_FORGOT_PASSWORD);
     expect(action.payload).toBe(testHost.state.emailAddress);

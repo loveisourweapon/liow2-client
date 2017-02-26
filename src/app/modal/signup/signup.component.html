@@ -11,42 +11,43 @@
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <liow-modal-header
-        modalTitle="Sign up"
-        (close)="onClose()"
-      ></liow-modal-header>
+      <form
+        (ngSubmit)="form.valid && signup(state.user, state.joinGroup, group)"
+        #form="ngForm"
+        class="form-horizontal"
+        novalidate
+      >
+        <liow-modal-header
+          modalTitle="Sign up"
+          (close)="onClose()"
+        ></liow-modal-header>
 
-      <div class="modal-body">
-        <div *ngIf="group">
-          <ui-switch
-            [checked]="state.joinGroup"
-            (change)="onUpdatePropertyAction('JoinGroup', $event)"
-          >
-            Join {{ group.name }}
-          </ui-switch>
+        <div class="modal-body">
+          <div *ngIf="group">
+            <ui-switch
+              [checked]="state.joinGroup"
+              (change)="onUpdatePropertyAction('JoinGroup', $event)"
+            >
+              Join {{ group.name }}
+            </ui-switch>
+            <hr>
+          </div>
+
+          <p>
+            <button
+              type="button"
+              (click)="authenticateFacebook(state.joinGroup, group)"
+              class="btn btn-facebook btn-block"
+              [disabled]="state.isSigningUp"
+            >
+              <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
+              <i class="fa fa-fw fa-facebook-official" [hidden]="state.isSigningUp"></i>
+              Sign up with Facebook
+            </button>
+          </p>
+
           <hr>
-        </div>
 
-        <p>
-          <button
-            (click)="authenticateFacebook(state.joinGroup, group)"
-            class="btn btn-facebook btn-block"
-            [disabled]="state.isSigningUp"
-          >
-            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
-            <i class="fa fa-fw fa-facebook-official" [hidden]="state.isSigningUp"></i>
-            Sign up with Facebook
-          </button>
-        </p>
-
-        <hr>
-
-        <form
-          (ngSubmit)="form.valid && signup(state.user, state.joinGroup, group)"
-          #form="ngForm"
-          class="form-horizontal"
-          novalidate
-        >
           <alert type="danger" *ngIf="state.errorMessage">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             There was an error signing up. Please try again or
@@ -179,37 +180,34 @@
             </div>
           </div>
 
-          <button type="submit" hidden></button>
-        </form>
-
-        <div class="row">
-          <div class="col-xs-9 col-xs-push-3">
-            <p>
-              Already have an account?
-              <button
-                type="button"
-                (click)="onClose(); openLogin()"
-                class="btn btn-link btn-inline"
-              >
-                Login now
-              </button>
-            </p>
+          <div class="row">
+            <div class="col-xs-9 col-xs-push-3">
+              <p>
+                Already have an account?
+                <button
+                  type="button"
+                  (click)="onClose(); openLogin()"
+                  class="btn btn-link btn-inline"
+                >
+                  Login now
+                </button>
+              </p>
+            </div>
           </div>
-        </div>
-      </div><!-- .modal-body -->
+        </div><!-- .modal-body -->
 
-      <div class="modal-footer">
-        <button
-          type="submit"
-          (click)="form.valid && signup(state.user, state.joinGroup, group)"
-          class="btn btn-primary btn-block"
-          [disabled]="state.isSigningUp"
-        >
-          <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
-          Sign up
-        </button>
-      </div><!-- .modal-footer -->
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="state.isSigningUp"
+          >
+            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
+            Sign up
+          </button>
+        </div><!-- .modal-footer -->
 
+      </form>
     </div>
   </div>
 </div>

@@ -11,41 +11,42 @@
 >
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <liow-modal-header
-        modalTitle="Login"
-        (close)="onClose()"
-      ></liow-modal-header>
+      <form
+        (ngSubmit)="form.valid && authenticateEmail(state.credentials, state.joinGroup, group)"
+        #form="ngForm"
+        novalidate
+      >
+        <liow-modal-header
+          modalTitle="Login"
+          (close)="onClose()"
+        ></liow-modal-header>
 
-      <div class="modal-body">
-        <div *ngIf="group">
-          <ui-switch
-            [checked]="state.joinGroup"
-            (change)="onUpdatePropertyAction('JoinGroup', $event)"
-          >
-            Join {{ group.name }}
-          </ui-switch>
+        <div class="modal-body">
+          <div *ngIf="group">
+            <ui-switch
+              [checked]="state.joinGroup"
+              (change)="onUpdatePropertyAction('JoinGroup', $event)"
+            >
+              Join {{ group.name }}
+            </ui-switch>
+            <hr>
+          </div>
+
+          <p>
+            <button
+              type="button"
+              (click)="authenticateFacebook(state.joinGroup, group)"
+              class="btn btn-facebook btn-block"
+              [disabled]="state.isLoggingIn"
+            >
+              <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
+              <i class="fa fa-fw fa-facebook-official" [hidden]="state.isLoggingIn"></i>
+              Sign in with Facebook
+            </button>
+          </p>
+
           <hr>
-        </div>
 
-        <p>
-          <button
-            (click)="authenticateFacebook(state.joinGroup, group)"
-            class="btn btn-facebook btn-block"
-            [disabled]="state.isLoggingIn"
-          >
-            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
-            <i class="fa fa-fw fa-facebook-official" [hidden]="state.isLoggingIn"></i>
-            Sign in with Facebook
-          </button>
-        </p>
-
-        <hr>
-
-        <form
-          (ngSubmit)="form.valid && authenticateEmail(state.credentials, state.joinGroup, group)"
-          #form="ngForm"
-          novalidate
-        >
           <alert type="danger" *ngIf="state.errorMessage">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             {{ state.errorMessage }}
@@ -105,33 +106,30 @@
             </span>
           </div>
 
-          <button type="submit" hidden></button>
-        </form>
+          <p>
+            Don't have an account?
+            <button
+              type="button"
+              (click)="onClose(); openSignup()"
+              class="btn btn-link btn-inline"
+            >
+              Sign up now
+            </button>
+          </p>
+        </div><!-- .modal-body -->
 
-        <p>
-          Don't have an account?
+        <div class="modal-footer">
           <button
-            type="button"
-            (click)="onClose(); openSignup()"
-            class="btn btn-link btn-inline"
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="state.isLoggingIn"
           >
-            Sign up now
+            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
+            Login
           </button>
-        </p>
-      </div><!-- .modal-body -->
+        </div><!-- .modal-footer -->
 
-      <div class="modal-footer">
-        <button
-          type="submit"
-          (click)="form.valid && authenticateEmail(state.credentials, state.joinGroup, group)"
-          class="btn btn-primary btn-block"
-          [disabled]="state.isLoggingIn"
-        >
-          <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
-          Login
-        </button>
-      </div><!-- .modal-footer -->
-
+      </form>
     </div>
   </div>
 </div>

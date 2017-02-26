@@ -91,7 +91,7 @@ describe(`LoginModalComponent`, () => {
   it(`should dispatch LOGIN_WITH_EMAIL action when 'Login' is clicked`, () => {
     const loginSpy = spyOn(store, 'dispatch');
     const loginButton = element.query(By.css('.modal-footer > button.btn-primary'));
-    loginButton.triggerEventHandler('click', new MouseEvent('click'));
+    loginButton.nativeElement.click();
     const action = loginSpy.calls.mostRecent().args[0];
     expect(action.type).toBe(auth.ActionTypes.LOGIN_WITH_EMAIL);
     expect(action.payload).toBe(testHost.state.credentials);

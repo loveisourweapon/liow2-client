@@ -11,25 +11,24 @@
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <liow-modal-header
-        modalTitle="{{ state.action }} Group"
-        (close)="onClose()"
-      ></liow-modal-header>
+      <form
+        (ngSubmit)="form.valid && save(state.group, state.setupCampaign)"
+        #form="ngForm"
+        class="form-horizontal"
+        novalidate
+      >
+        <liow-modal-header
+          modalTitle="{{ state.action }} Group"
+          (close)="onClose()"
+        ></liow-modal-header>
 
-      <div class="modal-body">
-        <alert type="danger" *ngIf="state.errorMessage">
-          <i class="fa fa-fw fa-exclamation-triangle"></i>
-          Failed sending request. Please try again or
-          <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
-        </alert>
+        <div class="modal-body" [hidden]="!isAuthenticated">
+          <alert type="danger" *ngIf="state.errorMessage">
+            <i class="fa fa-fw fa-exclamation-triangle"></i>
+            Failed sending request. Please try again or
+            <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
+          </alert>
 
-        <form
-          (ngSubmit)="form.valid && save(state.group, state.setupCampaign)"
-          #form="ngForm"
-          class="form-horizontal"
-          [hidden]="!isAuthenticated"
-          novalidate
-        >
           <div
             class="form-group"
             [class.has-error]="form.submitted && (name.invalid || state.errors.name || state.errors.urlName)"
@@ -167,11 +166,9 @@
               </ui-switch>
             </div>
           </div>
+        </div><!-- .modal-body.isAuthenticated -->
 
-          <button type="submit" hidden></button>
-        </form>
-
-        <div [hidden]="isAuthenticated">
+        <div class="modal-body" [hidden]="isAuthenticated">
           <p>Please sign up or login to setup a new group</p>
           <p>
             <button
@@ -190,27 +187,28 @@
               Login
             </button>
           </p>
-        </div>
-      </div><!-- .modal-body -->
+        </div><!-- .modal-body.!isAuthenticated -->
 
-      <div class="modal-footer">
-        <button
-          type="button"
-          (click)="onClose()"
-          class="btn btn-default"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          (click)="form.valid && save(state.group, state.setupCampaign)"
-          class="btn btn-primary"
-          [disabled]="!isAuthenticated || state.isSaving"
-        >
-          <i class="fa fa-cog fa-spin" [hidden]="!state.isSaving"></i>
-          {{ state.action }}
-        </button>
-      </div><!-- .modal-footer -->
+        <div class="modal-footer">
+          <button
+            type="button"
+            (click)="onClose()"
+            class="btn btn-default"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!isAuthenticated || state.isSaving"
+          >
+            <i class="fa fa-cog fa-spin" [hidden]="!state.isSaving"></i>
+            {{ state.action }}
+          </button>
+        </div><!-- .modal-footer -->
+
+      </form>
     </div>
   </div>
 </div>
