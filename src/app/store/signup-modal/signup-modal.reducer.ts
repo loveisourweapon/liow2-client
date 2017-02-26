@@ -88,6 +88,7 @@ export function reducer(state = initialState, action: signupModal.Actions|auth.A
       });
 
     case auth.ActionTypes.SIGNUP_SUCCESS:
+    case auth.ActionTypes.LOGIN_SUCCESS:
       return assign({}, state, {
         isOpen: false,
         isSigningUp: false,

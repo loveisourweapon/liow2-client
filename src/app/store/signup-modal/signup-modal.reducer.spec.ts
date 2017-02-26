@@ -3,7 +3,7 @@ import { assign } from 'lodash';
 import { reducer, State } from './index';
 import * as signupModal from './signup-modal.actions';
 import * as auth from '../auth/auth.actions';
-import { NewUser } from '../user';
+import { NewUser, User } from '../user';
 
 describe(`signup modal reducer`, () => {
   const initialState: State = {
@@ -80,9 +80,15 @@ describe(`signup modal reducer`, () => {
     expect(state.errors).toEqual({});
   });
 
-  it(`should set isOpen and isSigningUp to false with SIGNUP_SUCCESS action`, () => {
+  it(`should set isOpen and isSigningUp to false with SIGNUP_SUCCESS and LOGIN_SUCCESS actions`, () => {
     const signingUpState = assign({}, initialState, { isSigningUp: true });
-    const state = reducer(signingUpState, new auth.SignupSuccessAction());
+    let state = reducer(signingUpState, new auth.SignupSuccessAction());
+    expect(state).not.toBe(signingUpState);
+    expect(state.isOpen).toBe(false);
+    expect(state.isSigningUp).toBe(false);
+
+    // 'Sign up with Facebook' triggers LOGIN_SUCCESS action
+    state = reducer(signingUpState, new auth.LoginSuccessAction(<User>{}));
     expect(state).not.toBe(signingUpState);
     expect(state.isOpen).toBe(false);
     expect(state.isSigningUp).toBe(false);
