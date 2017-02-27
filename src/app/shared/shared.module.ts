@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { EmailValidatorDirective } from './email-validator.directive';
@@ -24,7 +23,6 @@ import { MomentPipe } from './moment.pipe';
     CommonModule,
     FormsModule,
     RouterModule,
-    InfiniteScrollModule,
   ],
   declarations: [
     DeedListComponent,

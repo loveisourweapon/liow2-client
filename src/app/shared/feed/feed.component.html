@@ -9,13 +9,7 @@
   </button>
 </div>
 
-<div
-  class="feed-wrapper"
-  infinite-scroll
-  [infiniteScrollDistance]="0.4"
-  [infiniteScrollThrottle]="300"
-  (scrolled)="loadOlderItems()"
->
+<div class="feed-wrapper">
   <liow-feed-item
     *ngFor="let feedItem of (feedItems$ | async); trackBy: item?._id; let isLastItem = first"
     [item]="feedItem"
@@ -24,9 +18,21 @@
 
   <div
     class="feed-item feed-item-narrow text-center"
-    [hidden]="!(isLoading$ | async)"
+    *ngIf="(isLoading$ | async) || (feedItems$ | async)?.length > 0"
   >
-    <i class="fa fa-ellipsis-h fa-2x"></i>
+    <button
+      class="btn btn-link"
+      (click)="loadOlderItems()"
+      [hidden]="isLoading$ | async"
+    >
+      <i class="fa fa-refresh fa-lg"></i>
+    </button>
+
+    <div class="loading-bounce" [hidden]="!(isLoading$ | async)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 
   <div class="feed-item" *ngIf="!(isLoading$ | async) && (feedItems$ | async)?.length === 0">

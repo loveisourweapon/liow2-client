@@ -15,7 +15,6 @@ describe(`FeedComponent`, () => {
         declarations: [
           FeedComponent,
           FeedItemStubComponent,
-          InfiniteScrollStubDirective,
         ],
         providers: [
           { provide: Store, useClass: StoreStubService },
@@ -42,14 +41,4 @@ describe(`FeedComponent`, () => {
 class FeedItemStubComponent {
   @Input() item: any;
   @Input() authUser: any;
-}
-
-@Directive({
-  // tslint:disable-next-line:directive-selector
-  selector: '[infinite-scroll]',
-})
-class InfiniteScrollStubDirective {
-  @Input() infiniteScrollDistance: number;
-  @Input() infiniteScrollThrottle: number;
-  @Output() scrolled = new EventEmitter();
 }
