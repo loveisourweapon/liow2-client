@@ -15,6 +15,7 @@ describe(`FeedComponent`, () => {
         declarations: [
           FeedComponent,
           FeedItemStubComponent,
+          InViewportStubDirective,
         ],
         providers: [
           { provide: Store, useClass: StoreStubService },
@@ -41,4 +42,11 @@ describe(`FeedComponent`, () => {
 class FeedItemStubComponent {
   @Input() item: any;
   @Input() authUser: any;
+}
+
+@Directive({
+  selector: '[uiInViewport]',
+})
+class InViewportStubDirective {
+  @Output() inViewport = new EventEmitter<void>();
 }

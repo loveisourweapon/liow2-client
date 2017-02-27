@@ -18,16 +18,10 @@
 
   <div
     class="feed-item feed-item-narrow text-center"
+    uiInViewport
+    (inViewport)="loadOlderItems()"
     *ngIf="(isLoading$ | async) || (feedItems$ | async)?.length > 0"
   >
-    <button
-      class="btn btn-link"
-      (click)="loadOlderItems()"
-      [hidden]="isLoading$ | async"
-    >
-      <i class="fa fa-refresh fa-lg"></i>
-    </button>
-
     <div class="loading-bounce" [hidden]="!(isLoading$ | async)">
       <span></span>
       <span></span>
@@ -35,7 +29,10 @@
     </div>
   </div>
 
-  <div class="feed-item" *ngIf="!(isLoading$ | async) && (feedItems$ | async)?.length === 0">
+  <div
+    class="feed-item"
+    *ngIf="!(isLoading$ | async) && (feedItems$ | async)?.length === 0"
+  >
     No feed items to show.
   </div>
 </div>

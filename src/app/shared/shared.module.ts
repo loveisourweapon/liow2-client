@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { EmailValidatorDirective } from './email-validator.directive';
 import { FeedComponent, FeedItemComponent } from './feed';
+import { InViewportDirective } from './in-viewport.directive';
 import { JumbotronComponent } from './jumbotron';
 import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
@@ -31,6 +32,7 @@ import { MomentPipe } from './moment.pipe';
     EmailValidatorDirective,
     FeedComponent,
     FeedItemComponent,
+    InViewportDirective,
     JumbotronComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
