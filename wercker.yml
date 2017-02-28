@@ -1,0 +1,28 @@
+box: node:6
+
+build:
+  steps:
+    - script:
+      name: install yarn
+      code: npm install -g yarn
+
+    - script:
+      name: set yarn cache
+      code: export YARN_CACHE=$WERCKER_CACHE_DIR/yarn
+
+    - script:
+      name: install dependencies
+      code: HOME=$YARN_CACHE yarn
+
+    - script:
+      name: lint, test and build
+      code: yarn build
+
+deploy:
+  steps:
+    - s3sync:
+      name: sync to S3
+      key-id: $S3_ACCESS_KEY_ID
+      key-secret: $S3_SECRET_KEY
+      bucket-url: $S3_BUCKET_NAME
+      source-dir: dist
