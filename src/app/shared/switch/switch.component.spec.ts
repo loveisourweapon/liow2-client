@@ -39,10 +39,10 @@ describe(`SwitchComponent`, () => {
 
   it(`should emit changes to the 'checked' state`, () => {
     const changeSpy = spyOn(testHost, 'onChange').and.callThrough();
-    element.triggerEventHandler('click', new MouseEvent('click'));
+    element.triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(changeSpy).toHaveBeenCalledWith(false);
-    element.triggerEventHandler('click', new MouseEvent('click'));
+    element.triggerEventHandler('click', null);
     fixture.detectChanges();
     expect(changeSpy).toHaveBeenCalledWith(true);
   });

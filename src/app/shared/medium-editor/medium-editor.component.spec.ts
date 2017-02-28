@@ -30,7 +30,7 @@ describe(`MediumEditorComponent`, () => {
 
   it(`should show/hide the placeholder text when content is empty/not empty`, () => {
     const placeholderStyles = window.getComputedStyle(element, ':after');
-    expect(placeholderStyles.getPropertyValue('content')).toBe(`"${testHost.placeholder}"`);
+    expect(placeholderStyles.getPropertyValue('content')).toMatch(testHost.placeholder);
 
     testHost.content = 'Test content';
     fixture.detectChanges();

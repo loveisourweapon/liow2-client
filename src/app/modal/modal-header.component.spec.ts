@@ -35,7 +35,7 @@ describe(`ModalHeaderComponent`, () => {
   it(`should emit a 'close' event when clicking the close button`, () => {
     const closeSpy = spyOn(testHost, 'onClose');
     const closeElement = element.query(By.css('button.close'));
-    closeElement.triggerEventHandler('click', new MouseEvent('click'));
+    closeElement.triggerEventHandler('click', null);
     expect(closeSpy).toHaveBeenCalled();
   });
 });

@@ -50,7 +50,7 @@ describe(`ForgotPasswordModalComponent`, () => {
   it(`should dispatch CLOSE action when close button is clicked`, () => {
     const closeSpy = spyOn(store, 'dispatch');
     const closeButton = element.query(By.css('button.close'));
-    closeButton.triggerEventHandler('click', new MouseEvent('click'));
+    closeButton.triggerEventHandler('click', null);
     const action = closeSpy.calls.mostRecent().args[0];
     expect(action.type).toBe(forgotPasswordModal.ActionTypes.CLOSE);
   });

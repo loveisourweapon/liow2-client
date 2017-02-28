@@ -53,7 +53,7 @@ describe(`LoginModalComponent`, () => {
   it(`should dispatch LOGIN_WITH_FACEBOOK action when 'Sign in with Facebook' is clicked`, () => {
     const facebookSpy = spyOn(store, 'dispatch');
     const facebookButton = element.query(By.css('.btn-facebook'));
-    facebookButton.triggerEventHandler('click', new MouseEvent('click'));
+    facebookButton.triggerEventHandler('click', null);
     const action = facebookSpy.calls.mostRecent().args[0];
     expect(action.type).toBe(auth.ActionTypes.LOGIN_WITH_FACEBOOK);
   });
@@ -101,7 +101,7 @@ describe(`LoginModalComponent`, () => {
     const closeSpy = spyOn(component, 'onClose');
     const openForgotSpy = spyOn(component, 'openForgotPassword');
     const forgotButton = element.query(By.css('.help-block > button.btn-link'));
-    forgotButton.triggerEventHandler('click', new MouseEvent('click'));
+    forgotButton.triggerEventHandler('click', null);
     expect(closeSpy).toHaveBeenCalled();
     expect(openForgotSpy).toHaveBeenCalled();
   });
@@ -110,7 +110,7 @@ describe(`LoginModalComponent`, () => {
     const closeSpy = spyOn(component, 'onClose');
     const openSignupSpy = spyOn(component, 'openSignup');
     const signupButton = element.query(By.css('.modal-body > :last-child > button.btn-link'));
-    signupButton.triggerEventHandler('click', new MouseEvent('click'));
+    signupButton.triggerEventHandler('click', null);
     expect(closeSpy).toHaveBeenCalled();
     expect(openSignupSpy).toHaveBeenCalled();
   });

@@ -54,7 +54,7 @@ describe(`SignupModalComponent`, () => {
   it(`should dispatch LOGIN_WITH_FACEBOOK action when 'Sign up with Facebook' is clicked`, () => {
     const facebookSpy = spyOn(store, 'dispatch');
     const facebookButton = element.query(By.css('.btn-facebook'));
-    facebookButton.triggerEventHandler('click', new MouseEvent('click'));
+    facebookButton.triggerEventHandler('click', null);
     const action = facebookSpy.calls.mostRecent().args[0];
     expect(action.type).toBe(auth.ActionTypes.LOGIN_WITH_FACEBOOK);
   });
