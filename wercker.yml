@@ -3,20 +3,30 @@ box: node:6
 build:
   steps:
     - script:
-      name: install yarn
-      code: npm install -g yarn
-
-    - script:
-      name: set yarn cache
-      code: export YARN_CACHE=$WERCKER_CACHE_DIR/yarn
-
-    - script:
       name: install dependencies
-      code: HOME=$YARN_CACHE yarn
+      code: |
+        # install yarn
+        npm install -g yarn
+        # set yarn cache
+        export YARN_CACHE=$WERCKER_CACHE_DIR/yarn
+        # install dependencies
+        HOME=$YARN_CACHE yarn
 
     - script:
-      name: lint, test and build
-      code: yarn build
+      name: lint
+      code: yarn lint
+
+    - script:
+      name: test
+      code: yarn test -- --single-run --code-coverage
+
+    - script:
+      name: build
+      code: yarn build:prod
+
+    - script:
+      name: send test coverage report
+      code: yarn coveralls < ./coverage/lcov.info
 
 deploy:
   steps:
