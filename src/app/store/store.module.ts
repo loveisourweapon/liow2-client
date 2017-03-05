@@ -11,6 +11,7 @@ import { CommentEffects, CommentService } from './comment';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
 import { GroupEffects, GroupService } from './group';
+import { GroupEditModalEffects } from './group-edit-modal';
 import { UserEffects, UserService } from './user';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { UserEffects, UserService } from './user';
     EffectsModule.run(CounterEffects),
     EffectsModule.run(DeedEffects),
     EffectsModule.run(GroupEffects),
+    EffectsModule.run(GroupEditModalEffects),
     EffectsModule.run(UserEffects),
     EffectsModule.run(FeedEffects), // ordering appears to be important here
   ],

@@ -19,5 +19,6 @@ export interface NewGroup {
   name: string;
   logo?: string;
   coverImage?: string;
+  admins: string[];
   welcomeMessage?: string;
 }

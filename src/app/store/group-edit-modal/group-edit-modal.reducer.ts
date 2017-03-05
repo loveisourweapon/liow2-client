@@ -4,12 +4,14 @@ import * as groupEditModal from './group-edit-modal.actions';
 import { GroupEditAction } from './group-edit-modal.model';
 import * as group from '../group/group.actions';
 import { Group, NewGroup } from '../group';
+import { User } from '../user';
 
 export interface State {
   action: string;
   isOpen: boolean;
   isSaving: boolean;
   group: Group|NewGroup;
+  groupUsers: User[];
   setupCampaign: boolean;
   errorMessage: string;
   errors: { [key: string]: any };
@@ -23,8 +25,10 @@ const initialState: State = {
     name: '',
     logo: null,
     coverImage: null,
+    admins: [],
     welcomeMessage: '',
   },
+  groupUsers: [],
   setupCampaign: true,
   errorMessage: '',
   errors: {},
@@ -35,14 +39,20 @@ export function reducer(state = initialState, action: groupEditModal.Actions|gro
     case groupEditModal.ActionTypes.CLOSE:
       return assign({}, state, {
         isOpen: false,
+        group: initialState.group, // Always reset group when closing
       });
 
     case groupEditModal.ActionTypes.OPEN:
       return assign({}, initialState, {
         isOpen: true,
         action: action.payload.action,
-        group: action.payload.group || initialState.action,
+        group: action.payload.group || initialState.group,
         setupCampaign: !action.payload.group,
+      });
+
+    case groupEditModal.ActionTypes.UPDATE_GROUP_USERS:
+      return assign({}, state, {
+        groupUsers: action.payload,
       });
 
     case groupEditModal.ActionTypes.UPDATE_NAME:
@@ -63,6 +73,13 @@ export function reducer(state = initialState, action: groupEditModal.Actions|gro
       return merge({}, state, {
         group: {
           coverImage: action.payload,
+        },
+      });
+
+    case groupEditModal.ActionTypes.UPDATE_ADMINS:
+      return merge({}, state, {
+        group: {
+          admins: action.payload,
         },
       });
 

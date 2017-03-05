@@ -79,6 +79,7 @@ export class TitleStubService {
 
 @Injectable()
 export class UserStubService {
+  find() { }
   get() { }
   getCurrent() { }
   save() { }

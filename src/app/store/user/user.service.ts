@@ -21,6 +21,12 @@ export class UserService {
     this.baseUrl = `${environment.apiBaseUrl}/users`;
   }
 
+  find(params: SearchParams = {}): Observable<User[]> {
+    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
+      .map((response: Response) => response.json())
+      .map((users: User[]) => users.map((user: User) => this.transformUser(user)));
+  }
+
   get(userId: UserId): Observable<User> {
     return this.http.get(`${this.baseUrl}/${userId}`)
       .map((response: Response) => response.json() || {})

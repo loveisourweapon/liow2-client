@@ -8,6 +8,7 @@ import { State as GroupEditModalState } from '../../store/group-edit-modal';
 import * as groupEditModal from '../../store/group-edit-modal/group-edit-modal.actions';
 import * as group from '../../store/group/group.actions';
 import { Group, NewGroup } from '../../store/group';
+import { User } from '../../store/user';
 import * as modal from '../../store/modal.actions';
 import { State as AppState } from '../../store/reducer';
 
@@ -18,6 +19,7 @@ import { State as AppState } from '../../store/reducer';
 })
 export class GroupEditModalComponent implements OnChanges {
   @Input() isAuthenticated: boolean;
+  @Input() authUser: User;
   @Input() state = <GroupEditModalState>null;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('form') form: NgForm;
@@ -30,10 +32,15 @@ export class GroupEditModalComponent implements OnChanges {
     if (has(changes, 'state.currentValue')) {
       if (this.state.isOpen && !this.modal.isShown) {
         this.form.resetForm();
+        this.initAuthUser();
         this.modal.show();
       } else if (!this.state.isOpen && this.modal.isShown) {
         this.modal.hide();
       }
+    }
+
+    if (has(changes, 'authUser.currentValue')) {
+      this.initAuthUser();
     }
   }
 
@@ -41,8 +48,10 @@ export class GroupEditModalComponent implements OnChanges {
     this.store.dispatch(new group.CreateAction({ group: groupToSave, setupCampaign }));
   }
 
-  onUpdatePropertyAction(property: string, value: boolean|string): void {
-    this.store.dispatch(new groupEditModal[`Update${property}Action`](value));
+  onUpdatePropertyAction(property: string, value: any): void {
+    if (value !== null) {
+      this.store.dispatch(new groupEditModal[`Update${property}Action`](value));
+    }
   }
 
   onClose(): void {
@@ -55,5 +64,12 @@ export class GroupEditModalComponent implements OnChanges {
 
   openSignup(): void {
     this.store.dispatch(new modal.OpenSignupAction());
+  }
+
+  private initAuthUser(): void {
+    if (!this.state.group['_id'] && this.authUser) {
+      this.onUpdatePropertyAction('GroupUsers', [this.authUser]);
+      this.onUpdatePropertyAction('Admins', [this.authUser._id]);
+    }
   }
 }
