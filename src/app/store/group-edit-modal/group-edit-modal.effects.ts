@@ -15,10 +15,7 @@ export class GroupEditModalEffects {
     .ofType(groupEditModal.ActionTypes.OPEN).map(toPayload)
     .flatMap((payload: GroupEditInitialise) => Observable.if(
       () => has(payload, 'group._id'),
-      this.userService.find({
-        groups: payload.group ? payload.group._id : null,
-        fields: ['_id', 'name', 'picture'].join(','),
-      }),
+      this.userService.find({ groups: payload.group ? payload.group._id : null }),
     ))
     .map((users: User[]) => new groupEditModal.UpdateGroupUsersAction(users));
 
