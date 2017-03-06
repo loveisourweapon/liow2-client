@@ -63,6 +63,18 @@ export class SwitchStubComponent {
 }
 
 @Component({
+  selector: 'liow-user-picker',
+  template: ``,
+})
+export class UserPickerStubComponent {
+  @Input() userList: any;
+  @Input() selectedIds: string[];
+  @Input() lockedIds = [];
+  @Input() disabled = false;
+  @Output() change = new EventEmitter<string[]>();
+}
+
+@Component({
   selector: 'ui-youtube-player',
   template: ``,
 })

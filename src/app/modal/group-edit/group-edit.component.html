@@ -106,37 +106,18 @@
             </div>
           </div>
 
-          <!-- TODO: add the admin picker -->
-          <!--<div class="form-group"
-               ng-class="{ 'has-error': $ctrl.error.errors.admins }">
-            <label for="logo"
-                   class="col-xs-3 control-label">
-              Admins
-            </label>
-            <div class="col-xs-9">
-              <ui-select multiple
-                         id="admins"
-                         name="admins"
-                         ng-model="$ctrl.group.admins"
-                         ng-disabled="!$ctrl.group._id">
-                <ui-select-match placeholder="Select admins..."
-                                 ui-lock-choice="$item._id === $ctrl.group.owner">
-                  <img ng-src="{{ $item.picture || $ctrl.User.getDefaultUserImage($item._id) }}"
-                       class="img-circle b-xs m-xxs"
-                       style="width: 22px;">
-                  {{ $item.name }}
-                </ui-select-match>
-                <ui-select-choices repeat="user._id as user in $ctrl.users | filter: { name: $select.search }">
-                  <div class="clearfix">
-                    <img ng-src="{{ user.picture || $ctrl.User.getDefaultUserImage(user._id) }}"
-                         class="img-circle pull-left b-xs m-r-xs"
-                         style="width: 22px;">
-                    <div ng-bind-html="user.name | highlight: $select.search"></div>
-                  </div>
-                </ui-select-choices>
-              </ui-select>
+          <div class="form-group" [class.has-error]="state.errors.admins">
+            <label class="col-xs-3 control-label">Admins</label>
+            <div class="col-xs-9 p-t-xxs">
+              <liow-user-picker
+                [userList]="state.groupUsers"
+                [selectedIds]="state.group.admins"
+                [lockedIds]="authUser ? [authUser._id] : []"
+                [disabled]="!state.group._id"
+                (change)="onUpdatePropertyAction('Admins', $event)"
+              ></liow-user-picker>
             </div>
-          </div>-->
+          </div>
 
           <div class="form-group" [class.has-error]="state.errors.welcomeMessage">
             <label for="welcomeMessage" class="col-xs-3 control-label">Intro Message</label>

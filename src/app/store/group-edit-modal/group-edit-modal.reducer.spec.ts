@@ -1,25 +1,11 @@
 import { assign } from 'lodash';
 
-import { GroupEditAction, reducer, State } from './index';
+import { initialState, GroupEditAction, reducer } from './index';
 import * as groupEditModal from './group-edit-modal.actions';
 import { Group } from '../group';
+import { User } from '../user';
 
 describe(`group edit modal reducer`, () => {
-  const initialState: State = {
-    action: GroupEditAction.CREATE,
-    isOpen: false,
-    isSaving: false,
-    group: {
-      name: '',
-      logo: null,
-      coverImage: null,
-      welcomeMessage: '',
-    },
-    setupCampaign: true,
-    errorMessage: '',
-    errors: {},
-  };
-
   it(`should set isOpen to false with CLOSE action`, () => {
     const openState = assign({}, initialState, { isOpen: true });
     const state = reducer(openState, new groupEditModal.CloseAction());
@@ -43,6 +29,13 @@ describe(`group edit modal reducer`, () => {
     expect(state.setupCampaign).toBe(false);
   });
 
+  it(`should update the groupUsers property with UPDATE_GROUP_USERS action`, () => {
+    const users = [<User>{}];
+    const state = reducer(initialState, new groupEditModal.UpdateGroupUsersAction(users));
+    expect(state).not.toBe(initialState);
+    expect(state.groupUsers).toBe(users);
+  });
+
   it(`should update the group.name property with UPDATE_NAME action`, () => {
     const name = 'Test group name';
     const state = reducer(initialState, new groupEditModal.UpdateNameAction(name));
@@ -62,6 +55,13 @@ describe(`group edit modal reducer`, () => {
     const state = reducer(initialState, new groupEditModal.UpdateCoverImageAction(coverImage));
     expect(state).not.toBe(initialState);
     expect(state.group.coverImage).toBe(coverImage);
+  });
+
+  it(`should update the group.admins property with UPDATE_ADMINS action`, () => {
+    const admins = ['abc123'];
+    const state = reducer(initialState, new groupEditModal.UpdateAdminsAction(admins));
+    expect(state).not.toBe(initialState);
+    expect(state.group.admins).toBe(admins);
   });
 
   it(`should update the group.welcomeMessage property with UPDATE_WELCOME_MESSAGE action`, () => {

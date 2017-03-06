@@ -28,6 +28,7 @@ export class DropdownMenuStubDirective { }
   exportAs: 'bs-modal',
 })
 export class ModalStubDirective {
+  @Input() config: any;
   @Output() onHide = new EventEmitter();
   show() { }
   hide() { }

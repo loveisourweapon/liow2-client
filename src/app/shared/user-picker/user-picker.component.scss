@@ -1,0 +1,51 @@
+@import "../../../styles/variables";
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.media img {
+  width: 22px;
+  border: 1px solid;
+}
+
+.user-list {
+  width: calc(100% - 42px);
+
+  .user-list-item {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 3px 3px 0;
+    background: $input-bg-disabled;
+    border: 1px solid $input-border;
+    border-radius: $border-radius-base;
+    padding: 5px;
+
+    .media-left {
+      padding-right: 5px;
+    }
+
+    .media-right {
+      padding-left: 0;
+    }
+  }
+}
+
+.user-picker-button {
+  position: absolute;
+  right: 0;
+  top: -3px;
+}
+
+.user-picker-modal {
+  .modal-content {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+
+  .list-group-item {
+    outline: none;
+  }
+}
+

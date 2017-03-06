@@ -17,7 +17,7 @@ export interface State {
   errors: { [key: string]: any };
 }
 
-const initialState: State = {
+export const initialState: State = {
   action: GroupEditAction.CREATE,
   isOpen: false,
   isSaving: false,
@@ -77,10 +77,10 @@ export function reducer(state = initialState, action: groupEditModal.Actions|gro
       });
 
     case groupEditModal.ActionTypes.UPDATE_ADMINS:
-      return merge({}, state, {
-        group: {
+      return assign({}, state, {
+        group: assign({}, state.group, {
           admins: action.payload,
-        },
+        }),
       });
 
     case groupEditModal.ActionTypes.UPDATE_WELCOME_MESSAGE:

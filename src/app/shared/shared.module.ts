@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { ModalModule } from 'ng2-bootstrap';
 
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { EmailValidatorDirective } from './email-validator.directive';
@@ -14,6 +15,7 @@ import { MarkedComponent } from './marked.component';
 import { MediumEditorComponent } from './medium-editor';
 import { SameAsValidatorDirective } from './same-as-validator.directive';
 import { SwitchComponent } from './switch';
+import { UserPickerComponent } from './user-picker';
 import { YoutubePlayerComponent } from './youtube-player.component';
 import { FromNowPipe } from './from-now.pipe';
 import { KebabCasePipe } from './kebab-case.pipe';
@@ -24,6 +26,7 @@ import { MomentPipe } from './moment.pipe';
     CommonModule,
     FormsModule,
     RouterModule,
+    ModalModule,
   ],
   declarations: [
     DeedListComponent,
@@ -39,6 +42,7 @@ import { MomentPipe } from './moment.pipe';
     MediumEditorComponent,
     SameAsValidatorDirective,
     SwitchComponent,
+    UserPickerComponent,
     YoutubePlayerComponent,
 
     FromNowPipe,
@@ -60,6 +64,7 @@ import { MomentPipe } from './moment.pipe';
     MediumEditorComponent,
     SameAsValidatorDirective,
     SwitchComponent,
+    UserPickerComponent,
     YoutubePlayerComponent,
 
     FromNowPipe,

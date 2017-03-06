@@ -17,6 +17,7 @@ import {
   ModalStubDirective,
   StoreStubService,
   SwitchStubComponent,
+  UserPickerStubComponent,
 } from '../../../testing';
 
 describe(`GroupEditModalComponent`, () => {
@@ -38,6 +39,7 @@ describe(`GroupEditModalComponent`, () => {
           ModalHeaderComponent,
           ModalStubDirective,
           SwitchStubComponent,
+          UserPickerStubComponent,
         ],
         imports: [
           FormsModule,

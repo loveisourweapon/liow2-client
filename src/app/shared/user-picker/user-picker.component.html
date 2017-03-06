@@ -1,0 +1,64 @@
+<div class="user-list">
+  <div
+    class="user-list-item media"
+    *ngFor="let user of getSelectedUsers(userList, selectedIds)"
+  >
+    <div class="media-left">
+      <img [src]="user.picture" class="img-circle">
+    </div>
+    <div class="media-right media-middle">
+      {{ user.name }}
+      <a
+        class="btn btn-link btn-xs"
+        (click)="onRemoveClick(user); $event.preventDefault()"
+        *ngIf="showRemoveButton(user)"
+        href
+      >
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<a
+  class="btn btn-link user-picker-button"
+  (click)="openUserPicker(); $event.preventDefault()"
+  *ngIf="!disabled"
+  href
+>
+  <i class="fa fa-plus-circle fa-lg"></i>
+</a>
+
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade user-picker-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="User picker"
+  aria-hidden="true"
+  [config]="{ backdrop: false }"
+>
+  <div class="modal-backdrop fade in" (click)="modal.hide()"></div>
+
+  <div class="modal-dialog modal-sm" style="z-index: 1050">
+    <div class="modal-content" >
+      <div class="list-group m-b-none">
+        <button
+          type="button"
+          (click)="onSelectClick(user); modal.hide()"
+          *ngFor="let user of getNotSelectedUsers(userList, selectedIds)"
+          class="list-group-item media m-t-none"
+        >
+          <div class="media-left">
+            <img [src]="user.picture" class="img-circle">
+          </div>
+          <div class="media-right media-middle">
+            {{ user.name }}
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

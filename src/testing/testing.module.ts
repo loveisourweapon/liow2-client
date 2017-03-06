@@ -24,6 +24,7 @@ import {
   MarkedStubComponent,
   MediumEditorStubComponent,
   SwitchStubComponent,
+  UserPickerStubComponent,
   YoutubePlayerStubComponent,
 } from './component-stubs';
 import {
@@ -65,6 +66,7 @@ import {
     MarkedStubComponent,
     MediumEditorStubComponent,
     SwitchStubComponent,
+    UserPickerStubComponent,
     YoutubePlayerStubComponent,
 
     RouterLinkStubDirective,
