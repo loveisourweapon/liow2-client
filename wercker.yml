@@ -5,8 +5,7 @@ build:
     - script:
       name: install dependencies
       code: |
-        # install yarn
-        npm install -g yarn
+        # yarn already installed by node:6 docker image
         # set yarn cache
         export YARN_CACHE=$WERCKER_CACHE_DIR/yarn
         # install dependencies
