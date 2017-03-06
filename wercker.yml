@@ -18,7 +18,7 @@ build:
 
     - script:
       name: test
-      code: yarn test -- --single-run --code-coverage
+      code: yarn test:prod -- --code-coverage
 
     - script:
       name: build

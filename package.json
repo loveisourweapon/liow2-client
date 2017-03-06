@@ -22,6 +22,7 @@
     "build": "ng build",
     "build:prod": "ng build --prod --aot",
     "test": "ng test",
+    "test:prod": "ng test --single-run --browsers PhantomJS",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "coveralls": "coveralls"
