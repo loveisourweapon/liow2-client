@@ -1,16 +1,10 @@
 import { assign } from 'lodash';
 
-import { reducer, State } from './index';
+import { initialState, reducer } from './index';
 import * as forgotPasswordModal from './forgot-password-modal.actions';
 import * as auth from '../auth/auth.actions';
 
 describe(`forgot password modal reducer`, () => {
-  const initialState: State = {
-    isOpen: false,
-    isSending: false,
-    emailAddress: '',
-  };
-
   const emailAddress = 'test@example.com';
 
   it(`should set isOpen to false with CLOSE action`, () => {

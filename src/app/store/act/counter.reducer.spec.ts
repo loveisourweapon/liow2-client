@@ -1,12 +1,10 @@
-import { reducer, State } from './counter.reducer';
+import { initialState, reducer } from './index';
 import * as act from './act.actions';
 import * as deed from '../deed/deed.actions';
 import * as group from '../group/group.actions';
 import * as user from '../user/user.actions';
 
 describe(`counters reducer`, () => {
-  const initialState: State = { };
-
   it(`should store the counterId/count pair as key/value after act.COUNT_SUCCESS action`, () => {
     const counterResult = { counterId: 'abc123', count: 123 };
     const state = reducer(initialState, new act.CountSuccessAction(counterResult));

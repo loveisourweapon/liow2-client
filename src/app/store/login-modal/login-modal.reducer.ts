@@ -13,7 +13,7 @@ export interface State {
   errorMessage: string;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isOpen: false,
   isLoggingIn: false,
   isSendingConfirmEmail: false,

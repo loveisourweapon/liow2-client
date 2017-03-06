@@ -9,7 +9,7 @@ export interface State {
   emailAddress: string;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isOpen: false,
   isSending: false,
   emailAddress: '',

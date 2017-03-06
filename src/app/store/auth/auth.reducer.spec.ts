@@ -1,16 +1,10 @@
-import { reducer, State } from './index';
+import { initialState, reducer } from './index';
 import { Group } from '../group';
 import { User } from '../user';
 
 import * as auth from './auth.actions';
 
 describe(`auth reducer`, () => {
-  const initialState: State = {
-    isAuthenticated: false,
-    user: null,
-    group: null,
-  };
-
   it(`should set isAuthenticated and user with LOGIN action`, () => {
     const user = <User>{ groups: [] };
     const state = reducer(initialState, new auth.LoginSuccessAction(user));

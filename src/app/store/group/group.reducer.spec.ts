@@ -1,11 +1,7 @@
-import { Group, reducer, State } from './index';
+import { Group, initialState, reducer, State } from './index';
 import * as group from './group.actions';
 
 describe(`group reducer`, () => {
-  const initialState: State = {
-    current: null,
-  };
-
   it(`should clear current group with FIND_AND_SET_CURRENT action`, () => {
     const groupState = <State>{ current: <Group>{} };
     const state = reducer(groupState, new group.FindAndSetCurrentAction({}));

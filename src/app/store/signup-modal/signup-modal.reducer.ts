@@ -13,7 +13,7 @@ export interface State {
   errors: { [key: string]: any };
 }
 
-const initialState: State = {
+export const initialState: State = {
   isOpen: false,
   isSigningUp: false,
   user: {

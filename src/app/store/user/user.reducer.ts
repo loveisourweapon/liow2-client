@@ -5,7 +5,7 @@ export interface State {
   current: User;
 }
 
-const initialState: State = {
+export const initialState: State = {
   current: null,
 };
 

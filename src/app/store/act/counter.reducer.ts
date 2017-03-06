@@ -8,7 +8,7 @@ import * as user from '../user/user.actions';
 
 export type State = Counters;
 
-const initialState: State = { };
+export const initialState: State = { };
 
 export function reducer(state = initialState, action: act.Actions|deed.Actions|group.Actions|user.Actions): State {
   switch (action.type) {

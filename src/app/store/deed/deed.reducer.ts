@@ -15,7 +15,7 @@ export interface State {
   testimony: string;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isLoading: true,
   isLoaded: false,
   isDoing: false,

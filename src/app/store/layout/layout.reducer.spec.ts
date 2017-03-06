@@ -1,11 +1,7 @@
-import { reducer, State } from './index';
+import { initialState, reducer, State } from './index';
 import * as layout from './layout.actions';
 
 describe(`layout reducer`, () => {
-  const initialState: State = {
-    isMenuOpen: false,
-  };
-
   it(`should toggle isMenuOpen with TOGGLE_MENU action`, () => {
     let state = reducer(initialState, new layout.ToggleMenuAction());
     expect(state.isMenuOpen).toBe(!initialState.isMenuOpen);
@@ -15,7 +11,7 @@ describe(`layout reducer`, () => {
   });
 
   it(`should return isMenuOpen as false for CLOSE_MENU action if isMenuOpen is true`, () => {
-    let state: State = { isMenuOpen: true };
+    let state = <State>{ isMenuOpen: true };
     state = reducer(state, new layout.CloseMenuAction());
     expect(state.isMenuOpen).toBe(false);
   });

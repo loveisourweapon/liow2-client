@@ -9,7 +9,7 @@ export interface State {
   feedItems: FeedItem[];
 }
 
-const initialState: State = {
+export const initialState: State = {
   criteria: null,
   isLoading: false,
   feedItems: [],

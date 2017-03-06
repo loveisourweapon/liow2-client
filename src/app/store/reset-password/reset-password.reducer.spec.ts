@@ -1,17 +1,10 @@
 import { assign } from 'lodash';
 
-import { reducer, State } from './index';
+import { initialState, reducer } from './index';
 import * as resetPassword from './reset-password.actions';
 import * as auth from '../auth/auth.actions';
 
 describe(`reset password reducer`, () => {
-  const initialState: State = {
-    isSaving: false,
-    password: '',
-    confirmPassword: '',
-    token: '',
-  };
-
   const password = 'Password123';
   const token = 'abc123';
 

@@ -1,25 +1,11 @@
 import { assign } from 'lodash';
 
-import { reducer, State } from './index';
+import { initialState, reducer } from './index';
 import * as signupModal from './signup-modal.actions';
 import * as auth from '../auth/auth.actions';
 import { NewUser, User } from '../user';
 
 describe(`signup modal reducer`, () => {
-  const initialState: State = {
-    isOpen: false,
-    isSigningUp: false,
-    user: {
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-    },
-    joinGroup: true,
-    errorMessage: '',
-    errors: {},
-  };
-
   const newUser: NewUser = {
     email: 'test@example.com',
     password: 'testing123',

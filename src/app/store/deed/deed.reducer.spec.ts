@@ -1,22 +1,12 @@
 import { assign } from 'lodash';
 
-import { Deed, reducer, State } from './index';
+import { Deed, initialState, reducer, State } from './index';
 import * as act from '../act/act.actions';
 import { NewComment } from '../comment';
 import * as comment from '../comment/comment.actions';
 import * as deed from './deed.actions';
 
 describe(`deed reducer`, () => {
-  const initialState: State = {
-    isLoading: false,
-    isLoaded: false,
-    isDoing: false,
-    isSavingTestimony: false,
-    deeds: [],
-    current: null,
-    testimony: '',
-  };
-
   it(`should set isDoing to true with DONE action`, () => {
     const deed = <Deed>{};
     const state = reducer(initialState, new act.DoneAction({ deed }));

@@ -10,7 +10,7 @@ export interface State {
   token: string;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isSaving: false,
   password: '',
   confirmPassword: '',

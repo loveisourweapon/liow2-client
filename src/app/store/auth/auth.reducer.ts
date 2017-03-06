@@ -8,7 +8,7 @@ export interface State {
   group: any|null;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isAuthenticated: false,
   user: null,
   group: null,

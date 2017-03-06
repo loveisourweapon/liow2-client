@@ -4,7 +4,7 @@ export interface State {
   isMenuOpen: boolean;
 }
 
-const initialState: State = {
+export const initialState: State = {
   isMenuOpen: false,
 };
 

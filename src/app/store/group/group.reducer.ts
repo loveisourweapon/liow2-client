@@ -5,7 +5,7 @@ export interface State {
   current: Group;
 }
 
-const initialState: State = {
+export const initialState: State = {
   current: null,
 };
 

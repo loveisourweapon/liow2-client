@@ -1,15 +1,9 @@
 import { assign } from 'lodash';
 
-import { FeedCriteria, FeedItem, reducer, State } from './index';
+import { FeedCriteria, FeedItem, initialState, reducer } from './index';
 import * as feed from './feed.actions';
 
 describe(`feed reducer`, () => {
-  const initialState: State = {
-    criteria: null,
-    isLoading: false,
-    feedItems: [],
-  };
-
   let feedItem;
   let feedItems;
 
