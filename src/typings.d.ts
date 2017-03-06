@@ -1,3 +1,8 @@
+/* SystemJS module definition */
+declare var module: {
+  id: string;
+};
+
 declare module 'alertify.js';
 declare module 'in-viewport';
 declare module 'to-markdown';
