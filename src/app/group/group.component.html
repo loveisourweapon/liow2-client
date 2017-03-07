@@ -31,7 +31,10 @@
       </div>-->
 
       <tabset type="pills">
-        <tab>
+        <tab
+          [active]="(currentTab$ | async) === tabs.Welcome"
+          (select)="setCurrentTab(tabs.Welcome)"
+        >
           <template tabHeading>
             <i class="fa fa-fw fa-commenting"></i>
             Welcome
@@ -55,7 +58,10 @@
           </div>
         </tab>
 
-        <tab>
+        <tab
+          [active]="(currentTab$ | async) === tabs.Feed"
+          (select)="setCurrentTab(tabs.Feed)"
+        >
           <template tabHeading>
             <i class="fa fa-fw fa-list"></i>
             Activity Feed

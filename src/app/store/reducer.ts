@@ -111,6 +111,7 @@ export const getFeedIsLoading = createSelector(getFeedState, fromFeed.getIsLoadi
  */
 export function getGroupState(state: State) { return state.group; }
 export const getCurrentGroup = createSelector(getGroupState, fromGroup.getCurrent);
+export const getCurrentGroupTab = createSelector(getGroupState, fromGroup.getCurrentTab);
 
 
 /**

@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { actionType, ApiError, SearchParams } from '../utils';
-import { NewGroup, Group } from './index';
+import { NewGroup, Group, GroupTab } from './index';
 
 export class ActionTypes {
   static readonly COUNT = actionType('[Group] Count');
@@ -13,6 +13,7 @@ export class ActionTypes {
   static readonly FIND_AND_SET_CURRENT = actionType('[Group] Find and Set Current');
   static readonly FIND_AND_SET_CURRENT_FAIL = actionType('[Group] Find and Set Current Fail');
   static readonly SET_CURRENT = actionType('[Group] Set Current');
+  static readonly SET_CURRENT_TAB = actionType('[Group] Set Current Tab');
 }
 
 export class CountAction implements Action {
@@ -78,6 +79,14 @@ export class SetCurrentAction implements Action {
   ) { }
 }
 
+export class SetCurrentTabAction implements Action {
+  type = ActionTypes.SET_CURRENT_TAB;
+
+  constructor(
+    public payload: GroupTab,
+  ) { }
+}
+
 export type Actions
   = CountAction
   | CountSuccessAction
@@ -88,4 +97,5 @@ export type Actions
   | FindAndSetCurrentAction
   | FindAndSetCurrentFailAction
   | SetCurrentAction
+  | SetCurrentTabAction
   ;
