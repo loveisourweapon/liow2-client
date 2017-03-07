@@ -1,5 +1,19 @@
 @import "../../../styles/variables";
 
+.navbar .container {
+  display: flex;
+
+  .navbar-header {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    @media (min-width: $screen-sm-min) {
+      justify-content: flex-start;
+    }
+  }
+}
+
 .navbar-brand {
   padding: 8px 15px;
   font-size: 24px;
@@ -21,21 +35,32 @@
   }
 }
 
-.navbar-divider {
-  display: none;
+.navbar-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  @media (min-width: $screen-sm-min) {
-    display: block;
-    width: 1px;
-    height: 58px;
-    background: $gray-border;
-    margin: 0 10px;
-  }
+  margin: 0;
+  padding: 22px 18px;
+
+  background: none;
+  border: none;
+  border-radius: 0;
+
+  &:hover { background: $dropdown-link-hover-bg; }
+  &:focus { background: inherit; }
+}
+
+.navbar-nav > li > a {
+  &:hover { background: $dropdown-link-hover-bg; }
+  &:focus { background: inherit; }
 }
 
 a.user-dropdown {
   padding-top: 8px;
   padding-bottom: 8px;
+
+  background: none !important;
 
   > img {
     width: 40px;

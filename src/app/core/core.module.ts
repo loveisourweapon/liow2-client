@@ -1,11 +1,12 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
-import { AlertModule, CollapseModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
+import { AlertModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
 
 import { SharedModule } from '../shared';
 
 import { AuthConfig } from './auth-config';
 import { NavbarComponent } from './navbar';
+import { SidebarComponent } from './sidebar';
 import { TitleService } from './title.service';
 
 @NgModule({
@@ -13,7 +14,6 @@ import { TitleService } from './title.service';
     Ng2UiAuthModule.forRoot(AuthConfig),
 
     AlertModule.forRoot(),
-    CollapseModule.forRoot(),
     DropdownModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
@@ -26,9 +26,11 @@ import { TitleService } from './title.service';
   ],
   declarations: [
     NavbarComponent,
+    SidebarComponent,
   ],
   exports: [
     NavbarComponent,
+    SidebarComponent,
   ],
 })
 export class CoreModule {

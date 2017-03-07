@@ -1,0 +1,146 @@
+@import "../../../styles/variables";
+
+$sidebar-bg: $navbar-inverse-bg;
+$sidebar-border: $navbar-inverse-border;
+$sidebar-color: lighten($navbar-inverse-color, 10%);
+
+$sidebar-lighter-bg: lighten($sidebar-bg, 10%);
+$sidebar-lighter-color: lighten($sidebar-color, 10%);
+
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 16px;
+
+  width: 350px;
+  background: $sidebar-bg;
+  color: $sidebar-color;
+  border-right: 1px solid $sidebar-border;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+
+  transform: translateX(-100%);
+  transition: transform $transition-speed;
+
+  &.showing {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-main {
+  flex: 1;
+  overflow-y: scroll;
+
+  h5 {
+    padding-left: 15px;
+  }
+
+  .current-campaign {
+    line-height: 100%;
+    > small { padding-left: 25px; }
+  }
+
+  .list-group:not(:first-of-type) {
+    border-top: 1px solid $sidebar-border;
+  }
+
+  .list-group-item {
+    background: $sidebar-bg;
+    color: $sidebar-color;
+    border-radius: 0;
+    border-color: $sidebar-border;
+    border-width: 0 0 1px;
+    margin: 0;
+    outline: 0;
+
+    &.active {
+      background: $sidebar-lighter-bg;
+      color: $sidebar-lighter-color;
+    }
+
+    &:hover { background: darken($sidebar-bg, 5%); }
+    &.active:hover { background: darken($sidebar-lighter-bg, 5%); }
+  }
+}
+
+.sidebar-header {
+  border-bottom: 1px solid $sidebar-border;
+  height: $navbar-height;
+
+  display: flex;
+
+  background: $sidebar-lighter-bg;
+  color: $sidebar-lighter-color;
+
+  > .user-profile {
+    flex: 1;
+    padding: 8px;
+    line-height: 100%;
+
+    img {
+      width: 41px;
+      border: 1px solid;
+    }
+
+    .media-left {
+      padding: 0;
+    }
+  }
+
+  > .btn-close {
+    @include button-variant(
+        $sidebar-lighter-color,
+        $sidebar-lighter-bg,
+        $sidebar-border);
+
+    border: none;
+    border-radius: 0;
+    width: $navbar-height - 1;
+    height: $navbar-height - 1;
+    outline: none;
+  }
+}
+
+.sidebar-footer {
+  border-top: 1px solid $sidebar-border;
+  height: $footer-height;
+
+  > .btn-logout {
+    @include button-variant(
+        $sidebar-color,
+        $sidebar-bg,
+        $sidebar-border);
+
+    border: none;
+    border-radius: 0;
+    height: $footer-height;
+    outline: none;
+    text-align: left;
+  }
+}
+
+.sidebar-backdrop {
+  background: black;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity $transition-speed;
+
+  &.showing {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+}

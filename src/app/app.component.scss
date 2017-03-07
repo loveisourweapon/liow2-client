@@ -1,6 +1,9 @@
 @import "../styles/variables";
 
-$footer-height: 60px;
+:host {
+  display: block;
+  height: 100%;
+}
 
 .content-wrapper {
   padding-top: $navbar-height;

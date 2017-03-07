@@ -9,11 +9,6 @@ export class AlertStubComponent {
   @Input() type: string;
 }
 
-@Directive({ selector: '[collapse]' })
-export class CollapseStubDirective {
-  @Input('collapse') isCollapsed: boolean;
-}
-
 @Directive({ selector: '[dropdown]' })
 export class DropdownStubDirective { }
 

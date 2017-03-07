@@ -21,3 +21,13 @@ $fa-font-path: "../../node_modules/font-awesome/fonts";
 
 @import "~font-awesome/scss/variables";
 @import "~font-awesome/scss/mixins";
+
+
+/**
+ * LIOW specific styles
+ */
+$footer-height: 60px;
+
+$transition-speed: 0.3s;
+$transition-speed-fast: $transition-speed / 2;
+$transition-speed-slow: $transition-speed * 2;

@@ -3,19 +3,27 @@ import { Action } from '@ngrx/store';
 import { actionType } from '../utils';
 
 export class ActionTypes {
-  static readonly CLOSE_MENU = actionType('[Layout] Close Menu');
-  static readonly TOGGLE_MENU = actionType('[Layout] Toggle Menu');
+  static readonly SET_IS_MENU_OPEN = actionType('[Layout] Set is Menu Open');
+  static readonly SET_IS_SMALL_SCREEN = actionType('[Layout] Set is Small Screen');
 }
 
-export class CloseMenuAction implements Action {
-  type = ActionTypes.CLOSE_MENU;
+export class SetIsMenuOpenAction implements Action {
+  type = ActionTypes.SET_IS_MENU_OPEN;
+
+  constructor(
+    public payload: boolean,
+  ) { }
 }
 
-export class ToggleMenuAction implements Action {
-  type = ActionTypes.TOGGLE_MENU;
+export class SetIsSmallScreenAction implements Action {
+  type = ActionTypes.SET_IS_SMALL_SCREEN;
+
+  constructor(
+    public payload: boolean,
+  ) { }
 }
 
 export type Actions
-  = CloseMenuAction
-  | ToggleMenuAction
+  = SetIsMenuOpenAction
+  | SetIsSmallScreenAction
   ;

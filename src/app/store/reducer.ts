@@ -118,6 +118,7 @@ export const getCurrentGroup = createSelector(getGroupState, fromGroup.getCurren
  */
 export function getLayoutState(state: State) { return state.layout; }
 export const getIsMenuOpen = createSelector(getLayoutState, fromLayout.getIsMenuOpen);
+export const getIsSmallScreen = createSelector(getLayoutState, fromLayout.getIsSmallScreen);
 
 
 /**

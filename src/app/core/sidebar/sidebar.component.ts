@@ -10,17 +10,17 @@ import * as modal from '../../store/modal.actions';
 import * as fromRoot from '../../store/reducer';
 
 @Component({
-  selector: 'liow-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  selector: 'liow-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarComponent implements OnInit {
+export class SidebarComponent implements OnInit {
   authUser$: Observable<User>;
   authGroup$: Observable<Group>;
   isAuthenticated$: Observable<boolean>;
+  isMenuOpen$: Observable<boolean>;
   isSmallScreen$: Observable<boolean>;
-  globalCounter$: Observable<number>;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -30,12 +30,12 @@ export class NavbarComponent implements OnInit {
     this.authUser$ = this.store.select(fromRoot.getAuthUser);
     this.authGroup$ = this.store.select(fromRoot.getAuthGroup);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
+    this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
     this.isSmallScreen$ = this.store.select(fromRoot.getIsSmallScreen);
-    this.globalCounter$ = this.store.select(fromRoot.getGlobalCount);
   }
 
-  openMenu(): void {
-    this.store.dispatch(new layout.SetIsMenuOpenAction(true));
+  closeMenu(): void {
+    this.store.dispatch(new layout.SetIsMenuOpenAction(false));
   }
 
   openLogin(): void {

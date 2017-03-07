@@ -1,0 +1,144 @@
+<div
+  class="sidebar-wrapper"
+  [class.showing]="isMenuOpen$ | async"
+  *ngIf="isSmallScreen$ | async"
+>
+  <div class="sidebar-header">
+    <div class="media user-profile">
+      <div class="media-left" *ngIf="isAuthenticated$ | async">
+        <img [src]="(authUser$ | async)?.picture" class="img-circle b-xs">
+      </div>
+      <div class="media-right media-middle">
+        {{ (authUser$ | async)?.name }}<br>
+        <small class="text-muted">{{ (authUser$ | async)?.email }}</small>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-lg btn-close"
+      (click)="closeMenu()"
+    >
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-main">
+    <div class="list-group">
+      <a
+        routerLink="/global"
+        class="list-group-item list-group-item-inverse"
+        (click)="closeMenu()"
+      >
+        <i class="fa fa-fw fa-globe text-primary"></i>
+        Global Activity Feed
+      </a>
+      <a
+        [routerLink]="['/g', (authGroup$ | async)?.urlName]"
+        class="list-group-item list-group-item-inverse current-campaign"
+        *ngIf="(isAuthenticated$ | async) && (authGroup$ | async)"
+        (click)="closeMenu()"
+      >
+        <i class="fa fa-fw fa-users text-primary"></i>
+        Current Campaign<br>
+        <small class="text-muted">{{ (authGroup$ | async)?.name }}</small>
+      </a>
+    </div>
+
+    <h5 class="text-uppercase text-muted" *ngIf="isAuthenticated$ | async">
+      <i class="fa fa-fw fa-user"></i>
+      You&hellip;
+    </h5>
+    <div class="list-group" *ngIf="isAuthenticated$ | async">
+      <a
+        [routerLink]="['/u', (authUser$ | async)?._id]"
+        class="list-group-item list-group-item-inverse"
+        (click)="closeMenu()"
+      >
+        <i class="fa fa-fw fa-user-circle-o text-primary"></i>
+        Your Profile
+      </a>
+      <a
+        routerLink="/control-panel"
+        class="list-group-item list-group-item-inverse"
+        (click)="closeMenu()"
+      >
+        <i class="fa fa-fw fa-gears text-primary"></i>
+        Control Panel
+      </a>
+    </div>
+
+    <h5 class="text-uppercase text-muted" *ngIf="isAuthenticated$ | async">
+      <i class="fa fa-fw fa-users"></i>
+      Groups&hellip;
+    </h5>
+    <div class="list-group" *ngIf="isAuthenticated$ | async">
+      <a
+        *ngFor="let group of (authUser$ | async)?.groups; trackBy: group?._id"
+        [routerLink]="['/g', group.urlName]"
+        class="list-group-item list-group-item-inverse"
+        [class.active]="(authGroup$ | async)?._id === group._id"
+        (click)="setCurrentGroup(group); closeMenu()"
+      >
+        <i class="fa fa-fw"></i><!-- this icon left intentionally blank -->
+        {{ group.name }}
+      </a>
+      <button
+        type="button"
+        class="list-group-item list-group-item-inverse"
+        (click)="openGroupEdit(); closeMenu()"
+      >
+        <i class="fa fa-fw fa-pencil-square-o text-primary"></i>
+        Group Signup
+      </button>
+    </div>
+
+    <h5 class="text-uppercase text-muted" *ngIf="!(isAuthenticated$ | async)">
+      Join Us&hellip;
+    </h5>
+    <div class="list-group" *ngIf="!(isAuthenticated$ | async)">
+      <button
+        type="button"
+        class="list-group-item list-group-item-inverse"
+        (click)="openLogin(); closeMenu()"
+      >
+        <i class="fa fa-fw fa-sign-in text-primary"></i>
+        Login
+      </button>
+      <button
+        type="button"
+        class="list-group-item list-group-item-inverse"
+        (click)="openSignup(); closeMenu()"
+      >
+        <i class="fa fa-fw fa-user-plus text-primary"></i>
+        Signup
+      </button>
+      <button
+        type="button"
+        class="list-group-item list-group-item-inverse"
+        (click)="openGroupEdit(); closeMenu()"
+      >
+        <i class="fa fa-fw fa-pencil-square-o text-primary"></i>
+        Group Signup
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar-footer" *ngIf="isAuthenticated$ | async">
+    <button
+      type="button"
+      class="btn btn-block btn-lg btn-logout"
+      (click)="logout(); closeMenu()"
+    >
+      <i class="fa fa-fw fa-power-off text-primary"></i>
+      Logout
+    </button>
+  </div>
+</div>
+
+<div
+  class="sidebar-backdrop"
+  [class.showing]="isMenuOpen$ | async"
+  *ngIf="isSmallScreen$ | async"
+  (click)="closeMenu()"
+></div>

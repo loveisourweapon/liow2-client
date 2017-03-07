@@ -2,9 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
-import { RouterStubService, RouterOutletStubComponent } from '../testing';
+import { RouterStubService, RouterOutletStubComponent, StoreStubService } from '../testing';
 
 describe(`AppComponent`, () => {
   let component: AppComponent;
@@ -17,10 +18,12 @@ describe(`AppComponent`, () => {
           AppComponent,
           ModalsStubComponent,
           NavbarStubComponent,
+          SidebarStubComponent,
           RouterOutletStubComponent,
         ],
         providers: [
           { provide: Router, useClass: RouterStubService },
+          { provide: Store, useClass: StoreStubService },
         ],
       })
       .compileComponents();
@@ -31,6 +34,8 @@ describe(`AppComponent`, () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  // TODO: test setting isSmallScreen and listening for resize events
 
   it(`should render the current year in the footer copyright`, () => {
     const date = component.date;
@@ -59,3 +64,9 @@ class ModalsStubComponent { }
   template: ``,
 })
 class NavbarStubComponent { }
+
+@Component({
+  selector: 'liow-sidebar',
+  template: ``,
+})
+class SidebarStubComponent { }

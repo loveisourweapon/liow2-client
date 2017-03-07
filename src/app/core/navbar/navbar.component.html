@@ -3,7 +3,7 @@
     <div class="navbar-header">
       <button
         type="button"
-        (click)="toggleMenu()"
+        (click)="openMenu()"
         class="navbar-toggle"
         aria-expanded="false"
       >
@@ -15,7 +15,6 @@
 
       <a
         routerLink="/"
-        (click)="closeMenu()"
         class="navbar-brand"
         title="Love is our Weapon"
       >
@@ -29,7 +28,20 @@
       </a>
     </div>
 
-    <div class="collapse navbar-collapse" [collapse]="!(isMenuOpen$ | async)">
+    <div *ngIf="(isSmallScreen$ | async) && (isAuthenticated$ | async)">
+      <ul class="nav navbar-nav navbar-right m-none">
+        <li dropdown>
+          <a
+            class="user-dropdown"
+            (click)="openMenu(); $event.preventDefault()"
+            href>
+            <img [src]="(authUser$ | async)?.picture" class="img-circle">
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="!(isSmallScreen$ | async)">
       <div class="navbar-divider navbar-left"></div>
 
       <!--<form class="navbar-form navbar-left" id="group-search" role="search">
@@ -56,20 +68,12 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a
-            routerLink="/global"
-            title="Global Activity Feed"
-            (click)="closeMenu()"
-          >
+          <a routerLink="/global" title="Global Activity Feed">
             Global
           </a>
         </li>
         <li *ngIf="(isAuthenticated$ | async) && (authGroup$ | async)">
-          <a
-            [routerLink]="['/g', (authGroup$ | async)?.urlName]"
-            [title]="(authGroup$ | async)?.name"
-            (click)="closeMenu()"
-          >
+          <a [routerLink]="['/g', (authGroup$ | async)?.urlName]" [title]="(authGroup$ | async)?.name">
             Campaign
           </a>
         </li>
@@ -84,42 +88,30 @@
             <img [src]="(authUser$ | async)?.picture || '/images/user0.png'" class="img-circle">
             <span class="caret"></span>
           </a>
-          <ul dropdownMenu>
-            <li class="dropdown-header" *ngIf="isAuthenticated$ | async">
+          <ul dropdownMenu *ngIf="isAuthenticated$ | async">
+            <li class="dropdown-header">
               {{ (authUser$ | async)?.name }}
             </li>
-            <li *ngIf="isAuthenticated$ | async">
-              <a [routerLink]="['/u', (authUser$ | async)?._id]" (click)="closeMenu()">
+            <li>
+              <a [routerLink]="['/u', (authUser$ | async)?._id]">
                 <i class="fa fa-fw fa-user"></i>
                 Your Profile
               </a>
             </li>
-            <li *ngIf="isAuthenticated$ | async">
-              <a routerLink="/control-panel" (click)="closeMenu()">
+            <li>
+              <a routerLink="/control-panel">
                 <i class="fa fa-fw fa-cogs"></i>
                 Control Panel
               </a>
             </li>
-            <li *ngIf="isAuthenticated$ | async">
-              <a (click)="logout(); closeMenu(); $event.preventDefault()" href>
-                <i class="fa fa-fw fa-sign-out"></i>
+            <li>
+              <a (click)="logout(); $event.preventDefault()" href>
+                <i class="fa fa-fw fa-power-off"></i>
                 Logout
               </a>
             </li>
-            <li *ngIf="!(isAuthenticated$ | async)">
-              <a (click)="openLogin(); closeMenu(); $event.preventDefault()" href>
-                <i class="fa fa-fw fa-sign-in"></i>
-                Login
-              </a>
-            </li>
-            <li *ngIf="!(isAuthenticated$ | async)">
-              <a (click)="openSignup(); closeMenu(); $event.preventDefault()" href>
-                <i class="fa fa-fw fa-user-plus"></i>
-                Sign up
-              </a>
-            </li>
-            <li class="divider" *ngIf="isAuthenticated$ | async" role="separator"></li>
-            <li class="dropdown-header" *ngIf="isAuthenticated$ | async">
+            <li class="divider" role="separator"></li>
+            <li class="dropdown-header">
               <i class="fa fa-fw fa-users"></i>
               Groups
             </li>
@@ -127,17 +119,38 @@
               *ngFor="let group of (authUser$ | async)?.groups; trackBy: group?._id"
               [class.active]="(authGroup$ | async)?._id === group._id"
             >
-              <a [routerLink]="['/g', group.urlName]" (click)="setCurrentGroup(group); closeMenu()">
+              <a [routerLink]="['/g', group.urlName]" (click)="setCurrentGroup(group)">
                 {{ group.name }}
               </a>
             </li>
             <li>
-              <a (click)="openGroupEdit(); closeMenu(); $event.preventDefault()" href>
+              <a (click)="openGroupEdit(); $event.preventDefault()" href>
                 <i class="fa fa-fw fa-pencil-square-o"></i>
-                Group sign up
+                Group Signup
               </a>
             </li>
-          </ul>
+          </ul><!-- [dropdownMenu](isAuthenticated) -->
+
+          <ul dropdownMenu *ngIf="!(isAuthenticated$ | async)">
+            <li>
+              <a (click)="openLogin(); $event.preventDefault()" href>
+                <i class="fa fa-fw fa-sign-in"></i>
+                Login
+              </a>
+            </li>
+            <li>
+              <a (click)="openSignup(); $event.preventDefault()" href>
+                <i class="fa fa-fw fa-user-plus"></i>
+                Signup
+              </a>
+            </li>
+            <li>
+              <a (click)="openGroupEdit(); $event.preventDefault()" href>
+                <i class="fa fa-fw fa-pencil-square-o"></i>
+                Group Signup
+              </a>
+            </li>
+          </ul><!-- [dropdownMenu](!isAuthenticated) -->
         </li>
       </ul>
     </div>
