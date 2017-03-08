@@ -9,6 +9,7 @@ export class ActionTypes {
   static readonly COUNT_SUCCESS = actionType('[User] Count Success');
   static readonly COUNT_FAIL = actionType('[User] Count Fail');
   static readonly JOIN_GROUP = actionType('[User] Join Group');
+  static readonly LEAVE_GROUP = actionType('[User] Leave Group');
   static readonly GET_AND_SET_CURRENT = actionType('[User] Get and Set Current');
   static readonly GET_FAIL = actionType('[User] Get Fail');
   static readonly SET_CURRENT = actionType('[User] Set Current');
@@ -36,6 +37,14 @@ export class CountFailAction implements Action {
 
 export class JoinGroupAction implements Action {
   type = ActionTypes.JOIN_GROUP;
+
+  constructor(
+    public payload: { user: User, group: Group },
+  ) { }
+}
+
+export class LeaveGroupAction implements Action {
+  type = ActionTypes.LEAVE_GROUP;
 
   constructor(
     public payload: { user: User, group: Group },
@@ -71,6 +80,7 @@ export type Actions
   | CountSuccessAction
   | CountFailAction
   | JoinGroupAction
+  | LeaveGroupAction
   | GetAndSetCurrentAction
   | GetFailAction
   | SetCurrentAction

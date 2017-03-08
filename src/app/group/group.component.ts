@@ -8,6 +8,7 @@ import { has, some } from 'lodash';
 import { TitleService } from '../core';
 import { Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
+import * as alertify from '../store/alertify/alertify.actions';
 import * as modal from '../store/modal.actions';
 import { User } from '../store/user';
 import * as user from '../store/user/user.actions';
@@ -96,6 +97,36 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   leaveGroup(user$: Observable<User>, group$: Observable<Group>): void {
+    Observable.combineLatest(user$, group$)
+      .distinctUntilChanged()
+      .first()
+      .flatMap(([currentUser, group]: [User, Group]) => Observable.if(
+        // Prevent group owner and group admins from leaving
+        () => group.owner !== currentUser._id && !this.adminOfGroup(currentUser, group),
+        Observable.of([currentUser, group]),
+        Observable.throw(group.owner === currentUser._id
+          // User is the group owner
+          ? `
+            <p>You are the current owner of <b>${group.name}</b>.</p>
+            <p>You'll need to make someone else the owner before leaving.</p>
+          `
+          // User is a group admin
+          : `
+            <p>You are currently an admin of <b>${group.name}</b>.</p>
+            <p>You'll need to be removed as an admin before leaving.</p>
+          `
+        )
+      ))
+      .subscribe(
+        ([currentUser, group]: [User, Group]) =>
+          this.store.dispatch(new user.LeaveGroupAction({ user: currentUser, group })),
+        (errorMessage: string) =>
+          this.store.dispatch(new alertify.LogAction({
+            message: errorMessage,
+            timeout: 10000,
+            useTemplate: false,
+          })),
+      );
   }
 
   openGroupEditModal(group$: Observable<Group>): void {

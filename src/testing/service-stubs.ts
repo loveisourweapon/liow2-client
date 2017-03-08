@@ -8,6 +8,7 @@ export class ActStubService {
 
 @Injectable()
 export class AlertifyStubService {
+  alert() { }
   error() { }
   log() { }
   success() { }

@@ -9,21 +9,24 @@ export class AlertifyService {
       .closeLogOnClick(true);
   }
 
-  error(message: string): void {
+  error(message: string, timeout = 6000, useTemplate = true): void {
     return alertify
-      .setLogTemplate((message: string) => this.getLogTemplate('exclamation-circle', message))
+      .delay(timeout)
+      .setLogTemplate((message: string) => useTemplate ? this.getLogTemplate('exclamation-circle', message) : message)
       .error(message);
   }
 
-  log(message: string): void {
+  log(message: string, timeout = 6000, useTemplate = true): void {
     return alertify
-      .setLogTemplate((message: string) => this.getLogTemplate('info-circle', message))
+      .delay(timeout)
+      .setLogTemplate((message: string) => useTemplate ? this.getLogTemplate('info-circle', message) : message)
       .log(message);
   }
 
-  success(message: string): void {
+  success(message: string, timeout = 6000, useTemplate = true): void {
     return alertify
-      .setLogTemplate((message: string) => this.getLogTemplate('check-circle', message))
+      .delay(timeout)
+      .setLogTemplate((message: string) => useTemplate ? this.getLogTemplate('check-circle', message) : message)
       .success(message);
   }
 

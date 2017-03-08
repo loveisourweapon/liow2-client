@@ -53,6 +53,26 @@ export class UserEffects {
         ));
     });
 
+  @Effect()
+  leaveGroup$: Observable<Action> = this.actions$
+    .ofType(user.ActionTypes.LEAVE_GROUP).map(toPayload)
+    .flatMap(({ user: currentUser, group }: { user: User, group: Group }) => {
+      const index = currentUser.groups.findIndex((userGroup: Group) => userGroup._id === group._id);
+      const patch = {
+        op: JsonPatchOp.Remove,
+        path: `/groups/${index}`,
+      };
+
+      return this.userService.update(currentUser, [patch])
+        .mergeMap(() => Observable.from([
+          new auth.LoginWithTokenAction(), // reload the current auth user
+          new alertify.LogAction(`Left group <b>${group.name}</b>`),
+        ]))
+        .catch(() => Observable.of(
+          new alertify.ErrorAction(`Failed leaving group <b>${group.name}</b>`)
+        ));
+    });
+
   constructor(
     private actions$: Actions,
     private userService: UserService,

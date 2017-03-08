@@ -124,4 +124,39 @@ describe(`UserEffects`, () => {
       });
     });
   });
+
+  describe(`leaveGroup$`, () => {
+    const testGroup = <Group>{ _id: 'def456' };
+    const testUser = <User>{ _id: 'abc123', groups: [testGroup] };
+
+    it(`should generate a properly formed JsonPatch object`, () => {
+      const updateSpy = spyOn(userService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new user.LeaveGroupAction({ user: testUser, group: testGroup }));
+      userEffects.leaveGroup$.take(1).subscribe(() => {
+        const patch = updateSpy.calls.mostRecent().args[1][0];
+        expect(patch.op).toBe('remove');
+        expect(patch.path).toBe(`/groups/0`);
+      });
+    });
+
+    it(`should dispatch LOGIN_WITH_TOKEN and alertify LOG actions after updating user`, () => {
+      spyOn(userService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new user.LeaveGroupAction({ user: testUser, group: testGroup }));
+      takeAndScan(userEffects.leaveGroup$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_WITH_TOKEN);
+          expect(results[1].type).toBe(alertify.ActionTypes.LOG);
+          expect(results[1].payload).toMatch(/^Left group/);
+        });
+    });
+
+    it(`should dispatch alertify ERROR action after failing to update user`, () => {
+      spyOn(userService, 'update').and.returnValue(Observable.throw({}));
+      runner.queue(new user.LeaveGroupAction({ user: testUser, group: testGroup }));
+      userEffects.leaveGroup$.subscribe((result: Action) => {
+        expect(result.type).toBe(alertify.ActionTypes.ERROR);
+        expect(result.payload).toMatch(/^Failed leaving group/);
+      });
+    });
+  });
 });
