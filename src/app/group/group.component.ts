@@ -130,9 +130,8 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   openGroupEditModal(group$: Observable<Group>): void {
-    group$.take(1)
-      .subscribe((group: Group) =>
-        this.store.dispatch(new modal.OpenGroupEditAction({ action: 'Update', group })));
+    group$.first().subscribe((group: Group) =>
+      this.store.dispatch(new modal.OpenGroupEditAction({ action: 'Update', group })));
   }
 
   openLoginModal(): void {

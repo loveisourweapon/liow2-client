@@ -45,7 +45,12 @@ export class GroupEditModalComponent implements OnChanges {
   }
 
   save(groupToSave: Group|NewGroup, setupCampaign): void {
-    this.store.dispatch(new group.CreateAction({ group: groupToSave, setupCampaign }));
+    const action = has(groupToSave, '_id')
+      ? new group.UpdateAction(<Group>groupToSave)
+      : new group.CreateAction({ group: <NewGroup>groupToSave, setupCampaign })
+      ;
+
+    this.store.dispatch(action);
   }
 
   onUpdatePropertyAction(property: string, value: any): void {

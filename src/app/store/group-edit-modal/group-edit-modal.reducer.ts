@@ -96,6 +96,7 @@ export function reducer(state = initialState, action: groupEditModal.Actions|gro
       });
 
     case group.ActionTypes.CREATE:
+    case group.ActionTypes.UPDATE:
       return assign({}, state, {
         isSaving: true,
         errorMessage: '',
@@ -103,6 +104,7 @@ export function reducer(state = initialState, action: groupEditModal.Actions|gro
       });
 
     case group.ActionTypes.CREATE_FAIL:
+    case group.ActionTypes.UPDATE_FAIL:
       const newProps = <State>{ isSaving: false };
       if (has(action.payload, 'errors') && keys(action.payload.errors).length) {
         newProps.errors = action.payload.errors;
@@ -113,9 +115,11 @@ export function reducer(state = initialState, action: groupEditModal.Actions|gro
       return assign({}, state, newProps);
 
     case group.ActionTypes.CREATE_SUCCESS:
+    case group.ActionTypes.UPDATE_SUCCESS:
       return assign({}, state, {
         isOpen: false,
-        isSavings: false,
+        isSaving: false,
+        group: initialState.group, // Always reset group when closing
       });
 
     default:

@@ -45,6 +45,17 @@ export class GroupEffects {
     ]))
     .catch(error => Observable.of(new group.FindAndSetCurrentFailAction(error.message)));
 
+  @Effect()
+  update$: Observable<Action> = this.actions$
+    .ofType(group.ActionTypes.UPDATE).map(toPayload)
+    .flatMap((groupToUpdate: Group) => this.groupService.save(groupToUpdate)
+      .mergeMap((updatedGroup: Group) => Observable.from([
+        new group.UpdateSuccessAction(updatedGroup),
+        new group.SetCurrentAction(updatedGroup),
+        new alertify.SuccessAction(`Updated group <b>${updatedGroup.name}</b>`),
+      ]))
+      .catch((response: Response) => Observable.of(new group.UpdateFailAction(response.json().error || {}))));
+
   constructor(
     private actions$: Actions,
     private groupService: GroupService,

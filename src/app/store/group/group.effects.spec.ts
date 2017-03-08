@@ -63,6 +63,7 @@ describe(`GroupEffects`, () => {
     const newGroup = {
       name: 'Test group name',
       welcomeMessage: 'Test **welcome** message',
+      admins: [],
     };
 
     it(`should dispatch CREATE_SUCCESS, LOGIN_WITH_TOKEN and SET_CURRENT_GROUP actions after saving new group`, () => {
@@ -110,6 +111,41 @@ describe(`GroupEffects`, () => {
       groupEffects.findAndSetCurrent$.subscribe((result: Action) => {
         expect(result.type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_FAIL);
         expect(result.payload).toBe(errorMessage);
+      });
+    });
+  });
+
+  describe(`update$`, () => {
+    const updatedGroup = <Group>{
+      _id: 'abc123',
+      name: 'Test group name',
+      welcomeMessage: 'Test **welcome** message',
+      admins: [],
+    };
+
+    it(`should dispatch UPDATE_SUCCESS, SET_CURRENT and alertify SUCCESS actions after saving new group`, () => {
+      const saveSpy = spyOn(groupService, 'save').and.returnValue(Observable.of(updatedGroup));
+      runner.queue(new group.UpdateAction(updatedGroup));
+      takeAndScan(groupEffects.update$, 3)
+        .subscribe((results: Action[]) => {
+          expect(saveSpy).toHaveBeenCalledWith(updatedGroup);
+          expect(results[0].type).toBe(group.ActionTypes.UPDATE_SUCCESS);
+          expect(results[0].payload).toBe(updatedGroup);
+          expect(results[1].type).toBe(group.ActionTypes.SET_CURRENT);
+          expect(results[1].payload).toBe(updatedGroup);
+          expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[2].payload).toMatch(/^Updated group/);
+        });
+    });
+
+    it(`should dispatch UPDATE_FAIL action after failing to save group`, () => {
+      const error = { errors: {}, message: 'Test error' };
+      const response = new Response(new ResponseOptions({ body: { error } }));
+      spyOn(groupService, 'save').and.returnValue(Observable.throw(response));
+      runner.queue(new group.UpdateAction(updatedGroup));
+      groupEffects.update$.subscribe((result: Action) => {
+        expect(result.type).toBe(group.ActionTypes.UPDATE_FAIL);
+        expect(result.payload).toBe(error);
       });
     });
   });
