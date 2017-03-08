@@ -1,5 +1,9 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
+// Intl polyfill required for PhantomJS
+import 'intl';
+import 'intl/locale-data/jsonp/en-AU.js';
+
 import 'zone.js/dist/long-stack-trace-zone';
 import 'zone.js/dist/proxy.js';
 import 'zone.js/dist/sync-test';
