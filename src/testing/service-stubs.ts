@@ -53,6 +53,7 @@ export class GroupStubService {
 @Injectable()
 export class HttpStubService {
   get() { }
+  patch() { }
   post() { }
   put() { }
 }
@@ -79,9 +80,10 @@ export class TitleStubService {
 
 @Injectable()
 export class UserStubService {
+  count() { }
   find() { }
   get() { }
   getCurrent() { }
   save() { }
-  count() { }
+  update() { }
 }

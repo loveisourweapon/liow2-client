@@ -14,8 +14,42 @@
 <div class="container container-pad">
   <div class="row">
     <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
-      <p>Current Campaign Info</p>
-      <p>A stack of buttons</p>
+      <button
+        type="button"
+        class="btn btn-primary btn-block btn-lg"
+        (click)="joinGroup(authUser$, group$)"
+        *ngIf="(isAuthenticated$ | async) && !(isUserAn$(memberOfGroup, authUser$, group$) | async)"
+      >
+        <i class="fa fa-fw fa-users"></i>
+        Join us
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-block btn-lg"
+        (click)="openLoginModal()"
+        *ngIf="!(isAuthenticated$ | async)"
+      >
+        <i class="fa fa-fw fa-users"></i>
+        Login &amp; Join us
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="openGroupEditModal(group$)"
+        *ngIf="isUserAn$(adminOfGroup, authUser$, group$) | async"
+      >
+        <i class="fa fa-fw fa-edit"></i>
+        Update group
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="leaveGroup(authUser$, group$)"
+        *ngIf="isUserAn$(memberOfGroup, authUser$, group$) | async"
+      >
+        <i class="fa fa-fw fa-sign-out"></i>
+        Leave group
+      </button>
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">

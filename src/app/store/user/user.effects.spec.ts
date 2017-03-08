@@ -6,6 +6,9 @@ import { Observable } from 'rxjs/Observable';
 import { User, UserEffects, UserService } from './index';
 import * as user from './user.actions';
 import * as act from '../act/act.actions';
+import * as alertify from '../alertify/alertify.actions';
+import * as auth from '../auth/auth.actions';
+import { Group } from '../group';
 import { UserStubService, takeAndScan } from '../../../testing';
 
 describe(`UserEffects`, () => {
@@ -80,6 +83,44 @@ describe(`UserEffects`, () => {
       userEffects.count$.subscribe((result: Action) => {
         expect(result.type).toBe(user.ActionTypes.COUNT_FAIL);
         expect(result.payload).toBe(error);
+      });
+    });
+  });
+
+  describe(`joinGroup$`, () => {
+    const testUser = <User>{ _id: 'abc123', groups: [] };
+    const testGroup = <Group>{ _id: 'def456' };
+
+    it(`should generate a properly formed JsonPatch object`, () => {
+      const updateSpy = spyOn(userService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new user.JoinGroupAction({ user: testUser, group: testGroup }));
+      userEffects.joinGroup$.take(1).subscribe(() => {
+        const patch = updateSpy.calls.mostRecent().args[1][0];
+        expect(patch.op).toBe('add');
+        expect(patch.path).toBe(`/groups/${testUser.groups.length}`);
+        expect(patch.value).toBe(testGroup._id);
+      });
+    });
+
+    it(`should dispatch LOGIN_WITH_TOKEN, SET_CURRENT_GROUP and alertify SUCCESS actions after updating user`, () => {
+      spyOn(userService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new user.JoinGroupAction({ user: testUser, group: testGroup }));
+      takeAndScan(userEffects.joinGroup$, 3)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(auth.ActionTypes.LOGIN_WITH_TOKEN);
+          expect(results[1].type).toBe(auth.ActionTypes.SET_CURRENT_GROUP);
+          expect(results[1].payload).toBe(testGroup);
+          expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[2].payload).toMatch(/^Joined group/);
+        });
+    });
+
+    it(`should dispatch alertify ERROR action after failing to update user`, () => {
+      spyOn(userService, 'update').and.returnValue(Observable.throw({}));
+      runner.queue(new user.JoinGroupAction({ user: testUser, group: testGroup }));
+      userEffects.joinGroup$.subscribe((result: Action) => {
+        expect(result.type).toBe(alertify.ActionTypes.ERROR);
+        expect(result.payload).toMatch(/^Failed joining group/);
       });
     });
   });

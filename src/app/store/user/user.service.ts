@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Response, URLSearchParams } from '@angular/http';
+import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
-import { buildUrlSearchParams, SearchParams } from '../utils';
+import { buildUrlSearchParams, JsonPatch, SearchParams } from '../utils';
 import { NewUser, User, UserId } from './index';
 
 @Injectable()
@@ -47,6 +47,12 @@ export class UserService {
 
     return request
       .map((response: Response) => response.json() || {})
+      .map((user: User) => this.transformUser(user));
+  }
+
+  update(user: User, changes: JsonPatch[]): Observable<User> {
+    return this.http.patch(`${this.baseUrl}/${user._id}`, changes)
+      .map((response: Response) => response.json())
       .map((user: User) => this.transformUser(user));
   }
 
