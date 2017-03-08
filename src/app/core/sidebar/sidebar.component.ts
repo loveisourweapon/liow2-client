@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Group } from '../../store/group';
 import { User } from '../../store/user';
@@ -15,12 +16,14 @@ import * as fromRoot from '../../store/reducer';
   styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   authUser$: Observable<User>;
   authGroup$: Observable<Group>;
   isAuthenticated$: Observable<boolean>;
   isMenuOpen$: Observable<boolean>;
   isSmallScreen$: Observable<boolean>;
+
+  private bodySubscription: Subscription;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -32,6 +35,17 @@ export class SidebarComponent implements OnInit {
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.isMenuOpen$ = this.store.select(fromRoot.getIsMenuOpen);
     this.isSmallScreen$ = this.store.select(fromRoot.getIsSmallScreen);
+
+    // Add/remove the .modal-open class to the document body to prevent scrolling
+    const bodyElement = document.querySelector('body');
+    this.bodySubscription = Observable.combineLatest(this.isSmallScreen$, this.isMenuOpen$)
+      .map(([isSmallScreen, isMenuOpen]: [boolean, boolean]) => isSmallScreen && isMenuOpen)
+      .distinctUntilChanged()
+      .subscribe((isShowing) => bodyElement.classList[isShowing ? 'add' : 'remove']('modal-open'));
+  }
+
+  ngOnDestroy(): void {
+    this.bodySubscription.unsubscribe();
   }
 
   closeMenu(): void {
