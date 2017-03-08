@@ -8,7 +8,7 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-phantomjs-launcher'),
+      require('karma-nightmare'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma')
@@ -31,6 +31,11 @@ module.exports = function (config) {
     },
     angularCli: {
       environment: 'dev'
+    },
+    nightmareOptions: {
+      skipScreenshot: true,
+      skipCaptureHtml: true,
+      show: false,
     },
     reporters: config.angularCli && config.angularCli.codeCoverage
               ? ['progress', 'coverage-istanbul']
