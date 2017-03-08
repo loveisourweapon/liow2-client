@@ -53,16 +53,20 @@
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
-      <!--<div uib-alert
-           class="alert-info"
-           ng-if="$ctrl.showCampaignAlert"
-           close="$ctrl.showCampaignAlert = false">
+      <alert
+        type="info"
+        [dismissible]="true"
+        *ngIf="!(campaign$ | async) && (isUserAn$(adminOfGroup, authUser$, group$) | async)"
+      >
         You haven't got an active campaign, would you like to set one up now?&nbsp;
-        <button class="btn btn-info btn-inline m-t-xxs p-xs"
-                ng-click="$ctrl.editCampaign('create', $ctrl.group)">
+        <button
+          type="button"
+          class="btn btn-info btn-inline m-t-xxs p-xs"
+          (click)="openCampaignEditModal('Create', group$)"
+        >
           Setup Campaign
         </button>
-      </div>-->
+      </alert>
 
       <tabset type="pills">
         <tab

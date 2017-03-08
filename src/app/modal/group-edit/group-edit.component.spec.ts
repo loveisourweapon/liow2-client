@@ -78,7 +78,7 @@ describe(`GroupEditModalComponent`, () => {
 class TestHostComponent {
   isAuthenticated = true;
   state = <GroupEditModalState>{
-    action: GroupEditAction.CREATE,
+    action: GroupEditAction.Create,
     isOpen: false,
     isSaving: false,
     group: {

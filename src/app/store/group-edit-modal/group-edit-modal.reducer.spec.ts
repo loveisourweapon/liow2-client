@@ -13,8 +13,8 @@ describe(`group edit modal reducer`, () => {
     expect(state.isOpen).toBe(false);
   });
 
-  it(`should set itOpen to false and action property with OPEN action`, () => {
-    const action = GroupEditAction.EDIT;
+  it(`should set isOpen to false and action property with OPEN action`, () => {
+    const action = GroupEditAction.Update;
     const state = reducer(initialState, new groupEditModal.OpenAction({ action }));
     expect(state).not.toBe(initialState);
     expect(state.isOpen).toBe(true);
@@ -22,7 +22,7 @@ describe(`group edit modal reducer`, () => {
   });
 
   it(`should set the group and setupCampaign properties when opened with a group`, () => {
-    const initialise = { action: GroupEditAction.EDIT, group: <Group>{} };
+    const initialise = { action: GroupEditAction.Update, group: <Group>{} };
     const state = reducer(initialState, new groupEditModal.OpenAction(initialise));
     expect(state).not.toBe(initialState);
     expect(state.group).toBe(initialise.group);

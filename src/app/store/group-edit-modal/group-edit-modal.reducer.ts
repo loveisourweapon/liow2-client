@@ -18,7 +18,7 @@ export interface State {
 }
 
 export const initialState: State = {
-  action: GroupEditAction.CREATE,
+  action: GroupEditAction.Create,
   isOpen: false,
   isSaving: false,
   group: {

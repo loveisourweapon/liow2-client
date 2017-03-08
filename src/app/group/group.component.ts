@@ -6,12 +6,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { has, some } from 'lodash';
 
 import { TitleService } from '../core';
-import { Group, GroupSlug, GroupTab } from '../store/group';
-import * as group from '../store/group/group.actions';
 import * as alertify from '../store/alertify/alertify.actions';
-import * as modal from '../store/modal.actions';
+import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
+import * as group from '../store/group/group.actions';
+import { GroupEditAction } from '../store/group-edit-modal';
 import { User } from '../store/user';
 import * as user from '../store/user/user.actions';
+import * as modal from '../store/modal.actions';
 import * as fromRoot from '../store/reducer';
 
 @Component({
@@ -20,6 +21,7 @@ import * as fromRoot from '../store/reducer';
 })
 export class GroupComponent implements OnDestroy, OnInit {
   group$: Observable<Group>;
+  campaign$: Observable<Campaign>;
   groupCounter$: Observable<number>;
   isAuthenticated$: Observable<boolean>;
   authUser$: Observable<User>;
@@ -131,7 +133,10 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   openGroupEditModal(group$: Observable<Group>): void {
     group$.first().subscribe((group: Group) =>
-      this.store.dispatch(new modal.OpenGroupEditAction({ action: 'Update', group })));
+      this.store.dispatch(new modal.OpenGroupEditAction({ action: GroupEditAction.Update, group })));
+  }
+
+  openCampaignEditModal(group$: Observable<Group>, campaign$: Observable<Campaign> = Observable.of(null)): void {
   }
 
   openLoginModal(): void {

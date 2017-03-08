@@ -24,7 +24,7 @@ export class OpenAction implements Action {
   type = ActionTypes.OPEN;
 
   constructor(
-    public payload: GroupEditInitialise = { action: GroupEditAction.CREATE },
+    public payload: GroupEditInitialise = { action: GroupEditAction.Create },
   ) { }
 }
 

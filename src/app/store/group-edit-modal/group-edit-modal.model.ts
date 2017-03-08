@@ -1,8 +1,8 @@
 import { Group } from '../group';
 
 export class GroupEditAction {
-  static readonly CREATE = 'Create';
-  static readonly EDIT = 'Edit';
+  static readonly Create = 'Create';
+  static readonly Update = 'Update';
 }
 
 export interface GroupEditInitialise {
