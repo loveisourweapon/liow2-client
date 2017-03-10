@@ -77,4 +77,6 @@ describe(`group edit modal reducer`, () => {
     expect(state).not.toBe(initialState);
     expect(state.setupCampaign).toBe(setupCampaign);
   });
+
+  // TODO: need more tests for the save actions?
 });

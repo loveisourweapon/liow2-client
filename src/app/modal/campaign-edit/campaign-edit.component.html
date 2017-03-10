@@ -1,0 +1,117 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Campaign edit"
+  aria-hidden="true"
+  (onHide)="onClose()"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <form
+        (ngSubmit)="save(state.campaign)"
+        class="form-horizontal"
+        novalidate
+      >
+        <liow-modal-header
+          modalTitle="{{ state.action }} Campaign"
+          (close)="onClose()"
+        ></liow-modal-header>
+
+        <div class="modal-body">
+          <alert type="danger" *ngIf="state.errorMessage || (submitted && state.campaign.deeds.length === 0)">
+            <i class="fa fa-fw fa-exclamation-triangle"></i>
+            <span *ngIf="state.errorMessage">
+              Failed sending request. Please try again or
+              <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
+            </span>
+            <span *ngIf="submitted && state.campaign.deeds.length === 0">
+              Please select some deeds to start your campaign.
+            </span>
+          </alert>
+
+          <p>
+            Create a campaign by dragging deeds from the 'Available Deeds' list into
+            the 'Your Campaign' list. You can also re-order deeds within your campaign.
+          </p>
+          <p>
+            We recommend choosing 1 deed for each week of the campaign, so choosing
+            6 deeds would work best for a 6 week campaign. In our experience with
+            youth groups, a 4-6 week campaign works best to keep up interest and
+            engagement with the campaign.
+          </p>
+
+          <div class="form-group">
+            <div class="col-xs-6">
+              <h5>Available Deeds</h5>
+              <ul
+                class="list-group"
+                [dragula]="'bag-deeds'"
+                [dragulaModel]="availableDeeds"
+              >
+                <li
+                  class="list-group-item"
+                  *ngFor="let item of state.deeds; trackBy: item?.deed._id"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-link p-none pull-right"
+                    (click)="openDeedPreview(item.deed)"
+                  >
+                    <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
+                  </button>
+                  {{ item.deed.title }}
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-xs-6">
+              <h5>Your Campaign</h5>
+              <ul
+                class="list-group"
+                [dragula]="'bag-deeds'"
+                [dragulaModel]="selectedDeeds"
+              >
+                <li
+                  class="list-group-item"
+                  *ngFor="let item of state.campaign.deeds; trackBy: item?.deed._id"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-link p-none pull-right"
+                    (click)="openDeedPreview(item.deed)"
+                  >
+                    <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
+                  </button>
+                  {{ item.deed.title }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- .modal-body -->
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            (click)="onClose()"
+            class="btn btn-default"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="state.isSaving"
+          >
+            <i class="fa fa-cog fa-spin" [hidden]="!state.isSaving"></i>
+            {{ state.action }}
+          </button>
+        </div><!-- .modal-footer -->
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -83,6 +83,7 @@ describe(`GroupService`, () => {
     const newGroup = {
       name: 'Test group name',
       welcomeMessage: 'Test **welcome** message',
+      admins: [],
     };
 
     it(`should POST to /groups if passed in group doesn't have an ID`, () => {

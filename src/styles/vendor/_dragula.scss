@@ -1,0 +1,10 @@
+/**
+ *  Dragula loader and overrides
+ */
+
+@import "~dragula/dist/dragula";
+
+.gu-mirror {
+  background: $state-info-bg;
+  border-radius: $border-radius-base;
+}

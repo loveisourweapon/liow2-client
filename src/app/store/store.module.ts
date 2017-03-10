@@ -10,8 +10,9 @@ import { AuthEffects, AuthService } from './auth';
 import { CommentEffects, CommentService } from './comment';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
-import { GroupEffects, GroupService } from './group';
+import { CampaignService, GroupEffects, GroupService } from './group';
 import { GroupEditModalEffects } from './group-edit-modal';
+import { CampaignEditModalEffects } from './campaign-edit-modal';
 import { UserEffects, UserService } from './user';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { UserEffects, UserService } from './user';
     EffectsModule.run(DeedEffects),
     EffectsModule.run(GroupEffects),
     EffectsModule.run(GroupEditModalEffects),
+    EffectsModule.run(CampaignEditModalEffects),
     EffectsModule.run(UserEffects),
     EffectsModule.run(FeedEffects), // ordering appears to be important here
   ],
@@ -36,6 +38,7 @@ import { UserEffects, UserService } from './user';
     ActService,
     AlertifyService,
     AuthService,
+    CampaignService,
     CommentService,
     DeedService,
     FeedService,

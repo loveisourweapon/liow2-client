@@ -10,6 +10,7 @@ import * as alertify from '../store/alertify/alertify.actions';
 import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
 import { GroupEditAction } from '../store/group-edit-modal';
+import { CampaignEditAction } from '../store/campaign-edit-modal';
 import { User } from '../store/user';
 import * as user from '../store/user/user.actions';
 import * as modal from '../store/modal.actions';
@@ -136,7 +137,13 @@ export class GroupComponent implements OnDestroy, OnInit {
       this.store.dispatch(new modal.OpenGroupEditAction({ action: GroupEditAction.Update, group })));
   }
 
-  openCampaignEditModal(group$: Observable<Group>, campaign$: Observable<Campaign> = Observable.of(null)): void {
+  openCampaignEditModal(group$: Observable<Group>, campaign$: Observable<Campaign> = Observable.of(undefined)): void {
+    Observable.combineLatest(group$, campaign$)
+      .first()
+      .subscribe(([group, campaign]: [Group, Campaign]) => {
+        const action = campaign === undefined ? CampaignEditAction.Create : CampaignEditAction.Update;
+        this.store.dispatch(new modal.OpenCampaignEditAction({ action, group, campaign }));
+      });
   }
 
   openLoginModal(): void {

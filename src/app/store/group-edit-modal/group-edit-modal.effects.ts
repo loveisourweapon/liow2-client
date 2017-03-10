@@ -11,7 +11,7 @@ import { User, UserService } from '../user';
 @Injectable()
 export class GroupEditModalEffects {
   @Effect()
-  $findGroupUsers: Observable<Action> = this.actions$
+  findGroupUsers$: Observable<Action> = this.actions$
     .ofType(groupEditModal.ActionTypes.OPEN).map(toPayload)
     .flatMap((payload: GroupEditInitialise) => Observable.if(
       () => has(payload, 'group._id'),

@@ -1,12 +1,21 @@
-<liow-forgot-password-modal
-  [state]="forgotPasswordModal$ | async"
-></liow-forgot-password-modal>
+<!--
+Need to be aware of order here for layering
+Lower is rendered on top of higher
+-->
+
+<liow-campaign-edit-modal
+  [state]="campaignEditModal$ | async"
+></liow-campaign-edit-modal>
 
 <liow-group-edit-modal
   [state]="groupEditModal$ | async"
   [isAuthenticated]="isAuthenticated$ | async"
   [authUser]="authUser$ | async"
 ></liow-group-edit-modal>
+
+<liow-forgot-password-modal
+  [state]="forgotPasswordModal$ | async"
+></liow-forgot-password-modal>
 
 <liow-login-modal
   [state]="loginModal$ | async"

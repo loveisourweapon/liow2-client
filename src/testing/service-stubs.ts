@@ -27,6 +27,11 @@ export class AuthStubService {
 }
 
 @Injectable()
+export class CampaignStubService {
+  save() { }
+}
+
+@Injectable()
 export class CommentStubService {
   save() { }
 }

@@ -35,6 +35,15 @@
       <button
         type="button"
         class="btn btn-default btn-block"
+        (click)="openCampaignEditModal(group$)"
+        *ngIf="!(campaign$ | async) && (isUserAn$(adminOfGroup, authUser$, group$) | async)"
+      >
+        <i class="fa fa-fw fa-bullhorn"></i>
+        Setup campaign
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
         (click)="openGroupEditModal(group$)"
         *ngIf="isUserAn$(adminOfGroup, authUser$, group$) | async"
       >
@@ -62,7 +71,7 @@
         <button
           type="button"
           class="btn btn-info btn-inline m-t-xxs p-xs"
-          (click)="openCampaignEditModal('Create', group$)"
+          (click)="openCampaignEditModal(group$)"
         >
           Setup Campaign
         </button>

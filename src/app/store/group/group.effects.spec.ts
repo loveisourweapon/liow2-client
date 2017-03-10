@@ -4,16 +4,17 @@ import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { Group, GroupEffects, GroupService } from './index';
+import { CampaignService, Group, GroupEffects, GroupService } from './index';
 import * as act from '../act/act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import * as auth from '../auth/auth.actions';
 import * as group from './group.actions';
-import { GroupStubService, takeAndScan } from '../../../testing';
+import { CampaignStubService, GroupStubService, takeAndScan } from '../../../testing';
 
 describe(`GroupEffects`, () => {
   let runner: EffectsRunner;
   let groupEffects: GroupEffects;
+  let campaignService: CampaignService;
   let groupService: GroupService;
 
   beforeEach(() => {
@@ -24,6 +25,7 @@ describe(`GroupEffects`, () => {
         ],
         providers: [
           GroupEffects,
+          { provide: CampaignService, useClass: CampaignStubService },
           { provide: GroupService, useClass: GroupStubService },
         ],
       });
@@ -32,6 +34,7 @@ describe(`GroupEffects`, () => {
   beforeEach(inject([EffectsRunner, GroupEffects], (_runner, _groupEffects) => {
     runner = _runner;
     groupEffects = _groupEffects;
+    campaignService = TestBed.get(CampaignService);
     groupService = TestBed.get(GroupService);
   }));
 
@@ -86,6 +89,37 @@ describe(`GroupEffects`, () => {
       runner.queue(new group.CreateAction({ group: newGroup, setupCampaign }));
       groupEffects.create$.subscribe((result: Action) => {
         expect(result.type).toBe(group.ActionTypes.CREATE_FAIL);
+        expect(result.payload).toBe(error);
+      });
+    });
+  });
+
+  describe(`createCampaign$`, () => {
+    const newCampaign = {
+      group: 'abc123',
+      deeds: [{ deed: 'def456' }],
+    };
+
+    it(`should dispatch CREATE_CAMPAIGN_SUCCESS and alertify SUCCESS actions after saving new campaign`, () => {
+      const saveSpy = spyOn(campaignService, 'save').and.returnValue(Observable.of(newCampaign));
+      runner.queue(new group.CreateCampaignAction(newCampaign));
+      takeAndScan(groupEffects.createCampaign$, 2)
+        .subscribe((results: Action[]) => {
+          expect(saveSpy).toHaveBeenCalledWith(newCampaign);
+          expect(results[0].type).toBe(group.ActionTypes.CREATE_CAMPAIGN_SUCCESS);
+          expect(results[0].payload).toBe(newCampaign);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].payload).toBe(`Created campaign`);
+        });
+    });
+
+    it(`should dispatch CREATE_CAMPAIGN_FAIL action after failing to save campaign`, () => {
+      const error = { errors: {}, message: 'Test error' };
+      const response = new Response(new ResponseOptions({ body: { error } }));
+      spyOn(campaignService, 'save').and.returnValue(Observable.throw(response));
+      runner.queue(new group.CreateCampaignAction(newCampaign));
+      groupEffects.createCampaign$.subscribe((result: Action) => {
+        expect(result.type).toBe(group.ActionTypes.CREATE_CAMPAIGN_FAIL);
         expect(result.payload).toBe(error);
       });
     });

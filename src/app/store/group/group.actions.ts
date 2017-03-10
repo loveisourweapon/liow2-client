@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { actionType, ApiError, SearchParams } from '../utils';
-import { NewGroup, Group, GroupTab } from './index';
+import { Campaign, NewCampaign, NewGroup, Group, GroupTab } from './index';
 
 export class ActionTypes {
   static readonly COUNT = actionType('[Group] Count');
@@ -10,6 +10,9 @@ export class ActionTypes {
   static readonly CREATE = actionType('[Group] Create');
   static readonly CREATE_FAIL = actionType('[Group] Create Fail');
   static readonly CREATE_SUCCESS = actionType('[Group] Create Success');
+  static readonly CREATE_CAMPAIGN = actionType('[Group] Create Campaign');
+  static readonly CREATE_CAMPAIGN_FAIL = actionType('[Group] Create Campaign Fail');
+  static readonly CREATE_CAMPAIGN_SUCCESS = actionType('[Group] Create Campaign Success');
   static readonly FIND_AND_SET_CURRENT = actionType('[Group] Find and Set Current');
   static readonly FIND_AND_SET_CURRENT_FAIL = actionType('[Group] Find and Set Current Fail');
   static readonly SET_CURRENT = actionType('[Group] Set Current');
@@ -56,6 +59,28 @@ export class CreateSuccessAction implements Action {
 
   constructor(
     public payload: Group,
+  ) { }
+}
+
+export class CreateCampaignAction implements Action {
+  type = ActionTypes.CREATE_CAMPAIGN;
+
+  constructor(
+    public payload: Campaign|NewCampaign,
+  ) { }
+}
+export class CreateCampaignFailAction implements Action {
+  type = ActionTypes.CREATE_CAMPAIGN_FAIL;
+
+  constructor(
+    public payload: ApiError,
+  ) { }
+}
+export class CreateCampaignSuccessAction implements Action {
+  type = ActionTypes.CREATE_CAMPAIGN_SUCCESS;
+
+  constructor(
+    public payload: Campaign,
   ) { }
 }
 
@@ -119,6 +144,9 @@ export type Actions
   | CreateAction
   | CreateFailAction
   | CreateSuccessAction
+  | CreateCampaignAction
+  | CreateCampaignFailAction
+  | CreateCampaignSuccessAction
   | FindAndSetCurrentAction
   | FindAndSetCurrentFailAction
   | SetCurrentAction

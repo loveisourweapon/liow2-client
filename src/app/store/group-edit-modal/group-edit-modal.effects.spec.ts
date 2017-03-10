@@ -34,14 +34,14 @@ describe(`GroupEditModalEffects`, () => {
     userService = TestBed.get(UserService);
   }));
 
-  describe(`$findGroupUsers`, () => {
+  describe(`findGroupUsers$`, () => {
     it(`should fetch users and dispatch UPDATE_GROUP_USERS if payload includes an initial group`, () => {
       const group = <Group>{ _id: 'abc123' };
       const payload = { action: 'Update', group };
       const response = <User[]>[];
       const userSpy = spyOn(userService, 'find').and.returnValue(Observable.of(response));
       runner.queue(new groupEditModal.OpenAction(payload));
-      groupEditModalEffects.$findGroupUsers.subscribe((result: Action) => {
+      groupEditModalEffects.findGroupUsers$.subscribe((result: Action) => {
         expect(userSpy.calls.mostRecent().args[0].groups).toBe(group._id);
         expect(result.type).toBe(groupEditModal.ActionTypes.UPDATE_GROUP_USERS);
         expect(result.payload).toBe(response);

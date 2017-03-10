@@ -1,4 +1,8 @@
 export {
+  OpenAction as OpenCampaignEditAction,
+  CloseAction as CloseCampaignEditAction,
+} from './campaign-edit-modal/campaign-edit-modal.actions';
+export {
   OpenAction as OpenForgotPasswordAction,
   CloseAction as CloseForgotPasswordAction,
 } from './forgot-password-modal/forgot-password-modal.actions';

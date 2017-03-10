@@ -1,17 +1,23 @@
-import { Group } from './index';
-import { Deed } from '../deed';
+import { GroupId } from './index';
+import { Deed, DeedId } from '../deed';
 
 export interface Campaign {
-  group: Group;
-  dateState: Date;
+  _id: string;
+  group: GroupId;
+  dateStart: Date;
   dateEnd: Date;
   active: boolean;
   deeds: DeedPublish[];
-  created: Deed;
-  modified: Deed;
+  created: Date;
+  modified: Date;
+}
+
+export interface NewCampaign {
+  group: GroupId;
+  deeds: Array<DeedPublish|DeedId>;
 }
 
 export interface DeedPublish {
-  deed: Deed;
-  published: boolean;
+  deed: Deed|DeedId;
+  published?: boolean;
 }
