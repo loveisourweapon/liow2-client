@@ -64,7 +64,7 @@ export class CampaignEditModalComponent implements OnChanges, OnInit {
   }
 
   openDeedPreview(deed: Deed): void {
-    // this.store.dispatch(new modal.OpenDeedPreviewAction(deed));
+    this.store.dispatch(new modal.OpenDeedPreviewAction(deed));
   }
 
   onClose(): void {

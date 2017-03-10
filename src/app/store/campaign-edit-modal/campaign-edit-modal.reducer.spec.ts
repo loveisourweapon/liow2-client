@@ -13,7 +13,7 @@ describe(`campaign edit modal reducer`, () => {
     expect(state.isOpen).toBe(false);
   });
 
-  it(`should set isOpen to false and action property with OPEN action`, () => {
+  it(`should set isOpen to true and action property with OPEN action`, () => {
     const action = CampaignEditAction.Update;
     const group = <Group>{};
     const campaign = <Campaign>{};

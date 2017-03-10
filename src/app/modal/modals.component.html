@@ -7,6 +7,10 @@ Lower is rendered on top of higher
   [state]="campaignEditModal$ | async"
 ></liow-campaign-edit-modal>
 
+<liow-deed-preview-modal
+  [state]="deedPreviewModal$ | async"
+></liow-deed-preview-modal>
+
 <liow-group-edit-modal
   [state]="groupEditModal$ | async"
   [isAuthenticated]="isAuthenticated$ | async"

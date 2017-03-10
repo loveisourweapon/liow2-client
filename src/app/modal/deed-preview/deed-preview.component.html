@@ -1,0 +1,58 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Deed preview"
+  aria-hidden="true"
+  (onHide)="onClose()"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <liow-modal-header
+        modalTitle="Preview Deed"
+        (close)="onClose()"
+      ></liow-modal-header>
+
+      <div class="modal-body">
+        <div class="modal-jumbotron">
+          <div class="embed-responsive embed-responsive-16by9" *ngIf="state.deed?.videoUrl">
+            <ui-youtube-player
+              [videoUrl]="state.deed.videoUrl"
+              class="embed-responsive-item"
+            ></ui-youtube-player>
+          </div>
+
+          <div class="deed-header clearfix">
+            <img
+              [src]="state.deed?.logo || '/images/deed.png'"
+              class="img-responsive img-circle pull-left m-t-md m-r-sm"
+            >
+
+            <h2 class="text-uppercase pull-left m-b-none">
+              {{ state.deed?.title }}
+            </h2>
+
+            <h1 class="pull-right text-right m-b-none">
+              {{ getDeedCount(counters$, state.deed?._id) | async | number }}
+            </h1>
+          </div>
+        </div>
+
+        <ui-marked [content]="state.deed?.content"></ui-marked>
+      </div><!-- .modal-body -->
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="onClose()"
+          class="btn btn-default"
+        >
+          Close
+        </button>
+      </div><!-- .modal-footer -->
+
+    </div>
+  </div>
+</div>
