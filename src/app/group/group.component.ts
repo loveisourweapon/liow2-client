@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { search } from '@ngrx/router-store';
+import { ModalDirective } from 'ng2-bootstrap';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { has, findLast, some } from 'lodash';
@@ -34,6 +36,10 @@ export class GroupComponent implements OnDestroy, OnInit {
   private routeSubscription: Subscription;
   private groupSubscription: Subscription;
   private userSubscription: Subscription;
+
+  @ViewChild('confirmModal') confirmModal: ModalDirective;
+  confirmModalContent: string;
+  private confirmation$ = new BehaviorSubject<boolean>(null);
 
   constructor(
     private route: ActivatedRoute,
@@ -163,9 +169,26 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   finishCampaign(campaign$: Observable<Campaign>): void {
+    this.confirmation$.next(null);
+    this.confirmModalContent = `Are you sure you want to finish this campaign?`;
+    this.confirmModal.show();
+
+    Observable.combineLatest(
+      this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null).first(),
+      campaign$.first(),
+    )
+      .filter(([isConfirmed, campaign]: [boolean, Campaign]) => isConfirmed)
+      .map(([isConfirmed, campaign]: [boolean, Campaign]) => campaign)
+      .subscribe((campaign: Campaign) =>
+        this.store.dispatch(new group.FinishCampaignAction(campaign)));
   }
 
   setPublished(campaign$: Observable<Campaign>, item: DeedPublish, isPublished: boolean): void {
+  }
+
+  closeConfirmation(isConfirmed: boolean): void {
+    this.confirmation$.next(isConfirmed);
+    this.confirmModal.hide();
   }
 
   openLoginModal(): void {

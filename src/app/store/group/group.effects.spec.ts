@@ -108,8 +108,8 @@ describe(`GroupEffects`, () => {
           expect(saveSpy).toHaveBeenCalledWith(newCampaign);
           expect(results[0].type).toBe(group.ActionTypes.CREATE_CAMPAIGN_SUCCESS);
           expect(results[0].payload).toBe(newCampaign);
-          expect(results[1].type).toBe(group.ActionTypes.SET_CURRENT_CAMPAIGN);
-          expect(results[1].payload).toBe(newCampaign);
+          expect(results[1].type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN);
+          expect(results[1].payload.group).toBe(newCampaign.group);
           expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
           expect(results[2].payload).toBe(`Created campaign`);
         });
@@ -171,6 +171,45 @@ describe(`GroupEffects`, () => {
       groupEffects.findAndSetCurrentCampaign$.subscribe((result: Action) => {
         expect(result.type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN_FAIL);
         expect(result.payload).toBe(errorMessage);
+      });
+    });
+  });
+
+  describe(`finishCampaign$`, () => {
+    const testCampaign = <Campaign>{ _id: 'abc123' };
+
+    it(`should generate properly formed JsonPatch objects`, () => {
+      const updateSpy = spyOn(campaignService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new group.FinishCampaignAction(testCampaign));
+      groupEffects.finishCampaign$.take(1).subscribe(() => {
+        const patches = updateSpy.calls.mostRecent().args[1];
+        expect(patches[0].op).toBe('replace');
+        expect(patches[0].path).toBe(`/active`);
+        expect(patches[0].value).toBe(false);
+        expect(patches[1].op).toBe('replace');
+        expect(patches[1].path).toBe(`/dateEnd`);
+        expect(patches[1].value instanceof Date).toBe(true);
+      });
+    });
+
+    it(`should dispatch SET_CURRENT_CAMPAIGN and alertify SUCCESS actions after updating campaign`, () => {
+      spyOn(campaignService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new group.FinishCampaignAction(testCampaign));
+      takeAndScan(groupEffects.finishCampaign$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(group.ActionTypes.SET_CURRENT_CAMPAIGN);
+          expect(results[0].payload).toBeNull();
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].payload).toMatch(`Finished campaign`);
+        });
+    });
+
+    it(`should dispatch alertify ERROR action after failing to update campaign`, () => {
+      spyOn(campaignService, 'update').and.returnValue(Observable.throw({}));
+      runner.queue(new group.FinishCampaignAction(testCampaign));
+      groupEffects.finishCampaign$.subscribe((result: Action) => {
+        expect(result.type).toBe(alertify.ActionTypes.ERROR);
+        expect(result.payload).toMatch(`Failed finishing campaign`);
       });
     });
   });

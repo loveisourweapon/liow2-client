@@ -5,6 +5,7 @@ import { go } from '@ngrx/router-store';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import { JsonPatchOp } from '../utils';
 import { Campaign, NewCampaign, NewGroup, Group } from './index';
 import { CampaignService } from './campaign.service';
 import { GroupService } from './group.service';
@@ -42,7 +43,7 @@ export class GroupEffects {
     .flatMap((newCampaign: NewCampaign) => this.campaignService.save(newCampaign)
       .mergeMap((campaign: Campaign) => Observable.from([
         new group.CreateCampaignSuccessAction(campaign),
-        new group.SetCurrentCampaignAction(campaign),
+        new group.FindAndSetCurrentCampaignAction({ group: campaign.group, active: true }),
         new alertify.SuccessAction(`Created campaign`),
       ]))
       .catch((response: Response) => Observable.of(new group.CreateCampaignFailAction(response.json().error || {}))));
@@ -64,6 +65,28 @@ export class GroupEffects {
     .flatMap((action: Action) => this.campaignService.findOne(action.payload)
       .map((foundCampaign: Campaign) => new group.SetCurrentCampaignAction(foundCampaign))
       .catch((error: Error) => Observable.of(new group.FindAndSetCurrentCampaignFailAction(error.message))));
+
+  @Effect()
+  finishCampaign$: Observable<Action> = this.actions$
+    .ofType(group.ActionTypes.FINISH_CAMPAIGN).map(toPayload)
+    .flatMap((campaign: Campaign) => {
+      const patches = [{
+        op: JsonPatchOp.Replace,
+        path: `/active`,
+        value: false,
+      }, {
+        op: JsonPatchOp.Replace,
+        path: `/dateEnd`,
+        value: new Date(),
+      }];
+
+      return this.campaignService.update(campaign, patches)
+        .mergeMap(() => Observable.from([
+          new group.SetCurrentCampaignAction(null),
+          new alertify.SuccessAction(`Finished campaign`),
+        ]))
+        .catch(() => Observable.of(new alertify.ErrorAction(`Failed finishing campaign`)));
+    });
 
   @Effect()
   update$: Observable<Action> = this.actions$

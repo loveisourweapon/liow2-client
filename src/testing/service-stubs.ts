@@ -31,6 +31,7 @@ export class CampaignStubService {
   find() { }
   findOne() { }
   save() { }
+  update() { }
 }
 
 @Injectable()

@@ -2,7 +2,7 @@ export interface JsonPatch {
   op: JsonPatchOp;
   path: string;
   from?: string;
-  value?: boolean|number|string;
+  value?: any;
 }
 
 export class JsonPatchOp {

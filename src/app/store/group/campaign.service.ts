@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
 
 import { environment } from '../../../environments/environment';
-import { buildUrlSearchParams, SearchParams } from '../utils';
+import { buildUrlSearchParams, JsonPatch, SearchParams } from '../utils';
 import { Campaign, NewCampaign } from './index';
 
 @Injectable()
@@ -45,6 +45,10 @@ export class CampaignService {
     return request
       .map((response: Response) => response.json() || {})
       .map((campaign: Campaign) => this.transformCampaign(campaign));
+  }
+
+  update(campaign: Campaign, changes: JsonPatch[]): Observable<null> {
+    return this.http.patch(`${this.baseUrl}/${campaign._id}`, changes);
   }
 
   private transformCampaign(campaign: Campaign): Campaign {

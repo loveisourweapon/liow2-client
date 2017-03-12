@@ -100,4 +100,17 @@ describe(`CampaignService`, () => {
       });
     });
   });
+
+  describe(`#update`, () => {
+    it(`should PATCH to /campaigns/:campaignId passing changes through`, () => {
+      const testCampaign = <Campaign>{ _id: 'abc123' };
+      const changes = [];
+      const response = new Response(new ResponseOptions({ body: {} }));
+      const httpSpy = spyOn(http, 'patch').and.returnValue(Observable.of(response));
+      service.update(testCampaign, changes).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/campaigns/${testCampaign._id}$`));
+        expect(httpSpy.calls.mostRecent().args[1]).toBe(changes);
+      });
+    });
+  });
 });
