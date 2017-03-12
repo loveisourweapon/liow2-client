@@ -2,17 +2,21 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { go } from '@ngrx/router-store';
+import { Store } from '@ngrx/store';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { pick } from 'lodash';
+import { find, pick } from 'lodash';
 
 import { Credentials } from './index';
 import { AuthService } from './auth.service';
 import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
+import { Group } from '../group';
+import * as group from '../group/group.actions';
 import * as modal from '../modal.actions';
 import { ResetPasswordRequest } from '../reset-password';
 import { NewUser, User, UserService } from '../user';
+import * as fromRoot from '../reducer';
 
 @Injectable()
 export class AuthEffects {
@@ -120,6 +124,15 @@ export class AuthEffects {
       ])));
 
   @Effect()
+  setCurrentGroup$: Observable<Action> = this.actions$
+    .ofType(group.ActionTypes.SET_CURRENT).map(toPayload)
+    .flatMap((group: Group) => this.store.select(fromRoot.getAuthUser)
+      .flatMap((user: User) => Observable.if(
+        () => find(user.groups, ['_id', group._id]) !== undefined,
+        Observable.of(new auth.SetCurrentGroupAction(group)),
+      )));
+
+  @Effect()
   signup$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.SIGNUP).map(toPayload)
     .flatMap((newUser: NewUser) => this.userService.save(newUser)
@@ -132,6 +145,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private store: Store<fromRoot.State>,
     private userService: UserService,
   ) { }
 }

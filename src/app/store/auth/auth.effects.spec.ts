@@ -2,22 +2,29 @@ import { inject, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { routerActions } from '@ngrx/router-store';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { pick } from 'lodash';
 
 import { AuthEffects, AuthService } from './index';
 import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
+import { Group } from '../group';
+import * as group from '../group/group.actions';
 import * as loginModal from '../login-modal/login-modal.actions';
-import { UserService } from '../user';
-import { AuthStubService, UserStubService, takeAndScan } from '../../../testing';
+import { User, UserService } from '../user';
+import { State as AppState } from '../reducer';
+import { AuthStubService, StoreStubService, UserStubService, takeAndScan } from '../../../testing';
 
 describe(`AuthEffects`, () => {
   let runner: EffectsRunner;
   let authEffects: AuthEffects;
   let authService: AuthService;
+  let store: Store<AppState>;
   let userService: UserService;
+
+  const storeSelect$ = new BehaviorSubject<any>(null);
 
   beforeEach(() => {
     TestBed
@@ -28,6 +35,7 @@ describe(`AuthEffects`, () => {
         providers: [
           AuthEffects,
           { provide: AuthService, useClass: AuthStubService },
+          { provide: Store, useClass: StoreStubService },
           { provide: UserService, useClass: UserStubService },
         ],
       });
@@ -38,6 +46,9 @@ describe(`AuthEffects`, () => {
     authEffects = _deedEffects;
     authService = TestBed.get(AuthService);
     userService = TestBed.get(UserService);
+
+    store = TestBed.get(Store);
+    spyOn(store, 'select').and.returnValue(storeSelect$);
   }));
 
   describe(`confirmEmail$`, () => {
@@ -237,6 +248,22 @@ describe(`AuthEffects`, () => {
           expect(results[0].type).toBe(auth.ActionTypes.SEND_FORGOT_PASSWORD_FAIL);
           expect(results[1].type).toBe(alertify.ActionTypes.ERROR);
         });
+    });
+  });
+
+  describe(`setCurrentGroup$`, () => {
+    const testGroup = <Group>{ _id: 'abc123' };
+    const testUser = <User>{ _id: 'def456', groups: [testGroup] };
+
+    afterEach(() => storeSelect$.next(null));
+
+    it(`should dispatch SET_CURRENT_GROUP action if user is a member of group`, () => {
+      storeSelect$.next(testUser);
+      runner.queue(new group.SetCurrentAction(testGroup));
+      authEffects.setCurrentGroup$.subscribe((result: Action) => {
+        expect(result.type).toBe(auth.ActionTypes.SET_CURRENT_GROUP);
+        expect(result.payload).toBe(testGroup);
+      });
     });
   });
 
