@@ -143,8 +143,14 @@ export class GroupComponent implements OnDestroy, OnInit {
         )
       ))
       .subscribe(
-        ([currentUser, group]: [User, Group]) =>
-          this.store.dispatch(new user.LeaveGroupAction({ user: currentUser, group })),
+        ([currentUser, group]: [User, Group]) => {
+          this.openConfirmation(`Are you sure you want to leave <b>${group.name}</b>?`);
+          this.confirmation$
+            .filter((isConfirmed: boolean) => isConfirmed !== null).first()
+            .filter((isConfirmed: boolean) => isConfirmed)
+            .subscribe(() =>
+              this.store.dispatch(new user.LeaveGroupAction({ user: currentUser, group })));
+        },
         (errorMessage: string) =>
           this.store.dispatch(new alertify.LogAction({
             message: errorMessage,
@@ -169,10 +175,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   finishCampaign(campaign$: Observable<Campaign>): void {
-    this.confirmation$.next(null);
-    this.confirmModalContent = `Are you sure you want to finish this campaign?`;
-    this.confirmModal.show();
-
+    this.openConfirmation(`Are you sure you want to finish the current campaign?`);
     Observable.combineLatest(
       this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null).first(),
       campaign$.first(),
@@ -184,6 +187,12 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   setPublished(campaign$: Observable<Campaign>, item: DeedPublish, isPublished: boolean): void {
+  }
+
+  openConfirmation(confirmModalContent: string): void {
+    this.confirmation$.next(null);
+    this.confirmModalContent = confirmModalContent;
+    this.confirmModal.show();
   }
 
   closeConfirmation(isConfirmed: boolean): void {
