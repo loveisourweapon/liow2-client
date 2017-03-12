@@ -4,6 +4,7 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { go } from '@ngrx/router-store';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { findIndex } from 'lodash';
 
 import { JsonPatchOp } from '../utils';
 import { Campaign, NewCampaign, NewGroup, Group } from './index';
@@ -12,6 +13,7 @@ import { GroupService } from './group.service';
 import * as act from '../act/act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import * as auth from '../auth/auth.actions';
+import { Deed } from '../deed';
 import * as group from './group.actions';
 
 @Injectable()
@@ -86,6 +88,27 @@ export class GroupEffects {
           new alertify.SuccessAction(`Finished campaign`),
         ]))
         .catch(() => Observable.of(new alertify.ErrorAction(`Failed finishing campaign`)));
+    });
+
+  @Effect()
+  setDeedPublished$: Observable<Action> = this.actions$
+    .ofType(group.ActionTypes.SET_DEED_PUBLISHED).map(toPayload)
+    .flatMap(({ campaign, deed, isPublished }: { campaign: Campaign, deed: Deed, isPublished: boolean }) => {
+      const deedIndex = findIndex(campaign.deeds, { deed: { _id: deed._id } });
+      const patch = {
+        op: JsonPatchOp.Replace,
+        path: `/deeds/${deedIndex}/published`,
+        value: isPublished,
+      };
+
+      const action = isPublished ? `Publish` : `Unpublish`;
+      const alertMethod = isPublished ? `SuccessAction` : `LogAction`;
+      return this.campaignService.update(campaign, [patch])
+        .mergeMap(() => Observable.from([
+          new group.FindAndSetCurrentCampaignAction({ group: campaign.group, active: true }),
+          new alertify[alertMethod](`${action}ed deed <b>${deed.title}</b>`),
+        ]))
+        .catch(() => Observable.of(new alertify.ErrorAction(`Failed ${action}ing deed <b>${deed.title}</b>`)));
     });
 
   @Effect()

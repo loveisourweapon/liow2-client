@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 import { actionType, ApiError, SearchParams } from '../utils';
 import { Campaign, NewCampaign, NewGroup, Group, GroupTab } from './index';
+import { Deed } from '../deed';
 
 export class ActionTypes {
   static readonly COUNT = actionType('[Group] Count');
@@ -21,6 +22,7 @@ export class ActionTypes {
   static readonly SET_CURRENT = actionType('[Group] Set Current');
   static readonly SET_CURRENT_CAMPAIGN = actionType('[Group] Set Current Campaign');
   static readonly SET_CURRENT_TAB = actionType('[Group] Set Current Tab');
+  static readonly SET_DEED_PUBLISHED = actionType('[Group] Set Deed Published');
   static readonly UPDATE = actionType('[Group] Update');
   static readonly UPDATE_FAIL = actionType('[Group] Update Fail');
   static readonly UPDATE_SUCCESS = actionType('[Group] Update Success');
@@ -150,6 +152,14 @@ export class SetCurrentTabAction implements Action {
   ) { }
 }
 
+export class SetDeedPublishedAction implements Action {
+  type = ActionTypes.SET_DEED_PUBLISHED;
+
+  constructor(
+    public payload: { campaign: Campaign, deed: Deed, isPublished: boolean },
+  ) { }
+}
+
 export class UpdateAction implements Action {
   type = ActionTypes.UPDATE;
 
@@ -190,6 +200,7 @@ export type Actions
   | SetCurrentAction
   | SetCurrentCampaignAction
   | SetCurrentTabAction
+  | SetDeedPublishedAction
   | UpdateAction
   | UpdateFailAction
   | UpdateSuccessAction

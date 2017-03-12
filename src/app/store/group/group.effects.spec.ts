@@ -4,10 +4,11 @@ import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { Campaign, CampaignService, Group, GroupEffects, GroupService } from './index';
+import { Campaign, CampaignService, DeedPublish, Group, GroupEffects, GroupService } from './index';
 import * as act from '../act/act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import * as auth from '../auth/auth.actions';
+import { Deed } from '../deed';
 import * as group from './group.actions';
 import { CampaignStubService, GroupStubService, takeAndScan } from '../../../testing';
 
@@ -210,6 +211,47 @@ describe(`GroupEffects`, () => {
       groupEffects.finishCampaign$.subscribe((result: Action) => {
         expect(result.type).toBe(alertify.ActionTypes.ERROR);
         expect(result.payload).toMatch(`Failed finishing campaign`);
+      });
+    });
+  });
+
+  describe(`setDeedPublished$`, () => {
+    const deed = <Deed>{ _id: 'abc123' };
+    const campaign = <Campaign>{
+      _id: 'def456',
+      group: 'ghi789',
+      deeds: [<DeedPublish>{ deed: deed, published: false }] };
+    const isPublished = true;
+
+    it(`should generate a properly formed JsonPatch object`, () => {
+      const updateSpy = spyOn(campaignService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new group.SetDeedPublishedAction({ campaign, deed, isPublished }));
+      groupEffects.setDeedPublished$.take(1).subscribe(() => {
+        const patch = updateSpy.calls.mostRecent().args[1][0];
+        expect(patch.op).toBe('replace');
+        expect(patch.path).toBe(`/deeds/0/published`);
+        expect(patch.value).toBe(isPublished);
+      });
+    });
+
+    it(`should dispatch FIND_AND_SET_CURRENT_CAMPAIGN and alertify SUCCESS actions after updating campaign`, () => {
+      spyOn(campaignService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new group.SetDeedPublishedAction({ campaign, deed, isPublished }));
+      takeAndScan(groupEffects.setDeedPublished$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN);
+          expect(results[0].payload.group).toBe(campaign.group);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].payload).toMatch(/^Published deed/);
+        });
+    });
+
+    it(`should dispatch alertify ERROR action after failing to update campaign`, () => {
+      spyOn(campaignService, 'update').and.returnValue(Observable.throw({}));
+      runner.queue(new group.SetDeedPublishedAction({ campaign, deed, isPublished }));
+      groupEffects.setDeedPublished$.subscribe((result: Action) => {
+        expect(result.type).toBe(alertify.ActionTypes.ERROR);
+        expect(result.payload).toMatch(/^Failed Publishing deed/);
       });
     });
   });

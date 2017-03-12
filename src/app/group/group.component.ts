@@ -10,8 +10,9 @@ import { has, findLast, some } from 'lodash';
 
 import { TitleService } from '../core';
 import * as alertify from '../store/alertify/alertify.actions';
-import { Campaign, DeedPublish, Group, GroupSlug, GroupTab } from '../store/group';
+import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
+import { Deed } from '../store/deed';
 import { GroupEditAction } from '../store/group-edit-modal';
 import { CampaignEditAction } from '../store/campaign-edit-modal';
 import { User } from '../store/user';
@@ -101,7 +102,7 @@ export class GroupComponent implements OnDestroy, OnInit {
       && group.admins.includes(user._id);
   }
 
-  isCurrentDeed(item: DeedPublish): Observable<boolean> {
+  isCurrentDeed(deed: Deed): Observable<boolean> {
     return this.campaign$.take(1)
       .map((campaign: Campaign) => {
         if (!(campaign && campaign.deeds)) { return false; }
@@ -109,7 +110,7 @@ export class GroupComponent implements OnDestroy, OnInit {
         const currentDeed = findLast(campaign.deeds,  { published: true });
         if (!currentDeed) { return false; }
 
-        return currentDeed.deed['_id'] === item.deed['_id'];
+        return currentDeed.deed['_id'] === deed._id;
       });
   }
 
@@ -186,7 +187,10 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.store.dispatch(new group.FinishCampaignAction(campaign)));
   }
 
-  setPublished(campaign$: Observable<Campaign>, item: DeedPublish, isPublished: boolean): void {
+  setPublished(campaign$: Observable<Campaign>, deed: Deed, isPublished: boolean): void {
+    campaign$.first()
+      .subscribe((campaign: Campaign) =>
+        this.store.dispatch(new group.SetDeedPublishedAction({ campaign, deed, isPublished })));
   }
 
   openConfirmation(confirmModalContent: string): void {

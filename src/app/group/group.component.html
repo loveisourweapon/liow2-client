@@ -38,7 +38,7 @@
                 class="btn"
                 [class.btn-primary]="item.published"
                 [class.btn-default]="!item.published"
-                [class.btn-lg]="isCurrentDeed(item) | async"
+                [class.btn-lg]="isCurrentDeed(item.deed) | async"
               >
                 {{ item.deed.title }}
               </a>
@@ -47,7 +47,7 @@
                 class="btn"
                 [class.btn-primary]="item.published"
                 [class.btn-default]="!item.published"
-                [class.btn-lg]="isCurrentDeed(item) | async"
+                [class.btn-lg]="isCurrentDeed(item.deed) | async"
                 dropdownToggle
               >
                 <span class="caret"></span>
@@ -55,13 +55,13 @@
               </button>
               <ul class="dropdown-menu-right" dropdownMenu>
                 <li *ngIf="!item.published">
-                  <a (click)="setPublished(campaign$, item, true); $event.preventDefault()" href>
+                  <a (click)="setPublished(campaign$, item.deed, true); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-up"></i>
                     Publish
                   </a>
                 </li>
                 <li *ngIf="item.published">
-                  <a (click)="setPublished(campaign$, item, false); $event.preventDefault()" href>
+                  <a (click)="setPublished(campaign$, item.deed, false); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-down"></i>
                     Unpublish
                   </a>
@@ -96,7 +96,7 @@
               class="btn btn-block"
               [class.btn-primary]="item.published"
               [class.btn-default]="!item.published"
-              [class.btn-lg]="isCurrentDeed(item) | async"
+              [class.btn-lg]="isCurrentDeed(item.deed) | async"
             >
               {{ item.deed.title }}
             </a>
