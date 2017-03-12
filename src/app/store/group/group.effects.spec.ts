@@ -159,10 +159,13 @@ describe(`GroupEffects`, () => {
       const foundCampaign = <Campaign>{ _id: 'abc123' };
       spyOn(campaignService, 'findOne').and.returnValue(Observable.of(foundCampaign));
       runner.queue(new group.FindAndSetCurrentCampaignAction({}));
-      groupEffects.findAndSetCurrentCampaign$.subscribe((result: Action) => {
-        expect(result.type).toBe(group.ActionTypes.SET_CURRENT_CAMPAIGN);
-        expect(result.payload).toBe(foundCampaign);
-      });
+      takeAndScan(groupEffects.findAndSetCurrentCampaign$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(group.ActionTypes.SET_CURRENT_CAMPAIGN);
+          expect(results[0].payload).toBe(foundCampaign);
+          expect(results[1].type).toBe(act.ActionTypes.COUNT);
+          expect(results[1].payload.campaign).toBe(foundCampaign._id);
+        });
     });
 
     it(`should dispatch FIND_AND_SET_CURRENT_CAMPAIGN_FAIL after failing to find campaign`, () => {

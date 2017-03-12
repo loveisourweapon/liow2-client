@@ -28,6 +28,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   group$: Observable<Group>;
   campaign$: Observable<Campaign>;
   groupCounter$: Observable<number>;
+  campaignCounter$: Observable<number>;
   isAuthenticated$: Observable<boolean>;
   authUser$: Observable<User>;
   currentTab$: Observable<GroupTab>;
@@ -52,6 +53,7 @@ export class GroupComponent implements OnDestroy, OnInit {
     this.group$ = this.store.select(fromRoot.getCurrentGroup);
     this.campaign$ = this.store.select(fromRoot.getCurrentCampaign);
     this.groupCounter$ = this.store.select(fromRoot.getCurrentGroupCount);
+    this.campaignCounter$ = this.store.select(fromRoot.getCurrentCampaignCount);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.authUser$ = this.store.select(fromRoot.getAuthUser);
     this.currentTab$ = this.store.select(fromRoot.getCurrentGroupTab);

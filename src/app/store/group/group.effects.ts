@@ -65,7 +65,10 @@ export class GroupEffects {
   findAndSetCurrentCampaign$: Observable<Action> = this.actions$
     .ofType(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN)
     .flatMap((action: Action) => this.campaignService.findOne(action.payload)
-      .map((foundCampaign: Campaign) => new group.SetCurrentCampaignAction(foundCampaign))
+      .mergeMap((foundCampaign: Campaign) => Observable.from([
+        new group.SetCurrentCampaignAction(foundCampaign),
+        new act.CountAction({ campaign: foundCampaign._id }),
+      ]))
       .catch((error: Error) => Observable.of(new group.FindAndSetCurrentCampaignFailAction(error.message))));
 
   @Effect()

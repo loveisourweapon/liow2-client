@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 
 import { Counters } from './act';
 import { Deed } from './deed';
-import { Group } from './group';
+import { Campaign, Group } from './group';
 import { User } from './user';
 
 import * as fromRouter from '@ngrx/router-store';
@@ -162,6 +162,11 @@ export function getSignupModal(state: State) { return state.modalSignup; }
 /**
  * Combined selectors
  */
+export const getCurrentCampaignCount = createSelector(
+  getCountersState,
+  getCurrentCampaign,
+  (counters: Counters, campaign: Campaign) => campaign && counters[campaign._id],
+);
 export const getCurrentDeedCount = createSelector(
   getCountersState,
   getCurrentDeed,
