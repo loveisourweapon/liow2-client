@@ -156,7 +156,7 @@ describe(`AuthEffects`, () => {
         .subscribe((results: Action[]) => {
           expect(logoutSpy).toHaveBeenCalled();
           expect(results[0].type).toBe(auth.ActionTypes.LOGOUT_SUCCESS);
-          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].type).toBe(alertify.ActionTypes.LOG);
         });
     });
   });

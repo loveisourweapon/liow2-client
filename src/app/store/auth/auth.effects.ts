@@ -73,7 +73,7 @@ export class AuthEffects {
     .flatMap(() => this.authService.logout())
     .mergeMap(() => Observable.from([
       new auth.LogoutSuccessAction(),
-      new alertify.SuccessAction(`Logged out`),
+      new alertify.LogAction(`Logged out`),
     ]));
 
   @Effect()

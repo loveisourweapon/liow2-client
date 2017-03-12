@@ -13,16 +13,16 @@ export class DeedEffects {
   findAll$: Observable<Action> = this.actions$
     .ofType(deed.ActionTypes.FIND_ALL)
     .startWith(new deed.FindAllAction()) // dispatch on startup
-    .flatMap(() => this.deedService.find())
-    .map((deeds: Deed[]) => new deed.FindAllSuccessAction(deeds))
-    .catch(error => Observable.of(new deed.FindAllFailAction(error.message)));
+    .flatMap(() => this.deedService.find()
+      .map((deeds: Deed[]) => new deed.FindAllSuccessAction(deeds))
+      .catch(error => Observable.of(new deed.FindAllFailAction(error.message))));
 
   @Effect()
   findAndSetCurrent$: Observable<Action> = this.actions$
     .ofType(deed.ActionTypes.FIND_AND_SET_CURRENT)
-    .flatMap((action: Action) => this.deedService.findOne(action.payload))
-    .map((foundDeed: Deed) => new deed.SetCurrentAction(foundDeed))
-    .catch(error => Observable.of(new deed.FindAndSetCurrentFailAction(error.message)));
+    .flatMap((action: Action) => this.deedService.findOne(action.payload)
+      .map((foundDeed: Deed) => new deed.SetCurrentAction(foundDeed))
+      .catch(error => Observable.of(new deed.FindAndSetCurrentFailAction(error.message))));
 
   constructor(
     private actions$: Actions,

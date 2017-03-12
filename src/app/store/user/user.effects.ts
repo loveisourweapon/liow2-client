@@ -17,20 +17,20 @@ export class UserEffects {
   @Effect()
   getAndSetCurrent$: Observable<Action> = this.actions$
     .ofType(user.ActionTypes.GET_AND_SET_CURRENT).map(toPayload)
-    .flatMap((userId: UserId) => this.userService.get(userId))
-    .mergeMap((foundUser: User) => Observable.from([
-      new user.SetCurrentAction(foundUser),
-      new act.CountAction({ user: foundUser._id }),
-    ]))
-    .catch(error => Observable.of(new user.GetFailAction(error)));
+    .flatMap((userId: UserId) => this.userService.get(userId)
+      .mergeMap((foundUser: User) => Observable.from([
+        new user.SetCurrentAction(foundUser),
+        new act.CountAction({ user: foundUser._id }),
+      ]))
+      .catch(error => Observable.of(new user.GetFailAction(error))));
 
   @Effect()
   count$: Observable<Action> = this.actions$
     .ofType(user.ActionTypes.COUNT)
     .startWith(new user.CountAction()) // dispatch on startup
-    .flatMap(() => this.userService.count())
-    .map((counter: number) => new user.CountSuccessAction(counter))
-    .catch(error => Observable.of(new user.CountFailAction(error)));
+    .flatMap(() => this.userService.count()
+      .map((counter: number) => new user.CountSuccessAction(counter))
+      .catch(error => Observable.of(new user.CountFailAction(error))));
 
   @Effect()
   joinGroup$: Observable<Action> = this.actions$

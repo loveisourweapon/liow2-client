@@ -15,17 +15,17 @@ export class CounterEffects {
   count$: Observable<Action> = this.actions$
     .ofType(act.ActionTypes.COUNT)
     .startWith(new act.CountAction()) // dispatch global count on startup
-    .flatMap((action: Action) => this.actService.count(action.payload))
-    .map((counter: CounterResult) => new act.CountSuccessAction(counter))
-    .catch((error: Error) => Observable.of(new act.CountFailAction(error.message)));
+    .flatMap((action: Action) => this.actService.count(action.payload)
+      .map((counter: CounterResult) => new act.CountSuccessAction(counter))
+      .catch((error: Error) => Observable.of(new act.CountFailAction(error.message))));
 
   @Effect()
   allDeedCounters$: Observable<Action> = this.actions$
     .ofType(deed.ActionTypes.ALL_COUNTERS)
     .startWith(new deed.AllCountersAction()) // dispatch on startup
-    .flatMap(() => this.deedService.countAll())
-    .map((counters: DeedCounterResult[]) => new deed.AllCountersSuccessAction(counters))
-    .catch((error: Error) => Observable.of(new deed.AllCountersFailAction(error.message)));
+    .flatMap(() => this.deedService.countAll()
+      .map((counters: DeedCounterResult[]) => new deed.AllCountersSuccessAction(counters))
+      .catch((error: Error) => Observable.of(new deed.AllCountersFailAction(error.message))));
 
   constructor(
     private actions$: Actions,
