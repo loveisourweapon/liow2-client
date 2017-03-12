@@ -15,7 +15,10 @@ export class ActionTypes {
   static readonly CREATE_CAMPAIGN_SUCCESS = actionType('[Group] Create Campaign Success');
   static readonly FIND_AND_SET_CURRENT = actionType('[Group] Find and Set Current');
   static readonly FIND_AND_SET_CURRENT_FAIL = actionType('[Group] Find and Set Current Fail');
+  static readonly FIND_AND_SET_CURRENT_CAMPAIGN = actionType('[Group] Find and Set Current Campaign');
+  static readonly FIND_AND_SET_CURRENT_CAMPAIGN_FAIL = actionType('[Group] Find and Set Current Campaign Fail');
   static readonly SET_CURRENT = actionType('[Group] Set Current');
+  static readonly SET_CURRENT_CAMPAIGN = actionType('[Group] Set Current Campaign');
   static readonly SET_CURRENT_TAB = actionType('[Group] Set Current Tab');
   static readonly UPDATE = actionType('[Group] Update');
   static readonly UPDATE_FAIL = actionType('[Group] Update Fail');
@@ -99,11 +102,34 @@ export class FindAndSetCurrentFailAction implements Action {
   ) { }
 }
 
+export class FindAndSetCurrentCampaignAction implements Action {
+  type = ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN;
+
+  constructor(
+    public payload: SearchParams,
+  ) { }
+}
+export class FindAndSetCurrentCampaignFailAction implements Action {
+  type = ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN_FAIL;
+
+  constructor(
+    public payload: string,
+  ) { }
+}
+
 export class SetCurrentAction implements Action {
   type = ActionTypes.SET_CURRENT;
 
   constructor(
     public payload: Group,
+  ) { }
+}
+
+export class SetCurrentCampaignAction implements Action {
+  type = ActionTypes.SET_CURRENT_CAMPAIGN;
+
+  constructor(
+    public payload: Campaign,
   ) { }
 }
 
@@ -149,7 +175,10 @@ export type Actions
   | CreateCampaignSuccessAction
   | FindAndSetCurrentAction
   | FindAndSetCurrentFailAction
+  | FindAndSetCurrentCampaignAction
+  | FindAndSetCurrentCampaignFailAction
   | SetCurrentAction
+  | SetCurrentCampaignAction
   | SetCurrentTabAction
   | UpdateAction
   | UpdateFailAction

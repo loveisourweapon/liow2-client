@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { search } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { has, some } from 'lodash';
+import { has, findLast, some } from 'lodash';
 
 import { TitleService } from '../core';
 import * as alertify from '../store/alertify/alertify.actions';
-import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
+import { Campaign, DeedPublish, Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
 import { GroupEditAction } from '../store/group-edit-modal';
 import { CampaignEditAction } from '../store/campaign-edit-modal';
@@ -42,6 +43,7 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.group$ = this.store.select(fromRoot.getCurrentGroup);
+    this.campaign$ = this.store.select(fromRoot.getCurrentCampaign);
     this.groupCounter$ = this.store.select(fromRoot.getCurrentGroupCount);
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.authUser$ = this.store.select(fromRoot.getAuthUser);
@@ -51,10 +53,12 @@ export class GroupComponent implements OnDestroy, OnInit {
       .map((params: Params) => params['groupSlug'])
       .filter((groupSlug: GroupSlug) => Boolean(groupSlug))
       .distinctUntilChanged()
-      .subscribe((groupSlug: GroupSlug) => this.store.dispatch(new group.FindAndSetCurrentAction({ urlName: groupSlug })));
+      .subscribe((groupSlug: GroupSlug) =>
+        this.store.dispatch(new group.FindAndSetCurrentAction({ urlName: groupSlug })));
 
     this.groupSubscription = this.group$
       .filter((group: Group) => group !== null)
+      .do(() => this.checkSetupCampaign())
       .subscribe((group: Group) => this.title.set(group.name));
 
     this.userSubscription = this.isUserAn$(this.memberOfGroup, this.authUser$, this.group$)
@@ -89,6 +93,18 @@ export class GroupComponent implements OnDestroy, OnInit {
     return has(group, 'admins')
       && has(user, '_id')
       && group.admins.includes(user._id);
+  }
+
+  isCurrentDeed(item: DeedPublish): Observable<boolean> {
+    return this.campaign$.take(1)
+      .map((campaign: Campaign) => {
+        if (!(campaign && campaign.deeds)) { return false; }
+
+        const currentDeed = findLast(campaign.deeds,  { published: true });
+        if (!currentDeed) { return false; }
+
+        return currentDeed.deed['_id'] === item.deed['_id'];
+      });
   }
 
   joinGroup(user$: Observable<User>, group$: Observable<Group>): void {
@@ -146,7 +162,20 @@ export class GroupComponent implements OnDestroy, OnInit {
       });
   }
 
+  finishCampaign(campaign$: Observable<Campaign>): void {
+  }
+
+  setPublished(campaign$: Observable<Campaign>, item: DeedPublish, isPublished: boolean): void {
+  }
+
   openLoginModal(): void {
     this.store.dispatch(new modal.OpenLoginAction());
+  }
+
+  private checkSetupCampaign(): void {
+    this.route.queryParams.take(1)
+      .filter((queryParams: Params) => queryParams['setupCampaign'])
+      .do(() => this.store.dispatch(search({})))
+      .subscribe((queryParams) => this.openCampaignEditModal(this.group$));
   }
 }

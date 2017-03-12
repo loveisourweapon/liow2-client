@@ -14,6 +14,96 @@
 <div class="container container-pad">
   <div class="row">
     <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
+      <div class="well well-sm" *ngIf="(campaign$ | async) && (isUserAn$(memberOfGroup, authUser$, group$) | async)">
+        <h5 class="text-center">
+          Current Campaign<br>
+          <small>
+            <span class="f-lg">
+
+            </span>
+            acts of love
+          </small>
+        </h5>
+
+        <div [ngSwitch]="isUserAn$(adminOfGroup, authUser$, group$) | async">
+          <!-- Show buttons with publish/unpublish menu for admins -->
+          <div *ngSwitchCase="true">
+            <div
+              class="btn-group btn-block"
+              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: item?._id"
+              dropdown
+            >
+              <a
+                [routerLink]="['/d', item.deed.urlTitle]"
+                class="btn"
+                [class.btn-primary]="item.published"
+                [class.btn-default]="!item.published"
+                [class.btn-lg]="isCurrentDeed(item) | async"
+              >
+                {{ item.deed.title }}
+              </a>
+              <button
+                type="button"
+                class="btn"
+                [class.btn-primary]="item.published"
+                [class.btn-default]="!item.published"
+                [class.btn-lg]="isCurrentDeed(item) | async"
+                dropdownToggle
+              >
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu-right" dropdownMenu>
+                <li *ngIf="!item.published">
+                  <a (click)="setPublished(campaign$, item, true); $event.preventDefault()" href>
+                    <i class="fa fa-fw fa-thumbs-up"></i>
+                    Publish
+                  </a>
+                </li>
+                <li *ngIf="item.published">
+                  <a (click)="setPublished(campaign$, item, false); $event.preventDefault()" href>
+                    <i class="fa fa-fw fa-thumbs-down"></i>
+                    Unpublish
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <hr>
+            <button
+              type="button"
+              class="btn btn-default btn-block"
+              (click)="openCampaignEditModal(group$, campaign$)"
+            >
+              <i class="fa fa-fw fa-edit"></i>
+              Update campaign
+            </button>
+            <button
+              type="button"
+              class="btn btn-default btn-block"
+              (click)="finishCampaign(campaign$)"
+            >
+              <i class="fa fa-fw fa-flag-checkered"></i>
+              Finish campaign
+            </button>
+          </div>
+
+          <!-- Show a normal button for non-admins -->
+          <div *ngSwitchCase="false">
+            <a
+              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: item?._id"
+              [routerLink]="['/d', item.deed.urlTitle]"
+              class="btn btn-block"
+              [class.btn-primary]="item.published"
+              [class.btn-default]="!item.published"
+              [class.btn-lg]="isCurrentDeed(item) | async"
+            >
+              {{ item.deed.title }}
+            </a>
+          </div>
+        </div>
+      </div>
+
       <button
         type="button"
         class="btn btn-primary btn-block btn-lg"

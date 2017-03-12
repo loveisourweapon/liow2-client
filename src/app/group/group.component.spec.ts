@@ -6,6 +6,9 @@ import { GroupComponent } from './group.component';
 import { TitleService } from '../core';
 import {
   ActivatedRouteStubService,
+  DropdownStubDirective,
+  DropdownMenuStubDirective,
+  DropdownToggleStubDirective,
   FeedStubComponent,
   JumbtronStubComponent,
   MarkedStubComponent,
@@ -28,6 +31,9 @@ xdescribe(`GroupComponent`, () => {
       .configureTestingModule({
         declarations: [
           GroupComponent,
+          DropdownStubDirective,
+          DropdownMenuStubDirective,
+          DropdownToggleStubDirective,
           FeedStubComponent,
           JumbtronStubComponent,
           MarkedStubComponent,

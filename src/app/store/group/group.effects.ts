@@ -19,9 +19,9 @@ export class GroupEffects {
   count$: Observable<Action> = this.actions$
     .ofType(group.ActionTypes.COUNT)
     .startWith(new group.CountAction()) // dispatch on startup
-    .flatMap(() => this.groupService.count())
-    .map((counter: number) => new group.CountSuccessAction(counter))
-    .catch(error => Observable.of(new group.CountFailAction(error)));
+    .flatMap(() => this.groupService.count()
+      .map((counter: number) => new group.CountSuccessAction(counter))
+      .catch(error => Observable.of(new group.CountFailAction(error))));
 
   @Effect()
   create$: Observable<Action> = this.actions$
@@ -42,6 +42,7 @@ export class GroupEffects {
     .flatMap((newCampaign: NewCampaign) => this.campaignService.save(newCampaign)
       .mergeMap((campaign: Campaign) => Observable.from([
         new group.CreateCampaignSuccessAction(campaign),
+        new group.SetCurrentCampaignAction(campaign),
         new alertify.SuccessAction(`Created campaign`),
       ]))
       .catch((response: Response) => Observable.of(new group.CreateCampaignFailAction(response.json().error || {}))));
@@ -49,12 +50,20 @@ export class GroupEffects {
   @Effect()
   findAndSetCurrent$: Observable<Action> = this.actions$
     .ofType(group.ActionTypes.FIND_AND_SET_CURRENT)
-    .flatMap((action: Action) => this.groupService.findOne(action.payload))
-    .mergeMap((foundGroup: Group) => Observable.from([
-      new group.SetCurrentAction(foundGroup),
-      new act.CountAction({ group: foundGroup._id }),
-    ]))
-    .catch(error => Observable.of(new group.FindAndSetCurrentFailAction(error.message)));
+    .flatMap((action: Action) => this.groupService.findOne(action.payload)
+      .mergeMap((foundGroup: Group) => Observable.from([
+        new group.SetCurrentAction(foundGroup),
+        new group.FindAndSetCurrentCampaignAction({ group: foundGroup._id, active: true }),
+        new act.CountAction({ group: foundGroup._id }),
+      ]))
+      .catch((error: Error) => Observable.of(new group.FindAndSetCurrentFailAction(error.message))));
+
+  @Effect()
+  findAndSetCurrentCampaign$: Observable<Action> = this.actions$
+    .ofType(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN)
+    .flatMap((action: Action) => this.campaignService.findOne(action.payload)
+      .map((foundCampaign: Campaign) => new group.SetCurrentCampaignAction(foundCampaign))
+      .catch((error: Error) => Observable.of(new group.FindAndSetCurrentCampaignFailAction(error.message))));
 
   @Effect()
   update$: Observable<Action> = this.actions$

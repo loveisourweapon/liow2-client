@@ -4,7 +4,7 @@ import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { CampaignService, Group, GroupEffects, GroupService } from './index';
+import { Campaign, CampaignService, Group, GroupEffects, GroupService } from './index';
 import * as act from '../act/act.actions';
 import * as alertify from '../alertify/alertify.actions';
 import * as auth from '../auth/auth.actions';
@@ -100,16 +100,18 @@ describe(`GroupEffects`, () => {
       deeds: [{ deed: 'def456' }],
     };
 
-    it(`should dispatch CREATE_CAMPAIGN_SUCCESS and alertify SUCCESS actions after saving new campaign`, () => {
+    it(`should dispatch CREATE_CAMPAIGN_SUCCESS and SET_CURRENT_CAMPAIGN actions after saving campaign`, () => {
       const saveSpy = spyOn(campaignService, 'save').and.returnValue(Observable.of(newCampaign));
       runner.queue(new group.CreateCampaignAction(newCampaign));
-      takeAndScan(groupEffects.createCampaign$, 2)
+      takeAndScan(groupEffects.createCampaign$, 3)
         .subscribe((results: Action[]) => {
           expect(saveSpy).toHaveBeenCalledWith(newCampaign);
           expect(results[0].type).toBe(group.ActionTypes.CREATE_CAMPAIGN_SUCCESS);
           expect(results[0].payload).toBe(newCampaign);
-          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
-          expect(results[1].payload).toBe(`Created campaign`);
+          expect(results[1].type).toBe(group.ActionTypes.SET_CURRENT_CAMPAIGN);
+          expect(results[1].payload).toBe(newCampaign);
+          expect(results[2].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[2].payload).toBe(`Created campaign`);
         });
     });
 
@@ -126,15 +128,17 @@ describe(`GroupEffects`, () => {
   });
 
   describe(`findAndSetCurrent$`, () => {
-    it(`should dispatch SET_CURRENT and COUNT actions after finding current group`, () => {
-      const foundGroup = <Group>{};
+    it(`should dispatch SET_CURRENT and FIND_AND_SET_CURRENT_CAMPAIGN and COUNT actions after finding group`, () => {
+      const foundGroup = <Group>{ _id: 'abc123' };
       spyOn(groupService, 'findOne').and.returnValue(Observable.of(foundGroup));
       runner.queue(new group.FindAndSetCurrentAction({}));
-      takeAndScan(groupEffects.findAndSetCurrent$, 2)
+      takeAndScan(groupEffects.findAndSetCurrent$, 3)
         .subscribe((results: Action[]) => {
           expect(results[0].type).toBe(group.ActionTypes.SET_CURRENT);
           expect(results[0].payload).toBe(foundGroup);
-          expect(results[1].type).toBe(act.ActionTypes.COUNT);
+          expect(results[1].type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN);
+          expect(results[1].payload.group).toBe(foundGroup._id);
+          expect(results[2].type).toBe(act.ActionTypes.COUNT);
         });
     });
 
@@ -144,6 +148,28 @@ describe(`GroupEffects`, () => {
       runner.queue(new group.FindAndSetCurrentAction({}));
       groupEffects.findAndSetCurrent$.subscribe((result: Action) => {
         expect(result.type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_FAIL);
+        expect(result.payload).toBe(errorMessage);
+      });
+    });
+  });
+
+  describe(`findAndSetCurrentCampaign$`, () => {
+    it(`should dispatch SET_CURRENT_CAMPAIGN action after finding campaign`, () => {
+      const foundCampaign = <Campaign>{ _id: 'abc123' };
+      spyOn(campaignService, 'findOne').and.returnValue(Observable.of(foundCampaign));
+      runner.queue(new group.FindAndSetCurrentCampaignAction({}));
+      groupEffects.findAndSetCurrentCampaign$.subscribe((result: Action) => {
+        expect(result.type).toBe(group.ActionTypes.SET_CURRENT_CAMPAIGN);
+        expect(result.payload).toBe(foundCampaign);
+      });
+    });
+
+    it(`should dispatch FIND_AND_SET_CURRENT_CAMPAIGN_FAIL after failing to find campaign`, () => {
+      const errorMessage = 'Test error';
+      spyOn(campaignService, 'findOne').and.returnValue(Observable.throw(new Error(errorMessage)));
+      runner.queue(new group.FindAndSetCurrentCampaignAction({}));
+      groupEffects.findAndSetCurrentCampaign$.subscribe((result: Action) => {
+        expect(result.type).toBe(group.ActionTypes.FIND_AND_SET_CURRENT_CAMPAIGN_FAIL);
         expect(result.payload).toBe(errorMessage);
       });
     });

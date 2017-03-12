@@ -28,6 +28,8 @@ export class AuthStubService {
 
 @Injectable()
 export class CampaignStubService {
+  find() { }
+  findOne() { }
   save() { }
 }
 

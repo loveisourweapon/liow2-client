@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
 
 import { environment } from '../../../environments/environment';
+import { buildUrlSearchParams, SearchParams } from '../utils';
 import { Campaign, NewCampaign } from './index';
 
 @Injectable()
@@ -15,6 +16,24 @@ export class CampaignService {
     private http: JwtHttp,
   ) {
     this.baseUrl = `${environment.apiBaseUrl}/campaigns`;
+  }
+
+  find(params: SearchParams = {}): Observable<Campaign[]> {
+    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
+      .map((response: Response) => response.json() || [])
+      .map((campaigns: Campaign[]) =>
+        campaigns.map((campaign: Campaign) => this.transformCampaign(campaign)));
+  }
+
+  findOne(params: SearchParams = {}): Observable<Campaign> {
+    return this.find(params)
+      .map((campaigns: Campaign[]) => {
+        if (campaigns.length !== 1) {
+          throw new Error(`Campaign not found`);
+        }
+
+        return campaigns[0];
+      });
   }
 
   save(campaign: Campaign|NewCampaign): Observable<Campaign> {

@@ -4,12 +4,19 @@ import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import { assign } from 'lodash';
 
-import { CampaignService } from './index';
+import { Campaign, CampaignService } from './index';
 import { HttpStubService } from '../../../testing';
 
 describe(`CampaignService`, () => {
   let service: CampaignService;
   let http: JwtHttp;
+
+  const testCampaign = {
+    dateStart: new Date().toDateString(),
+    dateEnd: new Date().toDateString(),
+    created: new Date().toDateString(),
+    modified: new Date().toDateString(),
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -24,6 +31,49 @@ describe(`CampaignService`, () => {
     service = _service;
     http = TestBed.get(JwtHttp);
   }));
+
+  describe(`#find`, () => {
+    it(`should pass search params to http.get`, () => {
+      const response = new Response(new ResponseOptions({ body: [testCampaign] }));
+      const httpSpy = spyOn(http, 'get').and.returnValue(Observable.of(response));
+      const params = { property: 'value' };
+      service.find(params).subscribe(() => {
+        const requestOptions = httpSpy.calls.mostRecent().args[1];
+        expect(requestOptions.search.get('property')).toBe(params.property);
+      });
+    });
+
+    it(`should convert Campaign date strings to Date objects`, () => {
+      const response = new Response(new ResponseOptions({ body: [testCampaign] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.find().subscribe((campaigns: Campaign[]) => {
+        expect(campaigns[0].dateStart instanceof Date).toBe(true);
+        expect(campaigns[0].dateEnd instanceof Date).toBe(true);
+        expect(campaigns[0].created instanceof Date).toBe(true);
+        expect(campaigns[0].modified instanceof Date).toBe(true);
+      });
+    });
+  });
+
+  describe(`#findOne`, () => {
+    it(`should return a single Campaign`, () => {
+      const response = new Response(new ResponseOptions({ body: [testCampaign] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.findOne().subscribe((campaign: Campaign) => expect(campaign).toBe(testCampaign));
+    });
+
+    it(`should throw an error if no Campaigns found`, () => {
+      const response = new Response(new ResponseOptions({ body: [] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Campaign not found`));
+    });
+
+    it(`should throw an error if more than one Campaign found`, () => {
+      const response = new Response(new ResponseOptions({ body: [testCampaign, testCampaign] }));
+      spyOn(http, 'get').and.returnValue(Observable.of(response));
+      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Campaign not found`));
+    });
+  });
 
   describe(`#save`, () => {
     const newCampaign = {

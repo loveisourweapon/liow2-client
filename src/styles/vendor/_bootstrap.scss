@@ -62,6 +62,10 @@
 .btn-inline {
   vertical-align: baseline;
 }
+.btn-group.btn-block {
+  display: flex;
+  > .btn:first-child:not(:last-child):not(.dropdown-toggle) { flex: 1; }
+}
 .btn-link {
   outline: none !important;
 }
