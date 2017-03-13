@@ -35,7 +35,6 @@ export class AppComponent implements OnDestroy, OnInit {
 
     // Listen for resize and update isSmallScreen
     this.resizeSubscription = Observable.fromEvent(window, 'resize')
-      .debounceTime(100)
       .map((event: UIEvent) => this.checkIsSmallScreen(event.target['innerWidth']))
       .subscribe((isSmallScreen: boolean) => this.store.dispatch(new layout.SetIsSmallScreenAction(isSmallScreen)));
 
