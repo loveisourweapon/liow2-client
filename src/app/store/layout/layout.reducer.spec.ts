@@ -1,3 +1,5 @@
+import { assign } from 'lodash';
+
 import { initialState, reducer } from './index';
 import * as layout from './layout.actions';
 
@@ -24,5 +26,21 @@ describe(`layout reducer`, () => {
     const newValue = initialState.isSmallScreen;
     const state = reducer(initialState, new layout.SetIsSmallScreenAction(newValue));
     expect(state).toBe(initialState);
+  });
+
+  it(`should update searchInput property and clear searchResults with UPDATE_SEARCH_INPUT action`, () => {
+    const newValue = 'def';
+    const updatedState = assign({}, initialState, { searchInput: 'abc', searchResults: [{}] });
+    const state = reducer(updatedState, new layout.UpdateSearchInputAction(newValue));
+    expect(state).not.toBe(updatedState);
+    expect(state.searchInput).toBe(newValue);
+    expect(state.searchResults).toEqual([]);
+  });
+
+  it(`should update searchResults property with UPDATE_SEARCH_RESULTS action`, () => {
+    const searchResult = { id: 'abc123', name: 'Test result', type: 'Group' };
+    const state = reducer(initialState, new layout.UpdateSearchResultsAction([searchResult]));
+    expect(state).not.toBe(initialState);
+    expect(state.searchResults[0]).toBe(searchResult);
   });
 });

@@ -11,6 +11,7 @@ import { CommentEffects, CommentService } from './comment';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
 import { CampaignService, GroupEffects, GroupService } from './group';
+import { LayoutEffects } from './layout';
 import { GroupEditModalEffects } from './group-edit-modal';
 import { CampaignEditModalEffects } from './campaign-edit-modal';
 import { UserEffects, UserService } from './user';
@@ -29,6 +30,7 @@ import { UserEffects, UserService } from './user';
     EffectsModule.run(CounterEffects),
     EffectsModule.run(DeedEffects),
     EffectsModule.run(GroupEffects),
+    EffectsModule.run(LayoutEffects),
     EffectsModule.run(GroupEditModalEffects),
     EffectsModule.run(CampaignEditModalEffects),
     EffectsModule.run(UserEffects),

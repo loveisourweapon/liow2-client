@@ -42,3 +42,13 @@ export class TabsetStubComponent {
   template: ``,
 })
 export class TabStubComponent { }
+
+@Directive({
+  selector: '[typeahead]',
+})
+export class TypeaheadStubDirective {
+  @Input() typeahead: any;
+  @Input() typeaheadOptionField: string;
+  @Input() typeaheadGroupField: string;
+  @Output() typeaheadOnSelect = new EventEmitter();
+}

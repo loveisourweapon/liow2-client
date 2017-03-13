@@ -4,11 +4,12 @@ import { AlertModule } from 'ng2-bootstrap/alert';
 import { DropdownModule } from 'ng2-bootstrap/dropdown';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { TabsModule } from 'ng2-bootstrap/tabs';
+import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
 
 import { SharedModule } from '../shared';
 
 import { AuthConfig } from './auth-config';
-import { NavbarComponent } from './navbar';
+import { NavbarComponent, NavbarSearchComponent } from './navbar';
 import { SidebarComponent } from './sidebar';
 import { TitleService } from './title.service';
 
@@ -20,6 +21,7 @@ import { TitleService } from './title.service';
     DropdownModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
+    TypeaheadModule.forRoot(),
 
     SharedModule,
   ],
@@ -29,6 +31,7 @@ import { TitleService } from './title.service';
   ],
   declarations: [
     NavbarComponent,
+    NavbarSearchComponent,
     SidebarComponent,
   ],
   exports: [

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 
@@ -25,6 +25,7 @@ describe(`NavbarComponent`, () => {
       .configureTestingModule({
         declarations: [
           NavbarComponent,
+          NavbarSearchStubComponent,
           DropdownStubDirective,
           DropdownMenuStubDirective,
           DropdownToggleStubDirective,
@@ -57,3 +58,9 @@ describe(`NavbarComponent`, () => {
     expect(action.payload).toBe(true);
   });
 });
+
+@Component({
+  selector: 'liow-navbar-search',
+  template: ``,
+})
+class NavbarSearchStubComponent { }

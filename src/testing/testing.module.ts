@@ -14,6 +14,7 @@ import {
   ModalStubDirective,
   TabsetStubComponent,
   TabStubComponent,
+  TypeaheadStubDirective,
 } from './bootstrap-stubs';
 import {
   DeedListStubComponent,
@@ -57,6 +58,7 @@ import {
     ModalStubDirective,
     TabsetStubComponent,
     TabStubComponent,
+    TypeaheadStubDirective,
 
     DeedListStubComponent,
     FeedStubComponent,

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
-    <div class="navbar-header">
+    <div class="navbar-header" [class.navbar-flex]="isSmallScreen$ | async">
       <button
         type="button"
         (click)="openMenu()"
@@ -41,30 +41,10 @@
       </ul>
     </div>
 
-    <div *ngIf="!(isSmallScreen$ | async)">
+    <div *ngIf="!(isSmallScreen$ | async)" class="navbar-flex">
       <div class="navbar-divider navbar-left"></div>
 
-      <!--<form class="navbar-form navbar-left" id="group-search" role="search">
-        <div class="form-group">
-          <label class="input-group">
-            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <ui-select ng-model="$ctrl.selected"
-                       on-select="$ctrl.select($item)"
-                       append-to-body="false">
-              <ui-select-match placeholder="Find a group or deed...">
-                {{ $select.selected.name || $select.selected.title }}
-              </ui-select-match>
-              <ui-select-choices repeat="choice in $ctrl.choices"
-                                 group-by="$ctrl.groupChoices"
-                                 refresh="$ctrl.refreshChoices($select.search)"
-                                 refresh-delay="200"
-                                 position="down">
-                <div ng-bind-html="(choice.name || choice.title) | highlight:$select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </label>
-        </div>
-      </form>-->
+      <liow-navbar-search></liow-navbar-search>
 
       <ul class="nav navbar-nav navbar-right">
         <li>

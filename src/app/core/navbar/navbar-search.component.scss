@@ -1,0 +1,15 @@
+$search-border-radius: 17px;
+
+.input-group {
+  margin: 0;
+}
+
+.input-group-addon {
+  border-radius: $search-border-radius 0 0 $search-border-radius;
+}
+
+.form-control {
+  border-radius: 0 $search-border-radius $search-border-radius 0 !important;
+  box-shadow: none;
+  font-weight: normal;
+}

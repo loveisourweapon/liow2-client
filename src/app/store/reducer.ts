@@ -127,6 +127,8 @@ export const getCurrentGroupTab = createSelector(getGroupState, fromGroup.getCur
 export function getLayoutState(state: State) { return state.layout; }
 export const getIsMenuOpen = createSelector(getLayoutState, fromLayout.getIsMenuOpen);
 export const getIsSmallScreen = createSelector(getLayoutState, fromLayout.getIsSmallScreen);
+export const getNavbarSearchInput = createSelector(getLayoutState, fromLayout.getSearchInput);
+export const getNavbarSearchResults = createSelector(getLayoutState, fromLayout.getSearchResults);
 
 
 /**
