@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { go } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +14,8 @@ import * as fromRoot from '../../store/reducer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarSearchComponent implements OnInit {
+  @Output() select = new EventEmitter();
+
   searchInput$: Observable<string>;
   searchResults$: Observable<SearchItem[]>;
 
@@ -36,5 +38,6 @@ export class NavbarSearchComponent implements OnInit {
     const routePrefix = `/${item.type[0].toLowerCase()}`;
     this.store.dispatch(go([routePrefix, item.id]));
     this.store.dispatch(new layout.UpdateSearchInputAction(''));
+    this.select.next();
   }
 }

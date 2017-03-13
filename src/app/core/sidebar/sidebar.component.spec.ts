@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,6 +18,7 @@ describe(`SidebarComponent`, () => {
       .configureTestingModule({
         declarations: [
           SidebarComponent,
+          NavbarSearchStubComponent,
           RouterLinkStubDirective,
         ],
         providers: [
@@ -43,3 +44,9 @@ describe(`SidebarComponent`, () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'liow-navbar-search',
+  template: ``,
+})
+class NavbarSearchStubComponent { }

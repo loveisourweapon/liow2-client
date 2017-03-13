@@ -107,6 +107,20 @@ $sidebar-lighter-color: lighten($sidebar-color, 10%);
   }
 }
 
+liow-navbar-search {
+  display: block;
+  padding: 0 10px;
+
+  /deep/ {
+    .input-group-addon,
+    .form-control {
+      background: $sidebar-lighter-bg;
+      color: $sidebar-lighter-color;
+      border-color: $sidebar-border;
+    }
+  }
+}
+
 .sidebar-footer {
   border-top: 1px solid $sidebar-border;
   height: $footer-height;
