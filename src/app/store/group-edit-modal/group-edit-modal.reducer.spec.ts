@@ -1,6 +1,7 @@
 import { assign } from 'lodash';
 
-import { GroupEditAction, initialState, reducer } from './index';
+import { GroupEditAction, initialState } from './index';
+import { reducer } from './group-edit-modal.reducer';
 import * as groupEditModal from './group-edit-modal.actions';
 import { Group } from '../group';
 import { User } from '../user';

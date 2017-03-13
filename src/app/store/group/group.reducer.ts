@@ -1,6 +1,7 @@
 import { assign } from 'lodash';
 
-import { Campaign, Group, GroupTab } from './index';
+import { Campaign, Group } from './index';
+import { GroupTab } from './group-tab.model';
 import * as group from './group.actions';
 
 export interface State {
