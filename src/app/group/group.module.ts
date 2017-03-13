@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { AlertModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
+import { AlertModule } from 'ng2-bootstrap/alert';
+import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { ModalModule } from 'ng2-bootstrap/modal';
+import { TabsModule } from 'ng2-bootstrap/tabs';
 
 import { SharedModule } from '../shared';
 import { GroupRoutingModule } from './group-routing.module';

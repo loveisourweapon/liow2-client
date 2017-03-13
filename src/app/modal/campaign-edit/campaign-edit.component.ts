@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { cloneDeep, each, has } from 'lodash';
 

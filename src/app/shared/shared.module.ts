@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { ModalModule } from 'ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap/modal';
 
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { EmailValidatorDirective } from './email-validator.directive';

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 import { has } from 'lodash';
 
 import { State as GroupEditModalState } from '../../store/group-edit-modal';

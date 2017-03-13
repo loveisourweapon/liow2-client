@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { AlertModule, ModalModule as Ng2ModalModule } from 'ng2-bootstrap';
+import { AlertModule } from 'ng2-bootstrap/alert';
+import { ModalModule as Ng2ModalModule } from 'ng2-bootstrap/modal';
 import { DragulaModule } from 'ng2-dragula';
 
 import { SharedModule } from '../shared';

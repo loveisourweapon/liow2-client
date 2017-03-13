@@ -1,6 +1,9 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
-import { AlertModule, DropdownModule, ModalModule, TabsModule } from 'ng2-bootstrap';
+import { AlertModule } from 'ng2-bootstrap/alert';
+import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { ModalModule } from 'ng2-bootstrap/modal';
+import { TabsModule } from 'ng2-bootstrap/tabs';
 
 import { SharedModule } from '../shared';
 
