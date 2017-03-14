@@ -45,7 +45,6 @@ xdescribe(`LayoutEffects`, () => {
       const groupSpy = spyOn(groupService, 'find').and.returnValue(Observable.of([groupResult]));
       runner.queue(new layout.UpdateSearchInputAction(searchInput));
       layoutEffects.loadSearchResults$.subscribe((result: Action) => {
-        console.log('DEED SPY', deedSpy.calls.mostRecent().args[0]);
         expect(deedSpy.calls.mostRecent().args[0].query).toBe(searchInput);
         expect(groupSpy.calls.mostRecent().args[0].query).toBe(searchInput);
         expect(result.type).toBe(layout.ActionTypes.UPDATE_SEARCH_RESULTS);
