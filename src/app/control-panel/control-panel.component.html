@@ -1,0 +1,70 @@
+<div class="container container-pad control-panel">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="m-b-lg">
+        <i class="fa fa-fw fa-cogs"></i>
+        Control Panel
+        <small>&raquo; {{ activePage }}</small>
+      </h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="list-group">
+        <a
+          class="list-group-item"
+          routerLink="/control-panel/user"
+          routerLinkActive="active"
+        >
+          User
+        </a>
+      </div>
+
+      <div ng-if="$ctrl.User.current.groups.length">
+        <h4>Your Groups</h4>
+        <div class="list-group">
+          <a
+            class="list-group-item"
+            *ngFor="let group of (authUser$ | async)?.groups; trackBy: group?._id"
+            [routerLink]="['/control-panel/group', group._id]"
+            routerLinkActive="active"
+          >
+            {{ group.name }}
+          </a>
+        </div>
+      </div>
+
+      <div ng-if="$ctrl.User.isSuperAdmin()">
+        <h4>Admin</h4>
+        <div class="list-group">
+          <a
+            class="list-group-item"
+            routerLink="/control-panel/deeds"
+            routerLinkActive="active"
+          >
+            Deeds
+          </a>
+          <a
+            class="list-group-item"
+            routerLink="/control-panel/users"
+            routerLinkActive="active"
+          >
+            Users
+          </a>
+          <a
+            class="list-group-item"
+            routerLink="/control-panel/groups"
+            routerLinkActive="active"
+          >
+            Groups
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

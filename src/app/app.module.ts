@@ -4,6 +4,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { CoreModule } from './core';
 import { StoreModule } from './store';
 import { ModalModule } from './modal';
+import { ControlPanelModule } from './control-panel';
 import { HomeModule } from './home';
 import { DeedModule } from './deed';
 import { GroupModule } from './group';
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
     CoreModule,
     StoreModule,
     ModalModule,
+    ControlPanelModule,
     HomeModule,
     DeedModule,
     GroupModule,
