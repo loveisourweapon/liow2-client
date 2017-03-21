@@ -25,6 +25,7 @@ import * as fromForgotPasswordModal from './forgot-password-modal/forgot-passwor
 import * as fromGroupEditModal from './group-edit-modal/group-edit-modal.reducer';
 import * as fromLoginModal from './login-modal/login-modal.reducer';
 import * as fromSignupModal from './signup-modal/signup-modal.reducer';
+import * as fromUserControlPanel from './control-panel/user/user.reducer';
 
 export interface State {
   auth: fromAuth.State;
@@ -36,12 +37,17 @@ export interface State {
   resetPassword: fromResetPassword.State;
   router: fromRouter.RouterState;
   user: fromUser.State;
+
+  // Modals
   modalCampaignEdit: fromCampaignEditModal.State;
   modalDeedPreview: fromDeedPreviewModal.State;
   modalForgotPassword: fromForgotPasswordModal.State;
   modalGroupEdit: fromGroupEditModal.State;
   modalLogin: fromLoginModal.State;
   modalSignup: fromSignupModal.State;
+
+  // Control panels
+  userControlPanel: fromUserControlPanel.State;
 }
 
 const reducers = {
@@ -54,12 +60,17 @@ const reducers = {
   resetPassword: fromResetPassword.reducer,
   router: fromRouter.routerReducer,
   user: fromUser.reducer,
+
+  // Modals
   modalCampaignEdit: fromCampaignEditModal.reducer,
   modalDeedPreview: fromDeedPreviewModal.reducer,
   modalForgotPassword: fromForgotPasswordModal.reducer,
   modalGroupEdit: fromGroupEditModal.reducer,
   modalLogin: fromLoginModal.reducer,
   modalSignup: fromSignupModal.reducer,
+
+  // Control panels
+  userControlPanel: fromUserControlPanel.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -162,8 +173,19 @@ export function getSignupModal(state: State) { return state.modalSignup; }
 
 
 /**
+ * Control panel state selectors
+ */
+export function getUserControlPanel(state: State) { return state.userControlPanel; }
+
+
+/**
  * Combined selectors
  */
+export const getAuthUserCount = createSelector(
+  getCountersState,
+  getAuthUser,
+  (counters: Counters, user: User) => user && counters[user._id],
+);
 export const getCurrentCampaignCount = createSelector(
   getCountersState,
   getCurrentCampaign,

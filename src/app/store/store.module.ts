@@ -8,13 +8,14 @@ import { ActEffects, ActService, CounterEffects } from './act';
 import { AlertifyEffects, AlertifyService } from './alertify';
 import { AuthEffects, AuthService } from './auth';
 import { CampaignService, GroupEffects, GroupService } from './group';
-import { GroupEditModalEffects } from './group-edit-modal';
-import { CampaignEditModalEffects } from './campaign-edit-modal';
 import { CommentEffects, CommentService } from './comment';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
 import { LayoutEffects } from './layout';
 import { UserEffects, UserService } from './user';
+import { GroupEditModalEffects } from './group-edit-modal';
+import { CampaignEditModalEffects } from './campaign-edit-modal';
+import { UserControlPanelEffects } from './control-panel/user';
 
 @NgModule({
   imports: [
@@ -26,15 +27,20 @@ import { UserEffects, UserService } from './user';
     EffectsModule.run(ActEffects),
     EffectsModule.run(AlertifyEffects),
     EffectsModule.run(AuthEffects),
-    EffectsModule.run(CampaignEditModalEffects),
     EffectsModule.run(CommentEffects),
     EffectsModule.run(CounterEffects),
     EffectsModule.run(DeedEffects),
     EffectsModule.run(FeedEffects),
     EffectsModule.run(GroupEffects),
-    EffectsModule.run(GroupEditModalEffects),
     EffectsModule.run(LayoutEffects),
     EffectsModule.run(UserEffects),
+
+    // Modals
+    EffectsModule.run(CampaignEditModalEffects),
+    EffectsModule.run(GroupEditModalEffects),
+
+    // Control panels
+    EffectsModule.run(UserControlPanelEffects),
   ],
   providers: [
     ActService,
