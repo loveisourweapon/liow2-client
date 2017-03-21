@@ -44,7 +44,7 @@ export class CampaignService {
 
     return request
       .map((response: Response) => response.json() || {})
-      .map((campaign: Campaign) => this.transformCampaign(campaign));
+      .map((savedCampaign: Campaign) => this.transformCampaign(savedCampaign));
   }
 
   update(campaign: Campaign, changes: JsonPatch[]): Observable<null> {

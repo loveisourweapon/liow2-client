@@ -108,12 +108,12 @@ describe(`UserService`, () => {
 
   describe(`#update`, () => {
     it(`should PATCH to /users/:userId passing changes through`, () => {
-      const testUser = <User>{ _id: 'abc123' };
+      const userToUpdate = <User>{ _id: 'abc123' };
       const changes = [];
       const response = new Response(new ResponseOptions({ body: {} }));
       const httpSpy = spyOn(http, 'patch').and.returnValue(Observable.of(response));
-      service.update(testUser, changes).subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/users/${testUser._id}$`));
+      service.update(userToUpdate, changes).subscribe(() => {
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/users/${userToUpdate._id}$`));
         expect(httpSpy.calls.mostRecent().args[1]).toBe(changes);
       });
     });

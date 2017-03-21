@@ -46,7 +46,7 @@ export class GroupService {
 
     return request
       .map((response: Response) => response.json() || {})
-      .map((group: Group) => this.transformGroup(group));
+      .map((savedGroup: Group) => this.transformGroup(savedGroup));
   }
 
   count(params: SearchParams = {}): Observable<number> {

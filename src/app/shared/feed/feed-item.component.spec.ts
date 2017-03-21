@@ -63,18 +63,18 @@ describe(`FeedItemComponent`, () => {
     });
 
     it(`should return false if authUser has no groups`, () => {
-      const authUser = <User>{ groups: [] };
-      expect(component.isMemberOfGroup(authUser, group1)).toBe(false);
+      const noGroupsUser = <User>{ groups: [] };
+      expect(component.isMemberOfGroup(noGroupsUser, group1)).toBe(false);
     });
 
     it(`should return false if authUser groups doesn't include specified group`, () => {
-      const authUser = <User>{ groups: [group1] };
-      expect(component.isMemberOfGroup(authUser, group2)).toBe(false);
+      const oneGroupUser = <User>{ groups: [group1] };
+      expect(component.isMemberOfGroup(oneGroupUser, group2)).toBe(false);
     });
 
     it(`should return true if authUser groups includes specified group`, () => {
-      const authUser = <User>{ groups: [group1, group2] };
-      expect(component.isMemberOfGroup(authUser, group2)).toBe(true);
+      const twoGroupsUser = <User>{ groups: [group1, group2] };
+      expect(component.isMemberOfGroup(twoGroupsUser, group2)).toBe(true);
     });
   });
 });

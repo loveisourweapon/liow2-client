@@ -12,21 +12,21 @@ export class AlertifyService {
   error(message: string, timeout = 6000, useTemplate = true): void {
     return alertify
       .delay(timeout)
-      .setLogTemplate((message: string) => useTemplate ? this.getLogTemplate('exclamation-circle', message) : message)
+      .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('exclamation-circle', msg) : msg)
       .error(message);
   }
 
   log(message: string, timeout = 6000, useTemplate = true): void {
     return alertify
       .delay(timeout)
-      .setLogTemplate((message: string) => useTemplate ? this.getLogTemplate('info-circle', message) : message)
+      .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('info-circle', msg) : msg)
       .log(message);
   }
 
   success(message: string, timeout = 6000, useTemplate = true): void {
     return alertify
       .delay(timeout)
-      .setLogTemplate((message: string) => useTemplate ? this.getLogTemplate('check-circle', message) : message)
+      .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('check-circle', msg) : msg)
       .success(message);
   }
 

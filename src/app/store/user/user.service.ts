@@ -47,13 +47,13 @@ export class UserService {
 
     return request
       .map((response: Response) => response.json() || {})
-      .map((user: User) => this.transformUser(user));
+      .map((savedUser: User) => this.transformUser(savedUser));
   }
 
   update(user: User, changes: JsonPatch[]): Observable<User> {
     return this.http.patch(`${this.baseUrl}/${user._id}`, changes)
       .map((response: Response) => response.json())
-      .map((user: User) => this.transformUser(user));
+      .map((updatedUser: User) => this.transformUser(updatedUser));
   }
 
   count(params: SearchParams = {}): Observable<number> {
