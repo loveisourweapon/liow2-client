@@ -19,6 +19,7 @@ import {
 import {
   DeedListStubComponent,
   FeedStubComponent,
+  IconCheckedStubComponent,
   JumbtronStubComponent,
   LoadingSpinnerStubComponent,
   MarkedStubComponent,
@@ -62,6 +63,7 @@ import {
 
     DeedListStubComponent,
     FeedStubComponent,
+    IconCheckedStubComponent,
     JumbtronStubComponent,
     LoadingSpinnerStubComponent,
     MarkedStubComponent,

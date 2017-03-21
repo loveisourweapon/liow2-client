@@ -79,7 +79,7 @@
       <tr>
         <th>Confirmed</th>
         <td>
-          {{ (authUser$ | async)?.confirmed ? "Y" : "N" }}
+          <ui-icon-checked [isChecked]="(authUser$ | async)?.confirmed"></ui-icon-checked>
           <span *ngIf="(authUser$ | async) && !(authUser$ | async)?.confirmed" class="m-l-xs">
             <a (click)="sendConfirmEmail(); $event.preventDefault()" href>
               Re-send confirmation email
@@ -91,7 +91,7 @@
       <tr *ngIf="(authUser$ | async)?.superAdmin">
         <th>Super Admin</th>
         <td>
-          {{ (authUser$ | async)?.superAdmin ? "Y" : "N" }}
+          <ui-icon-checked [isChecked]="(authUser$ | async)?.superAdmin"></ui-icon-checked>
         </td>
       </tr>
       </tbody>

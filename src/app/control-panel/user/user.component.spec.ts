@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { UserComponent } from './user.component';
 import { MomentPipe } from '../../shared';
-import { StoreStubService } from '../../../testing';
+import { IconCheckedStubComponent, StoreStubService } from '../../../testing';
 
 describe(`UserComponent`, () => {
   let component: UserComponent;
@@ -15,6 +15,7 @@ describe(`UserComponent`, () => {
         declarations: [
           UserComponent,
           MomentPipe,
+          IconCheckedStubComponent,
         ],
         providers: [
           { provide: Store, useClass: StoreStubService },

@@ -17,6 +17,14 @@ export class FeedStubComponent {
 }
 
 @Component({
+  selector: 'ui-icon-checked',
+  template: ``,
+})
+export class IconCheckedStubComponent {
+  @Input() isChecked: boolean;
+}
+
+@Component({
   selector: 'liow-jumbotron',
   template: ``,
 })

@@ -8,6 +8,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
 import { EmailValidatorDirective } from './email-validator.directive';
 import { FeedComponent, FeedItemComponent } from './feed';
+import { IconCheckedComponent } from './icon-checked';
 import { InViewportDirective } from './in-viewport.directive';
 import { JumbotronComponent } from './jumbotron';
 import { LoadingSpinnerComponent } from './loading-spinner';
@@ -35,6 +36,7 @@ import { MomentPipe } from './moment.pipe';
     EmailValidatorDirective,
     FeedComponent,
     FeedItemComponent,
+    IconCheckedComponent,
     InViewportDirective,
     JumbotronComponent,
     LoadingSpinnerComponent,
@@ -58,6 +60,7 @@ import { MomentPipe } from './moment.pipe';
     DeedListComponent,
     EmailValidatorDirective,
     FeedComponent,
+    IconCheckedComponent,
     JumbotronComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
