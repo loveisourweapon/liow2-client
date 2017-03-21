@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 
 import { UserComponent } from './user.component';
+import { MomentPipe } from '../../shared';
+import { StoreStubService } from '../../../testing';
 
 describe(`UserComponent`, () => {
   let component: UserComponent;
@@ -11,6 +14,10 @@ describe(`UserComponent`, () => {
       .configureTestingModule({
         declarations: [
           UserComponent,
+          MomentPipe,
+        ],
+        providers: [
+          { provide: Store, useClass: StoreStubService },
         ],
       })
       .compileComponents();
