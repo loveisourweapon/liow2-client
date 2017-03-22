@@ -3,7 +3,6 @@ import { Event, NavigationEnd, Router } from '@angular/router';
 import { go } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { capitalize } from 'lodash';
 
 import { User } from '../store/user';
@@ -13,11 +12,11 @@ import * as fromRoot from '../store/reducer';
   templateUrl: './control-panel.component.html',
   styleUrls: ['./control-panel.component.scss'],
 })
-export class ControlPanelComponent implements OnInit, OnDestroy {
+export class ControlPanelComponent implements OnInit {
   authUser$: Observable<User>;
-  activePage: string;
+  activePage$: Observable<string>;
 
-  private routerSubscription: Subscription;
+  private superAdminPages = ['Deeds', 'Groups', 'Users'];
 
   constructor(
     private router: Router,
@@ -27,11 +26,12 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authUser$ = this.store.select(fromRoot.getAuthUser);
 
-    this.routerSubscription = this.router.events
+    // Get active page from router
+    this.activePage$ = this.router.events
       .filter((event: Event) => event instanceof NavigationEnd)
-      .subscribe((event: NavigationEnd) => {
+      .map((event: NavigationEnd) => {
         const [, , routePath] = event.urlAfterRedirects.split('/');
-        this.activePage = capitalize(routePath);
+        return capitalize(routePath);
       });
 
     // Redirect to home if user logs out
@@ -39,9 +39,13 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
       .filter((isAuthenticated: boolean) => isAuthenticated === false)
       .take(1)
       .subscribe(() => this.store.dispatch(go('/')));
-  }
 
-  ngOnDestroy(): void {
-    this.routerSubscription.unsubscribe();
+    // Redirect to user control panel if user doesn't have access
+    Observable.combineLatest(
+      this.authUser$.filter((user: User) => user !== null && !user.superAdmin),
+      this.activePage$.filter((activePage: string) => this.superAdminPages.includes(activePage)),
+    )
+      .take(1)
+      .subscribe(() => this.store.dispatch(go('/control-panel')));
   }
 }
