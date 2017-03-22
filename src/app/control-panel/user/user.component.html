@@ -12,49 +12,55 @@
       <tr>
         <th>Name</th>
         <td>
-          <div>
-          <!--<div ng-if="!$ctrl.editingName">-->
-            <a (click)="toggleEditName(); $event.preventDefault()" class="pull-right" href>
+          <div *ngIf="!(state$ | async)?.isEditingName">
+            <a (click)="setEditingName(true); $event.preventDefault()" class="pull-right" href>
               <i class="fa fa-fw fa-pencil"></i>
             </a>
             {{ (state$ | async)?.user?.name }}
           </div>
-          <!--<div ng-if="$ctrl.editingName">
-            <a ng-click="$ctrl.toggleEditName($ctrl.user)" class="pull-right" href>
+          <div *ngIf="(state$ | async)?.isEditingName">
+            <a (click)="setEditingName(false); $event.preventDefault()" class="pull-right" href>
               <i class="fa fa-fw fa-times"></i>
             </a>
 
-            <form name="userNameEdit"
-                  class="form-inline"
-                  ng-submit="$ctrl.form.$valid && $ctrl.saveName($ctrl.user)"
-                  novalidate>
-              <span ng-init="$ctrl.form = userNameEdit"></span>
-
-              <div class="form-group"
-                   ng-class="{ 'has-error': $ctrl.form.$submitted && $ctrl.form.firstName.$invalid }">
+            <form
+              (ngSubmit)="form.valid && saveUserName(firstName.value, lastName.value)"
+              #form="ngForm"
+              class="form-inline"
+              novalidate
+            >
+              <div class="form-group" [class.has-error]="form.submitted && firstName.invalid">
                 <label class="sr-only" for="firstName">First name</label>
-                <input type="text"
-                       class="form-control"
-                       id="firstName"
-                       name="firstName"
-                       placeholder="First..."
-                       ng-model="$ctrl.user.firstName"
-                       required>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  name="firstName"
+                  #firstName="ngModel"
+                  [ngModel]="(state$ | async)?.firstName"
+                  (ngModelChange)="onUpdatePropertyAction('FirstName', $event)"
+                  placeholder="First..."
+                  required
+                >
               </div>
               <div class="form-group">
                 <label class="sr-only" for="lastName">Last name</label>
-                <input type="text"
-                       class="form-control"
-                       id="lastName"
-                       name="lastName"
-                       placeholder="Last..."
-                       ng-model="$ctrl.user.lastName">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  name="lastName"
+                  #lastName="ngModel"
+                  [ngModel]="(state$ | async)?.lastName"
+                  (ngModelChange)="onUpdatePropertyAction('LastName', $event)"
+                  placeholder="Last..."
+                >
               </div>
               <button type="submit" class="btn btn-success">
                 <i class="fa fa-check"></i>
               </button>
             </form>
-          </div>-->
+          </div>
         </td>
       </tr>
       <tr>

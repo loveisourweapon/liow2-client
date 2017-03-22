@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -21,6 +22,9 @@ describe(`UserComponent`, () => {
           MomentPipe,
           IconCheckedStubComponent,
         ],
+        imports: [
+          FormsModule,
+        ],
         providers: [
           { provide: Store, useClass: StoreStubService },
           { provide: TitleService, useClass: TitleStubService },
@@ -34,7 +38,7 @@ describe(`UserComponent`, () => {
     component = fixture.componentInstance;
 
     store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of(null));
+    spyOn(store, 'select').and.returnValue(Observable.of({}));
 
     fixture.detectChanges();
   });
