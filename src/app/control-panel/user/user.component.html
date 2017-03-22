@@ -88,8 +88,8 @@
           <ui-icon-checked [isChecked]="(state$ | async)?.user?.confirmed"></ui-icon-checked>
           <span *ngIf="!(state$ | async)?.user?.confirmed" class="m-l-xs">
             <a (click)="sendConfirmEmail(); $event.preventDefault()" href>
-              Re-send confirmation email
-              <!--<i ng-show="$ctrl.sending" class="fa fa-cog fa-spin"></i>-->
+              Re-send confirmation email?
+              <i class="fa fa-cog fa-spin" [hidden]="!(state$ | async)?.isSendingConfirmEmail"></i>
             </a>
           </span>
         </td>

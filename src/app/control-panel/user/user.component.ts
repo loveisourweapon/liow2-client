@@ -7,6 +7,7 @@ import { TitleService } from '../../core';
 import { User } from '../../store/user';
 import * as userControlPanel from '../../store/control-panel/user';
 import * as fromUserControlPanel from '../../store/control-panel/user/user.reducer';
+import * as auth from '../../store/auth/auth.actions';
 import * as fromRoot from '../../store/reducer';
 
 @Component({
@@ -75,5 +76,11 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   openChangePassword(): void { }
-  sendConfirmEmail(): void { }
+
+  sendConfirmEmail(): void {
+    this.state$.first()
+      .map((state: fromUserControlPanel.State) => state.user)
+      .subscribe((user: User) =>
+        this.store.dispatch(new auth.SendConfirmEmailAction(user.email)));
+  }
 }

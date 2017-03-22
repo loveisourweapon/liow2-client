@@ -2,9 +2,11 @@ import { assign } from 'lodash';
 
 import { User } from '../../user';
 import * as user from './user.actions';
+import * as auth from '../../auth';
 
 export interface State {
   isEditingName: boolean;
+  isSendingConfirmEmail: boolean;
   user: User;
   firstName: string;
   lastName: string;
@@ -12,12 +14,13 @@ export interface State {
 
 export const initialState: State = {
   isEditingName: false,
+  isSendingConfirmEmail: false,
   user: null,
   firstName: '',
   lastName: '',
 };
 
-export function reducer(state = initialState, action: user.Actions): State {
+export function reducer(state = initialState, action: user.Actions|auth.Actions): State {
   switch (action.type) {
     case user.ActionTypes.SET_IS_EDITING:
       const isEditingName = action.payload.isEditingName;
@@ -41,6 +44,16 @@ export function reducer(state = initialState, action: user.Actions): State {
     case user.ActionTypes.UPDATE_LAST_NAME:
       return assign({}, state, {
         lastName: action.payload,
+      });
+
+    case auth.ActionTypes.SEND_CONFIRM_EMAIL:
+      return assign({}, state, {
+        isSendingConfirmEmail: true,
+      });
+
+    case auth.ActionTypes.SEND_CONFIRM_EMAIL_DONE:
+      return assign({}, state, {
+        isSendingConfirmEmail: false,
       });
 
     default:

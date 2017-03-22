@@ -2,6 +2,7 @@ import { assign } from 'lodash';
 
 import { initialState, reducer } from './index';
 import * as userControlPanel from './user.actions';
+import * as auth from '../../auth/auth.actions';
 import { User } from '../../user';
 
 describe(`user control panel reducer`, () => {
@@ -44,5 +45,18 @@ describe(`user control panel reducer`, () => {
     const state = reducer(initialState, new userControlPanel.UpdateLastNameAction(lastName));
     expect(state).not.toBe(initialState);
     expect(state.lastName).toBe(lastName);
+  });
+
+  it(`should set isSendingConfirmEmail to true with SEND_CONFIRM_EMAIL action`, () => {
+    const state = reducer(initialState, new auth.SendConfirmEmailAction('foo@bar.com'));
+    expect(state).not.toBe(initialState);
+    expect(state.isSendingConfirmEmail).toBe(true);
+  });
+
+  it(`should set isSendingConfirmEmail to false with SEND_CONFIRM_EMAIL_DONE action`, () => {
+    const sendingState = assign({}, initialState, { isSendingConfirmEmail: true });
+    const state = reducer(sendingState, new auth.SendConfirmEmailDoneAction());
+    expect(state).not.toBe(sendingState);
+    expect(state.isSendingConfirmEmail).toBe(false);
   });
 });
