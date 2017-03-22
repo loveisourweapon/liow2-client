@@ -1,15 +1,17 @@
 import { assign } from 'lodash';
 
 import * as auth from './auth.actions';
+import { Group } from '../group';
+import { User } from '../user';
 
 export interface State {
-  isAuthenticated: boolean;
-  user: any|null;
-  group: any|null;
+  isAuthenticated: boolean|null;
+  user: User|null;
+  group: Group|null;
 }
 
 export const initialState: State = {
-  isAuthenticated: false,
+  isAuthenticated: null,
   user: null,
   group: null,
 };
@@ -29,8 +31,11 @@ export function reducer(state = initialState, action: auth.Actions): State {
         group,
       };
 
+    case auth.ActionTypes.LOGIN_FAIL:
     case auth.ActionTypes.LOGOUT_SUCCESS:
-      return assign({}, initialState);
+      return assign({}, initialState, {
+        isAuthenticated: false,
+      });
 
     case auth.ActionTypes.SET_CURRENT_GROUP:
       return assign({}, state, {

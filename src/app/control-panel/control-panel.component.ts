@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
+import { go } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -32,6 +33,12 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
         const [, , routePath] = event.urlAfterRedirects.split('/');
         this.activePage = capitalize(routePath);
       });
+
+    // Redirect to home if user logs out
+    this.store.select(fromRoot.getIsAuthenticated)
+      .filter((isAuthenticated: boolean) => isAuthenticated === false)
+      .take(1)
+      .subscribe(() => this.store.dispatch(go('/')));
   }
 
   ngOnDestroy(): void {

@@ -22,10 +22,20 @@ describe(`auth reducer`, () => {
     expect(state.group).toBe(group1);
   });
 
-  it(`should reset to new clone of initialState with LOGOUT_SUCCESS action`, () => {
+  it(`should isAuthenticated to false and clear user and group with LOGIN_FAIL action`, () => {
+    const state = reducer(initialState, new auth.LoginFailAction(''));
+    expect(state).not.toBe(initialState);
+    expect(state.isAuthenticated).toBe(false);
+    expect(state.user).toBeNull();
+    expect(state.group).toBeNull();
+  });
+
+  it(`should isAuthenticated to false and clear user and group with LOGOUT_SUCCESS action`, () => {
     const state = reducer(initialState, new auth.LogoutSuccessAction());
     expect(state).not.toBe(initialState);
-    expect(state).toEqual(initialState);
+    expect(state.isAuthenticated).toBe(false);
+    expect(state.user).toBeNull();
+    expect(state.group).toBeNull();
   });
 
   it(`should replace the current group with SET_CURRENT_GROUP action`, () => {
