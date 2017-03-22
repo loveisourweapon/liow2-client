@@ -21,7 +21,7 @@
         </a>
       </div>
 
-      <div ng-if="$ctrl.User.current.groups.length">
+      <div *ngIf="(authUser$ | async)?.groups?.length">
         <h4>Your Groups</h4>
         <div class="list-group">
           <a
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div ng-if="$ctrl.User.isSuperAdmin()">
+      <div *ngIf="(authUser$ | async)?.superAdmin">
         <h4>Admin</h4>
         <div class="list-group">
           <a
