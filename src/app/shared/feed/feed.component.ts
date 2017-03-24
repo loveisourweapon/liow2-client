@@ -44,4 +44,8 @@ export class FeedComponent implements OnChanges, OnInit {
   loadOlderItems(): void {
     this.store.dispatch(new feed.LoadOlderAction());
   }
+
+  identifyFeedItem(idx: number, feedItem: FeedItem): string {
+    return feedItem._id;
+  }
 }

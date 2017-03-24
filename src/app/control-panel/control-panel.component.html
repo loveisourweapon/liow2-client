@@ -26,7 +26,7 @@
         <div class="list-group">
           <a
             class="list-group-item"
-            *ngFor="let group of (authUser$ | async)?.groups; trackBy: group?._id"
+            *ngFor="let group of (authUser$ | async)?.groups; trackBy: identifyGroup"
             [routerLink]="['/control-panel/group', group._id]"
             routerLinkActive="active"
           >

@@ -1,7 +1,7 @@
 <div class="user-list">
   <div
     class="user-list-item media"
-    *ngFor="let user of getSelectedUsers(userList, selectedIds); trackBy: user?._id"
+    *ngFor="let user of getSelectedUsers(userList, selectedIds); trackBy: identifyUser"
   >
     <div class="media-left">
       <img [src]="user.picture" class="img-circle">
@@ -47,7 +47,7 @@
         <button
           type="button"
           (click)="onSelectClick(user); modal.hide()"
-          *ngFor="let user of getNotSelectedUsers(userList, selectedIds); trackBy: user?._id"
+          *ngFor="let user of getNotSelectedUsers(userList, selectedIds); trackBy: identifyUser"
           class="list-group-item media m-t-none"
         >
           <div class="media-left">

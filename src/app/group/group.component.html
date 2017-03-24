@@ -30,7 +30,7 @@
           <div *ngSwitchCase="true">
             <div
               class="btn-group btn-block"
-              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: item?._id"
+              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: identifyDeedPublish"
               dropdown
             >
               <a
@@ -91,7 +91,7 @@
           <!-- Show a normal button for non-admins -->
           <div *ngSwitchCase="false">
             <a
-              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: item?._id"
+              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: identifyDeedPublish"
               [routerLink]="['/d', item.deed.urlTitle]"
               class="btn btn-block"
               [class.btn-primary]="item.published"

@@ -71,4 +71,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   logout(): void {
     this.store.dispatch(new auth.LogoutAction());
   }
+
+  identifyGroup(idx: number, group: Group): string {
+    return group._id;
+  }
 }

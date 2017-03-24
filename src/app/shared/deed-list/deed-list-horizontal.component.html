@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div
-        *ngFor="let deed of deeds; trackBy: deed?._id"
+        *ngFor="let deed of deeds; trackBy: identifyDeed"
         class="deed-wrapper"
         [routerLink]="['/d', deed.urlTitle]"
       >

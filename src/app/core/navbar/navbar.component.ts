@@ -57,4 +57,8 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.store.dispatch(new auth.LogoutAction());
   }
+
+  identifyGroup(idx: number, group: Group): string {
+    return group._id;
+  }
 }

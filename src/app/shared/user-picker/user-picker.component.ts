@@ -40,4 +40,8 @@ export class UserPickerComponent {
   openUserPicker(): void {
     this.modal.show();
   }
+
+  identifyUser(idx: number, user: User): string {
+    return user._id;
+  }
 }

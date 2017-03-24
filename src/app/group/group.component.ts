@@ -10,7 +10,7 @@ import { has, findLast, some } from 'lodash';
 
 import { TitleService } from '../core';
 import * as alertify from '../store/alertify/alertify.actions';
-import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
+import { Campaign, DeedPublish, Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
 import { Deed } from '../store/deed';
 import { GroupEditAction } from '../store/group-edit-modal';
@@ -208,6 +208,11 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   openLoginModal(): void {
     this.store.dispatch(new modal.OpenLoginAction());
+  }
+
+  identifyDeedPublish(idx: number, item: DeedPublish): string {
+    const deed = <Deed>item.deed;
+    return deed._id;
   }
 
   private checkSetupCampaign(): void {

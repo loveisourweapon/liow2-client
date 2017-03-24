@@ -70,4 +70,9 @@ export class CampaignEditModalComponent implements OnChanges, OnInit {
   onClose(): void {
     this.store.dispatch(new campaignEditModal.CloseAction());
   }
+
+  identifyItem(idx: number, item: DeedPublish): string {
+    const deed = <Deed>item.deed;
+    return deed._id;
+  }
 }

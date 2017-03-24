@@ -17,4 +17,8 @@ export class DeedListHorizontalComponent {
     const counter = counters[deedId];
     return typeof counter === 'number' ? counter : null;
   }
+
+  identifyDeed(idx: number, deed: Deed): string {
+    return deed._id;
+  }
 }

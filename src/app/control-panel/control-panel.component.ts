@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { capitalize } from 'lodash';
 
+import { Group } from '../store/group';
 import { User } from '../store/user';
 import * as fromRoot from '../store/reducer';
 
@@ -47,5 +48,9 @@ export class ControlPanelComponent implements OnInit {
     )
       .take(1)
       .subscribe(() => this.store.dispatch(go('/control-panel')));
+  }
+
+  identifyGroup(idx: number, group: Group): string {
+    return group._id;
   }
 }

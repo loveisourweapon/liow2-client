@@ -22,4 +22,8 @@ export class HomeFeedComponent {
   listGroupIds(groups: Group[]): string|null {
     return (groups && groups.length) ? groups.map((group: Group) => group._id).join(',') : null;
   }
+
+  identifyGroup(idx: number, group: Group): string {
+    return group._id;
+  }
 }

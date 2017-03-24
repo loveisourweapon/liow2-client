@@ -18,4 +18,8 @@ export class DeedListVerticalComponent {
     const counter = counters[deedId];
     return typeof counter === 'number' ? counter : null;
   }
+
+  identifyDeed(idx: number, deed: Deed): string {
+    return deed._id;
+  }
 }
