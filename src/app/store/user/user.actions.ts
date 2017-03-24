@@ -17,6 +17,7 @@ export class ActionTypes {
 
 export class CountAction implements Action {
   type = ActionTypes.COUNT;
+  payload = null;
 }
 
 export class CountSuccessAction implements Action {

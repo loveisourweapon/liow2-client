@@ -52,6 +52,7 @@ export class LoginWithFacebookAction implements Action {
 }
 export class LoginWithTokenAction implements Action {
   type = ActionTypes.LOGIN_WITH_TOKEN;
+  payload = null;
 }
 export class LoginSuccessAction implements Action {
   type = ActionTypes.LOGIN_SUCCESS;
@@ -70,9 +71,11 @@ export class LoginFailAction implements Action {
 
 export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
+  payload = null;
 }
 export class LogoutSuccessAction implements Action {
   type = ActionTypes.LOGOUT_SUCCESS;
+  payload = null;
 }
 
 export class ResetPasswordAction implements Action {
@@ -84,6 +87,7 @@ export class ResetPasswordAction implements Action {
 }
 export class ResetPasswordDoneAction implements Action {
   type = ActionTypes.RESET_PASSWORD_DONE;
+  payload = null;
 }
 
 export class SendConfirmEmailAction implements Action {
@@ -95,6 +99,7 @@ export class SendConfirmEmailAction implements Action {
 }
 export class SendConfirmEmailDoneAction implements Action {
   type = ActionTypes.SEND_CONFIRM_EMAIL_DONE;
+  payload = null;
 }
 
 export class SendForgotPasswordAction implements Action {
@@ -106,9 +111,11 @@ export class SendForgotPasswordAction implements Action {
 }
 export class SendForgotPasswordSuccessAction implements Action {
   type = ActionTypes.SEND_FORGOT_PASSWORD_SUCCESS;
+  payload = null;
 }
 export class SendForgotPasswordFailAction implements Action {
   type = ActionTypes.SEND_FORGOT_PASSWORD_FAIL;
+  payload = null;
 }
 
 export class SetCurrentGroupAction implements Action {
@@ -128,6 +135,7 @@ export class SignupAction implements Action {
 }
 export class SignupSuccessAction implements Action {
   type = ActionTypes.SIGNUP_SUCCESS;
+  payload = null;
 }
 export class SignupFailAction implements Action {
   type = ActionTypes.SIGNUP_FAIL;

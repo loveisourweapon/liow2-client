@@ -19,6 +19,7 @@ export class ActionTypes {
 
 export class AllCountersAction implements Action {
   type = ActionTypes.ALL_COUNTERS;
+  payload = null;
 }
 
 export class AllCountersSuccessAction implements Action {
@@ -39,6 +40,7 @@ export class AllCountersFailAction implements Action {
 
 export class FindAllAction implements Action {
   type = ActionTypes.FIND_ALL;
+  payload = null;
 }
 
 export class FindAllSuccessAction implements Action {

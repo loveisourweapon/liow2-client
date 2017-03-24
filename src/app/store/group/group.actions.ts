@@ -30,6 +30,7 @@ export class ActionTypes {
 
 export class CountAction implements Action {
   type = ActionTypes.COUNT;
+  payload = null;
 }
 export class CountFailAction implements Action {
   type = ActionTypes.COUNT_FAIL;

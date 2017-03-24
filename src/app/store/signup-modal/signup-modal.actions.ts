@@ -15,10 +15,12 @@ export class ActionTypes {
 
 export class CloseAction implements Action {
   type = ActionTypes.CLOSE;
+  payload = null;
 }
 
 export class OpenAction implements Action {
   type = ActionTypes.OPEN;
+  payload = null;
 }
 
 export class UpdateJoinGroupAction implements Action {

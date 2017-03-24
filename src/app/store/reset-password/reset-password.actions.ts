@@ -11,6 +11,7 @@ export class ActionTypes {
 
 export class InitialiseAction implements Action {
   type = ActionTypes.INITIALISE;
+  payload = null;
 }
 
 export class UpdatePasswordAction implements Action {

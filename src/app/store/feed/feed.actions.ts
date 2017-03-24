@@ -15,6 +15,7 @@ export class ActionTypes {
 
 export class LoadFailAction implements Action {
   type = ActionTypes.LOAD_FAIL;
+  payload = null;
 }
 
 export class LoadInitialAction implements Action {
@@ -35,6 +36,7 @@ export class LoadInitialSuccessAction implements Action {
 
 export class LoadNewerAction implements Action {
   type = ActionTypes.LOAD_NEWER;
+  payload = null;
 }
 
 export class LoadNewerSuccessAction implements Action {
@@ -47,6 +49,7 @@ export class LoadNewerSuccessAction implements Action {
 
 export class LoadOlderAction implements Action {
   type = ActionTypes.LOAD_OLDER;
+  payload = null;
 }
 
 export class LoadOlderSuccessAction implements Action {

@@ -19,10 +19,12 @@ export class CommentAction implements Action {
 
 export class CommentSuccessAction implements Action {
   type = ActionTypes.COMMENT_SUCCESS;
+  payload = null;
 }
 
 export class CommentFailAction implements Action {
   type = ActionTypes.COMMENT_FAIL;
+  payload = null;
 }
 
 export type Actions

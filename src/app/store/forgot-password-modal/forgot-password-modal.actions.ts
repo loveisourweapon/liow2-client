@@ -10,6 +10,7 @@ export class ActionTypes {
 
 export class CloseAction implements Action {
   type = ActionTypes.CLOSE;
+  payload = null;
 }
 
 export class OpenAction implements Action {

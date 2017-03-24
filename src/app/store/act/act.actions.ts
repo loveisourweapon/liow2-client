@@ -48,6 +48,7 @@ export class DoneAction implements Action {
 
 export class DoneSuccessAction implements Action {
   type = ActionTypes.DONE_SUCCESS;
+  payload = null;
 }
 
 export class DoneFailAction implements Action {
