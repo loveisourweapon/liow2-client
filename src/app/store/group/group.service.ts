@@ -40,7 +40,7 @@ export class GroupService {
 
   save(group: Group|NewGroup): Observable<Group> {
     const request = has(group, '_id')
-      ? this.http.put(`${this.baseUrl}/${group['_id']}`, group)
+      ? this.http.put(`${this.baseUrl}/${group._id}`, group)
       : this.http.post(this.baseUrl, group)
       ;
 

@@ -41,7 +41,7 @@ export class UserService {
 
   save(user: NewUser|User): Observable<User> {
     const request = has(user, '_id')
-      ? this.http.put(`${this.baseUrl}/${user['_id']}`, user)
+      ? this.http.put(`${this.baseUrl}/${user._id}`, user)
       : this.http.post(this.baseUrl, user)
       ;
 

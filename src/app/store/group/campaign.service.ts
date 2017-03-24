@@ -38,7 +38,7 @@ export class CampaignService {
 
   save(campaign: Campaign|NewCampaign): Observable<Campaign> {
     const request = has(campaign, '_id')
-      ? this.http.put(`${this.baseUrl}/${campaign['_id']}`, campaign)
+      ? this.http.put(`${this.baseUrl}/${campaign._id}`, campaign)
       : this.http.post(this.baseUrl, campaign)
       ;
 

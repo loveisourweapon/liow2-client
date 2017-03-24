@@ -20,6 +20,7 @@ export interface User {
 }
 
 export interface NewUser {
+  _id?: UserId;
   email: string;
   password: string;
   firstName: string;

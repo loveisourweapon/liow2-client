@@ -19,7 +19,7 @@ export class CommentService {
 
   save(comment: Comment|NewComment): Observable<Comment> {
     const method = has(comment, '_id') ? 'put' : 'post';
-    const urlSuffix = `/comments${has(comment, '_id') ? `/${comment['_id']}` : ''}`;
+    const urlSuffix = `/comments${has(comment, '_id') ? `/${comment._id}` : ''}`;
 
     let url;
     if (has(comment.target, 'deed')) {

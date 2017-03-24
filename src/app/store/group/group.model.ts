@@ -16,6 +16,7 @@ export interface Group {
 }
 
 export interface NewGroup {
+  _id?: GroupId;
   name: string;
   logo?: string;
   coverImage?: string;

@@ -1,8 +1,10 @@
 import { GroupId } from './index';
 import { Deed, DeedId } from '../deed';
 
+export type CampaignId = string;
+
 export interface Campaign {
-  _id: string;
+  _id: CampaignId;
   group: GroupId;
   dateStart: Date;
   dateEnd: Date;
@@ -13,6 +15,7 @@ export interface Campaign {
 }
 
 export interface NewCampaign {
+  _id?: CampaignId;
   group: GroupId;
   deeds: Array<DeedPublish|DeedId>;
 }

@@ -27,6 +27,7 @@ export interface Comment {
 }
 
 export interface NewComment {
+  _id?: CommentId;
   group?: GroupId;
   target: {
     group?: GroupId,
