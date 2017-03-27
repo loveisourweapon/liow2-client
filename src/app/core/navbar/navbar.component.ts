@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { Group } from '../../store/group';
-import { User } from '../../store/user';
-import * as auth from '../../store/auth/auth.actions';
-import * as layout from '../../store/layout/layout.actions';
-import * as modal from '../../store/modal.actions';
 import * as fromRoot from '../../store/reducer';
+import * as auth from '../../store/auth/auth.actions';
+import { Group } from '../../store/group';
+import * as layout from '../../store/layout/layout.actions';
+import * as modal from '../../store/modal/modal.actions';
+import { User } from '../../store/user';
 
 @Component({
   selector: 'liow-navbar',

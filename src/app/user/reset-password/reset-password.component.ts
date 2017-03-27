@@ -5,10 +5,10 @@ import { Observable } from 'rxjs/Observable';
 import { has, pick } from 'lodash';
 
 import { TitleService } from '../../core';
+import * as fromRoot from '../../store/reducer';
 import * as auth from '../../store/auth/auth.actions';
 import * as resetPassword from '../../store/reset-password/reset-password.actions';
 import { State as ResetPasswordState, ResetPasswordRequest } from '../../store/reset-password';
-import * as fromRoot from '../../store/reducer';
 
 @Component({
   templateUrl: './reset-password.component.html',

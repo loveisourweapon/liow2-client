@@ -4,14 +4,14 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { SignupModalComponent } from './signup.component';
-import { ModalHeaderComponent } from '../modal-header.component';
 import { EmailValidatorDirective } from '../../shared';
-import { Group } from '../../store/group';
-import * as auth from '../../store/auth/auth.actions';
-import { State as SignupModalState } from '../../store/signup-modal';
 import { State as AppState } from '../../store/reducer';
+import * as auth from '../../store/auth/auth.actions';
+import { Group } from '../../store/group';
+import { State as SignupModalState } from '../../store/modal/signup';
 import { AlertStubComponent, ModalStubDirective, StoreStubService, SwitchStubComponent } from '../../../testing';
+import { ModalHeaderComponent } from '../modal-header.component';
+import { SignupModalComponent } from './signup.component';
 
 describe(`SignupModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

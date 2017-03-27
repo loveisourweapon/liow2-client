@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { DeedListComponent } from './deed-list.component';
 import { StoreStubService } from '../../../testing';
+import { DeedListComponent } from './deed-list.component';
 
 describe(`DeedListComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

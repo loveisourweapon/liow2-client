@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { GroupComponent } from './group.component';
 import { TitleService } from '../core';
 import {
   ActivatedRouteStubService,
@@ -18,6 +17,7 @@ import {
   TabStubComponent,
   TitleStubService,
 } from '../../testing';
+import { GroupComponent } from './group.component';
 
 // TODO: Add proper tests!
 // Simple store spies won't work here because this component uses multiple `store.select` calls

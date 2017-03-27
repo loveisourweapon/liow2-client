@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 
-import { WelcomeComponent } from './welcome.component';
 import { DeedListStubComponent, StoreStubService } from '../../../testing';
+import { WelcomeComponent } from './welcome.component';
 
 describe(`WelcomeComponent`, () => {
   let component: WelcomeComponent;

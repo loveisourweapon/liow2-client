@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { UserPickerComponent } from './user-picker.component';
 import { ModalStubDirective } from '../../../testing';
+import { UserPickerComponent } from './user-picker.component';
 
 describe(`UserPickerComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

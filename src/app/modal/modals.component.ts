@@ -2,15 +2,15 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import * as fromRoot from '../store/reducer';
 import { Group } from '../store/group';
 import { User } from '../store/user';
-import { State as CampaignEditModalState } from '../store/campaign-edit-modal';
-import { State as DeedPreviewModalState } from '../store/deed-preview-modal';
-import { State as ForgotPasswordModalState } from '../store/forgot-password-modal';
-import { State as GroupEditModalState } from '../store/group-edit-modal';
-import { State as LoginModalState } from '../store/login-modal';
-import { State as SignupModalState } from '../store/signup-modal';
-import * as fromRoot from '../store/reducer';
+import { State as CampaignEditModalState } from '../store/modal/campaign-edit';
+import { State as DeedPreviewModalState } from '../store/modal/deed-preview';
+import { State as ForgotPasswordModalState } from '../store/modal/forgot-password';
+import { State as GroupEditModalState } from '../store/modal/group-edit';
+import { State as LoginModalState } from '../store/modal/login';
+import { State as SignupModalState } from '../store/modal/signup';
 
 @Component({
   selector: 'liow-modals',

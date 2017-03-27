@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { has } from 'lodash';
 
 import { TitleService } from '../../core';
-import * as auth from '../../store/auth/auth.actions';
 import { State as AppState } from '../../store/reducer';
+import * as auth from '../../store/auth/auth.actions';
 
 @Component({
   templateUrl: './confirm-email.component.html',

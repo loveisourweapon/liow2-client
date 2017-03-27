@@ -3,10 +3,10 @@ import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { HomeComponent } from './home.component';
 import { TitleService } from '../core';
 import { State as AppState } from '../store/reducer';
 import { JumbtronStubComponent, StoreStubService, TitleStubService, YoutubePlayerStubComponent } from '../../testing';
+import { HomeComponent } from './home.component';
 
 describe(`HomeComponent`, () => {
   let component: HomeComponent;

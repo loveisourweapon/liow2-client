@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { ResetPasswordComponent } from './reset-password.component';
 import { TitleService } from '../../core';
 import { SameAsValidatorDirective } from '../../shared';
 import {
@@ -12,6 +11,7 @@ import {
   StoreStubService,
   TitleStubService,
 } from '../../../testing';
+import { ResetPasswordComponent } from './reset-password.component';
 
 describe(`ResetPasswordComponent`, () => {
   let fixture: ComponentFixture<ResetPasswordComponent>;

@@ -3,9 +3,9 @@ import { go } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import * as fromRoot from '../../store/reducer';
 import { SearchItem, SearchItemType } from '../../store/layout';
 import * as layout from '../../store/layout/layout.actions';
-import * as fromRoot from '../../store/reducer';
 
 @Component({
   selector: 'liow-navbar-search',

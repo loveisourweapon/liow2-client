@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TitleService } from '../../core';
-import { User } from '../../store/user';
+import * as fromRoot from '../../store/reducer';
+import * as auth from '../../store/auth/auth.actions';
 import * as userControlPanel from '../../store/control-panel/user';
 import * as fromUserControlPanel from '../../store/control-panel/user/user.reducer';
-import * as auth from '../../store/auth/auth.actions';
-import * as fromRoot from '../../store/reducer';
+import { User } from '../../store/user';
 
 @Component({
   templateUrl: './user.component.html',

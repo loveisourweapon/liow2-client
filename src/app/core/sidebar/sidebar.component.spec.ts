@@ -3,9 +3,9 @@ import { Component, DebugElement } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { SidebarComponent } from './sidebar.component';
 import { State as AppState } from '../../store/reducer';
 import { RouterLinkStubDirective, StoreStubService } from '../../../testing';
+import { SidebarComponent } from './sidebar.component';
 
 describe(`SidebarComponent`, () => {
   let fixture: ComponentFixture<SidebarComponent>;

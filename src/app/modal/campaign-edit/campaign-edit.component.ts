@@ -4,13 +4,13 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { cloneDeep, each, has } from 'lodash';
 
-import { State as CampaignEditModalState } from '../../store/campaign-edit-modal';
-import * as campaignEditModal from '../../store/campaign-edit-modal/campaign-edit-modal.actions';
+import { State as AppState } from '../../store/reducer';
 import { Deed } from '../../store/deed';
 import { Campaign, DeedPublish, NewCampaign } from '../../store/group';
 import * as group from '../../store/group/group.actions';
-import * as modal from '../../store/modal.actions';
-import { State as AppState } from '../../store/reducer';
+import * as modal from '../../store/modal/modal.actions';
+import { State as CampaignEditModalState } from '../../store/modal/campaign-edit';
+import * as campaignEditModal from '../../store/modal/campaign-edit/campaign-edit.actions';
 
 @Component({
   selector: 'liow-campaign-edit-modal',

@@ -4,13 +4,13 @@ import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { has } from 'lodash';
 
-import { State as GroupEditModalState } from '../../store/group-edit-modal';
-import * as groupEditModal from '../../store/group-edit-modal/group-edit-modal.actions';
-import * as group from '../../store/group/group.actions';
-import { Group, NewGroup } from '../../store/group';
-import { User } from '../../store/user';
-import * as modal from '../../store/modal.actions';
 import { State as AppState } from '../../store/reducer';
+import { Group, NewGroup } from '../../store/group';
+import * as group from '../../store/group/group.actions';
+import * as modal from '../../store/modal/modal.actions';
+import { State as GroupEditModalState } from '../../store/modal/group-edit';
+import * as groupEditModal from '../../store/modal/group-edit/group-edit.actions';
+import { User } from '../../store/user';
 
 @Component({
   selector: 'liow-group-edit-modal',

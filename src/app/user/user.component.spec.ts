@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { UserComponent } from './user.component';
 import { TitleService } from '../core';
 import {
   ActivatedRouteStubService,
@@ -11,6 +10,7 @@ import {
   StoreStubService,
   TitleStubService,
 } from '../../testing';
+import { UserComponent } from './user.component';
 
 xdescribe(`UserComponent`, () => {
   let component: UserComponent;

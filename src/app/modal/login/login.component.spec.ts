@@ -4,14 +4,14 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { LoginModalComponent } from './login.component';
-import { ModalHeaderComponent } from '../modal-header.component';
-import { Group } from '../../store/group';
-import * as auth from '../../store/auth/auth.actions';
-import { State as LoginModal } from '../../store/login-modal';
-import * as loginModal from '../../store/login-modal/login-modal.actions';
 import { State as AppState } from '../../store/reducer';
+import * as auth from '../../store/auth/auth.actions';
+import { Group } from '../../store/group';
+import { State as LoginModal } from '../../store/modal/login';
+import * as loginModal from '../../store/modal/login/login.actions';
 import { AlertStubComponent, ModalStubDirective, StoreStubService, SwitchStubComponent } from '../../../testing';
+import { ModalHeaderComponent } from '../modal-header.component';
+import { LoginModalComponent } from './login.component';
 
 describe(`LoginModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

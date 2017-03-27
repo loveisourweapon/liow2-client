@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { has } from 'lodash';
 
-import * as auth from '../../store/auth';
-import { State as ForgotPasswordModalState } from '../../store/forgot-password-modal';
-import * as forgotPasswordModal from '../../store/forgot-password-modal/forgot-password-modal.actions';
 import { State as AppState } from '../../store/reducer';
+import * as auth from '../../store/auth';
+import { State as ForgotPasswordModalState } from '../../store/modal/forgot-password';
+import * as forgotPasswordModal from '../../store/modal/forgot-password/forgot-password.actions';
 
 @Component({
   selector: 'liow-forgot-password-modal',

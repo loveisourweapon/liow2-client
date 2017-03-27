@@ -7,14 +7,14 @@ import { reducer } from './reducer';
 import { ActEffects, ActService, CounterEffects } from './act';
 import { AlertifyEffects, AlertifyService } from './alertify';
 import { AuthEffects, AuthService } from './auth';
-import { CampaignService, GroupEffects, GroupService } from './group';
 import { CommentEffects, CommentService } from './comment';
 import { DeedEffects, DeedService } from './deed';
 import { FeedEffects, FeedService } from './feed';
+import { CampaignService, GroupEffects, GroupService } from './group';
 import { LayoutEffects } from './layout';
 import { UserEffects, UserService } from './user';
-import { GroupEditModalEffects } from './group-edit-modal';
-import { CampaignEditModalEffects } from './campaign-edit-modal';
+import { GroupEditModalEffects } from './modal/group-edit';
+import { CampaignEditModalEffects } from './modal/campaign-edit';
 import { UserControlPanelEffects } from './control-panel/user';
 
 @NgModule({

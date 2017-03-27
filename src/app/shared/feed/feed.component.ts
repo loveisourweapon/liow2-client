@@ -3,10 +3,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
 
-import { FeedCriteria, FeedItem } from '../../store/feed';
-import { User } from '../../store/user';
-import * as feed from '../../store/feed/feed.actions';
 import * as fromRoot from '../../store/reducer';
+import { FeedCriteria, FeedItem } from '../../store/feed';
+import * as feed from '../../store/feed/feed.actions';
+import { User } from '../../store/user';
 
 @Component({
   selector: 'liow-feed',

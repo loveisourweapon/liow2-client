@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import * as modal from '../../store/modal.actions';
 import * as fromRoot from '../../store/reducer';
+import * as modal from '../../store/modal/modal.actions';
 
 @Component({
   selector: 'liow-welcome',

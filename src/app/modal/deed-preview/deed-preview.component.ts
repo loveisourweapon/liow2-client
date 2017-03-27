@@ -4,10 +4,10 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
 
-import { State as DeedPreviewModalState } from '../../store/deed-preview-modal';
-import * as deedPreviewModal from '../../store/deed-preview-modal/deed-preview-modal.actions';
-import { Counters } from '../../store/act';
 import * as fromRoot from '../../store/reducer';
+import { Counters } from '../../store/act';
+import { State as DeedPreviewModalState } from '../../store/modal/deed-preview';
+import * as deedPreviewModal from '../../store/modal/deed-preview/deed-preview.actions';
 
 @Component({
   selector: 'liow-deed-preview-modal',

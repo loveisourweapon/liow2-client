@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { NavbarSearchComponent } from './navbar-search.component';
 import { StoreStubService, TypeaheadStubDirective } from '../../../testing';
+import { NavbarSearchComponent } from './navbar-search.component';
 
 describe(`NavbarSearchComponent`, () => {
   let component: NavbarSearchComponent;

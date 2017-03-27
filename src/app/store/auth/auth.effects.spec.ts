@@ -12,7 +12,7 @@ import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
 import { Group } from '../group';
 import * as group from '../group/group.actions';
-import * as loginModal from '../login-modal/login-modal.actions';
+import * as loginModal from '../modal/login/login.actions';
 import { User, UserService } from '../user';
 import { State as AppState } from '../reducer';
 import { AuthStubService, StoreStubService, UserStubService, takeAndScan } from '../../../testing';

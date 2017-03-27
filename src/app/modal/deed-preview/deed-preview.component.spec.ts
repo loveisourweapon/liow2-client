@@ -5,10 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { DeedPreviewModalComponent } from './deed-preview.component';
-import { ModalHeaderComponent } from '../modal-header.component';
-import { State as DeedPreviewModalState } from '../../store/deed-preview-modal';
 import { State as AppState } from '../../store/reducer';
+import { State as DeedPreviewModalState } from '../../store/modal/deed-preview';
 import {
   JumbtronStubComponent,
   MarkedStubComponent,
@@ -16,6 +14,8 @@ import {
   StoreStubService,
   YoutubePlayerStubComponent,
 } from '../../../testing';
+import { ModalHeaderComponent } from '../modal-header.component';
+import { DeedPreviewModalComponent } from './deed-preview.component';
 
 describe(`DeedPreviewModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

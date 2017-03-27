@@ -5,11 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { DragulaModule } from 'ng2-dragula';
 
-import { CampaignEditModalComponent } from './campaign-edit.component';
-import { ModalHeaderComponent } from '../modal-header.component';
-import { State as CampaignEditModalState, CampaignEditAction } from '../../store/campaign-edit-modal';
 import { State as AppState } from '../../store/reducer';
+import { State as CampaignEditModalState, CampaignEditAction } from '../../store/modal/campaign-edit';
 import { AlertStubComponent, ModalStubDirective, StoreStubService } from '../../../testing';
+import { ModalHeaderComponent } from '../modal-header.component';
+import { CampaignEditModalComponent } from './campaign-edit.component';
 
 describe(`CampaignEditModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

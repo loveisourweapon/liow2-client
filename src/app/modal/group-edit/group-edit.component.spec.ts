@@ -4,13 +4,9 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { GroupEditModalComponent } from './group-edit.component';
-import { ModalHeaderComponent } from '../modal-header.component';
-import * as auth from '../../store/auth/auth.actions';
-import { State as GroupEditModalState, GroupEditAction } from '../../store/group-edit-modal';
-import * as forgotPasswordModal from '../../store/forgot-password-modal/forgot-password-modal.actions';
-import { State as AppState } from '../../store/reducer';
 import { KebabCasePipe } from '../../shared';
+import { State as AppState } from '../../store/reducer';
+import { State as GroupEditModalState, GroupEditAction } from '../../store/modal/group-edit';
 import {
   AlertStubComponent,
   MediumEditorStubComponent,
@@ -19,6 +15,8 @@ import {
   SwitchStubComponent,
   UserPickerStubComponent,
 } from '../../../testing';
+import { ModalHeaderComponent } from '../modal-header.component';
+import { GroupEditModalComponent } from './group-edit.component';
 
 describe(`GroupEditModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

@@ -5,10 +5,10 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TitleService } from '../core';
-import { User, UserId } from '../store/user';
-import * as modal from '../store/modal.actions';
-import * as user from '../store/user/user.actions';
 import * as fromRoot from '../store/reducer';
+import * as modal from '../store/modal/modal.actions';
+import { User, UserId } from '../store/user';
+import * as user from '../store/user/user.actions';
 
 @Component({
   templateUrl: './user.component.html',

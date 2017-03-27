@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { FeedItemComponent } from './feed-item.component';
+import { FromNowPipe, MomentPipe } from '../../shared';
 import { FeedItem } from '../../store/feed';
 import { Group } from '../../store/group';
 import { User } from '../../store/user';
-import { FromNowPipe, MomentPipe } from '../../shared';
 import { MarkedStubComponent, RouterLinkStubDirective } from '../../../testing';
+import { FeedItemComponent } from './feed-item.component';
 
 describe(`FeedItemComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

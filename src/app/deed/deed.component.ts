@@ -5,14 +5,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TitleService } from '../core';
-import { Deed, DeedSlug } from '../store/deed';
-import { Group } from '../store/group';
-import { NewComment } from '../store/comment';
-import * as act from '../store/act/act.actions';
-import * as comment from '../store/comment/comment.actions';
-import * as deed from '../store/deed/deed.actions';
-import * as modal from '../store/modal.actions';
 import * as fromRoot from '../store/reducer';
+import * as act from '../store/act/act.actions';
+import { NewComment } from '../store/comment';
+import * as comment from '../store/comment/comment.actions';
+import { Deed, DeedSlug } from '../store/deed';
+import * as deed from '../store/deed/deed.actions';
+import { Group } from '../store/group';
+import * as modal from '../store/modal/modal.actions';
 
 @Component({
   templateUrl: './deed.component.html',

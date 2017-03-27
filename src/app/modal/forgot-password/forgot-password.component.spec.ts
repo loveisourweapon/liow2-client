@@ -4,13 +4,13 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { ForgotPasswordModalComponent } from './forgot-password.component';
-import { ModalHeaderComponent } from '../modal-header.component';
-import * as auth from '../../store/auth/auth.actions';
-import { State as ForgotPasswordModalState } from '../../store/forgot-password-modal';
-import * as forgotPasswordModal from '../../store/forgot-password-modal/forgot-password-modal.actions';
 import { State as AppState } from '../../store/reducer';
+import * as auth from '../../store/auth/auth.actions';
+import { State as ForgotPasswordModalState } from '../../store/modal/forgot-password';
+import * as forgotPasswordModal from '../../store/modal/forgot-password/forgot-password.actions';
 import { ModalStubDirective, StoreStubService } from '../../../testing';
+import { ModalHeaderComponent } from '../modal-header.component';
+import { ForgotPasswordModalComponent } from './forgot-password.component';
 
 describe(`ForgotPasswordModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

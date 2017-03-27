@@ -3,7 +3,6 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 
-import { NavbarComponent } from './navbar.component';
 import { State as LayoutState } from '../../store/layout';
 import * as layout from '../../store/layout/layout.actions';
 import {
@@ -13,6 +12,7 @@ import {
   RouterLinkStubDirective,
   StoreStubService,
 } from '../../../testing';
+import { NavbarComponent } from './navbar.component';
 
 describe(`NavbarComponent`, () => {
   let component: NavbarComponent;

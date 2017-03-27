@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import * as layout from './store/layout';
 import * as fromRoot from './store/reducer';
+import * as layout from './store/layout';
 
 @Component({
   selector: 'liow-root',

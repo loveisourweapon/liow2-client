@@ -11,25 +11,25 @@ import { Campaign, Group } from './group';
 import { User } from './user';
 
 import * as fromRouter from '@ngrx/router-store';
-import * as fromAuth from './auth/auth.reducer';
 import * as fromCounter from './act/counter.reducer';
+import * as fromAuth from './auth/auth.reducer';
 import * as fromDeed from './deed/deed.reducer';
 import * as fromFeed from './feed/feed.reducer';
 import * as fromGroup from './group/group.reducer';
 import * as fromLayout from './layout/layout.reducer';
 import * as fromResetPassword from './reset-password/reset-password.reducer';
 import * as fromUser from './user/user.reducer';
-import * as fromCampaignEditModal from './campaign-edit-modal/campaign-edit-modal.reducer';
-import * as fromDeedPreviewModal from './deed-preview-modal/deed-preview-modal.reducer';
-import * as fromForgotPasswordModal from './forgot-password-modal/forgot-password-modal.reducer';
-import * as fromGroupEditModal from './group-edit-modal/group-edit-modal.reducer';
-import * as fromLoginModal from './login-modal/login-modal.reducer';
-import * as fromSignupModal from './signup-modal/signup-modal.reducer';
+import * as fromCampaignEditModal from './modal/campaign-edit/campaign-edit.reducer';
+import * as fromDeedPreviewModal from './modal/deed-preview/deed-preview.reducer';
+import * as fromForgotPasswordModal from './modal/forgot-password/forgot-password.reducer';
+import * as fromGroupEditModal from './modal/group-edit/group-edit.reducer';
+import * as fromLoginModal from './modal/login/login.reducer';
+import * as fromSignupModal from './modal/signup/signup.reducer';
 import * as fromUserControlPanel from './control-panel/user/user.reducer';
 
 export interface State {
-  auth: fromAuth.State;
   counters: fromCounter.State;
+  auth: fromAuth.State;
   deed: fromDeed.State;
   feed: fromFeed.State;
   group: fromGroup.State;
@@ -51,8 +51,8 @@ export interface State {
 }
 
 const reducers = {
-  auth: fromAuth.reducer,
   counters: fromCounter.reducer,
+  auth: fromAuth.reducer,
   deed: fromDeed.reducer,
   feed: fromFeed.reducer,
   group: fromGroup.reducer,
@@ -83,14 +83,6 @@ export function reducer(state: any, action: any): State {
     ;
 }
 
-/**
- * Auth state selectors
- */
-export function getAuthState(state: State) { return state.auth; }
-export const getIsAuthenticated = createSelector(getAuthState, fromAuth.getIsAuthenticated);
-export const getAuthUser = createSelector(getAuthState, fromAuth.getUser);
-export const getAuthGroup = createSelector(getAuthState, fromAuth.getGroup);
-
 
 /**
  * Counters state selectors
@@ -99,6 +91,15 @@ export function getCountersState(state: State) { return state.counters; }
 export const getGlobalCount = createSelector(getCountersState, fromCounter.getGlobalCount);
 export const getGroupsCount = createSelector(getCountersState, fromCounter.getGroupsCount);
 export const getUsersCount = createSelector(getCountersState, fromCounter.getUsersCount);
+
+
+/**
+ * Auth state selectors
+ */
+export function getAuthState(state: State) { return state.auth; }
+export const getIsAuthenticated = createSelector(getAuthState, fromAuth.getIsAuthenticated);
+export const getAuthUser = createSelector(getAuthState, fromAuth.getUser);
+export const getAuthGroup = createSelector(getAuthState, fromAuth.getGroup);
 
 
 /**

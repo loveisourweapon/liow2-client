@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { UserComponent } from './user.component';
 import { TitleService } from '../../core';
 import { MomentPipe } from '../../shared';
 import { State as AppState } from '../../store/reducer';
 import { IconCheckedStubComponent, StoreStubService, TitleStubService } from '../../../testing';
+import { UserComponent } from './user.component';
 
 describe(`UserComponent`, () => {
   let component: UserComponent;

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeedListVerticalComponent } from './deed-list-vertical.component';
 import { RouterLinkStubDirective } from '../../../testing';
+import { DeedListVerticalComponent } from './deed-list-vertical.component';
 
 describe(`DeedListVerticalComponent`, () => {
   let component: DeedListVerticalComponent;

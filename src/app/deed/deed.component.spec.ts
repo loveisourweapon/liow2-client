@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { DeedComponent } from './deed.component';
 import { TitleService } from '../core';
 import { State as AppState } from '../store/reducer';
 import {
@@ -16,6 +15,7 @@ import {
   TitleStubService,
   YoutubePlayerStubComponent,
 } from '../../testing';
+import { DeedComponent } from './deed.component';
 
 // TODO: Add proper tests!
 // Simple store spies won't work here because this component uses multiple `store.select` calls

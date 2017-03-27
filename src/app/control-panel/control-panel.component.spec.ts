@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { ControlPanelComponent } from './control-panel.component';
 import { State as AppState } from '../store/reducer';
 import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStubService, StoreStubService } from '../../testing';
+import { ControlPanelComponent } from './control-panel.component';
 
 describe(`ControlPanelComponent`, () => {
   let component: ControlPanelComponent;

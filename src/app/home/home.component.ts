@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TitleService } from '../core';
-import { Group } from '../store/group';
-import { User } from '../store/user';
-import * as act from '../store/act/act.actions';
-import * as modal from '../store/modal.actions';
 import * as fromRoot from '../store/reducer';
+import * as act from '../store/act/act.actions';
+import { Group } from '../store/group';
+import * as modal from '../store/modal/modal.actions';
+import { User } from '../store/user';
 
 @Component({
   templateUrl: './home.component.html',

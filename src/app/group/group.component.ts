@@ -9,16 +9,16 @@ import { Subscription } from 'rxjs/Subscription';
 import { has, findLast, some } from 'lodash';
 
 import { TitleService } from '../core';
+import * as fromRoot from '../store/reducer';
 import * as alertify from '../store/alertify/alertify.actions';
+import { Deed } from '../store/deed';
 import { Campaign, DeedPublish, Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
-import { Deed } from '../store/deed';
-import { GroupEditAction } from '../store/group-edit-modal';
-import { CampaignEditAction } from '../store/campaign-edit-modal';
+import * as modal from '../store/modal/modal.actions';
+import { CampaignEditAction } from '../store/modal/campaign-edit';
+import { GroupEditAction } from '../store/modal/group-edit';
 import { User } from '../store/user';
 import * as user from '../store/user/user.actions';
-import * as modal from '../store/modal.actions';
-import * as fromRoot from '../store/reducer';
 
 @Component({
   templateUrl: './group.component.html',

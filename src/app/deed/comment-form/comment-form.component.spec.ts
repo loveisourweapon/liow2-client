@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { CommentFormComponent } from './comment-form.component';
 import { MediumEditorStubComponent } from '../../../testing';
+import { CommentFormComponent } from './comment-form.component';
 
 describe(`CommentFormComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;

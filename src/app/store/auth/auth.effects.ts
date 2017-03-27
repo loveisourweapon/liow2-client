@@ -13,7 +13,7 @@ import * as auth from './auth.actions';
 import * as alertify from '../alertify/alertify.actions';
 import { Group } from '../group';
 import * as group from '../group/group.actions';
-import * as modal from '../modal.actions';
+import * as modal from '../modal/modal.actions';
 import { ResetPasswordRequest } from '../reset-password';
 import { NewUser, User, UserService } from '../user';
 import * as fromRoot from '../reducer';

@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ModalsComponent } from './modals.component';
 import { StoreStubService } from '../../testing';
+import { ModalsComponent } from './modals.component';
 
 // TODO: Add proper tests!
 // Simple store spies won't work here because this component uses multiple `store.select` calls

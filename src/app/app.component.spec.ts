@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { AppComponent } from './app.component';
 import { RouterStubService, RouterOutletStubComponent, StoreStubService } from '../testing';
+import { AppComponent } from './app.component';
 
 describe(`AppComponent`, () => {
   let component: AppComponent;

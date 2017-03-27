@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { capitalize } from 'lodash';
 
+import * as fromRoot from '../store/reducer';
 import { Group } from '../store/group';
 import { User } from '../store/user';
-import * as fromRoot from '../store/reducer';
 
 @Component({
   templateUrl: './control-panel.component.html',
