@@ -8,6 +8,7 @@ import * as fromRoot from '../../store/reducer';
 import * as auth from '../../store/auth/auth.actions';
 import * as userControlPanel from '../../store/control-panel/user';
 import * as fromUserControlPanel from '../../store/control-panel/user/user.reducer';
+import * as modal from '../../store/modal/modal.actions';
 import { User } from '../../store/user';
 
 @Component({
@@ -56,15 +57,13 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   setEditingName(isEditingName: boolean): void {
-    this.state$.first()
-      .map((state: fromUserControlPanel.State) => state.user)
+    this.getUserFromState$()
       .subscribe((user: User) =>
         this.store.dispatch(new userControlPanel.SetIsEditingAction({ isEditingName, user })));
   }
 
   saveUserName(firstName: string, lastName: string): void {
-    this.state$.first()
-      .map((state: fromUserControlPanel.State) => state.user)
+    this.getUserFromState$()
       .subscribe((user: User) =>
         this.store.dispatch(new userControlPanel.SaveUserNameAction({ user, firstName, lastName })));
   }
@@ -75,12 +74,18 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
-  openChangePassword(): void { }
+  openChangePassword(): void {
+    this.getUserFromState$()
+      .subscribe((user: User) => this.store.dispatch(new modal.OpenChangePasswordAction(user)));
+  }
 
   sendConfirmEmail(): void {
-    this.state$.first()
-      .map((state: fromUserControlPanel.State) => state.user)
-      .subscribe((user: User) =>
-        this.store.dispatch(new auth.SendConfirmEmailAction(user.email)));
+    this.getUserFromState$()
+      .subscribe((user: User) => this.store.dispatch(new auth.SendConfirmEmailAction(user.email)));
+  }
+
+  private getUserFromState$(): Observable<User> {
+    return this.state$.first()
+      .map((state: fromUserControlPanel.State) => state.user);
   }
 }

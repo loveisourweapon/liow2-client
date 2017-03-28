@@ -3,10 +3,14 @@ import { Action } from '@ngrx/store';
 import { actionType, ApiError } from '../utils';
 import { Credentials } from './index';
 import { Group } from '../group';
+import { ChangePasswordRequest } from '../modal/change-password';
 import { ResetPasswordRequest } from '../reset-password';
 import { NewUser, User } from '../user';
 
 export class ActionTypes {
+  static readonly CHANGE_PASSWORD = actionType('[Auth] Cahnge Password');
+  static readonly CHANGE_PASSWORD_SUCCESS = actionType('[Auth] Change Password Success');
+  static readonly CHANGE_PASSWORD_FAIL = actionType('[Auth] Change Password Fail');
   static readonly CONFIRM_EMAIL = actionType('[Auth] Confirm Email');
   static readonly LOGIN_WITH_EMAIL = actionType('[Auth] Login Email');
   static readonly LOGIN_WITH_FACEBOOK = actionType('[Auth] Login Facebook');
@@ -26,6 +30,25 @@ export class ActionTypes {
   static readonly SIGNUP = actionType('[Auth] Signup');
   static readonly SIGNUP_SUCCESS = actionType('[Auth] Signup Success');
   static readonly SIGNUP_FAIL = actionType('[Auth] Signup Fail');
+}
+
+export class ChangePasswordAction implements Action {
+  type = ActionTypes.CHANGE_PASSWORD;
+
+  constructor(
+    public payload: ChangePasswordRequest,
+  ) { }
+}
+export class ChangePasswordSuccessAction implements Action {
+  type = ActionTypes.CHANGE_PASSWORD_SUCCESS;
+  payload = null;
+}
+export class ChangePasswordFailAction implements Action {
+  type = ActionTypes.CHANGE_PASSWORD_FAIL;
+
+  constructor(
+    public payload: ApiError,
+  ) { }
 }
 
 export class ConfirmEmailAction implements Action {
@@ -146,7 +169,10 @@ export class SignupFailAction implements Action {
 }
 
 export type Actions
-  = ConfirmEmailAction
+  = ChangePasswordAction
+  | ChangePasswordSuccessAction
+  | ChangePasswordFailAction
+  | ConfirmEmailAction
   | LoginWithEmailAction
   | LoginWithFacebookAction
   | LoginWithTokenAction

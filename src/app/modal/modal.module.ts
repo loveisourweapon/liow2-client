@@ -8,6 +8,7 @@ import { ModalHeaderComponent } from './modal-header.component';
 import { ModalsComponent } from './modals.component';
 
 import { CampaignEditModalComponent } from './campaign-edit';
+import { ChangePasswordModalComponent } from './change-password';
 import { DeedPreviewModalComponent } from './deed-preview';
 import { ForgotPasswordModalComponent } from './forgot-password';
 import { GroupEditModalComponent } from './group-edit';
@@ -26,6 +27,7 @@ import { SignupModalComponent } from './signup';
     ModalsComponent,
 
     CampaignEditModalComponent,
+    ChangePasswordModalComponent,
     DeedPreviewModalComponent,
     ForgotPasswordModalComponent,
     GroupEditModalComponent,

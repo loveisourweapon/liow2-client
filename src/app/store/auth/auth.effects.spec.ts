@@ -51,6 +51,48 @@ describe(`AuthEffects`, () => {
     spyOn(store, 'select').and.returnValue(storeSelect$);
   }));
 
+  describe(`changePassword$`, () => {
+    const testUser = <User>{ _id: 'abc123' };
+    const currentPassword = 'currentPassword123';
+    const newPassword = 'newPassword123';
+
+    it(`should generate properly formed JsonPatch objects`, () => {
+      const updateSpy = spyOn(userService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new auth.ChangePasswordAction({ user: testUser, currentPassword, newPassword }));
+      authEffects.changePassword$.take(1).subscribe(() => {
+        const patches = updateSpy.calls.mostRecent().args[1];
+        expect(patches[0].op).toBe('add');
+        expect(patches[0].path).toBe(`/currentPassword`);
+        expect(patches[0].value).toBe(currentPassword);
+        expect(patches[1].op).toBe('add');
+        expect(patches[1].path).toBe(`/newPassword`);
+        expect(patches[1].value).toBe(newPassword);
+      });
+    });
+
+    it(`should dispatch CHANGE_PASSWORD_SUCCESS and alertify SUCCESS actions after updating user`, () => {
+      spyOn(userService, 'update').and.returnValue(Observable.of({}));
+      runner.queue(new auth.ChangePasswordAction({ user: testUser, currentPassword, newPassword }));
+      takeAndScan(authEffects.changePassword$, 2)
+        .subscribe((results: Action[]) => {
+          expect(results[0].type).toBe(auth.ActionTypes.CHANGE_PASSWORD_SUCCESS);
+          expect(results[1].type).toBe(alertify.ActionTypes.SUCCESS);
+          expect(results[1].payload).toMatch(`Password changed`);
+        });
+    });
+
+    it(`should dispatch CHANGE_PASSWORD_FAIL action after failing to update user`, () => {
+      const error = { message: 'Test error' };
+      const response = new Response(new ResponseOptions({ body: error }));
+      spyOn(userService, 'update').and.returnValue(Observable.throw(response));
+      runner.queue(new auth.ChangePasswordAction({ user: testUser, currentPassword, newPassword }));
+      authEffects.changePassword$.subscribe((result: Action) => {
+        expect(result.type).toBe(auth.ActionTypes.CHANGE_PASSWORD_FAIL);
+        expect(result.payload).toBe(error);
+      });
+    });
+  });
+
   describe(`confirmEmail$`, () => {
     const token = 'abc123';
 

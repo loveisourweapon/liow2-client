@@ -3,6 +3,10 @@ export {
   CloseAction as CloseCampaignEditAction,
 } from './campaign-edit/campaign-edit.actions';
 export {
+  OpenAction as OpenChangePasswordAction,
+  CloseAction as CloseChangePasswordAction,
+} from './change-password/change-password.actions';
+export {
   OpenAction as OpenDeedPreviewAction,
   CloseAction as CloseDeedPreviewAction,
 } from './deed-preview/deed-preview.actions';

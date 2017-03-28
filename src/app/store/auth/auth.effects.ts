@@ -7,6 +7,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { find, pick } from 'lodash';
 
+import { JsonPatchOp } from '../utils';
 import { Credentials } from './index';
 import { AuthService } from './auth.service';
 import * as auth from './auth.actions';
@@ -14,12 +15,30 @@ import * as alertify from '../alertify/alertify.actions';
 import { Group } from '../group';
 import * as group from '../group/group.actions';
 import * as modal from '../modal/modal.actions';
+import { ChangePasswordRequest } from '../modal/change-password';
 import { ResetPasswordRequest } from '../reset-password';
 import { NewUser, User, UserService } from '../user';
 import * as fromRoot from '../reducer';
 
 @Injectable()
 export class AuthEffects {
+  @Effect()
+  changePassword$: Observable<Action> = this.actions$
+    .ofType(auth.ActionTypes.CHANGE_PASSWORD).map(toPayload)
+    .flatMap(({ user, currentPassword, newPassword }: ChangePasswordRequest) => {
+      const patches = [
+        { op: JsonPatchOp.Add, path: `/currentPassword`, value: currentPassword },
+        { op: JsonPatchOp.Add, path: `/newPassword`, value: newPassword },
+      ];
+
+      return this.userService.update(user, patches)
+        .mergeMap(() => Observable.from([
+          new auth.ChangePasswordSuccessAction(),
+          new alertify.SuccessAction(`Password changed`),
+        ]))
+        .catch((response: Response) => Observable.of(new auth.ChangePasswordFailAction(response.json() || {})));
+    });
+
   @Effect()
   confirmEmail$: Observable<Action> = this.actions$
     .ofType(auth.ActionTypes.CONFIRM_EMAIL).map(toPayload)

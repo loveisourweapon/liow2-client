@@ -1,4 +1,4 @@
 export interface ApiError {
-  errors: { [key: string]: any };
+  errors?: { [key: string]: any };
   message: string;
 }

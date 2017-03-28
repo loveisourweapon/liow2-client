@@ -6,6 +6,7 @@ import * as fromRoot from '../store/reducer';
 import { Group } from '../store/group';
 import { User } from '../store/user';
 import { State as CampaignEditModalState } from '../store/modal/campaign-edit';
+import { State as ChangePasswordModalState } from '../store/modal/change-password';
 import { State as DeedPreviewModalState } from '../store/modal/deed-preview';
 import { State as ForgotPasswordModalState } from '../store/modal/forgot-password';
 import { State as GroupEditModalState } from '../store/modal/group-edit';
@@ -22,6 +23,7 @@ export class ModalsComponent implements OnInit {
   authUser$: Observable<User>;
   currentGroup$: Observable<Group>;
   campaignEditModal$: Observable<CampaignEditModalState>;
+  changePasswordModal$: Observable<ChangePasswordModalState>;
   deedPreviewModal$: Observable<DeedPreviewModalState>;
   forgotPasswordModal$: Observable<ForgotPasswordModalState>;
   groupEditModal$: Observable<GroupEditModalState>;
@@ -36,6 +38,7 @@ export class ModalsComponent implements OnInit {
     this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
     this.authUser$ = this.store.select(fromRoot.getAuthUser);
     this.campaignEditModal$ = this.store.select(fromRoot.getCampaignEditModal);
+    this.changePasswordModal$ = this.store.select(fromRoot.getChangePasswordModal);
     this.deedPreviewModal$ = this.store.select(fromRoot.getDeedPreviewModal);
     this.forgotPasswordModal$ = this.store.select(fromRoot.getForgotPasswordModal);
     this.groupEditModal$ = this.store.select(fromRoot.getGroupEditModal);

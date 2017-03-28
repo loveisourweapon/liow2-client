@@ -20,6 +20,7 @@ import * as fromLayout from './layout/layout.reducer';
 import * as fromResetPassword from './reset-password/reset-password.reducer';
 import * as fromUser from './user/user.reducer';
 import * as fromCampaignEditModal from './modal/campaign-edit/campaign-edit.reducer';
+import * as fromChangePasswordModal from './modal/change-password/change-password.reducer';
 import * as fromDeedPreviewModal from './modal/deed-preview/deed-preview.reducer';
 import * as fromForgotPasswordModal from './modal/forgot-password/forgot-password.reducer';
 import * as fromGroupEditModal from './modal/group-edit/group-edit.reducer';
@@ -40,6 +41,7 @@ export interface State {
 
   // Modals
   modalCampaignEdit: fromCampaignEditModal.State;
+  modalChangePassword: fromChangePasswordModal.State;
   modalDeedPreview: fromDeedPreviewModal.State;
   modalForgotPassword: fromForgotPasswordModal.State;
   modalGroupEdit: fromGroupEditModal.State;
@@ -63,6 +65,7 @@ const reducers = {
 
   // Modals
   modalCampaignEdit: fromCampaignEditModal.reducer,
+  modalChangePassword: fromChangePasswordModal.reducer,
   modalDeedPreview: fromDeedPreviewModal.reducer,
   modalForgotPassword: fromForgotPasswordModal.reducer,
   modalGroupEdit: fromGroupEditModal.reducer,
@@ -166,6 +169,7 @@ export const getCurrentUser = createSelector(getUserState, fromUser.getCurrent);
  * Modal state selectors
  */
 export function getCampaignEditModal(state: State) { return state.modalCampaignEdit; }
+export function getChangePasswordModal(state: State) { return state.modalChangePassword; }
 export function getDeedPreviewModal(state: State) { return state.modalDeedPreview; }
 export function getForgotPasswordModal(state: State) { return state.modalForgotPassword; }
 export function getGroupEditModal(state: State) { return state.modalGroupEdit; }
