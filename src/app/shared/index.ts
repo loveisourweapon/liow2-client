@@ -5,4 +5,5 @@ export * from './same-as-validator.directive';
 
 export * from './from-now.pipe';
 export * from './kebab-case.pipe';
+export * from './last.pipe';
 export * from './moment.pipe';

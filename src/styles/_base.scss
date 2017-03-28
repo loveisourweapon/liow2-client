@@ -26,6 +26,10 @@ p:last-child {
 .middle {
   vertical-align: middle;
 }
+.table.table-middle th,
+.table.table-middle td {
+  vertical-align: middle;
+}
 
 .app-loading-spinner {
   position: absolute;

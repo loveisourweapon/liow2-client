@@ -21,6 +21,7 @@ import { YoutubePlayerComponent } from './youtube-player.component';
 
 import { FromNowPipe } from './from-now.pipe';
 import { KebabCasePipe } from './kebab-case.pipe';
+import { LastPipe } from './last.pipe';
 import { MomentPipe } from './moment.pipe';
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MomentPipe } from './moment.pipe';
 
     FromNowPipe,
     KebabCasePipe,
+    LastPipe,
     MomentPipe,
   ],
   exports: [
@@ -73,6 +75,7 @@ import { MomentPipe } from './moment.pipe';
 
     FromNowPipe,
     KebabCasePipe,
+    LastPipe,
     MomentPipe,
   ],
 })

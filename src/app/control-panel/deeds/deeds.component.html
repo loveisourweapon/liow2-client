@@ -1,3 +1,56 @@
-<p>
-  deeds works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table table-bordered table-striped table-middle">
+      <thead>
+        <tr>
+          <th style="width: 65px;">Logo</th>
+          <th>Title</th>
+          <th style="width: 150px;">Video</th>
+          <th style="width: 102px;">&nbsp;</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let deed of (deeds$ | async); trackBy: identifyDeed">
+          <td class="text-center">
+            <img [src]="deed.logo || '/images/deed.png'" class="img-circle icon">
+          </td>
+          <td>{{ deed.title }}</td>
+          <td>
+            <div *ngIf="deed.videoUrl">
+              <a href="{{ deed.videoUrl }}" target="_blank">
+                <i class="fa fa-lg fa-youtube-play"></i>
+                {{ deed.videoUrl.split('/') | last }}
+              </a>
+            </div>
+            <div *ngIf="!deed.videoUrl" ng-if="::!deed.videoUrl">
+              <ui-icon-checked [isChecked]="false"></ui-icon-checked>
+            </div>
+          </td>
+          <td>
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-default" dropdownToggle>
+                Actions
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu-right" dropdownMenu>
+                <li>
+                  <a (click)="openDeedPreview(deed); $event.preventDefault()" href>
+                    <i class="fa fa-fw fa-external-link-square"></i>
+                    Open Preview
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/d', deed.urlTitle]">
+                    <i class="fa fa-fw fa-heart"></i>
+                    View Public Page
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
