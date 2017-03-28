@@ -1,9 +1,8 @@
-import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-export function takeAndScan(observable: Observable<Action>, n: number): Observable<Action[]> {
+export function takeAndScan<T>(observable: Observable<T>, n: number): Observable<T[]> {
   return observable
     .take(n)
-    .scan((results: Action[], result: Action) => [...results, result], [])
+    .scan((results: T[], result: T) => [...results, result], [])
     .skip(n - 1);
 }
