@@ -84,12 +84,6 @@
                 Control Panel
               </a>
             </li>
-            <li>
-              <a (click)="logout(); $event.preventDefault()" href>
-                <i class="fa fa-fw fa-power-off"></i>
-                Logout
-              </a>
-            </li>
             <li class="divider" role="separator"></li>
             <li class="dropdown-header">
               <i class="fa fa-fw fa-users"></i>
@@ -107,6 +101,13 @@
               <a (click)="openGroupEdit(); $event.preventDefault()" href>
                 <i class="fa fa-fw fa-pencil-square-o"></i>
                 Group Signup
+              </a>
+            </li>
+            <li class="divider" role="separator"></li>
+            <li>
+              <a (click)="logout(); $event.preventDefault()" href>
+                <i class="fa fa-fw fa-power-off"></i>
+                Logout
               </a>
             </li>
           </ul><!-- [dropdownMenu](isAuthenticated) -->
