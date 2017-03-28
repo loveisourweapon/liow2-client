@@ -120,7 +120,17 @@
                 *ngIf="form.submitted && (email.invalid || state.errors.email)"
               >
                 <span *ngIf="email.errors?.validEmail">Please enter a valid email address</span>
-                <span *ngIf="state.errors?.email">{{ state.errors.email.message }}</span>
+                <span *ngIf="state.errors?.email">
+                  {{ state.errors.email.message }}
+                  <button
+                    type="button"
+                    (click)="onClose(); openLogin()"
+                    class="btn btn-link btn-inline"
+                    *ngIf="state.errors.email.message.includes('already registered')"
+                  >
+                    Login now
+                  </button>
+                </span>
               </span>
             </div>
           </div>
