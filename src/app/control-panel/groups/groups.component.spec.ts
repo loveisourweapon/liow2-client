@@ -5,7 +5,12 @@ import { Observable } from 'rxjs/Observable';
 import { TitleService } from '../../core';
 import { MomentPipe } from '../../shared';
 import { State as AppState } from '../../store/reducer';
-import { RouterLinkStubDirective, StoreStubService, TitleStubService } from '../../../testing';
+import {
+  ControlPanelSearchStubComponent,
+  RouterLinkStubDirective,
+  StoreStubService,
+  TitleStubService,
+} from '../../../testing';
 import { GroupsComponent } from './groups.component';
 
 describe(`GroupsComponent`, () => {
@@ -18,6 +23,7 @@ describe(`GroupsComponent`, () => {
       .configureTestingModule({
         declarations: [
           GroupsComponent,
+          ControlPanelSearchStubComponent,
           RouterLinkStubDirective,
           MomentPipe,
         ],

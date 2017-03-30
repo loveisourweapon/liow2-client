@@ -1,10 +1,12 @@
 <div class="row">
   <div class="col-xs-12">
-    <!--<control-panel-search query="$ctrl.query"
-                          on-search="$ctrl.onSearch($event)"
-                          autofocus></control-panel-search>
+    <liow-control-panel-search
+      [query]="(state$ | async)?.query"
+      (search)="onSearch($event)"
+      autofocus
+    ></liow-control-panel-search>
 
-    <p>
+    <!--<p>
       Number of groups:
       <strong>{{ $ctrl.numberOfGroups }}</strong>,
       showing:

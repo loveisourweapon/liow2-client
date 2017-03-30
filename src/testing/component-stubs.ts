@@ -1,6 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
+  selector: 'liow-control-panel-search',
+  template: ``,
+})
+export class ControlPanelSearchStubComponent {
+  @Input() query: string;
+  @Output() search = new EventEmitter();
+}
+
+@Component({
   selector: 'liow-deed-list',
   template: ``,
 })

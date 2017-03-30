@@ -1,0 +1,12 @@
+<div class="input-group m-b-md">
+  <span class="input-group-addon">
+    <i class="fa fa-search"></i>
+  </span>
+  <input
+    type="text"
+    [ngModel]="query"
+    (ngModelChange)="onQueryChange($event)"
+    class="form-control"
+    placeholder="Search..."
+  >
+</div>
