@@ -34,7 +34,7 @@
       <tr>
         <th style="width: 65px;">Logo</th>
         <th>Name</th>
-        <th style="width: 90px;">Created</th>
+        <th style="width: 95px;">Created</th>
         <th style="width: 102px;">&nbsp;</th>
       </tr>
       </thead>
@@ -45,7 +45,7 @@
           <img src="/images/group.png" class="img-circle icon">
         </td>
         <td>{{ group.name }}</td>
-        <td>{{ group.created | moment:'L' }}</td>
+        <td>{{ group.created | moment:'YYYY-MM-DD' }}</td>
         <td>
           <div class="btn-group" dropdown>
             <button type="button" class="btn btn-default" dropdownToggle>
