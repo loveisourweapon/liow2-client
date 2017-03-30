@@ -6,6 +6,11 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 import { TabsModule } from 'ng2-bootstrap/tabs';
 import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
 
+// Hardcode locale to en-AU
+const locale = 'en-AU';
+import * as moment from 'moment';
+moment.locale(locale);
+
 import { SharedModule } from '../shared';
 
 import { AuthConfig } from './auth-config';
@@ -26,7 +31,7 @@ import { TitleService } from './title.service';
     SharedModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'en-AU' },
+    { provide: LOCALE_ID, useValue: locale },
     TitleService,
   ],
   declarations: [
