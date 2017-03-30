@@ -26,6 +26,7 @@ import * as fromForgotPasswordModal from './modal/forgot-password/forgot-passwor
 import * as fromGroupEditModal from './modal/group-edit/group-edit.reducer';
 import * as fromLoginModal from './modal/login/login.reducer';
 import * as fromSignupModal from './modal/signup/signup.reducer';
+import * as fromGroupsControlPanel from './control-panel/groups/groups.reducer';
 import * as fromUserControlPanel from './control-panel/user/user.reducer';
 
 export interface State {
@@ -49,6 +50,7 @@ export interface State {
   modalSignup: fromSignupModal.State;
 
   // Control panels
+  groupsControlPanel: fromGroupsControlPanel.State;
   userControlPanel: fromUserControlPanel.State;
 }
 
@@ -73,6 +75,7 @@ const reducers = {
   modalSignup: fromSignupModal.reducer,
 
   // Control panels
+  groupsControlPanel: fromGroupsControlPanel.reducer,
   userControlPanel: fromUserControlPanel.reducer,
 };
 
@@ -180,6 +183,7 @@ export function getSignupModal(state: State) { return state.modalSignup; }
 /**
  * Control panel state selectors
  */
+export function getGroupsControlPanel(state: State) { return state.groupsControlPanel; }
 export function getUserControlPanel(state: State) { return state.userControlPanel; }
 
 

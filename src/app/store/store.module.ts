@@ -15,6 +15,7 @@ import { LayoutEffects } from './layout';
 import { UserEffects, UserService } from './user';
 import { GroupEditModalEffects } from './modal/group-edit';
 import { CampaignEditModalEffects } from './modal/campaign-edit';
+import { GroupsControlPanelEffects } from './control-panel/groups';
 import { UserControlPanelEffects } from './control-panel/user';
 
 @NgModule({
@@ -40,6 +41,7 @@ import { UserControlPanelEffects } from './control-panel/user';
     EffectsModule.run(GroupEditModalEffects),
 
     // Control panels
+    EffectsModule.run(GroupsControlPanelEffects),
     EffectsModule.run(UserControlPanelEffects),
   ],
   providers: [
