@@ -1,7 +1,7 @@
 import { assign } from 'lodash';
 
 import { User } from '../../user';
-import * as user from './user.actions';
+import * as userControlPanel from './user.actions';
 import * as auth from '../../auth';
 
 export interface State {
@@ -20,9 +20,9 @@ export const initialState: State = {
   lastName: '',
 };
 
-export function reducer(state = initialState, action: user.Actions|auth.Actions): State {
+export function reducer(state = initialState, action: userControlPanel.Actions|auth.Actions): State {
   switch (action.type) {
-    case user.ActionTypes.SET_IS_EDITING:
+    case userControlPanel.ActionTypes.SET_IS_EDITING:
       const isEditingName = action.payload.isEditingName;
       const currentUser = action.payload.user;
       return assign({}, state, {
@@ -31,17 +31,17 @@ export function reducer(state = initialState, action: user.Actions|auth.Actions)
         lastName: isEditingName ? currentUser.lastName : '',
       });
 
-    case user.ActionTypes.SET_USER:
+    case userControlPanel.ActionTypes.SET_USER:
       return assign({}, state, {
         user: action.payload,
       });
 
-    case user.ActionTypes.UPDATE_FIRST_NAME:
+    case userControlPanel.ActionTypes.UPDATE_FIRST_NAME:
       return assign({}, state, {
         firstName: action.payload,
       });
 
-    case user.ActionTypes.UPDATE_LAST_NAME:
+    case userControlPanel.ActionTypes.UPDATE_LAST_NAME:
       return assign({}, state, {
         lastName: action.payload,
       });
