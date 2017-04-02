@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
+import { ModalModule } from 'ng2-bootstrap/modal';
 
 import { SharedModule } from '../shared';
 import { ControlPanelRoutingModule } from './control-panel-routing.module';
@@ -15,6 +16,7 @@ import { UsersComponent } from './users';
 @NgModule({
   imports: [
     BsDropdownModule,
+    ModalModule,
     SharedModule,
     ControlPanelRoutingModule,
   ],

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { search } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
+import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { has } from 'lodash';
@@ -11,6 +12,7 @@ import { identifyBy } from '../../shared';
 import * as fromRoot from '../../store/reducer';
 import * as groupsControlPanel from '../../store/control-panel/groups/groups.actions';
 import * as fromGroupsControlPanel from '../../store/control-panel/groups/groups.reducer';
+import { Group } from '../../store/group';
 
 @Component({
   templateUrl: './groups.component.html',
@@ -18,6 +20,10 @@ import * as fromGroupsControlPanel from '../../store/control-panel/groups/groups
 })
 export class GroupsComponent implements OnInit, OnDestroy {
   state$: Observable<fromGroupsControlPanel.State>;
+
+  @ViewChild('welcomeMessageModal') welcomeMessageModal: ModalDirective;
+  welcomeMessage: string;
+  welcomeMessageTitle: string;
 
   identifyBy = identifyBy;
 
@@ -53,5 +59,15 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.store.dispatch(search({ query }));
   }
 
-  showWelcomeMessage(message: string): void { }
+  openWelcomeMessage(group: Group): void {
+    this.welcomeMessage = group.welcomeMessage;
+    this.welcomeMessageTitle = `${group.name} Welcome Message`;
+    this.welcomeMessageModal.show();
+  }
+
+  closeWelcomeMessage(): void {
+    if (this.welcomeMessageModal.isShown) {
+      this.welcomeMessageModal.hide();
+    }
+  }
 }

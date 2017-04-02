@@ -9,6 +9,8 @@ import { State as AppState } from '../../store/reducer';
 import {
   ActivatedRouteStubService,
   ControlPanelSearchStubComponent,
+  MarkedStubComponent,
+  ModalStubDirective,
   RouterLinkStubDirective,
   StoreStubService,
   TitleStubService,
@@ -26,6 +28,8 @@ describe(`GroupsComponent`, () => {
         declarations: [
           GroupsComponent,
           ControlPanelSearchStubComponent,
+          MarkedStubComponent,
+          ModalStubDirective,
           RouterLinkStubDirective,
           MomentPipe,
         ],
