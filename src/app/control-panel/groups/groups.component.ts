@@ -7,10 +7,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { has } from 'lodash';
 
 import { TitleService } from '../../core';
+import { identifyBy } from '../../shared';
 import * as fromRoot from '../../store/reducer';
 import * as groupsControlPanel from '../../store/control-panel/groups/groups.actions';
 import * as fromGroupsControlPanel from '../../store/control-panel/groups/groups.reducer';
-import { Group } from '../../store/group';
 
 @Component({
   templateUrl: './groups.component.html',
@@ -18,6 +18,8 @@ import { Group } from '../../store/group';
 })
 export class GroupsComponent implements OnInit, OnDestroy {
   state$: Observable<fromGroupsControlPanel.State>;
+
+  identifyBy = identifyBy;
 
   private routerSubscription: Subscription;
 
@@ -52,8 +54,4 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   showWelcomeMessage(message: string): void { }
-
-  identifyGroup(idx: number, group: Group): string {
-    return group._id;
-  }
 }

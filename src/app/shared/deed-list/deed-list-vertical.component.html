@@ -1,6 +1,6 @@
 <div class="container-pad-sm">
   <div
-    *ngFor="let deed of deeds; trackBy: identifyDeed"
+    *ngFor="let deed of deeds; trackBy: identifyBy('_id')"
     class="deed-wrapper"
     [routerLink]="['/d', deed.urlTitle]"
     [class.deed-current]="deed._id === currentDeed?._id"

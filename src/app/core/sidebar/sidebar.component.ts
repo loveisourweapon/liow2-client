@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { identifyBy } from '../../shared';
 import * as fromRoot from '../../store/reducer';
 import * as auth from '../../store/auth/auth.actions';
 import { Group } from '../../store/group';
@@ -22,6 +23,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isAuthenticated$: Observable<boolean>;
   isMenuOpen$: Observable<boolean>;
   isSmallScreen$: Observable<boolean>;
+
+  identifyBy = identifyBy;
 
   private bodySubscription: Subscription;
 
@@ -70,9 +73,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.store.dispatch(new auth.LogoutAction());
-  }
-
-  identifyGroup(idx: number, group: Group): string {
-    return group._id;
   }
 }

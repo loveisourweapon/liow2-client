@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import { identifyBy } from '../../shared';
 import * as fromRoot from '../../store/reducer';
 import * as auth from '../../store/auth/auth.actions';
 import { Group } from '../../store/group';
@@ -21,6 +22,8 @@ export class NavbarComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
   isSmallScreen$: Observable<boolean>;
   globalCounter$: Observable<number>;
+
+  identifyBy = identifyBy;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -56,9 +59,5 @@ export class NavbarComponent implements OnInit {
 
   logout(): void {
     this.store.dispatch(new auth.LogoutAction());
-  }
-
-  identifyGroup(idx: number, group: Group): string {
-    return group._id;
   }
 }

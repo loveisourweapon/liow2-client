@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
+import { identifyBy } from '../utils';
 import { User } from '../../store/user';
 
 @Component({
@@ -16,6 +17,8 @@ export class UserPickerComponent {
   @Input() disabled = false;
   @Output() change = new EventEmitter<string[]>();
   @ViewChild('modal') modal: ModalDirective;
+
+  identifyBy = identifyBy;
 
   getSelectedUsers(userList: User[], selectedIds: string[]): User[] {
     return userList.filter((user: User) => selectedIds.includes(user._id));
@@ -39,9 +42,5 @@ export class UserPickerComponent {
 
   openUserPicker(): void {
     this.modal.show();
-  }
-
-  identifyUser(idx: number, user: User): string {
-    return user._id;
   }
 }

@@ -53,7 +53,7 @@
               >
                 <li
                   class="list-group-item"
-                  *ngFor="let item of state.deeds; trackBy: identifyItem"
+                  *ngFor="let item of state.deeds; trackBy: identifyBy('deed._id')"
                 >
                   <button
                     type="button"
@@ -76,7 +76,7 @@
               >
                 <li
                   class="list-group-item"
-                  *ngFor="let item of state.campaign.deeds; trackBy: identifyItem"
+                  *ngFor="let item of state.campaign.deeds; trackBy: identifyBy('deed._id')"
                 >
                   <button
                     type="button"

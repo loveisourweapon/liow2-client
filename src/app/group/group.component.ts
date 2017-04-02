@@ -9,10 +9,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { has, findLast, some } from 'lodash';
 
 import { TitleService } from '../core';
+import { identifyBy } from '../shared';
 import * as fromRoot from '../store/reducer';
 import * as alertify from '../store/alertify/alertify.actions';
 import { Deed } from '../store/deed';
-import { Campaign, DeedPublish, Group, GroupSlug, GroupTab } from '../store/group';
+import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
 import * as group from '../store/group/group.actions';
 import * as modal from '../store/modal/modal.actions';
 import { CampaignEditAction } from '../store/modal/campaign-edit';
@@ -34,6 +35,8 @@ export class GroupComponent implements OnDestroy, OnInit {
   currentTab$: Observable<GroupTab>;
 
   tabs = GroupTab;
+
+  identifyBy = identifyBy;
 
   private routeSubscription: Subscription;
   private groupSubscription: Subscription;
@@ -208,11 +211,6 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   openLoginModal(): void {
     this.store.dispatch(new modal.OpenLoginAction());
-  }
-
-  identifyDeedPublish(idx: number, item: DeedPublish): string {
-    const deed = <Deed>item.deed;
-    return deed._id;
   }
 
   private checkSetupCampaign(): void {

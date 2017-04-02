@@ -91,7 +91,7 @@
               Groups
             </li>
             <li
-              *ngFor="let group of (authUser$ | async)?.groups; trackBy: identifyGroup"
+              *ngFor="let group of (authUser$ | async)?.groups; trackBy: identifyBy('_id')"
               [class.active]="(authGroup$ | async)?._id === group._id"
             >
               <a [routerLink]="['/g', group.urlName]" (click)="setCurrentGroup(group)">

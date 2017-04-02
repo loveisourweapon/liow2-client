@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
 
+import { identifyBy } from '../utils';
 import * as fromRoot from '../../store/reducer';
 import { FeedCriteria, FeedItem } from '../../store/feed';
 import * as feed from '../../store/feed/feed.actions';
@@ -20,6 +21,8 @@ export class FeedComponent implements OnChanges, OnInit {
   authUser$: Observable<User>;
   feedItems$: Observable<FeedItem[]>;
   isLoading$: Observable<boolean>;
+
+  identifyBy = identifyBy;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -43,9 +46,5 @@ export class FeedComponent implements OnChanges, OnInit {
 
   loadOlderItems(): void {
     this.store.dispatch(new feed.LoadOlderAction());
-  }
-
-  identifyFeedItem(idx: number, feedItem: FeedItem): string {
-    return feedItem._id;
   }
 }

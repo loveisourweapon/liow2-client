@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { TitleService } from '../../core';
+import { identifyBy } from '../../shared';
 import * as fromRoot from '../../store/reducer';
 import { Deed } from '../../store/deed';
 import * as modal from '../../store/modal/modal.actions';
@@ -13,6 +14,8 @@ import * as modal from '../../store/modal/modal.actions';
 })
 export class DeedsComponent implements OnInit {
   deeds$: Observable<Deed[]>;
+
+  identifyBy = identifyBy;
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -26,9 +29,5 @@ export class DeedsComponent implements OnInit {
 
   openDeedPreview(deed: Deed): void {
     this.store.dispatch(new modal.OpenDeedPreviewAction(deed));
-  }
-
-  identifyDeed(idx: number, deed: Deed): string {
-    return deed._id;
   }
 }

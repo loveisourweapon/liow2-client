@@ -4,6 +4,7 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
 import { cloneDeep, each, has } from 'lodash';
 
+import { identifyBy } from '../../shared';
 import { State as AppState } from '../../store/reducer';
 import { Deed } from '../../store/deed';
 import { Campaign, DeedPublish, NewCampaign } from '../../store/group';
@@ -27,6 +28,8 @@ export class CampaignEditModalComponent implements OnChanges, OnInit {
   availableDeeds: DeedPublish[];
   selectedDeeds: DeedPublish[];
   submitted: boolean;
+
+  identifyBy = identifyBy;
 
   constructor(
     private dragula: DragulaService,
@@ -69,10 +72,5 @@ export class CampaignEditModalComponent implements OnChanges, OnInit {
 
   onClose(): void {
     this.store.dispatch(new campaignEditModal.CloseAction());
-  }
-
-  identifyItem(idx: number, item: DeedPublish): string {
-    const deed = <Deed>item.deed;
-    return deed._id;
   }
 }

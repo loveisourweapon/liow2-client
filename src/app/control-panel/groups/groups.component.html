@@ -42,7 +42,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let group of (state$ | async)?.groups; trackBy: identifyGroup">
+      <tr *ngFor="let group of (state$ | async)?.groups; trackBy: identifyBy('_id')">
         <td class="text-center">
           <img src="/images/group.png" class="img-circle icon">
         </td>

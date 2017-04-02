@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+import { identifyBy } from '../utils';
 import { Counters } from '../../store/act';
 import { Deed } from '../../store/deed';
 
@@ -13,12 +14,10 @@ export class DeedListHorizontalComponent {
   @Input() deeds: Deed[];
   @Input() counters: Counters;
 
+  identifyBy = identifyBy;
+
   getDeedCount(counters: Counters, deedId: string): number|null {
     const counter = counters[deedId];
     return typeof counter === 'number' ? counter : null;
-  }
-
-  identifyDeed(idx: number, deed: Deed): string {
-    return deed._id;
   }
 }

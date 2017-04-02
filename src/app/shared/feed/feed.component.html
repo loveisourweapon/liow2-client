@@ -11,7 +11,7 @@
 
 <div class="feed-wrapper">
   <liow-feed-item
-    *ngFor="let feedItem of (feedItems$ | async); trackBy: identifyFeedItem; let isLastItem = first"
+    *ngFor="let feedItem of (feedItems$ | async); trackBy: identifyBy('_id'); let isLastItem = first"
     [item]="feedItem"
     [authUser]="authUser$ | async"
   ></liow-feed-item>
