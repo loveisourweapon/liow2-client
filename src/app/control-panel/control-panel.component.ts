@@ -32,7 +32,8 @@ export class ControlPanelComponent implements OnInit {
       .filter((event: Event) => event instanceof NavigationEnd)
       .map((event: NavigationEnd) => {
         const [, , routePath] = event.urlAfterRedirects.split('/');
-        return capitalize(routePath);
+        const [pageTitle] = routePath.split('?');
+        return capitalize(pageTitle);
       });
 
     // Redirect to home if user logs out
