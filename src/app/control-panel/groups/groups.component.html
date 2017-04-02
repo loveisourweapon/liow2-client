@@ -49,12 +49,12 @@
         <td>{{ group.name }}</td>
         <td>{{ group.created | moment:'YYYY-MM-DD' }}</td>
         <td>
-          <div class="btn-group" dropdown placement="bottom right">
-            <button type="button" class="btn btn-default dropdown-toggle" dropdownToggle>
+          <div dropdown placement="bottom right" class="btn-group dropdown">
+            <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
               Actions
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+            <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
               <li *ngIf="group.welcomeMessage">
                 <a (click)="showWelcomeMessage(group.welcomeMessage); $event.preventDefault()" href>
                   <i class="fa fa-fw fa-commenting"></i>
