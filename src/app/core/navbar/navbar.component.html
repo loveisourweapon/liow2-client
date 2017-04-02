@@ -57,10 +57,11 @@
             Campaign
           </a>
         </li>
-        <li dropdown>
+
+        <li dropdown placement="bottom right" class="dropdown" *ngIf="isAuthenticated$ | async">
           <a
-            class="user-dropdown"
             dropdownToggle
+            class="user-dropdown dropdown-toggle"
             role="button"
             aria-haspopup="true"
             aria-expanded="false"
@@ -68,7 +69,7 @@
             <img [src]="(authUser$ | async)?.picture || '/images/user0.png'" class="img-circle">
             <span class="caret"></span>
           </a>
-          <ul dropdownMenu *ngIf="isAuthenticated$ | async">
+          <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
             <li class="dropdown-header">
               {{ (authUser$ | async)?.name }}
             </li>
@@ -110,9 +111,21 @@
                 Logout
               </a>
             </li>
-          </ul><!-- [dropdownMenu](isAuthenticated) -->
+          </ul>
+        </li><!-- [dropdown](isAuthenticated) -->
 
-          <ul dropdownMenu *ngIf="!(isAuthenticated$ | async)">
+        <li dropdown placement="bottom right" class="dropdown" *ngIf="!(isAuthenticated$ | async)">
+          <a
+            dropdownToggle
+            class="user-dropdown dropdown-toggle"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img src="/images/user0.png" class="img-circle">
+            <span class="caret"></span>
+          </a>
+          <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
             <li>
               <a (click)="openLogin(); $event.preventDefault()" href>
                 <i class="fa fa-fw fa-sign-in"></i>
@@ -131,8 +144,8 @@
                 Group Signup
               </a>
             </li>
-          </ul><!-- [dropdownMenu](!isAuthenticated) -->
-        </li>
+          </ul>
+        </li><!-- [dropdown](!isAuthenticated) -->
       </ul>
     </div>
   </div>

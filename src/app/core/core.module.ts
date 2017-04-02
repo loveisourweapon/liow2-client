@@ -1,7 +1,7 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { AlertModule } from 'ng2-bootstrap/alert';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { TabsModule } from 'ng2-bootstrap/tabs';
 import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
@@ -23,7 +23,7 @@ import { TitleService } from './title.service';
     Ng2UiAuthModule.forRoot(AuthConfig),
 
     AlertModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     TypeaheadModule.forRoot(),

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AlertModule } from 'ng2-bootstrap/alert';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { TabsModule } from 'ng2-bootstrap/tabs';
 
@@ -12,7 +12,7 @@ import { GroupComponent } from './group.component';
 @NgModule({
   imports: [
     AlertModule,
-    DropdownModule,
+    BsDropdownModule,
     ModalModule,
     TabsModule,
 

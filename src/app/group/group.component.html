@@ -32,6 +32,8 @@
               class="btn-group btn-block"
               *ngFor="let item of (campaign$ | async)?.deeds; trackBy: identifyDeedPublish"
               dropdown
+              placement="bottom right"
+              container="body"
             >
               <a
                 [routerLink]="['/d', item.deed.urlTitle]"
@@ -43,7 +45,7 @@
                 {{ item.deed.title }}
               </a>
               <button
-                type="button"
+                type="button dropdown-toggle"
                 class="btn"
                 [class.btn-primary]="item.published"
                 [class.btn-default]="!item.published"
@@ -53,7 +55,7 @@
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
-              <ul class="dropdown-menu-right" dropdownMenu>
+              <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
                 <li *ngIf="!item.published">
                   <a (click)="setPublished(campaign$, item.deed, true); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-up"></i>
