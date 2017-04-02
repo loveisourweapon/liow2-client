@@ -31,7 +31,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.state$ = this.store.select(fromRoot.getGroupsControlPanel);
     this.title.set(`Groups | Control Panel`);
 
-    this.route.queryParams
+    this.routerSubscription = this.route.queryParams
       .first()
       .subscribe((queryParams: Params) => {
         const initialParams: any = {};
