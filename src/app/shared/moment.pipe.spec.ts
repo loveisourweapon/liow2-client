@@ -28,11 +28,16 @@ describe(`MomentPipe`, () => {
     });
   });
 
-  it(`returns 'Invalid date' message if empty or invalid string provided`, () => {
+  it(`returns an empty string if empty date provided`, () => {
     let result = pipe.transform('');
-    expect(result).toBe('Invalid date');
+    expect(result).toBe('');
 
-    result = pipe.transform('foobar');
+    result = pipe.transform(null);
+    expect(result).toBe('');
+  });
+
+  it(`returns 'Invalid date' message if invalid string provided`, () => {
+    const result = pipe.transform('foobar');
     expect(result).toBe('Invalid date');
   });
 });
