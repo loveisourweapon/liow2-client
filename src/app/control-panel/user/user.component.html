@@ -1,30 +1,31 @@
-<div class="row" *ngIf="(state$ | async)?.user">
+<div class="row" *ngIf="(state$ | async)?.user as user">
   <div class="col-sm-3 col-sm-push-9">
-    <img [src]="(state$ | async)?.user?.picture" class="profile img-responsive img-circle">
+    <img [src]="user.picture" class="profile img-responsive img-circle">
   </div>
   <div class="col-sm-9 col-sm-pull-3">
     <table class="table table-bordered table-striped">
       <tbody>
       <tr>
         <th>Email</th>
-        <td>{{ (state$ | async)?.user?.email }}</td>
+        <td>{{ user.email }}</td>
       </tr>
       <tr>
         <th>Name</th>
         <td>
-          <div *ngIf="!(state$ | async)?.isEditingName">
-            <a (click)="setEditingName(true); $event.preventDefault()" class="pull-right" href>
+          <div *ngIf="(state$ | async)?.isEditingName as isEditingName; then editNameForm; else editNameButton"></div>
+          <ng-template #editNameButton let-isEditingName>
+            <a (click)="setEditingName(!isEditingName, user); $event.preventDefault()" class="pull-right" href>
               <i class="fa fa-fw fa-pencil"></i>
             </a>
-            {{ (state$ | async)?.user?.name }}
-          </div>
-          <div *ngIf="(state$ | async)?.isEditingName">
-            <a (click)="setEditingName(false); $event.preventDefault()" class="pull-right" href>
+            {{ user.name }}
+          </ng-template>
+          <ng-template #editNameForm let-isEditingName>
+            <a (click)="setEditingName(!isEditingName); $event.preventDefault()" class="pull-right" href>
               <i class="fa fa-fw fa-times"></i>
             </a>
 
             <form
-              (ngSubmit)="form.valid && saveUserName(firstName.value, lastName.value)"
+              (ngSubmit)="form.valid && saveUserName(user, firstName.value, lastName.value)"
               #form="ngForm"
               class="form-inline"
               novalidate
@@ -60,23 +61,23 @@
                 <i class="fa fa-check"></i>
               </button>
             </form>
-          </div>
+          </ng-template>
         </td>
       </tr>
       <tr>
         <th>Password</th>
         <td>
-          <a (click)="openChangePassword(); $event.preventDefault()" href>
+          <a (click)="openChangePassword(user); $event.preventDefault()" href>
             Change password
           </a>
-          <a (click)="openChangePassword(); $event.preventDefault()" class="pull-right" href>
+          <a (click)="openChangePassword(user); $event.preventDefault()" class="pull-right" href>
             <i class="fa fa-fw fa-pencil"></i>
           </a>
         </td>
       </tr>
       <tr>
         <th>Joined</th>
-        <td>{{ (state$ | async)?.user?.created | moment:'LL' }}</td>
+        <td>{{ user.created | moment:'LL' }}</td>
       </tr>
       <tr>
         <th>Acts of Love</th>
@@ -85,16 +86,16 @@
       <tr>
         <th>Confirmed</th>
         <td>
-          <ui-icon-checked [isChecked]="(state$ | async)?.user?.confirmed"></ui-icon-checked>
-          <span *ngIf="!(state$ | async)?.user?.confirmed" class="m-l-xs">
-            <a (click)="sendConfirmEmail(); $event.preventDefault()" href>
+          <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
+          <span *ngIf="!user.confirmed" class="m-l-xs">
+            <a (click)="sendConfirmEmail(user.email); $event.preventDefault()" href>
               Re-send confirmation email?
               <i class="fa fa-cog fa-spin" [hidden]="!(state$ | async)?.isSendingConfirmEmail"></i>
             </a>
           </span>
         </td>
       </tr>
-      <tr *ngIf="(state$ | async)?.user?.superAdmin">
+      <tr *ngIf="user.superAdmin">
         <th>Super Admin</th>
         <td>
           <ui-icon-checked [isChecked]="true"></ui-icon-checked>

@@ -10,7 +10,7 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-3" *ngIf="(authUser$ | async) as authUser">
       <div class="list-group">
         <a
           class="list-group-item"
@@ -21,12 +21,12 @@
         </a>
       </div>
 
-      <div *ngIf="(authUser$ | async)?.groups?.length">
+      <div *ngIf="authUser?.groups?.length">
         <h4>Your Groups</h4>
         <div class="list-group">
           <a
             class="list-group-item"
-            *ngFor="let group of (authUser$ | async)?.groups; trackBy: identifyBy('_id')"
+            *ngFor="let group of authUser.groups; trackBy: identifyBy('_id')"
             [routerLink]="['/control-panel/group', group._id]"
             routerLinkActive="active"
           >
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div *ngIf="(authUser$ | async)?.superAdmin">
+      <div *ngIf="authUser.superAdmin">
         <h4>Admin</h4>
         <div class="list-group">
           <a

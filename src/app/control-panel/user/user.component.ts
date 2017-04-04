@@ -56,16 +56,12 @@ export class UserComponent implements OnInit, OnDestroy {
     this.stateSubscription.unsubscribe();
   }
 
-  setEditingName(isEditingName: boolean): void {
-    this.getUserFromState$()
-      .subscribe((user: User) =>
-        this.store.dispatch(new userControlPanel.SetIsEditingAction({ isEditingName, user })));
+  setEditingName(isEditingName: boolean, user: User): void {
+    this.store.dispatch(new userControlPanel.SetIsEditingAction({ isEditingName, user }));
   }
 
-  saveUserName(firstName: string, lastName: string): void {
-    this.getUserFromState$()
-      .subscribe((user: User) =>
-        this.store.dispatch(new userControlPanel.SaveUserNameAction({ user, firstName, lastName })));
+  saveUserName(user: User, firstName: string, lastName: string): void {
+    this.store.dispatch(new userControlPanel.SaveUserNameAction({ user, firstName, lastName }));
   }
 
   onUpdatePropertyAction(property: string, value: any): void {
@@ -74,18 +70,11 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
-  openChangePassword(): void {
-    this.getUserFromState$()
-      .subscribe((user: User) => this.store.dispatch(new modal.OpenChangePasswordAction(user)));
+  openChangePassword(user: User): void {
+    this.store.dispatch(new modal.OpenChangePasswordAction(user));
   }
 
-  sendConfirmEmail(): void {
-    this.getUserFromState$()
-      .subscribe((user: User) => this.store.dispatch(new auth.SendConfirmEmailAction(user.email)));
-  }
-
-  private getUserFromState$(): Observable<User> {
-    return this.state$.first()
-      .map((state: fromUserControlPanel.State) => state.user);
+  sendConfirmEmail(emailAddress: string): void {
+    this.store.dispatch(new auth.SendConfirmEmailAction(emailAddress));
   }
 }

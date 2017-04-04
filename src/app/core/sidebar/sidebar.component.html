@@ -36,14 +36,14 @@
         Global Activity Feed
       </a>
       <a
-        [routerLink]="['/g', (authGroup$ | async)?.urlName]"
+        [routerLink]="['/g', authGroup.urlName]"
         class="list-group-item list-group-item-inverse current-campaign"
-        *ngIf="(isAuthenticated$ | async) && (authGroup$ | async)"
+        *ngIf="(isAuthenticated$ | async) && (authGroup$ | async) as authGroup"
         (click)="closeMenu()"
       >
         <i class="fa fa-fw fa-users text-primary"></i>
         Current Campaign<br>
-        <small class="text-muted">{{ (authGroup$ | async)?.name }}</small>
+        <small class="text-muted">{{ authGroup.name }}</small>
       </a>
     </div>
 
