@@ -1,0 +1,27 @@
+<p>
+  Number of {{ typeOfItems }}:
+  <strong>{{ numberOfItems }}</strong>,
+  showing:
+  <strong>{{ ((currentPage - 1) * pageSize) + 1 }}</strong>
+  to
+  <strong>{{
+    currentPage === numberOfPages
+      ? numberOfItems
+      : currentPage * pageSize
+  }}</strong>
+</p>
+
+<pagination
+  [totalItems]="numberOfItems"
+  [itemsPerPage]="pageSize"
+  [ngModel]="currentPage"
+  (pageChanged)="currentPageChanged.emit($event.page)"
+  (numPages)="numberOfPagesChanged.emit($event)"
+  [maxSize]="5"
+  [boundaryLinks]="true"
+  firstText="&laquo;"
+  lastText="&raquo;"
+  nextText="&rsaquo;"
+  previousText="&lsaquo;"
+  class="m-none pagination-sm"
+></pagination>

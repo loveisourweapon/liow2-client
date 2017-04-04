@@ -18,6 +18,7 @@ import {
   TypeaheadStubDirective,
 } from './bootstrap-stubs';
 import {
+  ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   DeedListStubComponent,
   FeedStubComponent,
@@ -64,6 +65,7 @@ import {
     TabStubComponent,
     TypeaheadStubDirective,
 
+    ControlPanelPaginationStubComponent,
     ControlPanelSearchStubComponent,
     DeedListStubComponent,
     FeedStubComponent,

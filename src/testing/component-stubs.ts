@@ -1,6 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
+  selector: 'liow-control-panel-pagination',
+  template: ``,
+})
+export class ControlPanelPaginationStubComponent {
+  @Input() typeOfItems: string;
+  @Input() numberOfItems: number;
+  @Input() numberOfPages: number;
+  @Input() currentPage: number;
+  @Input() pageSize: number;
+  @Output() numberOfPagesChanged = new EventEmitter<number>();
+  @Output() currentPageChanged = new EventEmitter<number>();
+}
+
+@Component({
   selector: 'liow-control-panel-search',
   template: ``,
 })

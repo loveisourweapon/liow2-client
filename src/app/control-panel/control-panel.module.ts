@@ -7,6 +7,7 @@ import { SharedModule } from '../shared';
 import { ControlPanelRoutingModule } from './control-panel-routing.module';
 
 import { ControlPanelComponent } from './control-panel.component';
+import { ControlPanelPaginationComponent } from './pagination';
 import { ControlPanelSearchComponent } from './search';
 import { DeedsComponent } from './deeds';
 import { GroupComponent } from './group';
@@ -24,6 +25,7 @@ import { UsersComponent } from './users';
   ],
   declarations: [
     ControlPanelComponent,
+    ControlPanelPaginationComponent,
     ControlPanelSearchComponent,
     DeedsComponent,
     GroupComponent,

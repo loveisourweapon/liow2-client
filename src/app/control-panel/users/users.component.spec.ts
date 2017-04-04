@@ -8,9 +8,9 @@ import { MomentPipe } from '../../shared';
 import { State as AppState } from '../../store/reducer';
 import {
   ActivatedRouteStubService,
+  ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   IconCheckedStubComponent,
-  PaginationStubComponent,
   StoreStubService,
   TitleStubService,
 } from '../../../testing';
@@ -26,9 +26,9 @@ describe(`UsersComponent`, () => {
       .configureTestingModule({
         declarations: [
           UsersComponent,
+          ControlPanelPaginationStubComponent,
           ControlPanelSearchStubComponent,
           IconCheckedStubComponent,
-          PaginationStubComponent,
           MomentPipe,
         ],
         providers: [

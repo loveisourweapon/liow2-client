@@ -52,11 +52,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.store.dispatch(search({ query }));
   }
 
-  onPageChanged(page: number): void {
-    this.store.dispatch(new usersControlPanel.UpdatePageAction(page));
+  onCurrentPageChanged(currentPage: number): void {
+    this.store.dispatch(new usersControlPanel.UpdatePageAction(currentPage));
   }
 
-  onNumPagesChanged(numberOfPages: number): void {
+  onNumberOfPagesChanged(numberOfPages: number): void {
     this.store.dispatch(new usersControlPanel.UpdateNumberOfPagesAction(numberOfPages));
   }
 }

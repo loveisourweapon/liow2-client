@@ -55,11 +55,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.store.dispatch(search({ query }));
   }
 
-  onPageChanged(page: number): void {
-    this.store.dispatch(new groupsControlPanel.UpdatePageAction(page));
+  onCurrentPageChanged(currentPage: number): void {
+    this.store.dispatch(new groupsControlPanel.UpdatePageAction(currentPage));
   }
 
-  onNumPagesChanged(numberOfPages: number): void {
+  onNumberOfPagesChanged(numberOfPages: number): void {
     this.store.dispatch(new groupsControlPanel.UpdateNumberOfPagesAction(numberOfPages));
   }
 

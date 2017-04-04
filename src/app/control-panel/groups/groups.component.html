@@ -6,33 +6,16 @@
       autofocus
     ></liow-control-panel-search>
 
-    <div *ngIf="(state$ | async) as state">
-      <p>
-        Number of groups:
-        <strong>{{ state.numberOfGroups }}</strong>,
-        showing:
-        <strong>{{ ((state.page - 1) * state.pageSize) + 1 }}</strong>
-        to
-        <strong>{{
-          state.page === state.numberOfPages
-            ? state.numberOfGroups
-            : state.page * state.pageSize
-        }}</strong>
-      </p>
-
-      <pagination
-        [totalItems]="state.numberOfGroups"
-        [itemsPerPage]="state.pageSize"
-        [ngModel]="state.page"
-        (pageChanged)="onPageChanged($event.page)"
-        (numPages)="onNumPagesChanged($event)"
-        [maxSize]="5"
-        [rotate]="true"
-        nextText="&raquo;"
-        previousText="&laquo;"
-        class="m-none pagination-sm"
-      ></pagination>
-    </div>
+    <liow-control-panel-pagination
+      typeOfItems="groups"
+      [numberOfItems]="state.numberOfGroups"
+      [numberOfPages]="state.numberOfPages"
+      [currentPage]="state.page"
+      [pageSize]="state.pageSize"
+      (numberOfPagesChanged)="onNumberOfPagesChanged($event)"
+      (currentPageChanged)="onCurrentPageChanged($event)"
+      *ngIf="(state$ | async) as state"
+    ></liow-control-panel-pagination>
 
     <table class="table table-bordered table-striped table-middle">
       <thead>

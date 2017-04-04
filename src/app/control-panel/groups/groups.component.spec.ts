@@ -8,10 +8,10 @@ import { MomentPipe } from '../../shared';
 import { State as AppState } from '../../store/reducer';
 import {
   ActivatedRouteStubService,
+  ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   MarkedStubComponent,
   ModalStubDirective,
-  PaginationStubComponent,
   RouterLinkStubDirective,
   StoreStubService,
   TitleStubService,
@@ -28,10 +28,10 @@ describe(`GroupsComponent`, () => {
       .configureTestingModule({
         declarations: [
           GroupsComponent,
+          ControlPanelPaginationStubComponent,
           ControlPanelSearchStubComponent,
           MarkedStubComponent,
           ModalStubDirective,
-          PaginationStubComponent,
           RouterLinkStubDirective,
           MomentPipe,
         ],
