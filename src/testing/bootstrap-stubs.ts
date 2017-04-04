@@ -34,7 +34,10 @@ export class ModalStubDirective {
   template: ``,
 })
 export class PaginationStubComponent {
+  @Input() boundaryLinks: boolean;
   @Input() itemsPerPage: number;
+  @Input() firstText: string;
+  @Input() lastText: string;
   @Input() ngModel: any;
   @Input() maxSize: number;
   @Input() nextText: string;

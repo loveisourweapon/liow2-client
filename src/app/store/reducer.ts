@@ -28,6 +28,7 @@ import * as fromLoginModal from './modal/login/login.reducer';
 import * as fromSignupModal from './modal/signup/signup.reducer';
 import * as fromGroupsControlPanel from './control-panel/groups/groups.reducer';
 import * as fromUserControlPanel from './control-panel/user/user.reducer';
+import * as fromUsersControlPanel from './control-panel/users/users.reducer';
 
 export interface State {
   counters: fromCounter.State;
@@ -52,6 +53,7 @@ export interface State {
   // Control panels
   groupsControlPanel: fromGroupsControlPanel.State;
   userControlPanel: fromUserControlPanel.State;
+  usersControlPanel: fromUsersControlPanel.State;
 }
 
 const reducers = {
@@ -77,6 +79,7 @@ const reducers = {
   // Control panels
   groupsControlPanel: fromGroupsControlPanel.reducer,
   userControlPanel: fromUserControlPanel.reducer,
+  usersControlPanel: fromUsersControlPanel.reducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -185,6 +188,7 @@ export function getSignupModal(state: State) { return state.modalSignup; }
  */
 export function getGroupsControlPanel(state: State) { return state.groupsControlPanel; }
 export function getUserControlPanel(state: State) { return state.userControlPanel; }
+export function getUsersControlPanel(state: State) { return state.usersControlPanel; }
 
 
 /**

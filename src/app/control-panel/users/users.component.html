@@ -1,3 +1,77 @@
-<p>
-  users works!
-</p>
+<div class="row">
+  <div class="col-xs-12">
+    <liow-control-panel-search
+      [query]="(state$ | async)?.query"
+      (search)="onSearch($event)"
+      autofocus
+    ></liow-control-panel-search>
+
+    <div *ngIf="(state$ | async) as state">
+      <p>
+        Number of users:
+        <strong>{{ state.numberOfUsers }}</strong>,
+        showing:
+        <strong>{{ ((state.page - 1) * state.pageSize) + 1 }}</strong>
+        to
+        <strong>{{
+          state.page === state.numberOfPages
+            ? state.numberOfUsers
+            : state.page * state.pageSize
+        }}</strong>
+      </p>
+
+      <pagination
+        [totalItems]="state.numberOfUsers"
+        [itemsPerPage]="state.pageSize"
+        [ngModel]="state.page"
+        (pageChanged)="onPageChanged($event.page)"
+        (numPages)="onNumPagesChanged($event)"
+        [maxSize]="5"
+        [boundaryLinks]="true"
+        firstText="&laquo;"
+        lastText="&raquo;"
+        nextText="&rsaquo;"
+        previousText="&lsaquo;"
+        class="m-none pagination-sm"
+      ></pagination>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-middle">
+        <thead>
+          <tr>
+            <th style="width: 65px;">Picture</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th style="width: 95px;">Joined</th>
+            <th style="width: 95px;">Last Seen</th>
+            <th style="width: 90px;">Confirmed</th>
+            <!--<th ng-if="$ctrl.$state.params.groupId">Admin</th>-->
+            <th *ngIf="(authUser$ | async)?.superAdmin" style="width: 105px;">Super Admin</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of (state$ | async)?.users; trackBy: identifyBy('_id')">
+            <td class="text-center">
+              <img [src]="user.picture || '/images/user0.png'" class="img-circle icon">
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.created | moment:'YYYY-MM-DD' }}</td>
+            <td>{{ user.lastSeen | moment:'YYYY-MM-DD' }}</td>
+            <td class="text-center">
+              <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
+            </td>
+            <!--<td ng-if="$ctrl.$state.params.groupId" class="text-center">
+              <ui-icon-checked [isChecked]="$ctrl.Group.isAdmin($ctrl.group, user)"></ui-icon-checked>
+            </td>-->
+            <td *ngIf="(authUser$ | async)?.superAdmin" class="text-center">
+              <ui-icon-checked [isChecked]="user.superAdmin"></ui-icon-checked>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
