@@ -30,6 +30,22 @@ export class ModalStubDirective {
 }
 
 @Component({
+  selector: 'pagination',
+  template: ``,
+})
+export class PaginationStubComponent {
+  @Input() itemsPerPage: number;
+  @Input() ngModel: any;
+  @Input() maxSize: number;
+  @Input() nextText: string;
+  @Input() previousText: string;
+  @Input() rotate: boolean;
+  @Input() totalItems: number;
+  @Output() numPages = new EventEmitter<number>();
+  @Output() pageChanged = new EventEmitter<number>();
+}
+
+@Component({
   selector: 'tabset',
   template: ``
 })

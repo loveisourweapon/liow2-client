@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { has } from 'lodash';
 
 import { TitleService } from '../../core';
 import { identifyBy } from '../../shared';
@@ -40,12 +39,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.title.set(`Groups | Control Panel`);
 
     this.routerSubscription = this.route.queryParams
-      .first()
-      .subscribe((queryParams: Params) => {
-        const initialParams: any = {};
-        if (has(queryParams, 'query')) { initialParams.query = queryParams.query; }
-        if (has(queryParams, 'page')) { initialParams.page = Number(queryParams.query); }
-        this.store.dispatch(new groupsControlPanel.InitialiseAction(initialParams));
+      .distinctUntilChanged()
+      .map((queryParams: Params) => queryParams.query || '')
+      .subscribe((query: string) => {
+        this.store.dispatch(new groupsControlPanel.UpdateQueryAction(query));
+        this.store.dispatch(new groupsControlPanel.UpdatePageAction(1));
       });
   }
 
@@ -54,9 +52,15 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   onSearch(query: string): void {
-    // TODO: might be able to do this with just `search` and watch queryParams changes
-    this.store.dispatch(new groupsControlPanel.UpdateQueryAction(query));
     this.store.dispatch(search({ query }));
+  }
+
+  onPageChanged(page: number): void {
+    this.store.dispatch(new groupsControlPanel.UpdatePageAction(page));
+  }
+
+  onNumPagesChanged(numberOfPages: number): void {
+    this.store.dispatch(new groupsControlPanel.UpdateNumberOfPagesAction(numberOfPages));
   }
 
   openWelcomeMessage(group: Group): void {

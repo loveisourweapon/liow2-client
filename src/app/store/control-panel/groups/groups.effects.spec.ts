@@ -81,14 +81,6 @@ describe(`GroupsControlPanelEffects`, () => {
     beforeEach(() =>
       spyOn(store, 'select').and.returnValue(Observable.of(fromGroupsControlPanel.initialState)));
 
-    it(`should dispatch LOAD_GROUPS with INITIALISE action`, () => {
-      runner.queue(new groupsControlPanel.InitialiseAction());
-      groupsControlPanelEffects.triggerLoadGroups$.subscribe((result: Action) => {
-        expect(result.type).toBe(groupsControlPanel.ActionTypes.LOAD_GROUPS);
-        expect(result.payload).toBe(fromGroupsControlPanel.initialState);
-      });
-    });
-
     it(`should dispatch LOAD_GROUPS with UPDATE_QUERY action`, () => {
       runner.queue(new groupsControlPanel.UpdateQueryAction('query'));
       groupsControlPanelEffects.triggerLoadGroups$.subscribe((result: Action) => {

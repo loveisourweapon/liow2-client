@@ -36,7 +36,6 @@ export class GroupsControlPanelEffects {
   @Effect()
   triggerLoadGroups$: Observable<Action> = this.actions$
     .ofType(
-      groupsControlPanel.ActionTypes.INITIALISE,
       groupsControlPanel.ActionTypes.UPDATE_QUERY,
       groupsControlPanel.ActionTypes.UPDATE_PAGE,
     )

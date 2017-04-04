@@ -3,6 +3,7 @@ import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { AlertModule } from 'ng2-bootstrap/alert';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
 import { ModalModule } from 'ng2-bootstrap/modal';
+import { PaginationModule } from 'ng2-bootstrap/pagination';
 import { TabsModule } from 'ng2-bootstrap/tabs';
 import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
 
@@ -25,6 +26,7 @@ import { TitleService } from './title.service';
     AlertModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    PaginationModule.forRoot(),
     TabsModule.forRoot(),
     TypeaheadModule.forRoot(),
 

@@ -6,30 +6,33 @@
       autofocus
     ></liow-control-panel-search>
 
-    <!--<p>
-      Number of groups:
-      <strong>{{ $ctrl.numberOfGroups }}</strong>,
-      showing:
-      <strong>{{ (($ctrl.page - 1) * $ctrl.pageSize) + 1 }}</strong>
-      to
-      <strong>{{
-        $ctrl.page == $ctrl.numberOfPages ?
-        $ctrl.numberOfGroups :
-        $ctrl.page * $ctrl.pageSize
+    <div *ngIf="(state$ | async) as state">
+      <p>
+        Number of groups:
+        <strong>{{ state.numberOfGroups }}</strong>,
+        showing:
+        <strong>{{ ((state.page - 1) * state.pageSize) + 1 }}</strong>
+        to
+        <strong>{{
+          state.page === state.numberOfPages
+            ? state.numberOfGroups
+            : state.page * state.pageSize
         }}</strong>
-    </p>-->
+      </p>
 
-    <!--<ul uib-pagination
-        total-items="$ctrl.numberOfGroups"
-        items-per-page="$ctrl.pageSize"
-        ng-model="$ctrl.page"
-        ng-change="$ctrl.onPaginationChange($ctrl.page)"
-        num-pages="$ctrl.numberOfPages"
-        boundary-link-numbers="true"
-        max-size="5"
-        previous-text="&laquo;"
-        next-text="&raquo;"
-        class="m-none pagination-sm"></ul>-->
+      <pagination
+        [totalItems]="state.numberOfGroups"
+        [itemsPerPage]="state.pageSize"
+        [ngModel]="state.page"
+        (pageChanged)="onPageChanged($event.page)"
+        (numPages)="onNumPagesChanged($event)"
+        [maxSize]="5"
+        [rotate]="true"
+        nextText="&raquo;"
+        previousText="&laquo;"
+        class="m-none pagination-sm"
+      ></pagination>
+    </div>
 
     <table class="table table-bordered table-striped table-middle">
       <thead>

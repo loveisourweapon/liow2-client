@@ -8,6 +8,7 @@ export interface State {
   query: string;
   page: number;
   pageSize: number;
+  numberOfPages: number;
   groups: Group[];
   numberOfGroups: number;
 }
@@ -17,15 +18,13 @@ export const initialState: State = {
   query: '',
   page: 1,
   pageSize: 20,
+  numberOfPages: 1,
   groups: null,
   numberOfGroups: 0,
 };
 
 export function reducer(state = initialState, action: groupsControlPanel.Actions): State {
   switch (action.type) {
-    case groupsControlPanel.ActionTypes.INITIALISE:
-      return assign({}, initialState, action.payload);
-
     case groupsControlPanel.ActionTypes.LOAD_GROUPS:
       return assign({}, state, {
         isLoading: true,
@@ -49,6 +48,11 @@ export function reducer(state = initialState, action: groupsControlPanel.Actions
     case groupsControlPanel.ActionTypes.UPDATE_PAGE:
       return assign({}, state, {
         page: action.payload,
+      });
+
+    case groupsControlPanel.ActionTypes.UPDATE_NUMBER_OF_PAGES:
+      return assign({}, state, {
+        numberOfPages: action.payload,
       });
 
     default:
