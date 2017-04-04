@@ -32,6 +32,7 @@ export class ControlPanelComponent implements OnInit {
     // Get active page from router
     this.activePage$ = this.router.events
       .filter((event: Event) => event instanceof NavigationEnd)
+      .filter((event: NavigationEnd) => /^\/control-panel/.test(event.urlAfterRedirects))
       .map((event: NavigationEnd) => {
         const [, , routePath] = event.urlAfterRedirects.split('/');
         const [pageTitle] = routePath.split('?');
