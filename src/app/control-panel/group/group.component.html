@@ -1,3 +1,103 @@
-<p>
-  group works!
-</p>
+<ul class="nav nav-pills" role="tablist">
+  <li [class.active]="rlaGroup.isActive" role="presentation">
+    <a
+      [routerLink]="['.']"
+      routerLinkActive
+      #rlaGroup="routerLinkActive"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <i class="fa fa-fw fa-users"></i>
+      Overview
+    </a>
+  </li>
+  <li
+    [class.active]="rlaUsers.isActive"
+    ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current) || $ctrl.User.isSuperAdmin()"
+    role="presentation"
+  >
+    <a
+      [routerLink]="['users']"
+      routerLinkActive
+      #rlaUsers="routerLinkActive"
+    >
+      <i class="fa fa-fw fa-user"></i>
+      Users
+    </a>
+  </li>
+  <!--<li
+    [class.active]="rlaTestimonies.isActive"
+    ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current) || $ctrl.User.isSuperAdmin()"
+    role="presentation"
+  >
+    <a
+      [routerLink]="['testimonies']"
+      routerLinkActive
+      #rlaTestimonies="routerLinkActive"
+    >
+      <i class="fa fa-fw fa-comment"></i>
+      Testimonies
+    </a>
+  </li>-->
+</ul>
+
+<router-outlet>
+  <div class="row">
+    <div class="col-sm-3 col-sm-push-9 m-b-md">
+      <img src="/images/group.png" class="profile img-responsive img-circle">
+
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="updateGroup()"
+        ng-click="$ctrl.updateGroup($ctrl.group)"
+        ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current)"
+      >
+        <!-- TODO: allow superAdmin access -->
+        <i class="fa fa-fw fa-edit"></i>
+        Update
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="leaveGroup()"
+        ng-click="$ctrl.leaveGroup($ctrl.User.current, $ctrl.group)"
+        ng-if="$ctrl.User.isMemberOfGroup($ctrl.group)"
+      >
+        <i class="fa fa-fw fa-sign-out"></i>
+        Leave
+      </button>
+    </div>
+
+    <div class="col-sm-9 col-sm-pull-3">
+      <table class="table table-bordered table-striped" *ngIf="(state$ | async)?.group as group">
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>{{ group.name }}</td>
+          </tr>
+          <tr>
+            <th>Created</th>
+            <td>{{ group.created | moment:'LL' }}</td>
+          </tr>
+          <tr>
+            <th>Members</th>
+            <td>{{ (state$ | async)?.numberOfMembers | number }}</td>
+          </tr>
+          <tr>
+            <th>Acts of Love</th>
+            <td>{{ groupCounter$ | async | number }}</td>
+          </tr>
+          <tr>
+            <th>Welcome Message</th>
+            <td>
+              <ui-marked
+                [content]="group.welcomeMessage"
+                *ngIf="group.welcomeMessage"
+              ></ui-marked>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</router-outlet>

@@ -14,7 +14,15 @@ const controlPanelRoutes: Routes = [
     component: ControlPanelComponent,
     children: [
       { path: 'deeds', component: DeedsComponent, data: { title: 'Deeds' } },
-      { path: 'group/:groupId', component: GroupComponent, data: { title: 'Group' } },
+      {
+        path: 'group/:groupId',
+        component: GroupComponent,
+        data: { title: 'Group' },
+        children: [
+          { path: 'users', component: UsersComponent },
+          // { path: 'testimonies', component: CommentsComponent },
+        ],
+      },
       { path: 'groups', component: GroupsComponent, data: { title: 'Groups' } },
       { path: 'user', component: UserComponent, data: { title: 'User' } },
       { path: 'users', component: UsersComponent, data: { title: 'Users' } },

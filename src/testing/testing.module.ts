@@ -34,6 +34,7 @@ import {
 import {
   ActivatedRouteStubService,
   RouterLinkStubDirective,
+  RouterLinkActiveStubDirective,
   RouterOutletStubComponent,
   RouterStubService,
 } from './router-stubs';
@@ -79,6 +80,7 @@ import {
     YoutubePlayerStubComponent,
 
     RouterLinkStubDirective,
+    RouterLinkActiveStubDirective,
     RouterOutletStubComponent,
   ],
   providers: [

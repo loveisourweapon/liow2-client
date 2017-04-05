@@ -24,3 +24,12 @@ export class RouterOutletStubComponent { }
 export class RouterLinkStubDirective {
   @Input('routerLink') linkParams: any;
 }
+
+@Directive({
+  selector: '[routerLinkActive]',
+  exportAs: 'routerLinkActive',
+})
+export class RouterLinkActiveStubDirective {
+  @Input() routerLinkActive: string;
+  @Input() routerLinkActiveOptions: any;
+}

@@ -15,6 +15,7 @@ import { LayoutEffects } from './layout';
 import { UserEffects, UserService } from './user';
 import { GroupEditModalEffects } from './modal/group-edit';
 import { CampaignEditModalEffects } from './modal/campaign-edit';
+import { GroupControlPanelEffects } from './control-panel/group';
 import { GroupsControlPanelEffects } from './control-panel/groups';
 import { UserControlPanelEffects } from './control-panel/user';
 import { UsersControlPanelEffects } from './control-panel/users';
@@ -42,6 +43,7 @@ import { UsersControlPanelEffects } from './control-panel/users';
     EffectsModule.run(GroupEditModalEffects),
 
     // Control panels
+    EffectsModule.run(GroupControlPanelEffects),
     EffectsModule.run(GroupsControlPanelEffects),
     EffectsModule.run(UserControlPanelEffects),
     EffectsModule.run(UsersControlPanelEffects),
