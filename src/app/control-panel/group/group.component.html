@@ -12,7 +12,7 @@
   </li>
   <li
     [class.active]="rlaUsers.isActive"
-    ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current) || $ctrl.User.isSuperAdmin()"
+    *ngIf="(isUserAn$(adminOfGroup, authUser$, state$) | async) || (authUser$ | async)?.superAdmin"
     role="presentation"
   >
     <a
@@ -26,7 +26,7 @@
   </li>
   <!--<li
     [class.active]="rlaTestimonies.isActive"
-    ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current) || $ctrl.User.isSuperAdmin()"
+    *ngIf="(isUserAn$(adminOfGroup, authUser$, state$) | async) || (authUser$ | async)?.superAdmin"
     role="presentation"
   >
     <a
@@ -41,16 +41,15 @@
 </ul>
 
 <router-outlet>
-  <div class="row">
+  <div class="row" *ngIf="(state$ | async)?.group as group">
     <div class="col-sm-3 col-sm-push-9 m-b-md">
       <img src="/images/group.png" class="profile img-responsive img-circle">
 
       <button
         type="button"
         class="btn btn-default btn-block"
-        (click)="updateGroup()"
-        ng-click="$ctrl.updateGroup($ctrl.group)"
-        ng-if="$ctrl.Group.isAdmin($ctrl.group, $ctrl.User.current)"
+        (click)="openGroupEditModal(group)"
+        *ngIf="isUserAn$(adminOfGroup, authUser$, state$) | async"
       >
         <!-- TODO: allow superAdmin access -->
         <i class="fa fa-fw fa-edit"></i>
@@ -59,9 +58,8 @@
       <button
         type="button"
         class="btn btn-default btn-block"
-        (click)="leaveGroup()"
-        ng-click="$ctrl.leaveGroup($ctrl.User.current, $ctrl.group)"
-        ng-if="$ctrl.User.isMemberOfGroup($ctrl.group)"
+        (click)="leaveGroup(authUser$, group)"
+        *ngIf="isUserAn$(memberOfGroup, authUser$, state$) | async"
       >
         <i class="fa fa-fw fa-sign-out"></i>
         Leave
@@ -69,7 +67,7 @@
     </div>
 
     <div class="col-sm-9 col-sm-pull-3">
-      <table class="table table-bordered table-striped" *ngIf="(state$ | async)?.group as group">
+      <table class="table table-bordered table-striped">
         <tbody>
           <tr>
             <th>Name</th>

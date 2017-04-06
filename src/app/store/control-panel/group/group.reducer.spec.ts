@@ -2,6 +2,7 @@ import { assign } from 'lodash';
 
 import { initialState, reducer } from './index';
 import * as groupControlPanel from './group.actions';
+import * as group from '../../group/group.actions';
 import { Group } from '../../group';
 
 describe(`group control panel reducer`, () => {
@@ -18,6 +19,13 @@ describe(`group control panel reducer`, () => {
     const state = reducer(initialState, new groupControlPanel.SetGroupAction(group));
     expect(state).not.toBe(initialState);
     expect(state.group).toBe(group);
+  });
+
+  it(`should set group with UPDATE_SUCCESS action`, () => {
+    const updatedGroup = <Group>{};
+    const state = reducer(initialState, new group.UpdateSuccessAction(updatedGroup));
+    expect(state).not.toBe(initialState);
+    expect(state.group).toBe(updatedGroup);
   });
 
   it(`should set numberOfMembers with SET_NUMBER_OF_MEMBERS action`, () => {

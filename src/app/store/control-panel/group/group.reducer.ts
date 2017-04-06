@@ -2,6 +2,7 @@ import { assign } from 'lodash';
 
 import { Group } from '../../group';
 import * as groupControlPanel from './group.actions';
+import * as group from '../../group/group.actions';
 
 export interface State {
   group: Group;
@@ -13,7 +14,7 @@ export const initialState: State = {
   numberOfMembers: null,
 };
 
-export function reducer(state = initialState, action: groupControlPanel.Actions): State {
+export function reducer(state = initialState, action: groupControlPanel.Actions|group.Actions): State {
   switch (action.type) {
     case groupControlPanel.ActionTypes.FIND_AND_SET_GROUP:
       return assign({}, initialState);
@@ -26,6 +27,11 @@ export function reducer(state = initialState, action: groupControlPanel.Actions)
     case groupControlPanel.ActionTypes.SET_NUMBER_OF_MEMBERS:
       return assign({}, state, {
         numberOfMembers: action.payload,
+      });
+
+    case group.ActionTypes.UPDATE_SUCCESS:
+      return assign({}, state, {
+        group: action.payload,
       });
 
     default:

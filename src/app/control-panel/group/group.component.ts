@@ -10,6 +10,8 @@ import * as fromRoot from '../../store/reducer';
 import * as groupControlPanel from '../../store/control-panel/group/group.actions';
 import { State as GroupControlPanelState } from '../../store/control-panel/group/group.reducer';
 import { Group, GroupId } from '../../store/group';
+import * as modal from '../../store/modal/modal.actions';
+import { GroupEditAction } from '../../store/modal/group-edit';
 import { User } from '../../store/user';
 
 @Component({
@@ -47,10 +49,14 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.routeSubscription.unsubscribe();
   }
 
-  isUserAn$(predicate: (User, Group) => boolean, user$: Observable<User>, group$: Observable<Group>): Observable<boolean> {
-    return Observable.combineLatest(user$, group$)
+  isUserAn$(
+    predicate: (User, Group) => boolean,
+    user$: Observable<User>,
+    state$: Observable<GroupControlPanelState>,
+  ): Observable<boolean> {
+    return Observable.combineLatest(user$, state$)
       .distinctUntilChanged()
-      .map(([user, group]: [User, Group]) => predicate(user, group));
+      .map(([user, state]: [User, GroupControlPanelState]) => predicate(user, state.group));
   }
 
   memberOfGroup(user: User, group: Group): boolean {
@@ -65,6 +71,9 @@ export class GroupComponent implements OnInit, OnDestroy {
       && group.admins.includes(user._id);
   }
 
-  updateGroup(): void { }
-  leaveGroup(): void { }
+  openGroupEditModal(group: Group): void {
+    this.store.dispatch(new modal.OpenGroupEditAction({ action: GroupEditAction.Update, group }));
+  }
+
+  leaveGroup(user$: Observable<User>, group: Group): void { }
 }
