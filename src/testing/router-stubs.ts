@@ -1,5 +1,5 @@
 /* tslint:disable:component-selector directive-selector no-input-rename */
-import { Component, Directive, Injectable, Input } from '@angular/core';
+import { Component, Directive, EventEmitter, Injectable, Input, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -18,7 +18,10 @@ export class RouterStubService {
   selector: 'router-outlet',
   template: ``,
 })
-export class RouterOutletStubComponent { }
+export class RouterOutletStubComponent {
+  @Output() activate = new EventEmitter();
+  @Output() deactivate = new EventEmitter();
+}
 
 @Directive({ selector: '[routerLink]' })
 export class RouterLinkStubDirective {

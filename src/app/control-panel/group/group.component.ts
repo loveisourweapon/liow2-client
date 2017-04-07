@@ -22,6 +22,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   authUser$: Observable<User>;
   state$: Observable<GroupControlPanelState>;
   groupCounter$: Observable<number>;
+  isChildRouteActive = 0;
 
   private routeSubscription: Subscription;
 
@@ -47,6 +48,10 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
+  }
+
+  setChildRouteActive(value) {
+    this.isChildRouteActive += value;
   }
 
   isUserAn$(
