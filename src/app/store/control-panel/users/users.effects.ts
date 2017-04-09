@@ -15,8 +15,9 @@ export class UsersControlPanelEffects {
   @Effect()
   loadUsers$: Observable<Action> = this.actions$
     .ofType(usersControlPanel.ActionTypes.LOAD_USERS).map(toPayload)
-    .flatMap(({ query, page, pageSize }: fromUsersControlPanel.State) => {
+    .flatMap(({ groupId, query, page, pageSize }: fromUsersControlPanel.State) => {
       const searchParams = <SearchParams>{
+        groups: groupId || undefined,
         query,
         limit: pageSize,
         skip: (page - 1) * pageSize,
@@ -36,6 +37,7 @@ export class UsersControlPanelEffects {
   @Effect()
   triggerLoadUsers$: Observable<Action> = this.actions$
     .ofType(
+      usersControlPanel.ActionTypes.UPDATE_GROUP_ID,
       usersControlPanel.ActionTypes.UPDATE_QUERY,
       usersControlPanel.ActionTypes.UPDATE_PAGE,
     )

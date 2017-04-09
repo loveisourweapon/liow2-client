@@ -5,6 +5,12 @@ import * as usersControlPanel from './users.actions';
 import { User } from '../../user';
 
 describe(`users control panel reducer`, () => {
+  it(`should reset all properties with INITIALISE action`, () => {
+    const state = reducer(initialState, new usersControlPanel.InitialiseAction());
+    expect(state).not.toBe(initialState);
+    expect(state).toEqual(initialState);
+  });
+
   it(`should set isLoading to true with LOAD_USERS action`, () => {
     const state = reducer(initialState, new usersControlPanel.LoadUsersAction(initialState));
     expect(state).not.toBe(initialState);
@@ -34,6 +40,13 @@ describe(`users control panel reducer`, () => {
     const state = reducer(initialState, new usersControlPanel.UpdateQueryAction(query));
     expect(state).not.toBe(initialState);
     expect(state.query).toBe(query);
+  });
+
+  it(`should update groupId property with UPDATE_GROUP_ID action`, () => {
+    const groupId = 'abc123';
+    const state = reducer(initialState, new usersControlPanel.UpdateGroupIdAction(groupId));
+    expect(state).not.toBe(initialState);
+    expect(state.groupId).toBe(groupId);
   });
 
   it(`should update page property with UPDATE_PAGE action`, () => {

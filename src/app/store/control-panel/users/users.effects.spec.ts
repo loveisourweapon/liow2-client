@@ -45,6 +45,7 @@ describe(`UsersControlPanelEffects`, () => {
       runner.queue(new usersControlPanel.LoadUsersAction(fromUsersControlPanel.initialState));
       usersControlPanelEffects.loadUsers$.subscribe(() => {
         const searchParams = findSpy.calls.mostRecent().args[0];
+        expect(searchParams.groups).toBeUndefined();
         expect(searchParams.query).toBe(fromUsersControlPanel.initialState.query);
         expect(searchParams.limit).toBe(fromUsersControlPanel.initialState.pageSize);
         expect(searchParams.skip).toBe(0);
@@ -80,6 +81,14 @@ describe(`UsersControlPanelEffects`, () => {
   describe(`triggerLoadUsers$`, () => {
     beforeEach(() =>
       spyOn(store, 'select').and.returnValue(Observable.of(fromUsersControlPanel.initialState)));
+
+    it(`should dispatch LOAD_USERS with UPDATE_GROUP_ID action`, () => {
+      runner.queue(new usersControlPanel.UpdateGroupIdAction('abc123'));
+      usersControlPanelEffects.triggerLoadUsers$.subscribe((result: Action) => {
+        expect(result.type).toBe(usersControlPanel.ActionTypes.LOAD_USERS);
+        expect(result.payload).toBe(fromUsersControlPanel.initialState);
+      });
+    });
 
     it(`should dispatch LOAD_USERS with UPDATE_QUERY action`, () => {
       runner.queue(new usersControlPanel.UpdateQueryAction('query'));

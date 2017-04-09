@@ -6,6 +6,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class ActivatedRouteStubService {
   params = new BehaviorSubject<any>({});
   queryParams = new BehaviorSubject<any>({});
+  parent = <ActivatedRouteStubService>{
+    params: new BehaviorSubject<any>({}),
+    queryParams: new BehaviorSubject<any>({}),
+  };
 }
 
 @Injectable()

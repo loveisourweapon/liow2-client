@@ -1,10 +1,12 @@
 import { assign } from 'lodash';
 
+import { GroupId } from '../../group';
 import { User } from '../../user';
 import * as usersControlPanel from './users.actions';
 
 export interface State {
   isLoading: boolean;
+  groupId: GroupId;
   query: string;
   page: number;
   pageSize: number;
@@ -15,6 +17,7 @@ export interface State {
 
 export const initialState: State = {
   isLoading: false,
+  groupId: null,
   query: '',
   page: 1,
   pageSize: 20,
@@ -25,6 +28,9 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: usersControlPanel.Actions): State {
   switch (action.type) {
+    case usersControlPanel.ActionTypes.INITIALISE:
+      return assign({}, initialState);
+
     case usersControlPanel.ActionTypes.LOAD_USERS:
       return assign({}, state, {
         isLoading: true,
@@ -38,6 +44,11 @@ export function reducer(state = initialState, action: usersControlPanel.Actions)
     case usersControlPanel.ActionTypes.LOAD_USERS_SUCCESS:
       return assign({}, state, action.payload, {
         isLoading: false,
+      });
+
+    case usersControlPanel.ActionTypes.UPDATE_GROUP_ID:
+      return assign({}, state, {
+        groupId: action.payload,
       });
 
     case usersControlPanel.ActionTypes.UPDATE_QUERY:
