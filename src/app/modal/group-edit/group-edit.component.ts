@@ -48,7 +48,7 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
   groupUsers = [];
   setupCampaign = true;
   errorMessage = '';
-  errors = {};
+  errors: { [key: string]: any } = {};
 
   private stateSubscription: Subscription;
 

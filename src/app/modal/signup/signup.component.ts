@@ -30,7 +30,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   };
   joinGroup = true;
   errorMessage = '';
-  errors = {};
+  errors: { [key: string]: any } = {};
 
   private stateSubscription: Subscription;
 
