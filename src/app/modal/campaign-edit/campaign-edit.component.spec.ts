@@ -2,21 +2,28 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { DragulaModule } from 'ng2-dragula';
 
-import { State as AppState } from '../../store/reducer';
-import { State as CampaignEditModalState, CampaignEditAction } from '../../store/modal/campaign-edit';
-import { AlertStubComponent, ModalStubDirective, StoreStubService } from '../../../testing';
+import {
+  AlertifyStubService,
+  AlertStubComponent,
+  CampaignStubService,
+  DeedStubService,
+  ModalStubDirective,
+  ModalStubService,
+} from '../../../testing';
+import { Group } from '../../core/models';
+import { AlertifyService, CampaignService, DeedService, ModalService, StateService } from '../../core/services';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { CampaignEditModalComponent } from './campaign-edit.component';
+
+// TODO: add proper tests
 
 describe(`CampaignEditModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHost: TestHostComponent;
   let component: CampaignEditModalComponent;
   let element: DebugElement;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -33,7 +40,11 @@ describe(`CampaignEditModalComponent`, () => {
           FormsModule,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: CampaignService, useClass: CampaignStubService },
+          { provide: DeedService, useClass: DeedStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -44,34 +55,21 @@ describe(`CampaignEditModalComponent`, () => {
     testHost = fixture.componentInstance;
     element = fixture.debugElement.query(By.directive(CampaignEditModalComponent));
     component = element.injector.get(CampaignEditModalComponent);
-    store = TestBed.get(Store);
     fixture.detectChanges();
   });
 
   it(`should create`, () => {
     expect(component).toBeTruthy();
   });
-
-  // TODO: add proper tests
 });
 
 @Component({
   template: `
     <liow-campaign-edit-modal
-      [state]="state"
+      [group]="group"
     ></liow-campaign-edit-modal>
   `,
 })
 class TestHostComponent {
-  state = <CampaignEditModalState>{
-    action: CampaignEditAction.Create,
-    isOpen: false,
-    isSaving: false,
-    campaign: {
-      group: '',
-      deeds: [],
-    },
-    deeds: [],
-    errorMessage: '',
-  };
+  group = <Group>{ _id: 'abc123' };
 }

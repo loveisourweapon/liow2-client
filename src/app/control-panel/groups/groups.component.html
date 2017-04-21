@@ -1,20 +1,19 @@
 <div class="row">
   <div class="col-xs-12">
     <liow-control-panel-search
-      [query]="(state$ | async)?.query"
+      [query]="query$ | async"
       (search)="onSearch($event)"
       autofocus
     ></liow-control-panel-search>
 
     <liow-control-panel-pagination
       typeOfItems="groups"
-      [numberOfItems]="state.numberOfGroups"
-      [numberOfPages]="state.numberOfPages"
-      [currentPage]="state.page"
-      [pageSize]="state.pageSize"
-      (numberOfPagesChanged)="onNumberOfPagesChanged($event)"
-      (currentPageChanged)="onCurrentPageChanged($event)"
-      *ngIf="(state$ | async) as state"
+      [numberOfItems]="numberOfGroups$ | async"
+      [numberOfPages]="numberOfPages$ | async"
+      [currentPage]="page$ | async"
+      [pageSize]="pageSize$ | async"
+      (numberOfPagesChanged)="numberOfPages$.next($event)"
+      (currentPageChanged)="page$.next($event)"
     ></liow-control-panel-pagination>
 
     <table class="table table-bordered table-striped table-middle">
@@ -28,7 +27,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let group of (state$ | async)?.groups; trackBy: identifyBy('_id')">
+      <tr *ngFor="let group of (groups$ | async); trackBy: identifyBy('_id')">
         <td class="text-center">
           <img src="/images/group.png" class="img-circle icon">
         </td>

@@ -1,10 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
-import { StoreStubService } from '../../../testing';
+import { DeedStubService } from '../../../testing';
+import { Deed } from '../../core/models';
+import { DeedService } from '../../core/services';
 import { DeedListComponent } from './deed-list.component';
 
 describe(`DeedListComponent`, () => {
@@ -12,7 +14,7 @@ describe(`DeedListComponent`, () => {
   let testHost: TestHostComponent;
   let element: DebugElement;
 
-  const deeds = [];
+  const deeds: Deed[] = [];
 
   beforeEach(async(() => {
     TestBed
@@ -24,7 +26,7 @@ describe(`DeedListComponent`, () => {
           DeedListVerticalStubComponent,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: DeedService, useClass: DeedStubService },
         ],
       })
       .compileComponents();
@@ -35,7 +37,8 @@ describe(`DeedListComponent`, () => {
     testHost = fixture.componentInstance;
     element = fixture.debugElement;
 
-    spyOn(TestBed.get(Store), 'select').and.returnValue(Observable.of(deeds));
+    const deedService = TestBed.get(DeedService);
+    spyOn(deedService, 'find').and.returnValue(Observable.of(deeds));
 
     fixture.detectChanges();
   });
@@ -76,7 +79,7 @@ describe(`DeedListComponent`, () => {
 
     const horizontalElement = element.query(By.directive(DeedListHorizontalStubComponent));
     const horizontalComponent = horizontalElement.injector.get(DeedListHorizontalStubComponent);
-    expect(horizontalComponent.deeds).toEqual(deeds);
+    expect(horizontalComponent.deeds).toBe(deeds);
   });
 });
 
@@ -93,7 +96,6 @@ class TestHostComponent {
 })
 class DeedListHorizontalStubComponent {
   @Input() deeds: any;
-  @Input() counters: any;
 }
 
 @Component({
@@ -102,6 +104,4 @@ class DeedListHorizontalStubComponent {
 })
 class DeedListVerticalStubComponent {
   @Input() deeds: any;
-  @Input() currentDeed: any;
-  @Input() counters: any;
 }

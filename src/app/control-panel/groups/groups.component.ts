@@ -1,24 +1,30 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { search } from '@ngrx/router-store';
-import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import { TitleService } from '../../core';
-import { identifyBy } from '../../shared';
-import * as fromRoot from '../../store/reducer';
-import * as groupsControlPanel from '../../store/control-panel/groups/groups.actions';
-import * as fromGroupsControlPanel from '../../store/control-panel/groups/groups.reducer';
-import { Group } from '../../store/group';
+import { Group } from '../../core/models';
+import { GroupService, TitleService } from '../../core/services';
+import { identifyBy, SearchParams } from '../../shared';
 
 @Component({
   templateUrl: './groups.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupsComponent implements OnInit, OnDestroy {
-  state$: Observable<fromGroupsControlPanel.State>;
+export class GroupsComponent implements OnInit {
+  query$ = new BehaviorSubject<string>('');
+  page$ = new BehaviorSubject<number>(1);
+  pageSize$ = new BehaviorSubject<number>(20);
+  numberOfPages$ = new BehaviorSubject<number>(1);
+  groups$: Observable<Group[]>;
+  numberOfGroups$: Observable<number>;
+  filterParams$: Observable<SearchParams>;
 
   @ViewChild('welcomeMessageModal') welcomeMessageModal: ModalDirective;
   welcomeMessage: string;
@@ -26,41 +32,46 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   identifyBy = identifyBy;
 
-  private routerSubscription: Subscription;
-
   constructor(
+    private groupService: GroupService,
     private route: ActivatedRoute,
-    private store: Store<fromRoot.State>,
+    private router: Router,
     private title: TitleService,
   ) { }
 
   ngOnInit(): void {
-    this.state$ = this.store.select(fromRoot.getGroupsControlPanel);
-    this.title.set(`Groups | Control Panel`);
-
-    this.routerSubscription = this.route.queryParams
+    this.filterParams$ = Observable.combineLatest(
+      this.query$,
+      this.page$,
+      this.pageSize$,
+    )
       .distinctUntilChanged()
-      .map((queryParams: Params) => queryParams.query || '')
-      .subscribe((query: string) => {
-        this.store.dispatch(new groupsControlPanel.UpdateQueryAction(query));
-        this.store.dispatch(new groupsControlPanel.UpdatePageAction(1));
-      });
-  }
+      .map(([query, page, limit]: [string, number, number]) => (<SearchParams>{
+        query,
+        limit,
+        skip: (page - 1) * limit,
+        sort: '-_id',
+      }));
 
-  ngOnDestroy(): void {
-    this.routerSubscription.unsubscribe();
+    this.groups$ = this.filterParams$
+      .switchMap((searchParams: SearchParams) => this.groupService.find(searchParams));
+    this.numberOfGroups$ = this.filterParams$
+      .switchMap((searchParams: SearchParams) => this.groupService.count(searchParams));
+
+    // Get initial router params
+    this.route.queryParams
+      .first()
+      .subscribe((queryParams: Params) => this.query$.next(queryParams.query || ''));
+
+    this.title.set(`Groups | Control Panel`);
   }
 
   onSearch(query: string): void {
-    this.store.dispatch(search({ query }));
-  }
-
-  onCurrentPageChanged(currentPage: number): void {
-    this.store.dispatch(new groupsControlPanel.UpdatePageAction(currentPage));
-  }
-
-  onNumberOfPagesChanged(numberOfPages: number): void {
-    this.store.dispatch(new groupsControlPanel.UpdateNumberOfPagesAction(numberOfPages));
+    this.query$.next(query);
+    this.page$.next(1);
+    this.router.navigate([], {
+      queryParams: { query },
+    });
   }
 
   openWelcomeMessage(group: Group): void {

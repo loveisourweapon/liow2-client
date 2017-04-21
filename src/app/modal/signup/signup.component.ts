@@ -1,43 +1,64 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap/modal';
-import { assign, has } from 'lodash';
+import { assign, has, keys, pick } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/switchMap';
 
-import { State as AppState } from '../../store/reducer';
-import * as auth from '../../store/auth/auth.actions';
-import { Group } from '../../store/group';
-import * as modal from '../../store/modal/modal.actions';
-import { State as SignupModalState } from '../../store/modal/signup';
-import * as signupModal from '../../store/modal/signup/signup.actions';
-import { NewUser } from '../../store/user';
+import { ApiError, Credentials, Group, ModalState, NewUser } from '../../core/models';
+import { AlertifyService, AuthService, ModalService, StateService, UserService } from '../../core/services';
 
 @Component({
   selector: 'liow-signup-modal',
   templateUrl: './signup.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignupModalComponent implements OnChanges {
-  // Issue with exported interface 'fromSignupModal.State'
-  // https://github.com/angular/angular-cli/issues/2034
-  @Input() state = <SignupModalState>null;
+export class SignupModalComponent implements OnInit, OnDestroy {
   @Input() group: Group;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('form') form: NgForm;
 
+  isSigningUp$ = new BehaviorSubject<boolean>(false);
+  canSwitch = true;
+  user = <NewUser>{
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+  };
+  joinGroup = true;
+  errorMessage = '';
+  errors = {};
+
+  private stateSubscription: Subscription;
+
   constructor(
-    private store: Store<AppState>,
+    private alertify: AlertifyService,
+    private auth: AuthService,
+    public modalService: ModalService,
+    private state: StateService,
+    private userService: UserService,
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'state.currentValue')) {
-      if (this.state.isOpen && !this.modal.isShown) {
-        this.form.resetForm();
-        this.modal.show();
-      } else if (!this.state.isOpen && this.modal.isShown) {
-        this.modal.hide();
-      }
-    }
+  ngOnInit(): void {
+    this.stateSubscription = this.state.modal.signup$
+      .subscribe((state: ModalState) => {
+        if (state.isOpen && !this.modal.isShown) {
+          this.reset();
+          this.modal.show();
+        } else if (!state.isOpen && this.modal.isShown) {
+          this.modal.hide();
+        }
+
+        const options = <SignupModalOptions>state.options;
+        this.canSwitch = has(options, 'canSwitch') ? options.canSwitch : true;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.stateSubscription.unsubscribe();
   }
 
   signup(newUser: NewUser, joinGroup: boolean, group: Group): void {
@@ -45,25 +66,68 @@ export class SignupModalComponent implements OnChanges {
       newUser = assign({}, newUser, { groups: [group._id] });
     }
 
-    this.store.dispatch(new auth.SignupAction(newUser));
+    this.errorMessage = '';
+    this.errors = {};
+
+    this.isSigningUp$.next(true);
+    this.userService.save(newUser)
+      .switchMap(() => {
+        if (joinGroup) { this.state.auth.group = group; }
+
+        this.alertify.success(`Signed up. Please confirm your email address`);
+        return this.auth.authenticateEmail(<Credentials>pick(newUser, ['email', 'password']));
+      })
+      .finally(() => this.isSigningUp$.next(false))
+      .subscribe(
+        () => this.onClose(),
+        (error: ApiError) => {
+          if (has(error, 'errors') && keys(error.errors).length) {
+            this.errors = error.errors;
+          } else {
+            this.errorMessage = error.message;
+          }
+        },
+      );
   }
 
   authenticateFacebook(joinGroup: boolean, group: Group): void {
     const userData: any = {};
     if (group && joinGroup) { userData.group = group._id; }
 
-    this.store.dispatch(new auth.LoginWithFacebookAction(userData));
-  }
+    this.errorMessage = '';
+    this.errors = {};
 
-  onUpdatePropertyAction(property: string, value: boolean|string): void {
-    this.store.dispatch(new signupModal[`Update${property}Action`](value));
+    this.isSigningUp$.next(true);
+    this.auth.authenticateFacebook(userData)
+      .finally(() => this.isSigningUp$.next(false))
+      .subscribe(
+        () => {
+          if (joinGroup) { this.state.auth.group = group; }
+
+          this.onClose();
+          this.alertify.success(`Signed in`);
+        },
+        () => this.alertify.error(`Failed signing in`),
+      );
   }
 
   onClose(): void {
-    this.store.dispatch(new signupModal.CloseAction());
+    this.state.modal.signup$.next({ isOpen: false });
   }
 
-  openLogin(): void {
-    this.store.dispatch(new modal.OpenLoginAction());
+  private reset(): void {
+    this.isSigningUp$.next(false);
+    this.user.email = '';
+    this.user.password = '';
+    this.user.firstName = '';
+    this.user.lastName = '';
+    this.joinGroup = true;
+    this.errorMessage = '';
+    this.errors = {};
+    this.form.resetForm();
   }
+}
+
+interface SignupModalOptions {
+  canSwitch: boolean;
 }

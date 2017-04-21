@@ -1,24 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/first';
 
-import { State as LayoutState } from '../../store/layout';
-import * as layout from '../../store/layout/layout.actions';
 import {
+  ActStubService,
+  AuthStubService,
   DropdownStubDirective,
   DropdownMenuStubDirective,
   DropdownToggleStubDirective,
+  ModalStubService,
+  NavbarSearchStubComponent,
   RouterLinkStubDirective,
-  StoreStubService,
 } from '../../../testing';
+import { ActService, AuthService, ModalService, StateService } from '../services';
 import { NavbarComponent } from './navbar.component';
 
+// TODO: add more tests around what's being displayed and clicking more buttons
+
 describe(`NavbarComponent`, () => {
-  let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
+  let component: NavbarComponent;
   let element: DebugElement;
-  let store: Store<LayoutState>;
+  let state: StateService;
 
   beforeEach(async(() => {
     TestBed
@@ -32,7 +36,10 @@ describe(`NavbarComponent`, () => {
           RouterLinkStubDirective,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: ActService, useClass: ActStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -42,25 +49,19 @@ describe(`NavbarComponent`, () => {
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
     element = fixture.debugElement;
-    store = TestBed.get(Store);
+    state = TestBed.get(StateService);
 
     fixture.detectChanges();
   });
 
-  // TODO: add more tests around what's being displayed and clicking more buttons
+  it(`should set the menu state to open when clicking the navbar toggle button`, () => {
+    state.layout.isMenuOpen$.first()
+      .subscribe((isMenuOpen: boolean) => expect(isMenuOpen).toBe(false));
 
-  it(`should dispatch SET_IS_MENU_OPEN action with true payload when clicking the navbar toggle button`, () => {
-    const dispatchSpy = spyOn(store, 'dispatch');
     const toggleButton = element.query(By.css('button.navbar-toggle'));
     toggleButton.triggerEventHandler('click', null);
-    const action = dispatchSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(layout.ActionTypes.SET_IS_MENU_OPEN);
-    expect(action.payload).toBe(true);
+
+    state.layout.isMenuOpen$.first()
+      .subscribe((isMenuOpen: boolean) => expect(isMenuOpen).toBe(true));
   });
 });
-
-@Component({
-  selector: 'liow-navbar-search',
-  template: ``,
-})
-class NavbarSearchStubComponent { }

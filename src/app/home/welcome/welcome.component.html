@@ -8,7 +8,7 @@
           <br>
           <button
             type="button"
-            (click)="openSignupModal()"
+            (click)="modal.openSignup()"
             class="btn btn-primary"
           >
             Sign up
@@ -16,7 +16,7 @@
           &nbsp;&nbsp; or &nbsp;&nbsp;
           <button
             type="button"
-            (click)="openLoginModal()"
+            (click)="modal.openLogin()"
             class="btn btn-default"
           >
             Login
@@ -47,7 +47,7 @@
           <br><br><br>
           <button
             type="button"
-            (click)="openGroupEdit()"
+            (click)="modal.openGroupEdit()"
             class="btn btn-primary"
           >
             Start a Campaign for your Group!
@@ -57,19 +57,19 @@
 
       <div class="col-sm-3">
         <h1 class="text-primary m-b-none">
-          <span>{{ actsCount$ | async | number }}</span>
+          <span>{{ state.counter$('global') | async | number }}</span>
         </h1>
         <h4 class="m-none">acts of love</h4>
         <p class="m-t-none">done around the world</p>
 
         <h1 class="text-primary m-b-none">
-          <span>{{ groupsCount$ | async | number }}</span>
+          <span>{{ numberOfGroups$ | async | number }}</span>
         </h1>
         <h4 class="m-none">groups</h4>
         <p class="m-t-none">serving together</p>
 
         <h1 class="text-primary m-b-none">
-          <span>{{ usersCount$ | async | number }}</span>
+          <span>{{ numberOfUsers$ | async | number }}</span>
         </h1>
         <h4 class="m-none">individuals</h4>
         <p class="m-t-none">causing change</p>
@@ -113,7 +113,7 @@
           <br><br><br>
           <button
             type="button"
-            (click)="openGroupEdit()"
+            (click)="modal.openGroupEdit()"
             class="btn btn-primary"
           >
             Start a Campaign

@@ -6,7 +6,7 @@
   role="dialog"
   aria-labelledby="Deed preview"
   aria-hidden="true"
-  (onHide)="onClose()"
+  (onHidden)="onClose()"
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -15,32 +15,32 @@
         (close)="onClose()"
       ></liow-modal-header>
 
-      <div class="modal-body">
+      <div class="modal-body" *ngIf="deed$ | async as deed">
         <div class="modal-jumbotron">
-          <div class="embed-responsive embed-responsive-16by9" *ngIf="state.deed?.videoUrl">
+          <div class="embed-responsive embed-responsive-16by9" *ngIf="deed?.videoUrl as videoUrl">
             <ui-youtube-player
-              [videoUrl]="state.deed.videoUrl"
+              [videoUrl]="videoUrl"
               class="embed-responsive-item"
             ></ui-youtube-player>
           </div>
 
           <div class="deed-header clearfix">
             <img
-              [src]="state.deed?.logo || '/images/deed.png'"
+              [src]="deed?.logo || '/images/deed.png'"
               class="img-responsive img-circle pull-left m-t-md m-r-sm"
             >
 
             <h2 class="text-uppercase pull-left m-b-none">
-              {{ state.deed?.title }}
+              {{ deed?.title }}
             </h2>
 
             <h1 class="pull-right text-right m-b-none">
-              {{ getDeedCount(counters$, state.deed?._id) | async | number }}
+              {{ state.counter$(deed?._id) | async | number }}
             </h1>
           </div>
         </div>
 
-        <ui-marked [content]="state.deed?.content"></ui-marked>
+        <ui-marked [content]="deed?.content"></ui-marked>
       </div><!-- .modal-body -->
 
       <div class="modal-footer">

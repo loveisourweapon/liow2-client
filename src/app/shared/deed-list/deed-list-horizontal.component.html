@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="deed-text text-center">
-          <div class="deed-count">{{ getDeedCount(counters, deed._id) | number }}</div>
+          <div class="deed-count">{{ state.counter$(deed._id) | async | number }}</div>
           <div class="deed-subtext">Deeds Done</div>
         </div>
       </div>

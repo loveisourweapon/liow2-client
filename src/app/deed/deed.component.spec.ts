@@ -1,36 +1,44 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../core';
-import { State as AppState } from '../store/reducer';
 import {
+  ActStubService,
   ActivatedRouteStubService,
+  AlertifyStubService,
+  CommentStubService,
   DeedListStubComponent,
+  DeedStubService,
   FeedStubComponent,
   JumbtronStubComponent,
   MarkedStubComponent,
-  StoreStubService,
+  ModalStubService,
   TitleStubService,
   YoutubePlayerStubComponent,
 } from '../../testing';
+import {
+  ActService,
+  AlertifyService,
+  CommentService,
+  DeedService,
+  ModalService,
+  StateService,
+  TitleService,
+} from '../core/services';
 import { DeedComponent } from './deed.component';
 
 // TODO: Add proper tests!
-// Simple store spies won't work here because this component uses multiple `store.select` calls
-// need more complicated spies or testing methods
 
-xdescribe(`DeedComponent`, () => {
-  let component: DeedComponent;
+describe(`DeedComponent`, () => {
   let fixture: ComponentFixture<DeedComponent>;
-  let store: Store<AppState>;
+  let component: DeedComponent;
 
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
         declarations: [
           DeedComponent,
+          CommentFormStubComponent,
           DeedListStubComponent,
           FeedStubComponent,
           JumbtronStubComponent,
@@ -38,8 +46,13 @@ xdescribe(`DeedComponent`, () => {
           YoutubePlayerStubComponent,
         ],
         providers: [
+          { provide: ActService, useClass: ActStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: CommentService, useClass: CommentStubService },
+          { provide: DeedService, useClass: DeedStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
         ],
       })
@@ -49,10 +62,6 @@ xdescribe(`DeedComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DeedComponent);
     component = fixture.componentInstance;
-
-    store = TestBed.get(Store);
-    spyOn(TestBed.get(Store), 'select').and.returnValue(Observable.of([]));
-
     fixture.detectChanges();
   });
 
@@ -60,3 +69,14 @@ xdescribe(`DeedComponent`, () => {
     expect(component).toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'liow-comment-form',
+  template: ``,
+})
+class CommentFormStubComponent {
+  @Input() content: string;
+  @Input() isSaving: boolean;
+  @Output() change = new EventEmitter();
+  @Output() save = new EventEmitter();
+}

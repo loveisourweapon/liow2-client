@@ -1,31 +1,35 @@
 <liow-jumbotron
   image="/images/group.png"
-  [background]="(group$ | async)?.coverImage"
+  [background]="group.coverImage"
+  *ngIf="state.group$ | async as group"
 >
-  <div jumbotron-title>{{ (group$ | async)?.name }}</div>
+  <div jumbotron-title>{{ group.name }}</div>
   <div jumbotron-text>
     <span class="f-lg">
-      {{ groupCounter$ | async | number }}
+      {{ state.counter$(group._id) | async | number }}
     </span>
     acts of love
   </div>
 </liow-jumbotron>
 
 <div class="container container-pad">
-  <div class="row">
+  <div class="row" *ngIf="state.group$ | async as group">
     <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
-      <div class="well well-sm" *ngIf="(campaign$ | async) && (isUserAn$(memberOfGroup, authUser$, group$) | async)">
+      <div
+        class="well well-sm"
+        *ngIf="(isUserAn$(memberOfGroup, state.auth.user$, state.group$) | async) && (state.campaign$ | async) as campaign"
+      >
         <h5 class="text-center">
           Current Campaign<br>
           <small>
             <span class="f-lg">
-              {{ campaignCounter$ | async | number }}
+              {{ state.counter$(campaign._id) | async | number }}
             </span>
             acts of love
           </small>
         </h5>
 
-        <div [ngSwitch]="isUserAn$(adminOfGroup, authUser$, group$) | async">
+        <div [ngSwitch]="isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async">
           <!-- Show buttons with publish/unpublish menu for admins -->
           <div *ngSwitchCase="true">
             <div
@@ -33,14 +37,14 @@
               placement="bottom right"
               container="body"
               class="btn-group btn-block dropdown"
-              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: identifyBy('deed._id')"
+              *ngFor="let item of campaign.deeds; trackBy: identifyBy('deed._id')"
             >
               <a
                 [routerLink]="['/d', item.deed.urlTitle]"
                 class="btn"
                 [class.btn-primary]="item.published"
                 [class.btn-default]="!item.published"
-                [class.btn-lg]="isCurrentDeed(item.deed) | async"
+                [class.btn-lg]="isCurrentDeed(item.deed, campaign)"
               >
                 {{ item.deed.title }}
               </a>
@@ -50,20 +54,20 @@
                 class="btn dropdown-toggle"
                 [class.btn-primary]="item.published"
                 [class.btn-default]="!item.published"
-                [class.btn-lg]="isCurrentDeed(item.deed) | async"
+                [class.btn-lg]="isCurrentDeed(item.deed, campaign)"
               >
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
                 <li *ngIf="!item.published">
-                  <a (click)="setPublished(campaign$, item.deed, true); $event.preventDefault()" href>
+                  <a (click)="setPublished(item.deed, campaign, true); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-up"></i>
                     Publish
                   </a>
                 </li>
                 <li *ngIf="item.published">
-                  <a (click)="setPublished(campaign$, item.deed, false); $event.preventDefault()" href>
+                  <a (click)="setPublished(item.deed, campaign, false); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-down"></i>
                     Unpublish
                   </a>
@@ -75,7 +79,7 @@
             <button
               type="button"
               class="btn btn-default btn-block"
-              (click)="openCampaignEditModal(group$, campaign$)"
+              (click)="modal.openCampaignEdit('Update', campaign)"
             >
               <i class="fa fa-fw fa-edit"></i>
               Update campaign
@@ -83,7 +87,7 @@
             <button
               type="button"
               class="btn btn-default btn-block"
-              (click)="finishCampaign(campaign$)"
+              (click)="finishCampaign(campaign)"
             >
               <i class="fa fa-fw fa-flag-checkered"></i>
               Finish campaign
@@ -93,12 +97,12 @@
           <!-- Show a normal button for non-admins -->
           <div *ngSwitchCase="false">
             <a
-              *ngFor="let item of (campaign$ | async)?.deeds; trackBy: identifyBy('deed._id')"
+              *ngFor="let item of campaign?.deeds; trackBy: identifyBy('deed._id')"
               [routerLink]="['/d', item.deed.urlTitle]"
               class="btn btn-block"
               [class.btn-primary]="item.published"
               [class.btn-default]="!item.published"
-              [class.btn-lg]="isCurrentDeed(item.deed) | async"
+              [class.btn-lg]="isCurrentDeed(item.deed, campaign)"
             >
               {{ item.deed.title }}
             </a>
@@ -109,8 +113,8 @@
       <button
         type="button"
         class="btn btn-primary btn-block btn-lg"
-        (click)="joinGroup(authUser$, group$)"
-        *ngIf="(isAuthenticated$ | async) && !(isUserAn$(memberOfGroup, authUser$, group$) | async)"
+        (click)="joinGroup(state.auth.user$, state.group$)"
+        *ngIf="(state.auth.isAuthenticated$ | async) && !(isUserAn$(memberOfGroup, state.auth.user$, state.group$) | async)"
       >
         <i class="fa fa-fw fa-users"></i>
         Join us
@@ -118,8 +122,8 @@
       <button
         type="button"
         class="btn btn-primary btn-block btn-lg"
-        (click)="openLoginModal()"
-        *ngIf="!(isAuthenticated$ | async)"
+        (click)="modal.openLogin()"
+        *ngIf="!(state.auth.isAuthenticated$ | async)"
       >
         <i class="fa fa-fw fa-users"></i>
         Login &amp; Join us
@@ -127,8 +131,8 @@
       <button
         type="button"
         class="btn btn-default btn-block"
-        (click)="openCampaignEditModal(group$)"
-        *ngIf="!(campaign$ | async) && (isUserAn$(adminOfGroup, authUser$, group$) | async)"
+        (click)="modal.openCampaignEdit()"
+        *ngIf="!(state.campaign$ | async) && (isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async)"
       >
         <i class="fa fa-fw fa-bullhorn"></i>
         Setup campaign
@@ -136,8 +140,8 @@
       <button
         type="button"
         class="btn btn-default btn-block"
-        (click)="openGroupEditModal(group$)"
-        *ngIf="isUserAn$(adminOfGroup, authUser$, group$) | async"
+        (click)="modal.openGroupEdit('Update', group)"
+        *ngIf="isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async"
       >
         <i class="fa fa-fw fa-edit"></i>
         Update group
@@ -145,8 +149,8 @@
       <button
         type="button"
         class="btn btn-default btn-block"
-        (click)="leaveGroup(authUser$, group$)"
-        *ngIf="isUserAn$(memberOfGroup, authUser$, group$) | async"
+        (click)="leaveGroup(state.auth.user$, state.group$)"
+        *ngIf="isUserAn$(memberOfGroup, state.auth.user$, state.group$) | async"
       >
         <i class="fa fa-fw fa-sign-out"></i>
         Leave group
@@ -157,13 +161,13 @@
       <alert
         type="info"
         [dismissible]="true"
-        *ngIf="!(campaign$ | async) && (isUserAn$(adminOfGroup, authUser$, group$) | async)"
+        *ngIf="!(state.campaign$ | async) && (isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async)"
       >
         You haven't got an active campaign, would you like to set one up now?&nbsp;
         <button
           type="button"
           class="btn btn-info btn-inline m-t-xxs p-xs"
-          (click)="openCampaignEditModal(group$)"
+          (click)="modal.openCampaignEdit()"
         >
           Setup Campaign
         </button>
@@ -171,19 +175,19 @@
 
       <tabset type="pills">
         <tab
-          [active]="(currentTab$ | async) === tabs.Welcome"
-          (select)="setCurrentTab(tabs.Welcome)"
+          [active]="currentTab === tabs.Welcome"
+          (select)="currentTab = tabs.Welcome"
         >
-          <template tabHeading>
+          <ng-template tabHeading>
             <i class="fa fa-fw fa-commenting"></i>
             Welcome
-          </template>
+          </ng-template>
 
-          <blockquote *ngIf="(group$ | async)?.welcomeMessage">
-            <ui-marked [content]="(group$ | async)?.welcomeMessage"></ui-marked>
+          <blockquote *ngIf="group.welcomeMessage as welcomeMessage">
+            <ui-marked [content]="welcomeMessage"></ui-marked>
           </blockquote>
 
-          <div *ngIf="!(group$ | async)?.welcomeMessage">
+          <div *ngIf="!group.welcomeMessage">
             <h2>
               The Love is our Weapon Campaign is a youth movement that exists to
               change cities through the love of Jesus by doing strategic practical
@@ -198,22 +202,22 @@
         </tab>
 
         <tab
-          [active]="(currentTab$ | async) === tabs.Feed"
-          (select)="setCurrentTab(tabs.Feed)"
+          [active]="currentTab === tabs.Feed"
+          (select)="currentTab = tabs.Feed"
         >
-          <template tabHeading>
+          <ng-template tabHeading>
             <i class="fa fa-fw fa-list"></i>
             Activity Feed
-          </template>
+          </ng-template>
 
           <liow-feed
-            [criteria]="{ group: (group$ | async)?._id }"
-            *ngIf="(isAuthenticated$ | async) && (group$ | async)"
+            [criteria]="{ group: group._id }"
+            *ngIf="group && (state.auth.isAuthenticated$ | async)"
           ></liow-feed>
 
-          <p *ngIf="!(isAuthenticated$ | async)">
-            You must <a (click)="openLoginModal(); $event.preventDefault()" href>login</a>
-            to see {{ (group$ | async)?.name }}'s Activity Feed.
+          <p *ngIf="!(state.auth.isAuthenticated$ | async)">
+            You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a>
+            to see {{ group.name }}'s Activity Feed.
           </p>
         </tab>
       </tabset>

@@ -1,47 +1,55 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { has, pick } from 'lodash';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { has } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/first';
 
-import { TitleService } from '../../core';
-import * as fromRoot from '../../store/reducer';
-import * as auth from '../../store/auth/auth.actions';
-import * as resetPassword from '../../store/reset-password/reset-password.actions';
-import { State as ResetPasswordState, ResetPasswordRequest } from '../../store/reset-password';
+import { AlertifyService, AuthService, ModalService, TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './reset-password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordComponent implements OnInit {
-  state$: Observable<ResetPasswordState>;
+  isSaving$ = new BehaviorSubject<boolean>(false);
+
+  inputs = {
+    password: '',
+    confirmPassword: '',
+  };
+
+  private token: string;
 
   constructor(
+    private alertify: AlertifyService,
+    private auth: AuthService,
+    private modal: ModalService,
     private route: ActivatedRoute,
-    private store: Store<fromRoot.State>,
+    private router: Router,
     private title: TitleService,
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new resetPassword.InitialiseAction());
-
-    this.state$ = this.store.select(fromRoot.getResetPassword);
     this.route.params
       .filter((params: Params) => has(params, 'token'))
       .first()
-      .subscribe((params: Params) => this.onUpdatePropertyAction('Token', params['token']));
+      .subscribe((params: Params) => this.token = params.token);
 
     this.title.set(`Reset Password`);
   }
 
-  save(): void {
-    this.state$.take(1)
-      .subscribe((state: ResetPasswordState) =>
-        this.store.dispatch(new auth.ResetPasswordAction(<ResetPasswordRequest>pick(state, ['password', 'token']))));
-  }
-
-  onUpdatePropertyAction(property: string, value: string): void {
-    this.store.dispatch(new resetPassword[`Update${property}Action`](value));
+  save(newPassword: string): void {
+    this.isSaving$.next(true);
+    this.auth.resetPassword(newPassword, this.token)
+      .finally(() => this.router.navigate(['/']))
+      .subscribe(
+        () => {
+          this.alertify.success(`Password reset`);
+          this.modal.openLogin();
+        },
+        () => this.alertify.error(`Invalid or expired password reset link. Please try again or contact us`),
+      );
   }
 }

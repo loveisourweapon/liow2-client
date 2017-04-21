@@ -1,29 +1,42 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
-import { KebabCasePipe } from '../../shared';
-import { State as AppState } from '../../store/reducer';
-import { State as GroupEditModalState, GroupEditAction } from '../../store/modal/group-edit';
 import {
+  AlertifyStubService,
   AlertStubComponent,
+  AuthStubService,
+  GroupStubService,
   MediumEditorStubComponent,
   ModalStubDirective,
-  StoreStubService,
+  ModalStubService,
+  RouterStubService,
   SwitchStubComponent,
   UserPickerStubComponent,
+  UserStubService,
 } from '../../../testing';
+import { User } from '../../core/models';
+import {
+  AlertifyService,
+  AuthService,
+  GroupService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
+import { KebabCasePipe } from '../../shared';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { GroupEditModalComponent } from './group-edit.component';
+
+// TODO: add proper tests
 
 describe(`GroupEditModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHost: TestHostComponent;
   let component: GroupEditModalComponent;
   let element: DebugElement;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -43,7 +56,13 @@ describe(`GroupEditModalComponent`, () => {
           FormsModule,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          { provide: GroupService, useClass: GroupStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          { provide: Router, useClass: RouterStubService },
+          StateService,
+          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();
@@ -54,7 +73,6 @@ describe(`GroupEditModalComponent`, () => {
     testHost = fixture.componentInstance;
     element = fixture.debugElement.query(By.directive(GroupEditModalComponent));
     component = element.injector.get(GroupEditModalComponent);
-    store = TestBed.get(Store);
     fixture.detectChanges();
   });
 
@@ -62,31 +80,17 @@ describe(`GroupEditModalComponent`, () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: add proper tests
 });
 
 @Component({
   template: `
     <liow-group-edit-modal
-      [state]="state"
       [isAuthenticated]="isAuthenticated"
+      [authUser]="authUser"
     ></liow-group-edit-modal>
   `,
 })
 class TestHostComponent {
   isAuthenticated = true;
-  state = <GroupEditModalState>{
-    action: GroupEditAction.Create,
-    isOpen: false,
-    isSaving: false,
-    group: {
-      name: '',
-      logo: null,
-      coverImage: null,
-      welcomeMessage: '',
-    },
-    setupCampaign: true,
-    errorMessage: '',
-    errors: {},
-  };
+  authUser = <User>{ _id: 'abc123' };
 }

@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import { TitleService } from '../core';
-import * as fromRoot from '../store/reducer';
-import * as modal from '../store/modal/modal.actions';
-import { User, UserId } from '../store/user';
-import * as user from '../store/user/user.actions';
+import { User, UserId } from '../core/models';
+import { ActService, ModalService, StateService, TitleService, UserService } from '../core/services';
 
 @Component({
   templateUrl: './user.component.html',
@@ -16,38 +16,33 @@ import * as user from '../store/user/user.actions';
 })
 export class UserComponent implements OnDestroy, OnInit {
   user$: Observable<User>;
-  userCounter$: Observable<number>;
-  isAuthenticated$: Observable<boolean>;
 
-  private routeSubscription: Subscription;
   private userSubscription: Subscription;
 
   constructor(
+    private actService: ActService,
+    public modal: ModalService,
     private route: ActivatedRoute,
-    private store: Store<fromRoot.State>,
+    public state: StateService,
     private title: TitleService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    this.user$ = this.store.select(fromRoot.getCurrentUser);
-    this.userCounter$ = this.store.select(fromRoot.getCurrentUserCount);
-    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
-
-    this.routeSubscription = this.route.params.map((params: Params) => params['userId'])
+    this.user$ = this.route.params
+      .map((params: Params) => params['userId'])
       .distinctUntilChanged()
-      .subscribe((userId: UserId) => this.store.dispatch(new user.GetAndSetCurrentAction(userId)));
+      .switchMap((userId: UserId) => this.userService.get(userId));
 
     this.userSubscription = this.user$
       .filter((user: User) => user !== null)
-      .subscribe((user: User) => this.title.set(user.name));
+      .subscribe((user: User) => {
+        this.actService.count({ user: user._id });
+        this.title.set(user.name);
+      });
   }
 
   ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
-  }
-
-  openLogin(): void {
-    this.store.dispatch(new modal.OpenLoginAction());
   }
 }

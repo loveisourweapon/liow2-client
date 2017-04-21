@@ -1,18 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../../core';
+import {
+  ActStubService,
+  AlertifyStubService,
+  AuthStubService,
+  IconCheckedStubComponent,
+  ModalStubService,
+  TitleStubService,
+  UserStubService,
+} from '../../../testing';
+import {
+  ActService,
+  AlertifyService,
+  AuthService,
+  ModalService,
+  StateService,
+  TitleService,
+  UserService,
+} from '../../core/services';
 import { MomentPipe } from '../../shared';
-import { State as AppState } from '../../store/reducer';
-import { IconCheckedStubComponent, StoreStubService, TitleStubService } from '../../../testing';
 import { UserComponent } from './user.component';
+
+// TODO: add proper tests
 
 describe(`UserComponent`, () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -26,8 +40,13 @@ describe(`UserComponent`, () => {
           FormsModule,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: ActService, useClass: ActStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
+          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();
@@ -36,10 +55,6 @@ describe(`UserComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
-
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of({}));
-
     fixture.detectChanges();
   });
 

@@ -1,25 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../../core';
-import { MomentPipe } from '../../shared';
-import { State as AppState } from '../../store/reducer';
 import {
   ActivatedRouteStubService,
   ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   IconCheckedStubComponent,
-  StoreStubService,
+  RouterStubService,
   TitleStubService,
+  UserStubService,
 } from '../../../testing';
+import { StateService, TitleService, UserService } from '../../core/services';
+import { MomentPipe } from '../../shared';
 import { UsersComponent } from './users.component';
+
+// TODO: add proper tests
 
 describe(`UsersComponent`, () => {
   let fixture: ComponentFixture<UsersComponent>;
   let component: UsersComponent;
-  let store: Store<AppState>;
+  let userService: UserService;
 
   beforeEach(async(() => {
     TestBed
@@ -33,8 +34,10 @@ describe(`UsersComponent`, () => {
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: Router, useClass: RouterStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
+          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();
@@ -44,8 +47,9 @@ describe(`UsersComponent`, () => {
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
 
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of({}));
+    userService = TestBed.get(UserService);
+    spyOn(userService, 'find').and.returnValue(Observable.of([]));
+    spyOn(userService, 'count').and.returnValue(Observable.of(0));
 
     fixture.detectChanges();
   });

@@ -1,76 +1,157 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
-import { cloneDeep, each, has } from 'lodash';
+import { assign, has } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
+import {
+  ApiError,
+  Campaign,
+  Deed,
+  DeedId,
+  DeedPublish,
+  EditAction,
+  Group,
+  ModalState,
+  NewCampaign,
+} from '../../core/models';
+import {
+  AlertifyService,
+  CampaignService,
+  DeedService,
+  ModalService,
+  StateService,
+} from '../../core/services';
 import { identifyBy } from '../../shared';
-import { State as AppState } from '../../store/reducer';
-import { Deed } from '../../store/deed';
-import { Campaign, DeedPublish, NewCampaign } from '../../store/group';
-import * as group from '../../store/group/group.actions';
-import * as modal from '../../store/modal/modal.actions';
-import { State as CampaignEditModalState } from '../../store/modal/campaign-edit';
-import * as campaignEditModal from '../../store/modal/campaign-edit/campaign-edit.actions';
 
 @Component({
   selector: 'liow-campaign-edit-modal',
   templateUrl: './campaign-edit.component.html',
   styleUrls: ['./campaign-edit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CampaignEditModalComponent implements OnChanges, OnInit {
-  @Input() state = <CampaignEditModalState>null;
+export class CampaignEditModalComponent implements OnInit, OnDestroy {
+  @Input() group: Group;
   @ViewChild('modal') modal: ModalDirective;
+
+  action: EditAction = EditAction.Create;
+  isSaving$ = new BehaviorSubject<boolean>(false);
+  campaign: Campaign;
+  campaignDeeds$ = new BehaviorSubject<DeedPublish[]>([]);
+  deeds$ = new BehaviorSubject<DeedPublish[]>([]);
+  errorMessage = '';
+  submitted = false;
 
   // Need to create local mutable lists for Dragula to work
   // Listen to Dragula events to sync changes to global state
-  availableDeeds: DeedPublish[];
-  selectedDeeds: DeedPublish[];
-  submitted: boolean;
+  // TODO: investigate a better way to do this
+  availableDeeds: DeedPublish[] = [];
+  selectedDeeds: DeedPublish[] = [];
 
   identifyBy = identifyBy;
 
+  private stateSubscription: Subscription;
+
   constructor(
+    private alertify: AlertifyService,
+    private campaignService: CampaignService,
+    private deedService: DeedService,
     private dragula: DragulaService,
-    private store: Store<AppState>,
+    public modalService: ModalService,
+    private state: StateService,
   ) { }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'state.currentValue')) {
-      if (this.state.isOpen && !this.modal.isShown) {
-        this.submitted = false;
-        this.modal.show();
-      } else if (!this.state.isOpen && this.modal.isShown) {
-        this.modal.hide();
-      }
-
-      this.availableDeeds = [...this.state.deeds];
-      this.selectedDeeds = <DeedPublish[]>[...this.state.campaign.deeds];
-    }
-  }
 
   ngOnInit(): void {
     this.dragula.dropModel.subscribe(() => {
-      this.store.dispatch(new campaignEditModal.UpdateDeedsAction(this.availableDeeds));
-      this.store.dispatch(new campaignEditModal.UpdateSelectedDeedsAction(this.selectedDeeds));
+      this.deeds$.next(this.availableDeeds);
+      this.campaignDeeds$.next(this.selectedDeeds);
     });
+
+    this.stateSubscription = this.state.modal.campaignEdit$
+      .subscribe((state: ModalState) => {
+        if (state.isOpen && !this.modal.isShown) {
+          this.reset();
+          this.initDeeds();
+          this.modal.show();
+        } else if (!state.isOpen && this.modal.isShown) {
+          this.modal.hide();
+        }
+
+        const options = <CampaignEditModalOptions>state.options;
+        this.action = has(options, 'action') ? options.action : EditAction.Create;
+        if (has(options, 'campaign') && options.campaign) {
+          this.campaign = options.campaign;
+          this.campaignDeeds$.next(options.campaign.deeds);
+          this.selectedDeeds = <DeedPublish[]>[...options.campaign.deeds];
+        }
+      });
   }
 
-  save(campaign: Campaign|NewCampaign): void {
+  ngOnDestroy(): void {
+    this.stateSubscription.unsubscribe();
+  }
+
+  save(campaign: Campaign, campaignDeeds$: Observable<DeedPublish[]>, group: Group): void {
     this.submitted = true;
-    if (campaign.deeds.length === 0) { return; }
+    this.errorMessage = '';
 
-    const campaignToSave = cloneDeep(campaign);
-    each(campaignToSave.deeds, (item: DeedPublish) => item.deed = item.deed['_id']);
-    this.store.dispatch(new group.CreateCampaignAction(campaignToSave));
-  }
+    campaignDeeds$
+      .filter((deeds: DeedPublish[]) => deeds.length > 0)
+      .do(() => this.isSaving$.next(true))
+      .map((deeds: DeedPublish[]) => deeds.map((item: DeedPublish) => assign({}, item, { deed: item.deed['_id'] })))
+      .switchMap((deeds: DeedPublish[]) => {
+        const campaignToSave: Campaign|NewCampaign = campaign || <NewCampaign>{ group: group._id };
+        campaignToSave.deeds = deeds;
+        return this.campaignService.save(campaignToSave);
+      })
+      .finally(() => this.isSaving$.next(false))
+      .switchMap(() => this.campaignService.findOne({ group: group._id, active: true }))
+      .subscribe(
+        (createdCampaign: Campaign) => {
+          this.state.campaign = createdCampaign;
 
-  openDeedPreview(deed: Deed): void {
-    this.store.dispatch(new modal.OpenDeedPreviewAction(deed));
+          this.onClose();
+          this.alertify.success(`${this.action}d campaign`);
+        },
+        (error: ApiError) => this.errorMessage = error.message,
+      );
   }
 
   onClose(): void {
-    this.store.dispatch(new campaignEditModal.CloseAction());
+    this.state.modal.campaignEdit$.next({ isOpen: false });
   }
+
+  private initDeeds(): void {
+    this.deedService.find()
+      .map((deeds: Deed[]) => deeds.map((deed: Deed) => <DeedPublish>{ deed }))
+      .subscribe((deeds: DeedPublish[]) => {
+        const selectedDeedIds = this.selectedDeeds.map((item: DeedPublish) => item.deed['_id']);
+        const remainingDeeds = deeds.filter((item: DeedPublish) => !selectedDeedIds.includes(item.deed['_id']));
+
+        this.deeds$.next(remainingDeeds);
+        this.availableDeeds = [...remainingDeeds];
+      });
+  }
+
+  private reset(): void {
+    this.action = EditAction.Create;
+    this.isSaving$.next(false);
+    this.campaign = undefined;
+    this.campaignDeeds$.next([]);
+    this.deeds$.next([]);
+    this.errorMessage = '';
+    this.submitted = false;
+  }
+}
+
+interface CampaignEditModalOptions {
+  action: EditAction;
+  campaign?: Campaign;
 }

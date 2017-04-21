@@ -1,12 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../../core';
+import { Deed } from '../../core/models';
+import { DeedService, ModalService, TitleService } from '../../core/services';
 import { identifyBy } from '../../shared';
-import * as fromRoot from '../../store/reducer';
-import { Deed } from '../../store/deed';
-import * as modal from '../../store/modal/modal.actions';
 
 @Component({
   templateUrl: './deeds.component.html',
@@ -18,16 +15,13 @@ export class DeedsComponent implements OnInit {
   identifyBy = identifyBy;
 
   constructor(
-    private store: Store<fromRoot.State>,
+    private deedService: DeedService,
+    public modal: ModalService,
     private title: TitleService,
   ) { }
 
   ngOnInit(): void {
-    this.deeds$ = this.store.select(fromRoot.getDeeds);
+    this.deeds$ = this.deedService.find();
     this.title.set(`Deeds | Control Panel`);
-  }
-
-  openDeedPreview(deed: Deed): void {
-    this.store.dispatch(new modal.OpenDeedPreviewAction(deed));
   }
 }

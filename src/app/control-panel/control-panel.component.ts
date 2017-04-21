@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
-import { go } from '@ngrx/router-store';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 import { capitalize } from 'lodash';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
 
+import { User } from '../core/models';
+import { StateService } from '../core/services';
 import { identifyBy } from '../shared';
-import * as fromRoot from '../store/reducer';
-import { User } from '../store/user';
 
 @Component({
   templateUrl: './control-panel.component.html',
   styleUrls: ['./control-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ControlPanelComponent implements OnInit {
-  authUser$: Observable<User>;
   activePage$: Observable<string>;
 
   identifyBy = identifyBy;
@@ -23,12 +24,10 @@ export class ControlPanelComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<fromRoot.State>,
+    public state: StateService,
   ) { }
 
   ngOnInit(): void {
-    this.authUser$ = this.store.select(fromRoot.getAuthUser);
-
     // Get active page from router
     this.activePage$ = this.router.events
       .filter((event: Event) => event instanceof NavigationEnd)
@@ -40,17 +39,17 @@ export class ControlPanelComponent implements OnInit {
       });
 
     // Redirect to home if user logs out
-    this.store.select(fromRoot.getIsAuthenticated)
+    this.state.auth.isAuthenticated$
       .filter((isAuthenticated: boolean) => isAuthenticated === false)
-      .take(1)
-      .subscribe(() => this.store.dispatch(go('/')));
+      .first()
+      .subscribe(() => this.router.navigate(['/']));
 
     // Redirect to user control panel if user doesn't have access
     Observable.combineLatest(
-      this.authUser$.filter((user: User) => user !== null && !user.superAdmin),
+      this.state.auth.user$.filter((user: User) => user !== null && !user.superAdmin),
       this.activePage$.filter((activePage: string) => this.superAdminPages.includes(activePage)),
     )
-      .take(1)
-      .subscribe(() => this.store.dispatch(go('/control-panel')));
+      .first()
+      .subscribe(() => this.router.navigate(['/control-panel']));
   }
 }

@@ -6,13 +6,13 @@
   role="dialog"
   aria-labelledby="Sign up"
   aria-hidden="true"
-  (onHide)="onClose()"
+  (onHidden)="onClose()"
   (onShown)="autofocus.focus()"
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <form
-        (ngSubmit)="form.valid && signup(state.user, state.joinGroup, group)"
+        (ngSubmit)="form.valid && signup(user, joinGroup, group)"
         #form="ngForm"
         class="form-horizontal"
         novalidate
@@ -25,8 +25,8 @@
         <div class="modal-body">
           <div *ngIf="group">
             <ui-switch
-              [checked]="state.joinGroup"
-              (change)="onUpdatePropertyAction('JoinGroup', $event)"
+              [checked]="joinGroup"
+              (change)="joinGroup = $event"
             >
               Join {{ group.name }}
             </ui-switch>
@@ -36,19 +36,19 @@
           <p>
             <button
               type="button"
-              (click)="authenticateFacebook(state.joinGroup, group)"
+              (click)="authenticateFacebook(joinGroup, group)"
               class="btn btn-facebook btn-block"
-              [disabled]="state.isSigningUp"
+              [disabled]="isSigningUp$ | async"
             >
-              <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
-              <i class="fa fa-fw fa-facebook-official" [hidden]="state.isSigningUp"></i>
+              <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isSigningUp$ | async)"></i>
+              <i class="fa fa-fw fa-facebook-official" [hidden]="isSigningUp$ | async"></i>
               Sign up with Facebook
             </button>
           </p>
 
           <hr>
 
-          <alert type="danger" *ngIf="state.errorMessage">
+          <alert type="danger" *ngIf="errorMessage">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             There was an error signing up. Please try again or
             <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
@@ -56,7 +56,7 @@
 
           <div
             class="form-group"
-            [class.has-error]="form.submitted && (firstName.invalid || state.errors.firstName)"
+            [class.has-error]="form.submitted && (firstName.invalid || errors.firstName)"
           >
             <label for="firstName" class="col-xs-3 control-label">Name</label>
             <div class="col-xs-9 col-sm-8">
@@ -68,8 +68,7 @@
                     id="firstName"
                     name="firstName"
                     #firstName="ngModel"
-                    [ngModel]="state.user.firstName"
-                    (ngModelChange)="onUpdatePropertyAction('FirstName', $event)"
+                    [(ngModel)]="user.firstName"
                     placeholder="First..."
                     required
                     #autofocus
@@ -82,8 +81,7 @@
                     id="lastName"
                     name="lastName"
                     #lastName="ngModel"
-                    [ngModel]="state.user.lastName"
-                    (ngModelChange)="onUpdatePropertyAction('LastName', $event)"
+                    [(ngModel)]="user.lastName"
                     placeholder="Last..."
                   >
                 </div>
@@ -91,16 +89,16 @@
             </div>
             <span
               class="help-block col-xs-9 col-xs-push-3"
-              *ngIf="form.submitted && (firstName.invalid || state.errors.firstName)"
+              *ngIf="form.submitted && (firstName.invalid || errors.firstName)"
             >
               <span *ngIf="firstName.errors?.required">Please enter your name</span>
-              <span *ngIf="state.errors?.firstName">{{ state.errors.firstName.message }}</span>
+              <span *ngIf="errors?.firstName">{{ errors.firstName.message }}</span>
             </span>
           </div>
 
           <div
             class="form-group"
-            [class.has-error]="form.submitted && (email.invalid || state.errors.email)"
+            [class.has-error]="form.submitted && (email.invalid || errors.email)"
           >
             <label for="email" class="col-xs-3 control-label">Email</label>
             <div class="col-xs-9 col-sm-8">
@@ -110,23 +108,22 @@
                 id="email"
                 name="email"
                 #email="ngModel"
-                [ngModel]="state.user.email"
-                (ngModelChange)="onUpdatePropertyAction('Email', $event)"
+                [(ngModel)]="user.email"
                 placeholder="Email address..."
                 validateEmail
               >
               <span
                 class="help-block"
-                *ngIf="form.submitted && (email.invalid || state.errors.email)"
+                *ngIf="form.submitted && (email.invalid || errors.email)"
               >
                 <span *ngIf="email.errors?.validEmail">Please enter a valid email address</span>
-                <span *ngIf="state.errors?.email">
-                  {{ state.errors.email.message }}
+                <span *ngIf="errors?.email">
+                  {{ errors.email.message }}
                   <button
                     type="button"
-                    (click)="onClose(); openLogin()"
+                    (click)="onClose(); modalService.openLogin()"
                     class="btn btn-link btn-inline"
-                    *ngIf="state.errors.email.message.includes('already registered')"
+                    *ngIf="errors.email.message.includes('already registered')"
                   >
                     Login now
                   </button>
@@ -137,7 +134,7 @@
 
           <div
             class="form-group"
-            [class.has-error]="form.submitted && (password.invalid || state.errors.password)"
+            [class.has-error]="form.submitted && (password.invalid || errors.password)"
           >
             <label for="password" class="col-xs-3 control-label">Password</label>
             <div class="col-xs-9 col-sm-8">
@@ -147,26 +144,25 @@
                 id="password"
                 name="password"
                 #password="ngModel"
-                [ngModel]="state.user.password"
-                (ngModelChange)="onUpdatePropertyAction('Password', $event)"
+                [(ngModel)]="user.password"
                 placeholder="Enter a password..."
                 minlength="8"
                 required
               >
               <span
                 class="help-block"
-                *ngIf="form.submitted && (password.invalid || state.errors.password)"
+                *ngIf="form.submitted && (password.invalid || errors.password)"
               >
                 <span *ngIf="password.errors?.required">Please enter a password</span>
                 <span *ngIf="password.errors?.minlength">Password must be at least 8 characters</span>
-                <span *ngIf="state.errors?.password">{{ state.errors.password.message }}</span>
+                <span *ngIf="errors?.password">{{ errors.password.message }}</span>
               </span>
             </div>
           </div>
 
           <div
             class="form-group"
-            [class.has-error]="form.submitted && state.errors.picture"
+            [class.has-error]="form.submitted && errors.picture"
           >
             <label for="picture" class="col-xs-3 control-label">Picture</label>
             <div class="col-xs-9 col-sm-8">
@@ -176,27 +172,26 @@
                 id="picture"
                 name="picture"
                 #picture="ngModel"
-                [ngModel]="state.user.picture"
-                (ngModelChange)="onUpdatePropertyAction('Picture', $event)"
+                [(ngModel)]="user.picture"
                 placeholder="Image upload coming soon..."
                 disabled
               >
               <span
                 class="help-block"
-                *ngIf="form.submitted && state.errors.picture"
+                *ngIf="form.submitted && errors.picture"
               >
-                <span *ngIf="state.errors?.picture">{{ state.errors.picture.message }}</span>
+                <span *ngIf="errors?.picture">{{ errors.picture.message }}</span>
               </span>
             </div>
           </div>
 
-          <div class="row">
+          <div class="row" *ngIf="canSwitch">
             <div class="col-xs-9 col-xs-push-3">
               <p>
                 Already have an account?
                 <button
                   type="button"
-                  (click)="onClose(); openLogin()"
+                  (click)="onClose(); modalService.openLogin()"
                   class="btn btn-link btn-inline"
                 >
                   Login now
@@ -210,9 +205,9 @@
           <button
             type="submit"
             class="btn btn-primary btn-block"
-            [disabled]="state.isSigningUp"
+            [disabled]="isSigningUp$ | async"
           >
-            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isSigningUp"></i>
+            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isSigningUp$ | async)"></i>
             Sign up
           </button>
         </div><!-- .modal-footer -->

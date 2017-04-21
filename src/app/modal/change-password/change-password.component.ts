@@ -1,51 +1,91 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { has } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/finally';
 
-import { State as AppState } from '../../store/reducer';
-import * as auth from '../../store/auth/auth.actions';
-import { State as ChangePasswordModalState } from '../../store/modal/change-password';
-import * as changePasswordModal from '../../store/modal/change-password/change-password.actions';
-import { User } from '../../store/user';
+import { ApiError, JsonPatchOp, ModalState, User } from '../../core/models';
+import { AlertifyService, StateService, UserService } from '../../core/services';
 
 @Component({
   selector: 'liow-change-password-modal',
   templateUrl: './change-password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChangePasswordModalComponent implements OnChanges {
-  @Input() state = <ChangePasswordModalState>null;
+export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('form') form: NgForm;
 
+  isSaving$ = new BehaviorSubject<boolean>(false);
+  user: User;
+  inputs = {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  };
+  errorMessage = '';
+
+  private stateSubscription: Subscription;
+
   constructor(
-    private store: Store<AppState>,
+    private alertify: AlertifyService,
+    private state: StateService,
+    private userService: UserService,
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'state.currentValue')) {
-      if (this.state.isOpen && !this.modal.isShown) {
-        this.form.resetForm();
-        this.modal.show();
-      } else if (!this.state.isOpen && this.modal.isShown) {
-        this.modal.hide();
-      }
-    }
+  ngOnInit(): void {
+    this.stateSubscription = this.state.modal.changePassword$
+      .subscribe((state: ModalState) => {
+        if (state.isOpen && !this.modal.isShown) {
+          this.reset();
+          this.modal.show();
+        } else if (!state.isOpen && this.modal.isShown) {
+          this.modal.hide();
+        }
+
+        const options = <ChangePasswordModalOptions>state.options;
+        this.user = has(options, 'user') ? options.user : null;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.stateSubscription.unsubscribe();
   }
 
   save(user: User, currentPassword: string, newPassword: string): void {
-    this.store.dispatch(new auth.ChangePasswordAction({ user, currentPassword, newPassword }));
-  }
+    this.errorMessage = '';
 
-  onUpdatePropertyAction(property: string, value: string): void {
-    if (value !== null) {
-      this.store.dispatch(new changePasswordModal[`Update${property}Action`](value));
-    }
+    this.isSaving$.next(true);
+    this.userService.update(user, [
+      { op: JsonPatchOp.Add, path: `/currentPassword`, value: currentPassword },
+      { op: JsonPatchOp.Add, path: `/newPassword`, value: newPassword },
+    ])
+      .finally(() => this.isSaving$.next(false))
+      .subscribe(
+        () => {
+          this.onClose();
+          this.alertify.success(`Password changed`);
+        },
+        (error: ApiError) => this.errorMessage = error.message,
+      );
   }
 
   onClose(): void {
-    this.store.dispatch(new changePasswordModal.CloseAction());
+    this.state.modal.changePassword$.next({ isOpen: false });
   }
+
+  private reset(): void {
+    this.isSaving$.next(false);
+    this.inputs.currentPassword = '';
+    this.inputs.newPassword = '';
+    this.inputs.confirmPassword = '';
+    this.errorMessage = '';
+    this.form.resetForm();
+  }
+}
+
+interface ChangePasswordModalOptions {
+  user: User;
 }

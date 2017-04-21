@@ -6,13 +6,13 @@
   role="dialog"
   aria-labelledby="Login"
   aria-hidden="true"
-  (onHide)="onClose()"
+  (onHidden)="onClose()"
   (onShown)="autofocus.focus()"
 >
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <form
-        (ngSubmit)="form.valid && authenticateEmail(state.credentials, state.joinGroup, group)"
+        (ngSubmit)="form.valid && authenticateEmail(credentials, joinGroup, group)"
         #form="ngForm"
         novalidate
       >
@@ -24,8 +24,8 @@
         <div class="modal-body">
           <div *ngIf="group">
             <ui-switch
-              [checked]="state.joinGroup"
-              (change)="onUpdatePropertyAction('JoinGroup', $event)"
+              [checked]="joinGroup"
+              (change)="joinGroup = $event"
             >
               Join {{ group.name }}
             </ui-switch>
@@ -35,27 +35,27 @@
           <p>
             <button
               type="button"
-              (click)="authenticateFacebook(state.joinGroup, group)"
+              (click)="authenticateFacebook(joinGroup, group)"
               class="btn btn-facebook btn-block"
-              [disabled]="state.isLoggingIn"
+              [disabled]="isLoggingIn$ | async"
             >
-              <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
-              <i class="fa fa-fw fa-facebook-official" [hidden]="state.isLoggingIn"></i>
+              <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isLoggingIn$ | async)"></i>
+              <i class="fa fa-fw fa-facebook-official" [hidden]="isLoggingIn$ | async"></i>
               Sign in with Facebook
             </button>
           </p>
 
           <hr>
 
-          <alert type="danger" *ngIf="state.errorMessage">
+          <alert type="danger" *ngIf="errorMessage">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
-            {{ state.errorMessage }}
+            {{ errorMessage }}
 
-            <span *ngIf="state.errorMessage.includes('Please confirm')">
+            <span *ngIf="errorMessage.includes('Please confirm')">
               <i class="fa fa-fw"></i>
-              <a (click)="sendConfirmEmail(state.credentials.email); $event.preventDefault()" href>
+              <a (click)="sendConfirmEmail(credentials.email); $event.preventDefault()" href>
                 Re-send confirmation email?
-                <i class="fa fa-cog fa-spin" [hidden]="!state.isSendingConfirmEmail"></i>
+                <i class="fa fa-cog fa-spin" [hidden]="!(isSendingConfirmEmail$ | async)"></i>
               </a>
             </span>
           </alert>
@@ -70,8 +70,7 @@
                 class="form-control"
                 name="email"
                 #email="ngModel"
-                [ngModel]="state.credentials.email"
-                (ngModelChange)="onUpdatePropertyAction('Email', $event)"
+                [(ngModel)]="credentials.email"
                 placeholder="Email"
                 required
                 #autofocus
@@ -89,8 +88,7 @@
                 class="form-control"
                 name="password"
                 #password="ngModel"
-                [ngModel]="state.credentials.password"
-                (ngModelChange)="onUpdatePropertyAction('Password', $event)"
+                [(ngModel)]="credentials.password"
                 required
                 placeholder="Password"
               >
@@ -98,7 +96,7 @@
             <span class="help-block">
               <button
                 type="button"
-                (click)="onClose(); openForgotPassword(state.credentials.email)"
+                (click)="onClose(); modalService.openForgotPassword(credentials.email)"
                 class="btn btn-link btn-sm"
               >
                 Forgot your password?
@@ -106,11 +104,11 @@
             </span>
           </div>
 
-          <p>
+          <p *ngIf="canSwitch">
             Don't have an account?
             <button
               type="button"
-              (click)="onClose(); openSignup()"
+              (click)="onClose(); modalService.openSignup()"
               class="btn btn-link btn-inline"
             >
               Sign up now
@@ -122,9 +120,9 @@
           <button
             type="submit"
             class="btn btn-primary btn-block"
-            [disabled]="state.isLoggingIn"
+            [disabled]="isLoggingIn$ | async"
           >
-            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!state.isLoggingIn"></i>
+            <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isLoggingIn$ | async)"></i>
             Login
           </button>
         </div><!-- .modal-footer -->

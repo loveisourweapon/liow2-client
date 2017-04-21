@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
+import { Deed } from '../../core/models';
+import { StateService } from '../../core/services/state.service';
 import { identifyBy } from '../utils';
-import { Counters } from '../../store/act';
-import { Deed } from '../../store/deed';
 
 @Component({
   selector: 'liow-deed-list-horizontal',
@@ -12,12 +12,10 @@ import { Deed } from '../../store/deed';
 })
 export class DeedListHorizontalComponent {
   @Input() deeds: Deed[];
-  @Input() counters: Counters;
 
   identifyBy = identifyBy;
 
-  getDeedCount(counters: Counters, deedId: string): number|null {
-    const counter = counters[deedId];
-    return typeof counter === 'number' ? counter : null;
-  }
+  constructor(
+    public state: StateService,
+  ) { }
 }

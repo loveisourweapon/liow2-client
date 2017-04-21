@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { TitleService } from '../../core';
+import { TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './global-feed.component.html',

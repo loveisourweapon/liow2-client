@@ -1,0 +1,18 @@
+<form class="navbar-form navbar-left navbar-search" role="search">
+  <div class="form-group">
+    <label class="input-group">
+      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      <input
+        name="navbarSearch"
+        [ngModel]="searchQuery$ | async"
+        (ngModelChange)="searchQuery$.next($event)"
+        [typeahead]="searchResults$"
+        typeaheadOptionField="name"
+        typeaheadGroupField="type"
+        (typeaheadOnSelect)="onSelectItem($event.item)"
+        class="form-control"
+        placeholder="Find a group or deed..."
+      >
+    </label>
+  </div>
+</form>

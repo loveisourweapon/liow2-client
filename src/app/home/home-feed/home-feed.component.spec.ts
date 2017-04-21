@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Group } from '../../store/group';
 import { FeedStubComponent, RouterLinkStubDirective } from '../../../testing';
+import { Group } from '../../core/models';
+import { StateService } from '../../core/services';
 import { HomeFeedComponent } from './home-feed.component';
 
 describe(`HomeFeedComponent`, () => {
@@ -16,6 +17,9 @@ describe(`HomeFeedComponent`, () => {
           FeedStubComponent,
           RouterLinkStubDirective,
         ],
+        providers: [
+          StateService,
+        ],
       })
       .compileComponents();
   }));
@@ -24,29 +28,6 @@ describe(`HomeFeedComponent`, () => {
     fixture = TestBed.createComponent(HomeFeedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  describe(`#getGroupCount`, () => {
-    const counters = {
-      'abc123': 123,
-      'def456': 456,
-    };
-
-    it(`should return the current counter for a known group ID`, () => {
-      let groupId = 'abc123';
-      let count = component.getGroupCount(counters, groupId);
-      expect(count).toBe(counters[groupId]);
-
-      groupId = 'def456';
-      count = component.getGroupCount(counters, groupId);
-      expect(count).toBe(counters[groupId]);
-    });
-
-    it(`should return null for an unknown group ID`, () => {
-      const unknownGroupId = 'ghi789';
-      const count = component.getGroupCount(counters, unknownGroupId);
-      expect(count).toBeNull();
-    });
   });
 
   describe(`#listGroupIds`, () => {

@@ -1,25 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../../core';
-import { LastPipe } from '../../shared';
-import { State as AppState } from '../../store/reducer';
 import {
   IconCheckedStubComponent,
+  DeedStubService,
   DropdownStubDirective,
   DropdownMenuStubDirective,
   DropdownToggleStubDirective,
+  ModalStubService,
   RouterLinkStubDirective,
-  StoreStubService,
   TitleStubService,
 } from '../../../testing';
+import { DeedService, ModalService, TitleService } from '../../core/services';
+import { LastPipe } from '../../shared';
 import { DeedsComponent } from './deeds.component';
+
+// TODO: add proper tests
 
 describe(`DeedsComponent`, () => {
   let fixture: ComponentFixture<DeedsComponent>;
   let component: DeedsComponent;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -34,7 +33,8 @@ describe(`DeedsComponent`, () => {
           RouterLinkStubDirective,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: DeedService, useClass: DeedStubService },
+          { provide: ModalService, useClass: ModalStubService },
           { provide: TitleService, useClass: TitleStubService },
         ],
       })
@@ -44,10 +44,6 @@ describe(`DeedsComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DeedsComponent);
     component = fixture.componentInstance;
-
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of([]));
-
     fixture.detectChanges();
   });
 

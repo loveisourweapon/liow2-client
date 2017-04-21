@@ -1,18 +1,28 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { has } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import { TitleService } from '../core';
-import * as fromRoot from '../store/reducer';
-import * as act from '../store/act/act.actions';
-import { NewComment } from '../store/comment';
-import * as comment from '../store/comment/comment.actions';
-import { Deed, DeedSlug } from '../store/deed';
-import * as deed from '../store/deed/deed.actions';
-import { Group } from '../store/group';
-import * as modal from '../store/modal/modal.actions';
+import { Deed, DeedSlug, Group, NewComment } from '../core/models';
+import {
+  ActService,
+  AlertifyService,
+  CommentService,
+  DeedService,
+  ModalService,
+  StateService,
+  TitleService,
+} from '../core/services';
 
 @Component({
   templateUrl: './deed.component.html',
@@ -20,41 +30,39 @@ import * as modal from '../store/modal/modal.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeedComponent implements OnDestroy, OnInit {
-  deed$: Observable<Deed>;
-  deedCounter$: Observable<number>;
-  authGroup$: Observable<Group>;
-  isAuthenticated$: Observable<boolean>;
-  isDoing$: Observable<boolean>;
-  isSavingTestimony$: Observable<boolean>;
-  testimony$: Observable<string>;
+  isDoing$ = new BehaviorSubject<boolean>(false);
+  isSavingTestimony$ = new BehaviorSubject<boolean>(false);
+  testimony = '';
 
   private routeSubscription: Subscription;
   private deedSubscription: Subscription;
 
   constructor(
+    private actService: ActService,
+    private alertify: AlertifyService,
+    private commentService: CommentService,
+    private deedService: DeedService,
+    public modal: ModalService,
     private route: ActivatedRoute,
-    private store: Store<fromRoot.State>,
+    public state: StateService,
     private title: TitleService,
   ) { }
 
   ngOnInit(): void {
-    this.deed$ = this.store.select(fromRoot.getCurrentDeed);
-    this.deedCounter$ = this.store.select(fromRoot.getCurrentDeedCount);
-    this.authGroup$ = this.store.select(fromRoot.getAuthGroup);
-    this.testimony$ = this.store.select(fromRoot.getTestimony);
-    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
-    this.isDoing$ = this.store.select(fromRoot.getDeedIsDoing);
-    this.isSavingTestimony$ = this.store.select(fromRoot.getIsSavingTestimony);
-
     this.routeSubscription = this.route.params
-      .map((params: Params) => params['deedSlug'])
-      .filter((deedSlug: DeedSlug) => Boolean(deedSlug))
+      .filter((params: Params) => has(params, 'deedSlug'))
+      .map((params: Params) => params.deedSlug)
       .distinctUntilChanged()
-      .subscribe((deedSlug: DeedSlug) => this.store.dispatch(new deed.FindAndSetCurrentAction({ urlTitle: deedSlug })));
+      .do(() => this.state.deed$.next(null))
+      .switchMap((deedSlug: DeedSlug) => this.deedService.findOne({ urlTitle: deedSlug }))
+      .subscribe((deed: Deed) => this.state.deed = deed);
 
-    this.deedSubscription = this.deed$
+    this.deedSubscription = this.state.deed$
       .filter((deed: Deed) => deed !== null)
-      .subscribe((deed: Deed) => this.title.set(deed.title));
+      .subscribe((deed: Deed) => {
+        this.actService.count({ deed: deed._id });
+        this.title.set(deed.title);
+      });
   }
 
   ngOnDestroy(): void {
@@ -62,31 +70,48 @@ export class DeedComponent implements OnDestroy, OnInit {
     this.deedSubscription.unsubscribe();
   }
 
-  onUpdateTestimony(content: string): void {
-    this.store.dispatch(new deed.UpdateTestimonyAction(content));
-  }
-
   onSaveTestimony(content: string, deed$: Observable<Deed>, group$: Observable<Group|null>): void {
+    this.isSavingTestimony$.next(true);
     Observable.combineLatest(deed$, group$)
-      .take(1)
-      .subscribe(([deed, group]: [Deed, Group]) => {
+      .first()
+      .switchMap(([deed, group]: [Deed, Group]) => {
         const newComment: NewComment = {
           content: { text: content },
           target: { deed: deed._id },
         };
         if (group) { newComment.group = group._id; }
 
-        this.store.dispatch(new comment.CommentAction(newComment));
-      });
+        return this.commentService.save(newComment);
+      })
+      .finally(() => {
+        this.isSavingTestimony$.next(false);
+        this.testimony = '';
+      })
+      .subscribe(
+        () => {
+          this.state.feed.update();
+          this.alertify.success(`Comment saved`);
+        },
+        () => this.alertify.error(`Failed saving comment`),
+      );
   }
 
   onDeedDone(deed$: Observable<Deed>, group$: Observable<Group|null>): void {
+    this.isDoing$.next(true);
     Observable.combineLatest(deed$, group$)
-      .take(1)
-      .subscribe(([deed, group]: [Deed, Group]) => this.store.dispatch(new act.DoneAction({ deed, group })));
-  }
-
-  openLoginModal(): void {
-    this.store.dispatch(new modal.OpenLoginAction());
+      .first()
+      .switchMap(([deed, group]: [Deed, Group]) => this.actService.done(deed, group)
+        .map(() => {
+          this.actService.count();
+          this.actService.count({ deed: deed._id });
+        }))
+      .finally(() => this.isDoing$.next(false))
+      .subscribe(
+        () => {
+          this.state.feed.update();
+          this.alertify.success(`Deed done!`);
+        },
+        () => this.alertify.error(`Failed registering deed`),
+      );
   }
 }

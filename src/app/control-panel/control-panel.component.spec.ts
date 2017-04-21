@@ -1,16 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { State as AppState } from '../store/reducer';
-import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStubService, StoreStubService } from '../../testing';
+import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStubService } from '../../testing';
+import { StateService } from '../core/services';
 import { ControlPanelComponent } from './control-panel.component';
 
 describe(`ControlPanelComponent`, () => {
   let component: ControlPanelComponent;
   let fixture: ComponentFixture<ControlPanelComponent>;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -22,7 +19,7 @@ describe(`ControlPanelComponent`, () => {
         ],
         providers: [
           { provide: Router, useClass: RouterStubService },
-          { provide: Store, useClass: StoreStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -31,10 +28,6 @@ describe(`ControlPanelComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ControlPanelComponent);
     component = fixture.componentInstance;
-
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of({}));
-
     fixture.detectChanges();
   });
 

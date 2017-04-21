@@ -15,7 +15,7 @@
     <div class="text-center m-t-md">
       <button
         type="button"
-        (click)="openGroupEdit();"
+        (click)="modal.openGroupEdit();"
         class="btn btn-primary btn-lg"
       >
         Start a Campaign
@@ -24,10 +24,6 @@
   </div>
 </liow-jumbotron>
 
-<liow-welcome *ngIf="!(isAuthenticated$ | async)"></liow-welcome>
+<liow-welcome *ngIf="!(state.auth.isAuthenticated$ | async)"></liow-welcome>
 
-<liow-home-feed
-  [authUser]="authUser$ | async"
-  [counters]="counters$ | async"
-  *ngIf="isAuthenticated$ | async"
-></liow-home-feed>
+<liow-home-feed *ngIf="state.auth.isAuthenticated$ | async"></liow-home-feed>

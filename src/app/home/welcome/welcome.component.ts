@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import * as fromRoot from '../../store/reducer';
-import * as modal from '../../store/modal/modal.actions';
+import { GroupService, ModalService, StateService, UserService } from '../../core/services';
 
 @Component({
   selector: 'liow-welcome',
@@ -12,29 +10,18 @@ import * as modal from '../../store/modal/modal.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WelcomeComponent implements OnInit {
-  actsCount$: Observable<number>;
-  groupsCount$: Observable<number>;
-  usersCount$: Observable<number>;
+  numberOfGroups$: Observable<number>;
+  numberOfUsers$: Observable<number>;
 
   constructor(
-    private store: Store<fromRoot.State>,
+    private groupService: GroupService,
+    public modal: ModalService,
+    public state: StateService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    this.actsCount$ = this.store.select(fromRoot.getGlobalCount);
-    this.groupsCount$ = this.store.select(fromRoot.getGroupsCount);
-    this.usersCount$ = this.store.select(fromRoot.getUsersCount);
-  }
-
-  openLoginModal(): void {
-    this.store.dispatch(new modal.OpenLoginAction());
-  }
-
-  openSignupModal(): void {
-    this.store.dispatch(new modal.OpenSignupAction());
-  }
-
-  openGroupEdit(): void {
-    this.store.dispatch(new modal.OpenGroupEditAction());
+    this.numberOfGroups$ = this.groupService.count();
+    this.numberOfUsers$ = this.userService.count();
   }
 }

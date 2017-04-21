@@ -1,24 +1,24 @@
 <liow-jumbotron [classes]="['videotron']">
   <div jumbotron-content>
-    <div class="embed-responsive embed-responsive-16by9" *ngIf="(deed$ | async)?.videoUrl">
+    <div class="embed-responsive embed-responsive-16by9" *ngIf="(state.deed$ | async)?.videoUrl as videoUrl">
       <ui-youtube-player
-        [videoUrl]="(deed$ | async)?.videoUrl"
+        [videoUrl]="videoUrl"
         class="embed-responsive-item"
       ></ui-youtube-player>
     </div>
 
-    <div class="deed-header">
+    <div class="deed-header" *ngIf="state.deed$ | async as deed">
       <img
-        [src]="(deed$ | async)?.logo || '/images/deed.png'"
+        [src]="deed?.logo || '/images/deed.png'"
         class="img-responsive img-circle pull-left m-t-md m-r-sm"
       >
 
       <h2 class="text-uppercase pull-left m-b-none">
-        {{ (deed$ | async)?.title }}
+        {{ deed?.title }}
       </h2>
 
       <h1 class="pull-right text-right m-b-none">
-        {{ deedCounter$ | async | number }}
+        {{ state.counter$(deed?._id) | async | number }}
       </h1>
     </div>
   </div>
@@ -29,9 +29,9 @@
     <div class="col-sm-3 col-sm-push-9 m-b-sm">
       <button
         type="button"
-        (click)="onDeedDone(deed$, authGroup$)"
+        (click)="onDeedDone(state.deed$, state.auth.group$)"
         class="btn btn-primary btn-block btn-lg"
-        *ngIf="isAuthenticated$ | async"
+        *ngIf="state.auth.isAuthenticated$ | async"
         [disabled]="isDoing$ | async"
       >
         <img src="/images/logo-invert.png" class="img-responsive img-btn" [hidden]="isDoing$ | async">
@@ -41,9 +41,9 @@
 
       <button
         type="button"
-        (click)="openLoginModal()"
+        (click)="modal.openLogin()"
         class="btn btn-primary btn-block btn-lg"
-        *ngIf="!(isAuthenticated$ | async)"
+        *ngIf="!(state.auth.isAuthenticated$ | async)"
       >
         <i class="fa fa-fw fa-user"></i>
         Login
@@ -56,21 +56,21 @@
       <h2 class="m-t-none">Devotional</h2>
 
       <ui-marked
-        [content]="(deed$ | async)?.content"
+        [content]="(state.deed$ | async)?.content"
         class="m-b-md"
       ></ui-marked>
 
       <liow-comment-form
-        [content]="testimony$ | async"
-        (change)="onUpdateTestimony($event)"
-        (save)="onSaveTestimony($event, deed$, authGroup$)"
+        [content]="testimony"
+        (change)="testimony = $event"
+        (save)="onSaveTestimony($event, state.deed$, state.auth.group$)"
         [isSaving]="isSavingTestimony$ | async"
-        *ngIf="isAuthenticated$ | async"
+        *ngIf="(state.auth.isAuthenticated$ | async) && (state.deed$ | async)"
       ></liow-comment-form>
 
       <liow-feed
-        [criteria]="{ 'target.deed': (deed$ | async)?._id }"
-        *ngIf="deed$ | async"
+        [criteria]="{ 'target.deed': deed?._id }"
+        *ngIf="state.deed$ | async as deed"
       ></liow-feed>
     </div>
   </div>

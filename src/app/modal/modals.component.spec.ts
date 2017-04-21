@@ -1,28 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
 
-import { StoreStubService } from '../../testing';
+import { StateService } from '../core/services';
 import { ModalsComponent } from './modals.component';
 
 // TODO: Add proper tests!
-// Simple store spies won't work here because this component uses multiple `store.select` calls
-// need more complicated spies or testing methods
 
-xdescribe(`ModalsComponent`, () => {
-  let component: ModalsComponent;
+describe(`ModalsComponent`, () => {
   let fixture: ComponentFixture<ModalsComponent>;
+  let component: ModalsComponent;
 
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
         declarations: [
           ModalsComponent,
+          CampaignEditModalStubComponent,
+          ChangePasswordModalStubComponent,
+          DeedPreviewModalStubComponent,
+          ForgotPasswordModalStubComponent,
+          GroupEditModalStubComponent,
           LoginModalStubComponent,
           SignupModalStubComponent,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -40,11 +42,45 @@ xdescribe(`ModalsComponent`, () => {
 });
 
 @Component({
+  selector: 'liow-campaign-edit-modal',
+  template: ``,
+})
+class CampaignEditModalStubComponent {
+  @Input() group: any;
+}
+
+@Component({
+  selector: 'liow-change-password-modal',
+  template: ``,
+})
+class ChangePasswordModalStubComponent { }
+
+@Component({
+  selector: 'liow-deed-preview-modal',
+  template: ``,
+})
+class DeedPreviewModalStubComponent { }
+
+@Component({
+  selector: 'liow-forgot-password-modal',
+  template: ``,
+})
+class ForgotPasswordModalStubComponent { }
+
+@Component({
+  selector: 'liow-group-edit-modal',
+  template: ``,
+})
+class GroupEditModalStubComponent {
+  @Input() isAuthenticated: boolean;
+  @Input() authUser: any;
+}
+
+@Component({
   selector: 'liow-login-modal',
   template: ``,
 })
 class LoginModalStubComponent {
-  @Input() state: any;
   @Input() group: any;
 }
 
@@ -53,6 +89,5 @@ class LoginModalStubComponent {
   template: ``,
 })
 class SignupModalStubComponent {
-  @Input() state: any;
   @Input() group: any;
 }

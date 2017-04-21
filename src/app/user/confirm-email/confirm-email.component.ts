@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { has } from 'lodash';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import { TitleService } from '../../core';
-import { State as AppState } from '../../store/reducer';
-import * as auth from '../../store/auth/auth.actions';
+import { AlertifyService, AuthService, TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './confirm-email.component.html',
@@ -13,8 +15,10 @@ import * as auth from '../../store/auth/auth.actions';
 })
 export class ConfirmEmailComponent implements OnInit {
   constructor(
+    private alertify: AlertifyService,
+    private auth: AuthService,
     private route: ActivatedRoute,
-    private store: Store<AppState>,
+    private router: Router,
     private title: TitleService,
   ) { }
 
@@ -22,8 +26,12 @@ export class ConfirmEmailComponent implements OnInit {
     this.route.params
       .filter((params: Params) => has(params, 'token'))
       .first()
-      .map((params: Params) => this.store.dispatch(new auth.ConfirmEmailAction(params['token'])))
-      .subscribe();
+      .switchMap((params: Params) => this.auth.confirmEmail(params.token))
+      .finally(() => this.router.navigate(['/']))
+      .subscribe(
+        () => this.alertify.success(`Confirmed email address`),
+        () => this.alertify.error(`Failed confirming email address`),
+      );
 
     this.title.set(`Confirming Email Address`);
   }

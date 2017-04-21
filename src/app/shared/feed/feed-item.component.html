@@ -19,7 +19,7 @@
 
   <div class="feed-item-content">
     <h6 class="m-t-none">
-      <span [ngSwitch]="authUser?._id === item.user._id || isMemberOfGroup(authUser, item.group)">
+      <span [ngSwitch]="(state.auth.user | async)?._id === item.user._id || (auth.isMemberOfGroup(item.group) | async)">
         <a
           [routerLink]="['/u', item.user._id]"
           *ngSwitchCase="true"

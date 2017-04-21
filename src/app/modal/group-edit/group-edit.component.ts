@@ -1,80 +1,167 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
-import { has } from 'lodash';
+import { has, keys } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
-import { State as AppState } from '../../store/reducer';
-import { Group, NewGroup } from '../../store/group';
-import * as group from '../../store/group/group.actions';
-import * as modal from '../../store/modal/modal.actions';
-import { State as GroupEditModalState } from '../../store/modal/group-edit';
-import * as groupEditModal from '../../store/modal/group-edit/group-edit.actions';
-import { User } from '../../store/user';
+import { ApiError, EditAction, Group, ModalState, NewGroup, User } from '../../core/models';
+import {
+  AlertifyService,
+  AuthService,
+  GroupService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
 
 @Component({
   selector: 'liow-group-edit-modal',
   templateUrl: './group-edit.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupEditModalComponent implements OnChanges {
+export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
   @Input() isAuthenticated: boolean;
   @Input() authUser: User;
-  @Input() state = <GroupEditModalState>null;
   @ViewChild('modal') modal: ModalDirective;
   @ViewChild('form') form: NgForm;
 
+  action: EditAction = EditAction.Create;
+  isSaving$ = new BehaviorSubject<boolean>(false);
+  group: Group|NewGroup = <NewGroup>{
+    name: '',
+    logo: null,
+    coverImage: null,
+    admins: [],
+    welcomeMessage: '',
+  };
+  groupUsers = [];
+  setupCampaign = true;
+  errorMessage = '';
+  errors = {};
+
+  private stateSubscription: Subscription;
+
   constructor(
-    private store: Store<AppState>,
+    private alertify: AlertifyService,
+    private auth: AuthService,
+    private groupService: GroupService,
+    public modalService: ModalService,
+    private router: Router,
+    private state: StateService,
+    private userService: UserService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'state.currentValue')) {
-      if (this.state.isOpen && !this.modal.isShown) {
-        this.form.resetForm();
-        this.initAuthUser();
-        this.modal.show();
-      } else if (!this.state.isOpen && this.modal.isShown) {
-        this.modal.hide();
-      }
-    }
-
     if (has(changes, 'authUser.currentValue')) {
       this.initAuthUser();
     }
   }
 
-  save(groupToSave: Group|NewGroup, setupCampaign): void {
-    const action = has(groupToSave, '_id')
-      ? new group.UpdateAction(<Group>groupToSave)
-      : new group.CreateAction({ group: <NewGroup>groupToSave, setupCampaign })
-      ;
+  ngOnInit(): void {
+    this.stateSubscription = this.state.modal.groupEdit$
+      .subscribe((state: ModalState) => {
+        if (state.isOpen && !this.modal.isShown) {
+          this.reset();
+          this.initAuthUser();
+          this.modal.show();
+        } else if (!state.isOpen && this.modal.isShown) {
+          this.modal.hide();
+        }
 
-    this.store.dispatch(action);
+        const options = <GroupEditModalOptions>state.options;
+        this.action = has(options, 'action') ? options.action : EditAction.Create;
+        if (has(options, 'group') && options.group) { this.initGroup(options.group); }
+      });
   }
 
-  onUpdatePropertyAction(property: string, value: any): void {
-    if (value !== null) {
-      this.store.dispatch(new groupEditModal[`Update${property}Action`](value));
-    }
+  ngOnDestroy(): void {
+    this.stateSubscription.unsubscribe();
+  }
+
+  save(groupToSave: Group|NewGroup, setupCampaign): void {
+    this.errorMessage = '';
+    this.errors = {};
+
+    this.isSaving$.next(true);
+    this.groupService.save(groupToSave)
+      .finally(() => this.isSaving$.next(false))
+      .switchMap((group: Group) => this.state.group$
+        .first()
+        .map((currentGroup: Group) => ({ group, currentGroup })))
+      .subscribe(
+        ({ group, currentGroup }) => {
+          if (
+            this.action === EditAction.Create ||
+            currentGroup && currentGroup._id === group._id
+          ) {
+            this.auth.loadCurrentUser(false).subscribe();
+            this.state.group = group;
+          }
+
+          this.onClose();
+          this.alertify.success(`${this.action}d group <b>${group.name}</b>`);
+
+          if (this.action === EditAction.Create) {
+            this.router.navigate(['/g', group.urlName], {
+              queryParams: setupCampaign ? { setupCampaign: true } : {},
+            });
+          }
+        },
+        (error: ApiError) => {
+          if (has(error, 'errors') && keys(error.errors).length) {
+            this.errors = error.errors;
+          } else {
+            this.errorMessage = error.message;
+          }
+        },
+      );
   }
 
   onClose(): void {
-    this.store.dispatch(new groupEditModal.CloseAction());
-  }
-
-  openLogin(): void {
-    this.store.dispatch(new modal.OpenLoginAction());
-  }
-
-  openSignup(): void {
-    this.store.dispatch(new modal.OpenSignupAction());
+    this.state.modal.groupEdit$.next({ isOpen: false });
   }
 
   private initAuthUser(): void {
-    if (!this.state.group['_id'] && this.authUser) {
-      this.onUpdatePropertyAction('GroupUsers', [this.authUser]);
-      this.onUpdatePropertyAction('Admins', [this.authUser._id]);
+    if (!this.group._id && this.authUser) {
+      this.groupUsers = [this.authUser];
+      this.group.admins = [this.authUser._id];
     }
   }
+
+  private initGroup(group: Group): void {
+    this.group = group;
+    this.userService.find({ groups: group._id })
+      .subscribe((groupUsers: User[]) => this.groupUsers = groupUsers);
+  }
+
+  private reset(): void {
+    this.action = EditAction.Create;
+    this.isSaving$.next(false);
+    this.group.name = '';
+    this.group.logo = null;
+    this.group.coverImage = null;
+    this.group.admins = [];
+    this.group.welcomeMessage = '';
+    this.groupUsers = [];
+    this.setupCampaign = true;
+    this.errorMessage = '';
+    this.errors = {};
+    this.form.resetForm();
+  }
+}
+
+interface GroupEditModalOptions {
+  action: EditAction;
+  group?: Group;
 }

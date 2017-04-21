@@ -1,19 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../core';
-import { State as AppState } from '../store/reducer';
-import { JumbtronStubComponent, StoreStubService, TitleStubService, YoutubePlayerStubComponent } from '../../testing';
+import {
+  ActStubService,
+  JumbtronStubComponent,
+  ModalStubService,
+  TitleStubService,
+  YoutubePlayerStubComponent,
+} from '../../testing';
+import { ActService, ModalService, StateService, TitleService } from '../core/services';
 import { HomeComponent } from './home.component';
 
-describe(`HomeComponent`, () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
-  let store: Store<AppState>;
+// TODO: add proper tests
 
-  const testUser = { groups: [] };
+describe(`HomeComponent`, () => {
+  let fixture: ComponentFixture<HomeComponent>;
+  let component: HomeComponent;
 
   beforeEach(async(() => {
     TestBed
@@ -26,8 +28,10 @@ describe(`HomeComponent`, () => {
           YoutubePlayerStubComponent,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: ActService, useClass: ActStubService },
+          { provide: ModalService, useClass: ModalStubService },
           { provide: TitleService, useClass: TitleStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -36,9 +40,6 @@ describe(`HomeComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of(testUser));
 
     fixture.detectChanges();
   });

@@ -1,20 +1,19 @@
 <div class="row">
   <div class="col-xs-12">
     <liow-control-panel-search
-      [query]="(state$ | async)?.query"
+      [query]="query$ | async"
       (search)="onSearch($event)"
       autofocus
     ></liow-control-panel-search>
 
     <liow-control-panel-pagination
       typeOfItems="users"
-      [numberOfItems]="state.numberOfUsers"
-      [numberOfPages]="state.numberOfPages"
-      [currentPage]="state.page"
-      [pageSize]="state.pageSize"
-      (numberOfPagesChanged)="onNumberOfPagesChanged($event)"
-      (currentPageChanged)="onCurrentPageChanged($event)"
-      *ngIf="(state$ | async) as state"
+      [numberOfItems]="numberOfUsers$ | async"
+      [numberOfPages]="numberOfPages$ | async"
+      [currentPage]="page$ | async"
+      [pageSize]="pageSize$ | async"
+      (numberOfPagesChanged)="numberOfPages$.next($event)"
+      (currentPageChanged)="page$.next($event)"
     ></liow-control-panel-pagination>
 
     <div class="table-responsive">
@@ -28,12 +27,12 @@
             <th style="width: 95px;">Last Seen</th>
             <th style="width: 90px;">Confirmed</th>
             <!--<th *ngIf="(state$ | async)?.groupId">Admin</th>-->
-            <th *ngIf="(authUser$ | async)?.superAdmin" style="width: 105px;">Super Admin</th>
+            <th *ngIf="(state.auth.user$ | async)?.superAdmin" style="width: 105px;">Super Admin</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr *ngFor="let user of (state$ | async)?.users; trackBy: identifyBy('_id')">
+          <tr *ngFor="let user of users$ | async; trackBy: identifyBy('_id')">
             <td class="text-center">
               <img [src]="user.picture || '/images/user0.png'" class="img-circle icon">
             </td>
@@ -44,11 +43,11 @@
             <td class="text-center">
               <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
             </td>
-            <!-- TODO: need full user object for this check -->
+            <!-- TODO: need full group?user? object for this check -->
             <!--<td *ngIf="(state$ | async)?.groupId"class="text-center">
               <ui-icon-checked [isChecked]="$ctrl.Group.isAdmin($ctrl.group, user)"></ui-icon-checked>
             </td>-->
-            <td *ngIf="(authUser$ | async)?.superAdmin" class="text-center">
+            <td *ngIf="(state.auth.user$ | async)?.superAdmin" class="text-center">
               <ui-icon-checked [isChecked]="user.superAdmin"></ui-icon-checked>
             </td>
           </tr>

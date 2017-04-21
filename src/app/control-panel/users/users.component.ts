@@ -1,73 +1,88 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { search } from '@ngrx/router-store';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { has } from 'lodash';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { has } from 'lodash';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import { TitleService } from '../../core';
-import { identifyBy } from '../../shared';
-import * as fromRoot from '../../store/reducer';
-import * as usersControlPanel from '../../store/control-panel/users/users.actions';
-import * as fromUsersControlPanel from '../../store/control-panel/users/users.reducer';
-import { GroupId } from '../../store/group';
-import { User } from '../../store/user';
+import { GroupId, User } from '../../core/models';
+import { StateService, TitleService, UserService } from '../../core/services';
+import { identifyBy, SearchParams } from '../../shared';
 
 @Component({
   templateUrl: './users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  authUser$: Observable<User>;
-  state$: Observable<fromUsersControlPanel.State>;
+  groupId$ = new BehaviorSubject<GroupId>(null);
+  query$ = new BehaviorSubject<string>('');
+  page$ = new BehaviorSubject<number>(1);
+  pageSize$ = new BehaviorSubject<number>(20);
+  numberOfPages$ = new BehaviorSubject<number>(1);
+  users$: Observable<User[]>;
+  numberOfUsers$: Observable<number>;
+  filterParams$: Observable<SearchParams>;
 
   identifyBy = identifyBy;
 
-  private queryParamsSubscription: Subscription;
-  private routeSubscription: Subscription;
+  private groupIdSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<fromRoot.State>,
+    private router: Router,
+    public state: StateService,
     private title: TitleService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    this.authUser$ = this.store.select(fromRoot.getAuthUser);
-    this.state$ = this.store.select(fromRoot.getUsersControlPanel);
-    this.title.set(`Users | Control Panel`);
-    this.store.dispatch(new usersControlPanel.InitialiseAction());
-
-    this.routeSubscription = this.route.parent.params
+    this.groupIdSubscription = this.route.parent.params
       .filter((params: Params) => has(params, 'groupId'))
       .map((params: Params) => params.groupId)
-      .subscribe((groupId: GroupId) =>
-        this.store.dispatch(new usersControlPanel.UpdateGroupIdAction(groupId)));
+      .subscribe((groupId: GroupId) => this.groupId$.next(groupId));
 
-    this.queryParamsSubscription = this.route.queryParams
+    this.filterParams$ = Observable.combineLatest(
+      this.groupId$,
+      this.query$,
+      this.page$,
+      this.pageSize$,
+    )
       .distinctUntilChanged()
-      .map((queryParams: Params) => queryParams.query || '')
-      .subscribe((query: string) => {
-        this.store.dispatch(new usersControlPanel.UpdateQueryAction(query));
-        this.store.dispatch(new usersControlPanel.UpdatePageAction(1));
-      });
+      .map(([groupId, query, page, limit]: [GroupId, string, number, number]) => (<SearchParams>{
+        groups: groupId || undefined,
+        query,
+        limit,
+        skip: (page - 1) * limit,
+        sort: '-_id',
+      }));
+
+    this.users$ = this.filterParams$
+      .switchMap((searchParams: SearchParams) => this.userService.find(searchParams));
+    this.numberOfUsers$ = this.filterParams$
+      .switchMap((searchParams: SearchParams) => this.userService.count(searchParams));
+
+    // Get initial router params
+    this.route.queryParams
+      .first()
+      .subscribe((queryParams: Params) => this.query$.next(queryParams.query || ''));
+
+    this.title.set(`Users | Control Panel`);
   }
 
   ngOnDestroy(): void {
-    this.queryParamsSubscription.unsubscribe();
-    this.routeSubscription.unsubscribe();
+    this.groupIdSubscription.unsubscribe();
   }
 
   onSearch(query: string): void {
-    this.store.dispatch(search({ query }));
-  }
-
-  onCurrentPageChanged(currentPage: number): void {
-    this.store.dispatch(new usersControlPanel.UpdatePageAction(currentPage));
-  }
-
-  onNumberOfPagesChanged(numberOfPages: number): void {
-    this.store.dispatch(new usersControlPanel.UpdateNumberOfPagesAction(numberOfPages));
+    this.query$.next(query);
+    this.page$.next(1);
+    this.router.navigate([], {
+      queryParams: { query },
+    });
   }
 }

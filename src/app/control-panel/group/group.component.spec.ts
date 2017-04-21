@@ -1,26 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
-import { TitleService } from '../../core';
-import { MomentPipe } from '../../shared';
-import { State as AppState } from '../../store/reducer';
 import {
+  ActStubService,
   ActivatedRouteStubService,
+  GroupStubService,
   MarkedStubComponent,
+  ModalStubService,
   RouterLinkStubDirective,
   RouterLinkActiveStubDirective,
   RouterOutletStubComponent,
-  StoreStubService,
   TitleStubService,
+  UserStubService,
 } from '../../../testing';
+import { ActService, GroupService, ModalService, StateService, TitleService, UserService } from '../../core/services';
+import { MomentPipe } from '../../shared';
 import { GroupComponent } from './group.component';
+
+// TODO: add proper tests
 
 describe(`GroupComponent`, () => {
   let component: GroupComponent;
   let fixture: ComponentFixture<GroupComponent>;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -34,9 +35,13 @@ describe(`GroupComponent`, () => {
           RouterOutletStubComponent,
         ],
         providers: [
+          { provide: ActService, useClass: ActStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: GroupService, useClass: GroupStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
+          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();
@@ -45,10 +50,6 @@ describe(`GroupComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupComponent);
     component = fixture.componentInstance;
-
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of({}));
-
     fixture.detectChanges();
   });
 

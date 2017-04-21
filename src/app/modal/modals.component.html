@@ -4,33 +4,24 @@ Lower is rendered on top of higher
 -->
 
 <liow-campaign-edit-modal
-  [state]="campaignEditModal$ | async"
+  [group]="state.group$ | async"
 ></liow-campaign-edit-modal>
 
-<liow-change-password-modal
-  [state]="changePasswordModal$ | async"
-></liow-change-password-modal>
+<liow-change-password-modal></liow-change-password-modal>
 
-<liow-deed-preview-modal
-  [state]="deedPreviewModal$ | async"
-></liow-deed-preview-modal>
+<liow-deed-preview-modal></liow-deed-preview-modal>
 
 <liow-group-edit-modal
-  [state]="groupEditModal$ | async"
-  [isAuthenticated]="isAuthenticated$ | async"
-  [authUser]="authUser$ | async"
+  [isAuthenticated]="state.auth.isAuthenticated$ | async"
+  [authUser]="state.auth.user$ | async"
 ></liow-group-edit-modal>
 
-<liow-forgot-password-modal
-  [state]="forgotPasswordModal$ | async"
-></liow-forgot-password-modal>
+<liow-forgot-password-modal></liow-forgot-password-modal>
 
 <liow-login-modal
-  [state]="loginModal$ | async"
-  [group]="currentGroup$ | async"
+  [group]="state.auth.group$ | async"
 ></liow-login-modal>
 
 <liow-signup-modal
-  [state]="signupModal$ | async"
-  [group]="currentGroup$ | async"
+  [group]="state.auth.group$ | async"
 ></liow-signup-modal>

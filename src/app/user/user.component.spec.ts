@@ -1,20 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
-import { TitleService } from '../core';
 import {
+  ActStubService,
   ActivatedRouteStubService,
   FeedStubComponent,
   JumbtronStubComponent,
-  StoreStubService,
+  ModalStubService,
   TitleStubService,
+  UserStubService,
 } from '../../testing';
+import { User } from '../core/models';
+import { ActService, ModalService, StateService, TitleService, UserService } from '../core/services';
 import { UserComponent } from './user.component';
 
-xdescribe(`UserComponent`, () => {
-  let component: UserComponent;
+// TODO: add proper tests
+
+describe(`UserComponent`, () => {
   let fixture: ComponentFixture<UserComponent>;
+  let component: UserComponent;
+  let route: ActivatedRouteStubService;
+  let userService: UserService;
+
+  const testUser = <User>{ _id: 'abc123' };
 
   beforeEach(async(() => {
     TestBed
@@ -25,9 +35,12 @@ xdescribe(`UserComponent`, () => {
           JumbtronStubComponent,
         ],
         providers: [
+          { provide: ActService, useClass: ActStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
+          { provide: UserService, useClass: UserStubService },
         ]
       })
       .compileComponents();
@@ -36,6 +49,12 @@ xdescribe(`UserComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
+
+    route = TestBed.get(ActivatedRoute);
+    route.params.next({ userId: testUser._id });
+    userService = TestBed.get(UserService);
+    spyOn(userService, 'get').and.returnValue(Observable.of(testUser));
+
     fixture.detectChanges();
   });
 

@@ -1,16 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { TitleService } from '../../core';
+import { AlertifyService, AuthService, TitleService } from '../../core/services';
 import {
   ActivatedRouteStubService,
+  AlertifyStubService,
+  AuthStubService,
   JumbtronStubComponent,
   LoadingSpinnerStubComponent,
-  StoreStubService,
+  RouterStubService,
   TitleStubService,
 } from '../../../testing';
 import { ConfirmEmailComponent } from './confirm-email.component';
+
+// TODO: add proper tests
 
 describe(`ConfirmEmailComponent`, () => {
   let fixture: ComponentFixture<ConfirmEmailComponent>;
@@ -25,8 +28,10 @@ describe(`ConfirmEmailComponent`, () => {
           LoadingSpinnerStubComponent,
         ],
         providers: [
+          { provide: AlertifyService, useClass: AlertifyStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          { provide: Router, useClass: RouterStubService },
           { provide: TitleService, useClass: TitleStubService },
         ],
       })

@@ -1,27 +1,29 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
-import { TitleService } from '../../core';
-import { MomentPipe } from '../../shared';
-import { State as AppState } from '../../store/reducer';
 import {
   ActivatedRouteStubService,
   ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
+  GroupStubService,
   MarkedStubComponent,
   ModalStubDirective,
   RouterLinkStubDirective,
-  StoreStubService,
+  RouterStubService,
   TitleStubService,
 } from '../../../testing';
+import { GroupService, TitleService } from '../../core/services';
+import { MomentPipe } from '../../shared';
 import { GroupsComponent } from './groups.component';
+
+// TODO: add proper tests
 
 describe(`GroupsComponent`, () => {
   let fixture: ComponentFixture<GroupsComponent>;
   let component: GroupsComponent;
-  let store: Store<AppState>;
+  let groupService: GroupService;
 
   beforeEach(async(() => {
     TestBed
@@ -37,7 +39,8 @@ describe(`GroupsComponent`, () => {
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: GroupService, useClass: GroupStubService },
+          { provide: Router, useClass: RouterStubService },
           { provide: TitleService, useClass: TitleStubService },
         ],
       })
@@ -48,8 +51,9 @@ describe(`GroupsComponent`, () => {
     fixture = TestBed.createComponent(GroupsComponent);
     component = fixture.componentInstance;
 
-    store = TestBed.get(Store);
-    spyOn(store, 'select').and.returnValue(Observable.of({}));
+    groupService = TestBed.get(GroupService);
+    spyOn(groupService, 'find').and.returnValue(Observable.of([]));
+    spyOn(groupService, 'count').and.returnValue(Observable.of(0));
 
     fixture.detectChanges();
   });

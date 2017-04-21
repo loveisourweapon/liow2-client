@@ -85,6 +85,14 @@ export class MediumEditorStubComponent {
 }
 
 @Component({
+  selector: 'liow-navbar-search',
+  template: ``,
+})
+export class NavbarSearchStubComponent {
+  @Output() select = new EventEmitter();
+}
+
+@Component({
   selector: 'ui-switch',
   template: ``,
 })

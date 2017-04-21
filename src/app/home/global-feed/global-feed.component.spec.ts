@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { TitleService } from '../../core';
 import { FeedStubComponent, JumbtronStubComponent, TitleStubService } from '../../../testing';
+import { TitleService } from '../../core/services';
 import { GlobalFeedComponent } from './global-feed.component';
 
 describe(`GlobalFeedComponent`, () => {

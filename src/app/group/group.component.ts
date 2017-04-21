@@ -1,39 +1,43 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { search } from '@ngrx/router-store';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
+import { has, findIndex, findLast, some } from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { has, findLast, some } from 'lodash';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/if';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import { TitleService } from '../core';
+import { Campaign, Deed, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
+import {
+  ActService,
+  AlertifyService,
+  AuthService,
+  CampaignService,
+  GroupService,
+  ModalService,
+  StateService,
+  TitleService,
+  UserService,
+} from '../core/services';
 import { identifyBy } from '../shared';
-import * as fromRoot from '../store/reducer';
-import * as alertify from '../store/alertify/alertify.actions';
-import { Deed } from '../store/deed';
-import { Campaign, Group, GroupSlug, GroupTab } from '../store/group';
-import * as group from '../store/group/group.actions';
-import * as modal from '../store/modal/modal.actions';
-import { CampaignEditAction } from '../store/modal/campaign-edit';
-import { GroupEditAction } from '../store/modal/group-edit';
-import { User } from '../store/user';
-import * as user from '../store/user/user.actions';
+import { GroupTab } from './group-tab.model';
 
 @Component({
   templateUrl: './group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnDestroy, OnInit {
-  group$: Observable<Group>;
-  campaign$: Observable<Campaign>;
-  groupCounter$: Observable<number>;
-  campaignCounter$: Observable<number>;
-  isAuthenticated$: Observable<boolean>;
-  authUser$: Observable<User>;
-  currentTab$: Observable<GroupTab>;
-
+  currentTab: GroupTab;
   tabs = GroupTab;
 
   identifyBy = identifyBy;
@@ -47,46 +51,60 @@ export class GroupComponent implements OnDestroy, OnInit {
   private confirmation$ = new BehaviorSubject<boolean>(null);
 
   constructor(
+    private actService: ActService,
+    private alertify: AlertifyService,
+    private auth: AuthService,
+    private campaignService: CampaignService,
+    private groupService: GroupService,
+    public modal: ModalService,
     private route: ActivatedRoute,
-    private store: Store<fromRoot.State>,
+    private router: Router,
+    public state: StateService,
     private title: TitleService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    this.group$ = this.store.select(fromRoot.getCurrentGroup);
-    this.campaign$ = this.store.select(fromRoot.getCurrentCampaign);
-    this.groupCounter$ = this.store.select(fromRoot.getCurrentGroupCount);
-    this.campaignCounter$ = this.store.select(fromRoot.getCurrentCampaignCount);
-    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
-    this.authUser$ = this.store.select(fromRoot.getAuthUser);
-    this.currentTab$ = this.store.select(fromRoot.getCurrentGroupTab);
-
     this.routeSubscription = this.route.params
-      .map((params: Params) => params['groupSlug'])
-      .filter((groupSlug: GroupSlug) => Boolean(groupSlug))
+      .filter((params: Params) => has(params, 'groupSlug'))
+      .map((params: Params) => params.groupSlug)
       .distinctUntilChanged()
-      .subscribe((groupSlug: GroupSlug) =>
-        this.store.dispatch(new group.FindAndSetCurrentAction({ urlName: groupSlug })));
+      .do(() => {
+        this.state.deed = null;
+        this.state.campaign = null;
+      })
+      .switchMap((groupSlug: GroupSlug) => this.groupService.findOne({ urlName: groupSlug }))
+      .subscribe((group: Group) => this.state.group = group);
 
-    this.groupSubscription = this.group$
+    this.groupSubscription = this.state.group$
       .filter((group: Group) => group !== null)
-      .do(() => this.checkSetupCampaign())
-      .subscribe((group: Group) => this.title.set(group.name));
+      .do((group: Group) => {
+        this.loadCampaign(group);
+        this.checkSetupCampaign();
+      })
+      .subscribe((group: Group) => {
+        this.actService.count({ group: group._id });
+        this.title.set(group.name);
+      });
 
-    this.userSubscription = this.isUserAn$(this.memberOfGroup, this.authUser$, this.group$)
+    this.userSubscription = Observable.combineLatest(
+      this.isUserAn$(this.memberOfGroup, this.state.auth.user$, this.state.group$),
+      this.state.auth.user$,
+      this.state.group$,
+    )
       .distinctUntilChanged()
-      .subscribe((isMemberOfGroup: boolean) =>
-        this.store.dispatch(new group.SetCurrentTabAction(isMemberOfGroup ? GroupTab.Feed : GroupTab.Welcome)));
+      .subscribe(([isMemberOfGroup, authUser, group]: [boolean, User, Group]) => {
+        this.currentTab = isMemberOfGroup ? GroupTab.Feed : GroupTab.Welcome;
+        if (isMemberOfGroup && authUser) {
+          this.state.auth.group = group;
+        }
+      });
   }
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
     this.groupSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
-  }
-
-  setCurrentTab(currentTab: GroupTab): void {
-    this.store.dispatch(new group.SetCurrentTabAction(currentTab));
   }
 
   isUserAn$(predicate: (User, Group) => boolean, user$: Observable<User>, group$: Observable<Group>): Observable<boolean> {
@@ -107,35 +125,47 @@ export class GroupComponent implements OnDestroy, OnInit {
       && group.admins.includes(user._id);
   }
 
-  isCurrentDeed(deed: Deed): Observable<boolean> {
-    return this.campaign$.take(1)
-      .map((campaign: Campaign) => {
-        if (!(campaign && campaign.deeds)) { return false; }
+  isCurrentDeed(deed: Deed, campaign: Campaign): boolean {
+    if (!(campaign && campaign.deeds)) { return false; }
 
-        const currentDeed = findLast(campaign.deeds,  { published: true });
-        if (!currentDeed) { return false; }
+    const currentDeed = findLast(campaign.deeds,  { published: true });
+    if (!currentDeed) { return false; }
 
-        return currentDeed.deed['_id'] === deed._id;
-      });
+    return currentDeed.deed['_id'] === deed._id;
   }
 
   joinGroup(user$: Observable<User>, group$: Observable<Group>): void {
+    // TODO: investigate better way than hoisting these variables out of their closures
+    let user: User, group: Group;
+
     Observable.combineLatest(user$, group$)
-      .distinctUntilChanged()
       .first()
-      .subscribe(([currentUser, group]: [User, Group]) =>
-        this.store.dispatch(new user.JoinGroupAction({ user: currentUser, group })));
+      .do(([authUser, currentGroup]: [User, Group]) => {
+        user = authUser;
+        group = currentGroup;
+      })
+      .switchMap(([authUser, currentGroup]: [User, Group]) =>
+        this.userService.update(authUser, [{
+          op: JsonPatchOp.Add,
+          path: `/groups/${authUser.groups.length}`,
+          value: currentGroup._id,
+        }]))
+      .switchMap(() => this.auth.loadCurrentUser())
+      .do(() => this.state.auth.group = group)
+      .subscribe(
+        () => this.alertify.success(`Joined group <b>${group.name}</b>`),
+        () => this.alertify.error(`Failed joining group <b>${group.name}</b>`),
+      );
   }
 
   leaveGroup(user$: Observable<User>, group$: Observable<Group>): void {
     Observable.combineLatest(user$, group$)
-      .distinctUntilChanged()
       .first()
-      .flatMap(([currentUser, group]: [User, Group]) => Observable.if(
+      .flatMap(([user, group]: [User, Group]) => Observable.if(
         // Prevent group owner and group admins from leaving
-        () => group.owner !== currentUser._id && !this.adminOfGroup(currentUser, group),
-        Observable.of([currentUser, group]),
-        Observable.throw(group.owner === currentUser._id
+        () => group.owner !== user._id && !this.adminOfGroup(user, group),
+        Observable.of([user, group]),
+        Observable.throw(group.owner === user._id
           // User is the group owner
           ? `
             <p>You are the current owner of <b>${group.name}</b>.</p>
@@ -149,53 +179,69 @@ export class GroupComponent implements OnDestroy, OnInit {
         )
       ))
       .subscribe(
-        ([currentUser, group]: [User, Group]) => {
+        ([user, group]: [User, Group]) => {
           this.openConfirmation(`Are you sure you want to leave <b>${group.name}</b>?`);
           this.confirmation$
             .filter((isConfirmed: boolean) => isConfirmed !== null).first()
             .filter((isConfirmed: boolean) => isConfirmed)
-            .subscribe(() =>
-              this.store.dispatch(new user.LeaveGroupAction({ user: currentUser, group })));
+            .map(() => user.groups.findIndex((userGroup: Group) => userGroup._id === group._id))
+            .switchMap((index: number) =>
+              this.userService.update(user, [{
+                op: JsonPatchOp.Remove,
+                path: `/groups/${index}`,
+              }]))
+            .switchMap(() => this.auth.loadCurrentUser())
+            .subscribe(
+              () => this.alertify.log(`Left group <b>${group.name}</b>`),
+              () => this.alertify.error(`Failed leaving group <b>${group.name}</b>`),
+            );
         },
-        (errorMessage: string) =>
-          this.store.dispatch(new alertify.LogAction({
-            message: errorMessage,
-            timeout: 10000,
-            useTemplate: false,
-          })),
+        (errorMessage: string) => this.alertify.log(errorMessage, 10000, false),
       );
   }
 
-  openGroupEditModal(group$: Observable<Group>): void {
-    group$.first().subscribe((group: Group) =>
-      this.store.dispatch(new modal.OpenGroupEditAction({ action: GroupEditAction.Update, group })));
-  }
-
-  openCampaignEditModal(group$: Observable<Group>, campaign$: Observable<Campaign> = Observable.of(undefined)): void {
-    Observable.combineLatest(group$, campaign$)
-      .first()
-      .subscribe(([group, campaign]: [Group, Campaign]) => {
-        const action = campaign === undefined ? CampaignEditAction.Create : CampaignEditAction.Update;
-        this.store.dispatch(new modal.OpenCampaignEditAction({ action, group, campaign }));
-      });
-  }
-
-  finishCampaign(campaign$: Observable<Campaign>): void {
+  finishCampaign(campaign: Campaign): void {
     this.openConfirmation(`Are you sure you want to finish the current campaign?`);
-    Observable.combineLatest(
-      this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null).first(),
-      campaign$.first(),
-    )
-      .filter(([isConfirmed, campaign]: [boolean, Campaign]) => isConfirmed)
-      .map(([isConfirmed, campaign]: [boolean, Campaign]) => campaign)
-      .subscribe((campaign: Campaign) =>
-        this.store.dispatch(new group.FinishCampaignAction(campaign)));
+    this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null)
+      .first()
+      .filter((isConfirmed: boolean) => isConfirmed)
+      .switchMap(() =>
+        this.campaignService.update(campaign, [{
+          op: JsonPatchOp.Replace,
+          path: `/active`,
+          value: false,
+        }, {
+          op: JsonPatchOp.Replace,
+          path: `/dateEnd`,
+          value: new Date(),
+        }]))
+      .do(() => this.state.campaign = null)
+      .subscribe(
+        () => this.alertify.success(`Finished campaign`),
+        () => this.alertify.error(`Failed finishing campaign`),
+      );
   }
 
-  setPublished(campaign$: Observable<Campaign>, deed: Deed, isPublished: boolean): void {
-    campaign$.first()
-      .subscribe((campaign: Campaign) =>
-        this.store.dispatch(new group.SetDeedPublishedAction({ campaign, deed, isPublished })));
+  setPublished(deed: Deed, campaign: Campaign, isPublished: boolean): void {
+    const deedIndex = findIndex(campaign.deeds, { deed: { _id: deed._id } });
+    const patch = {
+      op: JsonPatchOp.Replace,
+      path: `/deeds/${deedIndex}/published`,
+      value: isPublished,
+    };
+    const action = isPublished ? `Publish` : `Unpublish`;
+    const alertMethod = isPublished ? `success` : `log`;
+
+    this.campaignService.update(campaign, [patch])
+      .switchMap(() => this.campaignService.findOne({ group: campaign.group, active: true }))
+      .do((foundCampaign: Campaign) => {
+        this.state.campaign = foundCampaign;
+        this.actService.count({ campaign: foundCampaign._id });
+      })
+      .subscribe(
+        () => this.alertify[alertMethod](`${action}ed deed <b>${deed.title}</b>`),
+        () => this.alertify.error(`Failed ${action}ing deed <b>${deed.title}</b>`),
+      );
   }
 
   openConfirmation(confirmModalContent: string): void {
@@ -209,14 +255,23 @@ export class GroupComponent implements OnDestroy, OnInit {
     this.confirmModal.hide();
   }
 
-  openLoginModal(): void {
-    this.store.dispatch(new modal.OpenLoginAction());
+  private loadCampaign(group: Group): void {
+    this.campaignService.findOne({ group: group._id, active: true })
+      .subscribe(
+        (campaign: Campaign) => {
+          this.state.campaign = campaign;
+          this.actService.count({ campaign: campaign._id });
+        },
+        () => null, // Ignore if not found
+      );
   }
 
   private checkSetupCampaign(): void {
-    this.route.queryParams.take(1)
-      .filter((queryParams: Params) => queryParams['setupCampaign'])
-      .do(() => this.store.dispatch(search({})))
-      .subscribe((queryParams) => this.openCampaignEditModal(this.group$));
+    this.route.queryParams
+      .first()
+      .filter((queryParams: Params) => queryParams.setupCampaign)
+      .do(() => this.router.navigate([], { queryParams: {} }))
+      .switchMap(() => this.state.group$.first())
+      .subscribe((group: Group) => this.modal.openCampaignEdit());
   }
 }

@@ -8,7 +8,7 @@
 
       <div class="list-group group-list">
         <a
-          *ngFor="let group of authUser?.groups; trackBy: identifyBy('_id')"
+          *ngFor="let group of (state.auth.user$ | async)?.groups; trackBy: identifyBy('_id')"
           [routerLink]="['/g', group.urlName]"
           class="list-group-item clearfix"
         >
@@ -19,7 +19,7 @@
             <h4 class="m-none">{{ group.name }}</h4>
             <p class="m-b-none">
               <span class='f-lg'>
-                {{ getGroupCount(counters, group._id) | number }}
+                {{ state.counter$(group._id) | async | number }}
               </span> acts of love
             </p>
           </div>
@@ -38,7 +38,7 @@
           user: authUser?._id,
           group: listGroupIds(authUser?.groups)
         }"
-        *ngIf="authUser"
+        *ngIf="state.auth.user$ | async as authUser"
       ></liow-feed>
     </div>
   </div>

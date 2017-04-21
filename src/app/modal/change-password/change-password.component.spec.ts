@@ -2,21 +2,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
 
+import { AlertifyStubService, ModalStubDirective, UserStubService } from '../../../testing';
+import { AlertifyService, StateService, UserService } from '../../core/services';
 import { SameAsValidatorDirective } from '../../shared';
-import { State as AppState } from '../../store/reducer';
-import { State as ChangePasswordModalState } from '../../store/modal/change-password';
-import { ModalStubDirective, StoreStubService } from '../../../testing';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { ChangePasswordModalComponent } from './change-password.component';
+
+// TODO: add proper tests
 
 describe(`ChangePasswordModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHost: TestHostComponent;
   let component: ChangePasswordModalComponent;
   let element: DebugElement;
-  let store: Store<AppState>;
 
   beforeEach(async(() => {
     TestBed
@@ -32,7 +31,9 @@ describe(`ChangePasswordModalComponent`, () => {
           FormsModule,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          StateService,
+          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();
@@ -43,7 +44,6 @@ describe(`ChangePasswordModalComponent`, () => {
     testHost = fixture.componentInstance;
     element = fixture.debugElement.query(By.directive(ChangePasswordModalComponent));
     component = element.injector.get(ChangePasswordModalComponent);
-    store = TestBed.get(Store);
     fixture.detectChanges();
   });
 
@@ -53,20 +53,6 @@ describe(`ChangePasswordModalComponent`, () => {
 });
 
 @Component({
-  template: `
-    <liow-change-password-modal 
-      [state]="state"
-    ></liow-change-password-modal>
-  `,
+  template: `<liow-change-password-modal></liow-change-password-modal>`,
 })
-class TestHostComponent {
-  state = <ChangePasswordModalState>{
-    isOpen: false,
-    isSaving: false,
-    user: null,
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-    errorMessage: '',
-  };
-}
+class TestHostComponent { }

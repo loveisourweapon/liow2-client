@@ -2,12 +2,9 @@
   <liow-deed-list-horizontal
     *ngSwitchCase="'horizontal'"
     [deeds]="deeds$ | async"
-    [counters]="counters$ | async"
   ></liow-deed-list-horizontal>
   <liow-deed-list-vertical
     *ngSwitchCase="'vertical'"
     [deeds]="deeds$ | async"
-    [currentDeed]="currentDeed$ | async"
-    [counters]="counters$ | async"
   ></liow-deed-list-vertical>
 </div>

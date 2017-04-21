@@ -6,6 +6,7 @@ import { Component, Directive, EventEmitter, Input, Output } from '@angular/core
   template: ``
 })
 export class AlertStubComponent {
+  @Input() dismissible: boolean;
   @Input() type: string;
 }
 
@@ -60,7 +61,10 @@ export class TabsetStubComponent {
   selector: 'tab',
   template: ``,
 })
-export class TabStubComponent { }
+export class TabStubComponent {
+  @Input() active: boolean;
+  @Output() select = new EventEmitter();
+}
 
 @Directive({
   selector: '[typeahead]',

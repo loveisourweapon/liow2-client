@@ -1,4 +1,4 @@
-<div class="row" *ngIf="(state$ | async)?.user as user">
+<div class="row" *ngIf="(user$ | async) as user">
   <div class="col-sm-3 col-sm-push-9">
     <img [src]="user.picture" class="profile img-responsive img-circle">
   </div>
@@ -12,7 +12,7 @@
       <tr>
         <th>Name</th>
         <td>
-          <div *ngIf="(state$ | async)?.isEditingName as isEditingName; then editNameForm; else editNameButton"></div>
+          <div *ngIf="isEditingName$ | async as isEditingName; then editNameForm; else editNameButton"></div>
           <ng-template #editNameButton let-isEditingName>
             <a (click)="setEditingName(!isEditingName, user); $event.preventDefault()" class="pull-right" href>
               <i class="fa fa-fw fa-pencil"></i>
@@ -38,8 +38,7 @@
                   id="firstName"
                   name="firstName"
                   #firstName="ngModel"
-                  [ngModel]="(state$ | async)?.firstName"
-                  (ngModelChange)="onUpdatePropertyAction('FirstName', $event)"
+                  [(ngModel)]="inputs.firstName"
                   placeholder="First..."
                   required
                 >
@@ -52,8 +51,7 @@
                   id="lastName"
                   name="lastName"
                   #lastName="ngModel"
-                  [ngModel]="(state$ | async)?.lastName"
-                  (ngModelChange)="onUpdatePropertyAction('LastName', $event)"
+                  [(ngModel)]="inputs.lastName"
                   placeholder="Last..."
                 >
               </div>
@@ -67,10 +65,10 @@
       <tr>
         <th>Password</th>
         <td>
-          <a (click)="openChangePassword(user); $event.preventDefault()" href>
+          <a (click)="modal.openChangePassword(user); $event.preventDefault()" href>
             Change password
           </a>
-          <a (click)="openChangePassword(user); $event.preventDefault()" class="pull-right" href>
+          <a (click)="modal.openChangePassword(user); $event.preventDefault()" class="pull-right" href>
             <i class="fa fa-fw fa-pencil"></i>
           </a>
         </td>
@@ -81,7 +79,7 @@
       </tr>
       <tr>
         <th>Acts of Love</th>
-        <td>{{ (userCounter$ | async) | number }}</td>
+        <td>{{ state.counter$(user._id) | async | number }}</td>
       </tr>
       <tr>
         <th>Confirmed</th>
@@ -90,7 +88,7 @@
           <span *ngIf="!user.confirmed" class="m-l-xs">
             <a (click)="sendConfirmEmail(user.email); $event.preventDefault()" href>
               Re-send confirmation email?
-              <i class="fa fa-cog fa-spin" [hidden]="!(state$ | async)?.isSendingConfirmEmail"></i>
+              <i class="fa fa-cog fa-spin" [hidden]="!(isSendingConfirmEmail$ | async)"></i>
             </a>
           </span>
         </td>

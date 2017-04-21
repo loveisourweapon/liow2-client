@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { has, some } from 'lodash';
 
-import { FeedItem } from '../../store/feed';
-import { Group } from '../../store/group';
-import { User } from '../../store/user';
+import { FeedItem } from '../../core/models';
+import { AuthService } from '../../core/services/auth.service';
+import { StateService } from '../../core/services/state.service';
 
 @Component({
   selector: 'liow-feed-item',
@@ -13,13 +12,9 @@ import { User } from '../../store/user';
 })
 export class FeedItemComponent {
   @Input() item: FeedItem;
-  @Input() authUser: User;
 
-  isMemberOfGroup(authUser: User, group: Group): boolean {
-    return (
-      has(authUser, 'groups') &&
-      has(group, '_id') &&
-      some(authUser.groups, (userGroup: Group) => userGroup._id === group._id)
-    );
-  }
+  constructor(
+    public auth: AuthService,
+    public state: StateService,
+  ) { }
 }

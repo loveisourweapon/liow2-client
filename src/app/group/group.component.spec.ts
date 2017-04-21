@@ -1,29 +1,45 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { TitleService } from '../core';
 import {
   ActivatedRouteStubService,
+  ActStubService,
+  AlertifyStubService,
+  AlertStubComponent,
+  AuthStubService,
+  CampaignStubService,
   DropdownStubDirective,
   DropdownMenuStubDirective,
   DropdownToggleStubDirective,
   FeedStubComponent,
+  GroupStubService,
   JumbtronStubComponent,
   MarkedStubComponent,
   ModalStubDirective,
-  StoreStubService,
+  ModalStubService,
+  RouterLinkStubDirective,
+  RouterStubService,
   TabsetStubComponent,
   TabStubComponent,
   TitleStubService,
+  UserStubService,
 } from '../../testing';
+import {
+  ActService,
+  AlertifyService,
+  AuthService,
+  CampaignService,
+  GroupService,
+  ModalService,
+  StateService,
+  TitleService,
+  UserService,
+} from '../core/services';
 import { GroupComponent } from './group.component';
 
 // TODO: Add proper tests!
-// Simple store spies won't work here because this component uses multiple `store.select` calls
-// need more complicated spies or testing methods
 
-xdescribe(`GroupComponent`, () => {
+describe(`GroupComponent`, () => {
   let component: GroupComponent;
   let fixture: ComponentFixture<GroupComponent>;
 
@@ -32,6 +48,7 @@ xdescribe(`GroupComponent`, () => {
       .configureTestingModule({
         declarations: [
           GroupComponent,
+          AlertStubComponent,
           DropdownStubDirective,
           DropdownMenuStubDirective,
           DropdownToggleStubDirective,
@@ -39,13 +56,22 @@ xdescribe(`GroupComponent`, () => {
           JumbtronStubComponent,
           MarkedStubComponent,
           ModalStubDirective,
+          RouterLinkStubDirective,
           TabsetStubComponent,
           TabStubComponent,
         ],
         providers: [
+          { provide: ActService, useClass: ActStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          { provide: CampaignService, useClass: CampaignStubService },
+          { provide: GroupService, useClass: GroupStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          { provide: Router, useClass: RouterStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
+          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();

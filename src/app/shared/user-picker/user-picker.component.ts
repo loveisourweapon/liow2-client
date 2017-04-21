@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
+import { User } from '../../core/models';
 import { identifyBy } from '../utils';
-import { User } from '../../store/user';
 
 @Component({
   selector: 'liow-user-picker',

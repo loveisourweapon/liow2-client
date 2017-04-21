@@ -1,13 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
-import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
-import * as fromRoot from '../../store/reducer';
-import { Counters } from '../../store/act';
-import { State as DeedPreviewModalState } from '../../store/modal/deed-preview';
-import * as deedPreviewModal from '../../store/modal/deed-preview/deed-preview.actions';
+import { Deed, ModalState } from '../../core/models';
+import { ActService, DeedService, StateService } from '../../core/services';
 
 @Component({
   selector: 'liow-deed-preview-modal',
@@ -15,37 +17,39 @@ import * as deedPreviewModal from '../../store/modal/deed-preview/deed-preview.a
   styleUrls: ['./deed-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeedPreviewModalComponent implements OnChanges, OnInit {
-  @Input() state = <DeedPreviewModalState>null;
+export class DeedPreviewModalComponent implements OnInit {
   @ViewChild('modal') modal: ModalDirective;
 
-  counters$: Observable<Counters>;
+  deed$: Observable<Deed>;
 
   constructor(
-    private store: Store<fromRoot.State>,
+    private actService: ActService,
+    private deedService: DeedService,
+    public state: StateService,
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'state.currentValue')) {
-      if (this.state.isOpen && !this.modal.isShown) {
-        this.modal.show();
-      } else if (!this.state.isOpen && this.modal.isShown) {
-        this.modal.hide();
-      }
-    }
-  }
-
   ngOnInit(): void {
-    this.counters$ = this.store.select(fromRoot.getCountersState);
-  }
+    this.deed$ = this.state.modal.deedPreview$
+      .map((state: ModalState) => {
+        if (state.isOpen && !this.modal.isShown) {
+          this.modal.show();
+        } else if (!state.isOpen && this.modal.isShown) {
+          this.modal.hide();
+        }
 
-  getDeedCount(counters$: Observable<Counters>, deedId: string): Observable<number|null> {
-    return counters$.first()
-      .map((counters: Counters) => counters[deedId])
-      .map((counter: number) => typeof counter === 'number' ? counter : null);
+        const options = <DeedPreviewModalOptions>state.options;
+        return has(options, 'deed') ? options.deed : {};
+      })
+      .switchMap((deed?: Deed) => this.deedService.findOne({ _id: deed._id })
+        .do(() => this.actService.count({ deed: deed._id }))
+        .catch(() => Observable.of(null)));
   }
 
   onClose(): void {
-    this.store.dispatch(new deedPreviewModal.CloseAction());
+    this.state.modal.deedPreview$.next({ isOpen: false });
   }
+}
+
+interface DeedPreviewModalOptions {
+  deed: Deed;
 }

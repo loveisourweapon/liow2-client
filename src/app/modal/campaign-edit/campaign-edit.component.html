@@ -6,28 +6,28 @@
   role="dialog"
   aria-labelledby="Campaign edit"
   aria-hidden="true"
-  (onHide)="onClose()"
+  (onHidden)="onClose()"
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <form
-        (ngSubmit)="save(state.campaign)"
+        (ngSubmit)="save(campaign, campaignDeeds$, group)"
         class="form-horizontal"
         novalidate
       >
         <liow-modal-header
-          modalTitle="{{ state.action }} Campaign"
+          modalTitle="{{ action }} Campaign"
           (close)="onClose()"
         ></liow-modal-header>
 
         <div class="modal-body">
-          <alert type="danger" *ngIf="state.errorMessage || (submitted && state.campaign.deeds.length === 0)">
+          <alert type="danger" *ngIf="errorMessage || (submitted && (campaignDeeds$ | async).length === 0)">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
-            <span *ngIf="state.errorMessage">
+            <span *ngIf="errorMessage">
               Failed sending request. Please try again or
               <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
             </span>
-            <span *ngIf="submitted && state.campaign.deeds.length === 0">
+            <span *ngIf="submitted && (campaignDeeds$ | async)?.length === 0">
               Please select some deeds to start your campaign.
             </span>
           </alert>
@@ -53,12 +53,12 @@
               >
                 <li
                   class="list-group-item"
-                  *ngFor="let item of state.deeds; trackBy: identifyBy('deed._id')"
+                  *ngFor="let item of deeds$ | async; trackBy: identifyBy('deed._id')"
                 >
                   <button
                     type="button"
                     class="btn btn-link p-none pull-right"
-                    (click)="openDeedPreview(item.deed)"
+                    (click)="modalService.openDeedPreview(item.deed)"
                   >
                     <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
                   </button>
@@ -76,12 +76,12 @@
               >
                 <li
                   class="list-group-item"
-                  *ngFor="let item of state.campaign.deeds; trackBy: identifyBy('deed._id')"
+                  *ngFor="let item of campaignDeeds$ | async; trackBy: identifyBy('deed._id')"
                 >
                   <button
                     type="button"
                     class="btn btn-link p-none pull-right"
-                    (click)="openDeedPreview(item.deed)"
+                    (click)="modalService.openDeedPreview(item.deed)"
                   >
                     <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
                   </button>
@@ -104,10 +104,10 @@
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="state.isSaving"
+            [disabled]="isSaving$ | async"
           >
-            <i class="fa fa-cog fa-spin" [hidden]="!state.isSaving"></i>
-            {{ state.action }}
+            <i class="fa fa-cog fa-spin" [hidden]="!(isSaving$ | async)"></i>
+            {{ action }}
           </button>
         </div><!-- .modal-footer -->
 

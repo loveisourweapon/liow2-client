@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Store } from '@ngrx/store';
 
-import { StoreStubService } from '../../../testing';
+import { FeedStubService } from '../../../testing';
+import { FeedService, StateService } from '../../core/services';
 import { FeedComponent } from './feed.component';
 
 describe(`FeedComponent`, () => {
-  let component: FeedComponent;
   let fixture: ComponentFixture<FeedComponent>;
+  let component: FeedComponent;
 
   beforeEach(async(() => {
     TestBed
@@ -18,7 +18,8 @@ describe(`FeedComponent`, () => {
           InViewportStubDirective,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: FeedService, useClass: FeedStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -41,7 +42,6 @@ describe(`FeedComponent`, () => {
 })
 class FeedItemStubComponent {
   @Input() item: any;
-  @Input() authUser: any;
 }
 
 @Directive({

@@ -20,6 +20,7 @@ export class AuthStubService {
   authenticateFacebook() { }
   confirmEmail() { }
   isAuthenticated() { }
+  isMemberOfGroup() { }
   logout() { }
   resetPassword() { }
   sendConfirmEmail() { }
@@ -68,17 +69,17 @@ export class HttpStubService {
 }
 
 @Injectable()
+export class ModalStubService {
+  openForgotPassword() { }
+  openLogin() { }
+}
+
+@Injectable()
 export class Ng2AuthStubService {
   authenticate() { }
   isAuthenticated() { }
   login() { }
   logout() { }
-}
-
-@Injectable()
-export class StoreStubService<T> {
-  select() { }
-  dispatch() { }
 }
 
 @Injectable()

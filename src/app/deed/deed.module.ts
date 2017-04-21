@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared';
 import { DeedRoutingModule } from './deed-routing.module';
 
-import { DeedComponent } from './deed.component';
 import { CommentFormComponent } from './comment-form';
+import { DeedComponent } from './deed.component';
 
 @NgModule({
   imports: [
@@ -12,8 +12,8 @@ import { CommentFormComponent } from './comment-form';
     DeedRoutingModule,
   ],
   declarations: [
-    DeedComponent,
     CommentFormComponent,
+    DeedComponent,
   ],
 })
 export class DeedModule { }

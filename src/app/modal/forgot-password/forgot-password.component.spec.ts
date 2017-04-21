@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/first';
 
-import { State as AppState } from '../../store/reducer';
-import * as auth from '../../store/auth/auth.actions';
-import { State as ForgotPasswordModalState } from '../../store/modal/forgot-password';
-import * as forgotPasswordModal from '../../store/modal/forgot-password/forgot-password.actions';
-import { ModalStubDirective, StoreStubService } from '../../../testing';
+import { AlertifyStubService, AuthStubService, ModalStubDirective } from '../../../testing';
+import { ModalState } from '../../core/models';
+import { AlertifyService, AuthService, StateService } from '../../core/services';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { ForgotPasswordModalComponent } from './forgot-password.component';
 
@@ -17,7 +17,8 @@ describe(`ForgotPasswordModalComponent`, () => {
   let testHost: TestHostComponent;
   let component: ForgotPasswordModalComponent;
   let element: DebugElement;
-  let store: Store<AppState>;
+  let auth: AuthService;
+  let state: StateService;
 
   beforeEach(async(() => {
     TestBed
@@ -32,7 +33,9 @@ describe(`ForgotPasswordModalComponent`, () => {
           FormsModule,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -43,57 +46,36 @@ describe(`ForgotPasswordModalComponent`, () => {
     testHost = fixture.componentInstance;
     element = fixture.debugElement.query(By.directive(ForgotPasswordModalComponent));
     component = element.injector.get(ForgotPasswordModalComponent);
-    store = TestBed.get(Store);
+
+    auth = TestBed.get(AuthService);
+    state = TestBed.get(StateService);
+
     fixture.detectChanges();
   });
 
-  it(`should dispatch CLOSE action when close button is clicked`, () => {
-    const closeSpy = spyOn(store, 'dispatch');
-    const closeButton = element.query(By.css('button.close'));
-    closeButton.triggerEventHandler('click', null);
-    const action = closeSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(forgotPasswordModal.ActionTypes.CLOSE);
-  });
+  it(`should call AuthService#sendForgotPassword when 'Email me a recovery link' is clicked`, () => {
+    const sendSpy = spyOn(auth, 'sendForgotPassword').and.returnValue(Observable.of({}));
 
-  it(`should dispatch UPDATE_EMAIL_ADDRESS action when typing into email input`, () => {
-    const newValue = 'test@example.com';
-    const emailSpy = spyOn(store, 'dispatch');
+    const emailAddress = 'test@example.com';
     const emailInput = element.query(By.css('#email'));
-
-    emailInput.nativeElement.value = newValue;
-    // TODO: should be able to use native input or change event?
-    emailInput.triggerEventHandler('ngModelChange', newValue);
+    emailInput.triggerEventHandler('ngModelChange', emailAddress);
     fixture.detectChanges();
 
-    const action = emailSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(forgotPasswordModal.ActionTypes.UPDATE_EMAIL_ADDRESS);
-    expect(action.payload).toBe(newValue);
-  });
-
-  it(`should dispatch SEND_FORGOT_PASSWORD action when 'Email me a recovery link' is clicked`, () => {
-    testHost.state.emailAddress = 'test@example.com';
-    fixture.detectChanges();
-
-    const sendSpy = spyOn(store, 'dispatch');
     const sendButton = element.query(By.css('.modal-footer > button.btn-primary'));
     sendButton.nativeElement.click();
-    const action = sendSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(auth.ActionTypes.SEND_FORGOT_PASSWORD);
-    expect(action.payload).toBe(testHost.state.emailAddress);
+    expect(sendSpy).toHaveBeenCalledWith(emailAddress);
+  });
+
+  it(`should set modal isOpen state to false when close button is clicked`, () => {
+    state.modal.forgotPassword$.next({ isOpen: true });
+    const closeButton = element.query(By.css('button.close'));
+    closeButton.triggerEventHandler('click', null);
+    state.modal.forgotPassword$.first()
+      .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(false));
   });
 });
 
 @Component({
-  template: `
-    <liow-forgot-password-modal
-      [state]="state"
-    ></liow-forgot-password-modal>
-  `,
+  template: `<liow-forgot-password-modal></liow-forgot-password-modal>`,
 })
-class TestHostComponent {
-  state = <ForgotPasswordModalState>{
-    isOpen: false,
-    isSending: false,
-    emailAddress: '',
-  };
-}
+class TestHostComponent { }

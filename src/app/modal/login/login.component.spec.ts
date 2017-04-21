@@ -2,23 +2,30 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
-import { State as AppState } from '../../store/reducer';
-import * as auth from '../../store/auth/auth.actions';
-import { Group } from '../../store/group';
-import { State as LoginModal } from '../../store/modal/login';
-import * as loginModal from '../../store/modal/login/login.actions';
-import { AlertStubComponent, ModalStubDirective, StoreStubService, SwitchStubComponent } from '../../../testing';
+import {
+  AlertifyStubService,
+  AlertStubComponent,
+  AuthStubService,
+  ModalStubDirective,
+  ModalStubService,
+  SwitchStubComponent
+} from '../../../testing';
+import { Group } from '../../core/models';
+import { AlertifyService, AuthService, ModalService, StateService } from '../../core/services';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { LoginModalComponent } from './login.component';
+
+// TODO: add more tests
 
 describe(`LoginModalComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHost: TestHostComponent;
   let component: LoginModalComponent;
   let element: DebugElement;
-  let store: Store<AppState>;
+  let auth: AuthService;
 
   beforeEach(async(() => {
     TestBed
@@ -35,7 +42,10 @@ describe(`LoginModalComponent`, () => {
           FormsModule,
         ],
         providers: [
-          { provide: Store, useClass: StoreStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
+          { provide: AuthService, useClass: AuthStubService },
+          { provide: ModalService, useClass: ModalStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -46,95 +56,35 @@ describe(`LoginModalComponent`, () => {
     testHost = fixture.componentInstance;
     element = fixture.debugElement.query(By.directive(LoginModalComponent));
     component = element.injector.get(LoginModalComponent);
-    store = TestBed.get(Store);
+
+    auth = TestBed.get(AuthService);
+
     fixture.detectChanges();
   });
 
-  it(`should dispatch LOGIN_WITH_FACEBOOK action when 'Sign in with Facebook' is clicked`, () => {
-    const facebookSpy = spyOn(store, 'dispatch');
+  it(`should call AuthService#authenticateFacebook when 'Sign in with Facebook' is clicked`, () => {
+    const facebookSpy = spyOn(auth, 'authenticateFacebook').and.returnValue(Observable.of({}));
     const facebookButton = element.query(By.css('.btn-facebook'));
     facebookButton.triggerEventHandler('click', null);
-    const action = facebookSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(auth.ActionTypes.LOGIN_WITH_FACEBOOK);
+    expect(facebookSpy).toHaveBeenCalled();
   });
 
-  it(`should dispatch UPDATE_EMAIL when typing into email input`, () => {
-    const newValue = 'test@example.com';
-    const emailSpy = spyOn(store, 'dispatch');
-    const emailInput = element.query(By.css('[name=email]'));
-
-    emailInput.nativeElement.value = newValue;
-    // TODO: should be able to use native input or change event?
-    emailInput.triggerEventHandler('ngModelChange', newValue);
+  it(`should call AuthService#authenticateEmail when 'Login' is clicked`, () => {
+    testHost.group = null;
     fixture.detectChanges();
 
-    const action = emailSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(loginModal.ActionTypes.UPDATE_EMAIL);
-    expect(action.payload).toBe(newValue);
-  });
-
-  it(`should dispatch UPDATE_PASSWORD when typing into password input`, () => {
-    const newValue = 'testing123';
-    const passwordSpy = spyOn(store, 'dispatch');
-    const passwordInput = element.query(By.css('[name=password]'));
-
-    passwordInput.nativeElement.value = newValue;
-    // TODO: should be able to use native input or change event?
-    passwordInput.triggerEventHandler('ngModelChange', newValue);
-    fixture.detectChanges();
-
-    const action = passwordSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(loginModal.ActionTypes.UPDATE_PASSWORD);
-    expect(action.payload).toBe(newValue);
-  });
-
-  it(`should dispatch LOGIN_WITH_EMAIL action when 'Login' is clicked`, () => {
-    const loginSpy = spyOn(store, 'dispatch');
+    const loginSpy = spyOn(auth, 'authenticateEmail').and.returnValue(Observable.of({}));
     const loginButton = element.query(By.css('.modal-footer > button.btn-primary'));
     loginButton.nativeElement.click();
-    const action = loginSpy.calls.mostRecent().args[0];
-    expect(action.type).toBe(auth.ActionTypes.LOGIN_WITH_EMAIL);
-    expect(action.payload).toBe(testHost.state.credentials);
-  });
-
-  it(`should close and open Forgot Password modal when 'Forgot your password?' is clicked`, () => {
-    const closeSpy = spyOn(component, 'onClose');
-    const openForgotSpy = spyOn(component, 'openForgotPassword');
-    const forgotButton = element.query(By.css('.help-block > button.btn-link'));
-    forgotButton.triggerEventHandler('click', null);
-    expect(closeSpy).toHaveBeenCalled();
-    expect(openForgotSpy).toHaveBeenCalled();
-  });
-
-  it(`should close and open Signup modal when 'Sign up now' is clicked`, () => {
-    const closeSpy = spyOn(component, 'onClose');
-    const openSignupSpy = spyOn(component, 'openSignup');
-    const signupButton = element.query(By.css('.modal-body > :last-child > button.btn-link'));
-    signupButton.triggerEventHandler('click', null);
-    expect(closeSpy).toHaveBeenCalled();
-    expect(openSignupSpy).toHaveBeenCalled();
+    expect(loginSpy).toHaveBeenCalledWith(component.credentials);
   });
 });
 
 @Component({
-  template: `
-    <liow-login-modal
-      [state]="state"
-      [group]="group"
-    ></liow-login-modal>
-  `,
+  template: `<liow-login-modal [group]="group"></liow-login-modal>`,
 })
 class TestHostComponent {
   group = <Group>{
     _id: 'abc123',
-  };
-  state = <LoginModal>{
-    isOpen: false,
-    isLoggingIn: false,
-    credentials: {
-      email: '',
-      password: '',
-    },
-    joinGroup: false,
   };
 }

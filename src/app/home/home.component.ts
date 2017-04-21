@@ -1,14 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/filter';
 
-import { TitleService } from '../core';
-import * as fromRoot from '../store/reducer';
-import * as act from '../store/act/act.actions';
-import { Group } from '../store/group';
-import * as modal from '../store/modal/modal.actions';
-import { User } from '../store/user';
+import { Group, User } from '../core/models';
+import { ActService, ModalService, StateService, TitleService } from '../core/services';
 
 @Component({
   templateUrl: './home.component.html',
@@ -16,36 +11,27 @@ import { User } from '../store/user';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  isAuthenticated$: Observable<boolean>;
-  authUser$: Observable<User>;
-  counters$: Observable<{ [key: string]: number }>;
-
   private userSubscription: Subscription;
 
   constructor(
-    private store: Store<fromRoot.State>,
+    private actService: ActService,
+    public modal: ModalService,
+    public state: StateService,
     private title: TitleService,
   ) { }
 
   ngOnInit(): void {
-    this.isAuthenticated$ = this.store.select(fromRoot.getIsAuthenticated);
-    this.authUser$ = this.store.select(fromRoot.getAuthUser);
-    this.counters$ = this.store.select(fromRoot.getCountersState);
+    this.title.clear();
 
-    this.userSubscription = this.authUser$
+    // Get each of the auth user's group counters
+    this.userSubscription = this.state.auth.user$
       .filter((user: User) => user !== null)
       .subscribe((user: User) =>
         user.groups.forEach((group: Group) =>
-          this.store.dispatch(new act.CountAction({ group: group._id }))));
-
-    this.title.clear();
+          this.actService.count({ group: group._id })));
   }
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
-  }
-
-  openGroupEdit(): void {
-    this.store.dispatch(new modal.OpenGroupEditAction());
   }
 }

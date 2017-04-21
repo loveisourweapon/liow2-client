@@ -1,4 +1,5 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { AlertModule } from 'ng2-bootstrap/alert';
 import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
@@ -15,9 +16,23 @@ moment.locale(locale);
 import { SharedModule } from '../shared';
 
 import { AuthConfig } from './auth-config';
-import { NavbarComponent, NavbarSearchComponent } from './navbar';
+import { NavbarComponent } from './navbar';
+import { NavbarSearchComponent } from './navbar-search';
 import { SidebarComponent } from './sidebar';
-import { TitleService } from './title.service';
+import {
+  ActService,
+  AlertifyService,
+  AuthService,
+  CampaignService,
+  CommentService,
+  DeedService,
+  FeedService,
+  GroupService,
+  ModalService,
+  StateService,
+  TitleService,
+  UserService,
+} from './services';
 
 @NgModule({
   imports: [
@@ -34,7 +49,19 @@ import { TitleService } from './title.service';
   ],
   providers: [
     { provide: LOCALE_ID, useValue: locale },
+    ActService,
+    AlertifyService,
+    AuthService,
+    CampaignService,
+    CommentService,
+    DeedService,
+    FeedService,
+    GroupService,
+    ModalService,
+    StateService,
+    Title,
     TitleService,
+    UserService,
   ],
   declarations: [
     NavbarComponent,

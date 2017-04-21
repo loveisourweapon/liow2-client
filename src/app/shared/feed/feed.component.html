@@ -11,16 +11,15 @@
 
 <div class="feed-wrapper">
   <liow-feed-item
-    *ngFor="let feedItem of (feedItems$ | async); trackBy: identifyBy('_id'); let isLastItem = first"
+    *ngFor="let feedItem of (state.feed.items$ | async); trackBy: identifyBy('_id'); let isLastItem = first"
     [item]="feedItem"
-    [authUser]="authUser$ | async"
   ></liow-feed-item>
 
   <div
     class="feed-item feed-item-narrow text-center"
     uiInViewport
     (inViewport)="loadOlderItems()"
-    *ngIf="(isLoading$ | async) || (feedItems$ | async)?.length > 0"
+    *ngIf="(isLoading$ | async) || (state.feed.items$ | async)?.length > 0"
   >
     <div class="loading-bounce" [hidden]="!(isLoading$ | async)">
       <span></span>
@@ -31,7 +30,7 @@
 
   <div
     class="feed-item"
-    *ngIf="!(isLoading$ | async) && (feedItems$ | async)?.length === 0"
+    *ngIf="!(isLoading$ | async) && (state.feed.items$ | async)?.length === 0"
   >
     No feed items to show.
   </div>

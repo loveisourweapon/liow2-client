@@ -1,16 +1,16 @@
 <div
   class="sidebar-wrapper"
-  [class.showing]="isMenuOpen$ | async"
-  *ngIf="isSmallScreen$ | async"
+  [class.showing]="state.layout.isMenuOpen$ | async"
+  *ngIf="state.layout.isSmallScreen$ | async"
 >
   <div class="sidebar-header">
     <div class="media user-profile">
-      <div class="media-left" *ngIf="isAuthenticated$ | async">
-        <img [src]="(authUser$ | async)?.picture" class="img-circle b-xs">
+      <div class="media-left" *ngIf="state.auth.isAuthenticated$ | async">
+        <img [src]="(state.auth.user$ | async)?.picture" class="img-circle b-xs">
       </div>
       <div class="media-right media-middle">
-        {{ (authUser$ | async)?.name }}<br>
-        <small class="text-muted">{{ (authUser$ | async)?.email }}</small>
+        {{ (state.auth.user$ | async)?.name }}<br>
+        <small class="text-muted">{{ (state.auth.user$ | async)?.email }}</small>
       </div>
     </div>
 
@@ -38,7 +38,7 @@
       <a
         [routerLink]="['/g', authGroup.urlName]"
         class="list-group-item list-group-item-inverse current-campaign"
-        *ngIf="(isAuthenticated$ | async) && (authGroup$ | async) as authGroup"
+        *ngIf="(state.auth.isAuthenticated$ | async) && (state.auth.group$ | async) as authGroup"
         (click)="closeMenu()"
       >
         <i class="fa fa-fw fa-users text-primary"></i>
@@ -47,15 +47,16 @@
       </a>
     </div>
 
-    <h5 class="text-uppercase text-muted" *ngIf="isAuthenticated$ | async">
+    <h5 class="text-uppercase text-muted" *ngIf="state.auth.isAuthenticated$ | async">
       <i class="fa fa-fw fa-user"></i>
       You&hellip;
     </h5>
-    <div class="list-group" *ngIf="isAuthenticated$ | async">
+    <div class="list-group" *ngIf="state.auth.isAuthenticated$ | async">
       <a
-        [routerLink]="['/u', (authUser$ | async)?._id]"
+        [routerLink]="['/u', authUser._id]"
         class="list-group-item list-group-item-inverse"
         (click)="closeMenu()"
+        *ngIf="state.auth.user$ | async as authUser"
       >
         <i class="fa fa-fw fa-user-circle-o text-primary"></i>
         Your Profile
@@ -70,17 +71,16 @@
       </a>
     </div>
 
-    <h5 class="text-uppercase text-muted" *ngIf="isAuthenticated$ | async">
+    <h5 class="text-uppercase text-muted" *ngIf="state.auth.isAuthenticated$ | async">
       <i class="fa fa-fw fa-users"></i>
       Groups&hellip;
     </h5>
-    <div class="list-group" *ngIf="isAuthenticated$ | async">
+    <div class="list-group" *ngIf="state.auth.isAuthenticated$ | async">
       <a
-        *ngFor="let group of (authUser$ | async)?.groups; trackBy: identifyBy('_id')"
+        *ngFor="let group of (state.auth.user$ | async)?.groups; trackBy: identifyBy('_id')"
         [routerLink]="['/g', group.urlName]"
         class="list-group-item list-group-item-inverse"
-        [class.active]="(authGroup$ | async)?._id === group._id"
-        (click)="setCurrentGroup(group); closeMenu()"
+        [class.active]="(state.auth.group$ | async)?._id === group._id"
       >
         <i class="fa fa-fw"></i><!-- this icon left intentionally blank -->
         {{ group.name }}
@@ -88,21 +88,21 @@
       <button
         type="button"
         class="list-group-item list-group-item-inverse"
-        (click)="openGroupEdit(); closeMenu()"
+        (click)="modal.openGroupEdit(); closeMenu()"
       >
         <i class="fa fa-fw fa-pencil-square-o text-primary"></i>
         Group Signup
       </button>
     </div>
 
-    <h5 class="text-uppercase text-muted" *ngIf="!(isAuthenticated$ | async)">
+    <h5 class="text-uppercase text-muted" *ngIf="!(state.auth.isAuthenticated$ | async)">
       Join Us&hellip;
     </h5>
-    <div class="list-group" *ngIf="!(isAuthenticated$ | async)">
+    <div class="list-group" *ngIf="!(state.auth.isAuthenticated$ | async)">
       <button
         type="button"
         class="list-group-item list-group-item-inverse"
-        (click)="openLogin(); closeMenu()"
+        (click)="modal.openLogin(); closeMenu()"
       >
         <i class="fa fa-fw fa-sign-in text-primary"></i>
         Login
@@ -110,7 +110,7 @@
       <button
         type="button"
         class="list-group-item list-group-item-inverse"
-        (click)="openSignup(); closeMenu()"
+        (click)="modal.openSignup(); closeMenu()"
       >
         <i class="fa fa-fw fa-user-plus text-primary"></i>
         Signup
@@ -118,7 +118,7 @@
       <button
         type="button"
         class="list-group-item list-group-item-inverse"
-        (click)="openGroupEdit(); closeMenu()"
+        (click)="modal.openGroupEdit(); closeMenu()"
       >
         <i class="fa fa-fw fa-pencil-square-o text-primary"></i>
         Group Signup
@@ -126,11 +126,11 @@
     </div>
   </div>
 
-  <div class="sidebar-footer" *ngIf="isAuthenticated$ | async">
+  <div class="sidebar-footer" *ngIf="state.auth.isAuthenticated$ | async">
     <button
       type="button"
       class="btn btn-block btn-lg btn-logout"
-      (click)="logout(); closeMenu()"
+      (click)="state.auth.logout(); closeMenu()"
     >
       <i class="fa fa-fw fa-power-off text-primary"></i>
       Logout
@@ -140,7 +140,7 @@
 
 <div
   class="sidebar-backdrop"
-  [class.showing]="isMenuOpen$ | async"
-  *ngIf="isSmallScreen$ | async"
+  [class.showing]="state.layout.isMenuOpen$ | async"
+  *ngIf="state.layout.isSmallScreen$ | async"
   (click)="closeMenu()"
 ></div>
