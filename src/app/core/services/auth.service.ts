@@ -70,7 +70,7 @@ export class AuthService {
       .map((user: User) => (
         has(group, 'admins') &&
         has(user, '_id') &&
-        group.admins.includes(user._id)
+        group.admins.indexOf(user._id) !== -1 // .includes is failing in PhantomJS
       ));
   }
 
