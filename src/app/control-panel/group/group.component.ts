@@ -70,14 +70,12 @@ export class GroupComponent implements OnInit, OnDestroy {
   }
 
   memberOfGroup(user: User, group: Group): boolean {
-    console.log('HERE!', 'memberOfGroup');
     return has(user, 'groups')
       && has(group, '_id')
       && some(user.groups, (userGroup: Group) => userGroup._id === group._id);
   }
 
   adminOfGroup(user: User, group: Group): boolean {
-    console.log('HERE!', 'adminOfGroup');
     return has(group, 'admins')
       && has(user, '_id')
       && group.admins.includes(user._id);
