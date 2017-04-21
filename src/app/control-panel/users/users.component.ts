@@ -6,11 +6,13 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { GroupId, User } from '../../core/models';
+import { Group, GroupId, User } from '../../core/models';
 import { StateService, TitleService, UserService } from '../../core/services';
 import { identifyBy, SearchParams } from '../../shared';
 
@@ -41,10 +43,15 @@ export class UsersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.title.set(`Users | Control Panel`);
+
     this.groupIdSubscription = this.route.parent.params
       .filter((params: Params) => has(params, 'groupId'))
       .map((params: Params) => params.groupId)
-      .subscribe((groupId: GroupId) => this.groupId$.next(groupId));
+      .do((groupId: GroupId) => this.groupId$.next(groupId))
+      .switchMap(() => this.state.controlPanel.group$)
+      .filter((group: Group) => group !== null)
+      .subscribe((group: Group) => this.title.set(`Users | ${group.name} | Control Panel`));
 
     this.filterParams$ = Observable.combineLatest(
       this.groupId$,
@@ -71,8 +78,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .first()
       .subscribe((queryParams: Params) => this.query$.next(queryParams.query || ''));
-
-    this.title.set(`Users | Control Panel`);
   }
 
   ngOnDestroy(): void {
