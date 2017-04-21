@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
@@ -41,14 +42,13 @@ export class GroupComponent implements OnInit, OnDestroy {
       .filter((params: Params) => has(params, 'groupId'))
       .map((params: Params) => params.groupId)
       .switchMap((groupId: GroupId) => this.groupService.findOne({ _id: groupId }))
+      .do((group: Group) => this.title.set(`${group.name} | Control Panel`))
       .subscribe((group: Group) => this.group$.next(group));
 
     this.numberOfMembers$ = this.group$
       .do((group: Group) => this.actservice.count({ group: group._id }))
       .map((group: Group) => (<SearchParams>{ groups: group._id }))
       .switchMap((searchParams: SearchParams) => this.userService.count(searchParams));
-
-    this.title.set(`Group | Control Panel`);
   }
 
   ngOnDestroy(): void {
