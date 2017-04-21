@@ -1,3 +1,5 @@
+import { UserId } from './user.model';
+
 export type GroupId = string;
 export type GroupSlug = string;
 
@@ -6,7 +8,7 @@ export interface Group {
   name: string;
   urlName: GroupSlug;
   owner: string;
-  admins: string[];
+  admins: UserId[];
   country: string;
   logo: string;
   coverImage: string;

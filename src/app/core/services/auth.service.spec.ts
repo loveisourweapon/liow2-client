@@ -104,6 +104,37 @@ describe(`AuthService`, () => {
     });
   });
 
+  describe(`#isAdminOfGroup`, () => {
+    const userId1 = 'abc123';
+    const userId2 = 'def456';
+
+    beforeEach(() => state.auth.user = <User>{ _id: userId1 });
+
+    it(`should return false if authUser or group aren't set`, () => {
+      state.auth.user = null;
+      service.isAdminOfGroup(null).first()
+        .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(false));
+    });
+
+    it(`should return false if group has no admins`, () => {
+      const group = <Group>{ admins: [] };
+      service.isAdminOfGroup(group).first()
+        .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(false));
+    });
+
+    it(`should return false if group admins doesn't include authUser`, () => {
+      const group = <Group>{ admins: [userId2] };
+      service.isAdminOfGroup(group).first()
+        .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(false));
+    });
+
+    it(`should return true if group admins includes authUser`, () => {
+      const group = <Group>{ admins: [userId1, userId2] };
+      service.isAdminOfGroup(group).first()
+        .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(true));
+    });
+  });
+
   describe(`#isMemberOfGroup`, () => {
     const group1 = <Group>{ _id: 'abc123' };
     const group2 = <Group>{ _id: 'def456' };

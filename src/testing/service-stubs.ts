@@ -19,6 +19,7 @@ export class AuthStubService {
   authenticateEmail() { }
   authenticateFacebook() { }
   confirmEmail() { }
+  isAdminOfGroup() { }
   isAuthenticated() { }
   isMemberOfGroup() { }
   logout() { }

@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 import {
   ActivatedRouteStubService,
@@ -80,6 +82,10 @@ describe(`GroupComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupComponent);
     component = fixture.componentInstance;
+
+    const auth = TestBed.get(AuthService);
+    spyOn(auth, 'isMemberOfGroup').and.returnValue(Observable.of(true));
+
     fixture.detectChanges();
   });
 

@@ -17,7 +17,7 @@
     <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
       <div
         class="well well-sm"
-        *ngIf="(isUserAn$(memberOfGroup, state.auth.user$, state.group$) | async) && (state.campaign$ | async) as campaign"
+        *ngIf="(auth.isMemberOfGroup(group) | async) && (state.campaign$ | async) as campaign"
       >
         <h5 class="text-center">
           Current Campaign<br>
@@ -29,7 +29,7 @@
           </small>
         </h5>
 
-        <div [ngSwitch]="isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async">
+        <div [ngSwitch]="auth.isAdminOfGroup(group) | async">
           <!-- Show buttons with publish/unpublish menu for admins -->
           <div *ngSwitchCase="true">
             <div
@@ -114,7 +114,7 @@
         type="button"
         class="btn btn-primary btn-block btn-lg"
         (click)="joinGroup(state.auth.user$, state.group$)"
-        *ngIf="(state.auth.isAuthenticated$ | async) && !(isUserAn$(memberOfGroup, state.auth.user$, state.group$) | async)"
+        *ngIf="(state.auth.isAuthenticated$ | async) && !(auth.isMemberOfGroup(group) | async)"
       >
         <i class="fa fa-fw fa-users"></i>
         Join us
@@ -132,7 +132,7 @@
         type="button"
         class="btn btn-default btn-block"
         (click)="modal.openCampaignEdit()"
-        *ngIf="!(state.campaign$ | async) && (isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async)"
+        *ngIf="!(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
       >
         <i class="fa fa-fw fa-bullhorn"></i>
         Setup campaign
@@ -141,7 +141,7 @@
         type="button"
         class="btn btn-default btn-block"
         (click)="modal.openGroupEdit('Update', group)"
-        *ngIf="isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async"
+        *ngIf="auth.isAdminOfGroup(group) | async"
       >
         <i class="fa fa-fw fa-edit"></i>
         Update group
@@ -150,7 +150,7 @@
         type="button"
         class="btn btn-default btn-block"
         (click)="leaveGroup(state.auth.user$, state.group$)"
-        *ngIf="isUserAn$(memberOfGroup, state.auth.user$, state.group$) | async"
+        *ngIf="auth.isMemberOfGroup(group) | async"
       >
         <i class="fa fa-fw fa-sign-out"></i>
         Leave group
@@ -161,7 +161,7 @@
       <alert
         type="info"
         [dismissible]="true"
-        *ngIf="!(state.campaign$ | async) && (isUserAn$(adminOfGroup, state.auth.user$, state.group$) | async)"
+        *ngIf="!(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
       >
         You haven't got an active campaign, would you like to set one up now?&nbsp;
         <button

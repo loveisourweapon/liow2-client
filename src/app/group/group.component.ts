@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
-import { has, findIndex, findLast, some } from 'lodash';
+import { has, findIndex, findLast } from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -53,7 +53,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   constructor(
     private actService: ActService,
     private alertify: AlertifyService,
-    private auth: AuthService,
+    public auth: AuthService,
     private campaignService: CampaignService,
     private groupService: GroupService,
     public modal: ModalService,
@@ -87,11 +87,12 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.title.set(group.name);
       });
 
-    this.userSubscription = Observable.combineLatest(
-      this.isUserAn$(this.memberOfGroup, this.state.auth.user$, this.state.group$),
-      this.state.auth.user$,
-      this.state.group$,
-    )
+    this.userSubscription = this.state.group$
+      .switchMap((group: Group) => Observable.combineLatest(
+        this.auth.isMemberOfGroup(group),
+        this.state.auth.user$,
+        this.state.group$,
+      ))
       .distinctUntilChanged()
       .subscribe(([isMemberOfGroup, authUser, group]: [boolean, User, Group]) => {
         this.currentTab = isMemberOfGroup ? GroupTab.Feed : GroupTab.Welcome;
@@ -105,24 +106,6 @@ export class GroupComponent implements OnDestroy, OnInit {
     this.routeSubscription.unsubscribe();
     this.groupSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
-  }
-
-  isUserAn$(predicate: (User, Group) => boolean, user$: Observable<User>, group$: Observable<Group>): Observable<boolean> {
-    return Observable.combineLatest(user$, group$)
-      .distinctUntilChanged()
-      .map(([user, group]: [User, Group]) => predicate(user, group));
-  }
-
-  memberOfGroup(user: User, group: Group): boolean {
-    return has(user, 'groups')
-      && has(group, '_id')
-      && some(user.groups, (userGroup: Group) => userGroup._id === group._id);
-  }
-
-  adminOfGroup(user: User, group: Group): boolean {
-    return has(group, 'admins')
-      && has(user, '_id')
-      && group.admins.includes(user._id);
   }
 
   isCurrentDeed(deed: Deed, campaign: Campaign): boolean {
@@ -159,11 +142,12 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   leaveGroup(user$: Observable<User>, group$: Observable<Group>): void {
-    Observable.combineLatest(user$, group$)
+    group$.first()
+      .switchMap((group: Group) => Observable.combineLatest(user$, group$, this.auth.isAdminOfGroup(group)))
       .first()
-      .flatMap(([user, group]: [User, Group]) => Observable.if(
+      .switchMap(([user, group, isAdminOfGroup]: [User, Group, boolean]) => Observable.if(
         // Prevent group owner and group admins from leaving
-        () => group.owner !== user._id && !this.adminOfGroup(user, group),
+        () => group.owner !== user._id && !isAdminOfGroup,
         Observable.of([user, group]),
         Observable.throw(group.owner === user._id
           // User is the group owner

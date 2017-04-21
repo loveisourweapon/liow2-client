@@ -65,6 +65,15 @@ export class AuthService {
       });
   }
 
+  isAdminOfGroup(group: Group): Observable<boolean> {
+    return this.state.auth.user$
+      .map((user: User) => (
+        has(group, 'admins') &&
+        has(user, '_id') &&
+        group.admins.includes(user._id)
+      ));
+  }
+
   isMemberOfGroup(group: Group): Observable<boolean> {
     return this.state.auth.user$
       .map((user: User) => (
