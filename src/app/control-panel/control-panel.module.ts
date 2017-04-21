@@ -10,7 +10,7 @@ import { ControlPanelComponent } from './control-panel.component';
 import { ControlPanelPaginationComponent } from './pagination';
 import { ControlPanelSearchComponent } from './search';
 import { DeedsComponent } from './deeds';
-import { GroupComponent } from './group';
+import { GroupComponent, GroupDetailComponent } from './group';
 import { GroupsComponent } from './groups';
 import { UserComponent } from './user';
 import { UsersComponent } from './users';
@@ -29,6 +29,7 @@ import { UsersComponent } from './users';
     ControlPanelSearchComponent,
     DeedsComponent,
     GroupComponent,
+    GroupDetailComponent,
     GroupsComponent,
     UserComponent,
     UsersComponent,

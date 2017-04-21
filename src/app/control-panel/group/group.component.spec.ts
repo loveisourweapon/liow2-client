@@ -2,46 +2,38 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
 import {
-  ActStubService,
   ActivatedRouteStubService,
+  AuthStubService,
   GroupStubService,
-  MarkedStubComponent,
   ModalStubService,
   RouterLinkStubDirective,
   RouterLinkActiveStubDirective,
   RouterOutletStubComponent,
-  TitleStubService,
-  UserStubService,
 } from '../../../testing';
-import { ActService, GroupService, ModalService, StateService, TitleService, UserService } from '../../core/services';
-import { MomentPipe } from '../../shared';
+import { AuthService, GroupService, ModalService, StateService } from '../../core/services';
 import { GroupComponent } from './group.component';
 
 // TODO: add proper tests
 
 describe(`GroupComponent`, () => {
-  let component: GroupComponent;
   let fixture: ComponentFixture<GroupComponent>;
+  let component: GroupComponent;
 
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
         declarations: [
           GroupComponent,
-          MarkedStubComponent,
-          MomentPipe,
           RouterLinkStubDirective,
           RouterLinkActiveStubDirective,
           RouterOutletStubComponent,
         ],
         providers: [
-          { provide: ActService, useClass: ActStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+          { provide: AuthService, useClass: AuthStubService },
           { provide: GroupService, useClass: GroupStubService },
           { provide: ModalService, useClass: ModalStubService },
           StateService,
-          { provide: TitleService, useClass: TitleStubService },
-          { provide: UserService, useClass: UserStubService },
         ],
       })
       .compileComponents();

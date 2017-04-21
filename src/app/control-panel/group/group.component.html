@@ -1,4 +1,4 @@
-<ul class="nav nav-pills" role="tablist">
+<ul class="nav nav-pills" role="tablist" *ngIf="state.controlPanel.group$ | async as group">
   <li [class.active]="rlaGroup.isActive" role="presentation">
     <a
       [routerLink]="['.']"
@@ -13,7 +13,7 @@
   <li
     [class.active]="rlaUsers.isActive"
     role="presentation"
-    *ngIf="(isUserAn$(adminOfGroup, state.auth.user$, group$) | async) || (state.auth.user$ | async)?.superAdmin"
+    *ngIf="(auth.isAdminOfGroup(group) | async) || (state.auth.user$ | async)?.superAdmin"
   >
     <a
       [routerLink]="['users']"
@@ -26,7 +26,7 @@
   </li>
   <!--<li
     [class.active]="rlaTestimonies.isActive"
-    *ngIf="(isUserAn$(adminOfGroup, state.auth.user$, group$) | async) || (state.auth.user$ | async)?.superAdmin"
+    *ngIf="(auth.isAdminOfGroup(group) | async) || (state.auth.user$ | async)?.superAdmin"
     role="presentation"
   >
     <a
@@ -40,65 +40,4 @@
   </li>-->
 </ul>
 
-<div class="row" *ngIf="!isChildRouteActive && (group$ | async) as group">
-  <div class="col-sm-3 col-sm-push-9 m-b-md">
-    <img src="/images/group.png" class="profile img-responsive img-circle">
-
-    <button
-      type="button"
-      class="btn btn-default btn-block"
-      (click)="modal.openGroupEdit('Update', group)"
-      *ngIf="isUserAn$(adminOfGroup, state.auth.user$, group$) | async"
-    >
-      <!-- TODO: allow superAdmin access -->
-      <i class="fa fa-fw fa-edit"></i>
-      Update
-    </button>
-    <button
-      type="button"
-      class="btn btn-default btn-block"
-      (click)="leaveGroup(authUser, group)"
-      *ngIf="(isUserAn$(memberOfGroup, state.auth.user$, group$) | async) && (state.auth.user$ | async) as authUser"
-    >
-      <i class="fa fa-fw fa-sign-out"></i>
-      Leave
-    </button>
-  </div>
-
-  <div class="col-sm-9 col-sm-pull-3">
-    <table class="table table-bordered table-striped">
-      <tbody>
-        <tr>
-          <th>Name</th>
-          <td>{{ group.name }}</td>
-        </tr>
-        <tr>
-          <th>Created</th>
-          <td>{{ group.created | moment:'LL' }}</td>
-        </tr>
-        <tr>
-          <th>Members</th>
-          <td>{{ numberOfMembers$ | async | number }}</td>
-        </tr>
-        <tr>
-          <th>Acts of Love</th>
-          <td>{{ state.counter$(group._id) | async | number }}</td>
-        </tr>
-        <tr>
-          <th>Welcome Message</th>
-          <td>
-            <ui-marked
-              [content]="group.welcomeMessage"
-              *ngIf="group.welcomeMessage"
-            ></ui-marked>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<router-outlet
-  (activate)="setChildRouteActive(1)"
-  (deactivate)="setChildRouteActive(-1)"
-></router-outlet>
+<router-outlet></router-outlet>

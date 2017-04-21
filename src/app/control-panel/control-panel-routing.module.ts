@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ControlPanelComponent } from './control-panel.component';
 import { DeedsComponent } from './deeds';
-import { GroupComponent } from './group';
+import { GroupComponent, GroupDetailComponent } from './group';
 import { GroupsComponent } from './groups';
 import { UserComponent } from './user';
 import { UsersComponent } from './users';
@@ -19,6 +19,7 @@ const controlPanelRoutes: Routes = [
         component: GroupComponent,
         data: { title: 'Group' },
         children: [
+          { path: '', component: GroupDetailComponent },
           { path: 'users', component: UsersComponent },
           // { path: 'testimonies', component: CommentsComponent },
         ],
