@@ -22,6 +22,23 @@ export class StateService {
     set user(user: User) { this.user$.next(user); },
   };
 
+  controlPanel = {
+    deeds$: new BehaviorSubject<Deed[]>([]),
+    set deeds(deeds: Deed[]) { this.deeds$.next(deeds); },
+
+    group$: new BehaviorSubject<Group>(null),
+    set group(group: Group) { this.group$.next(group); },
+
+    groups$: new BehaviorSubject<Group[]>([]),
+    set groups(groups: Group[]) { this.groups$.next(groups); },
+
+    user$: new BehaviorSubject<User>(null),
+    set user(user: User) { this.user$.next(user); },
+
+    users$: new BehaviorSubject<User[]>([]),
+    set users(users: User[]) { this.users$.next(users); },
+  };
+
   counters$ = new BehaviorSubject<Counters>({});
   counter$(counterId: string): Observable<number> {
     return this.counters$

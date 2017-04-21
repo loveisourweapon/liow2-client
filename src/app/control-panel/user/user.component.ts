@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -27,12 +26,12 @@ import {
 export class UserComponent implements OnInit, OnDestroy {
   isEditingName$ = new BehaviorSubject<boolean>(false);
   isSendingConfirmEmail$ = new BehaviorSubject<boolean>(false);
-  user$: Observable<User>;
   inputs = {
     firstName: '',
     lastName: '',
   };
 
+  private userSubscription: Subscription;
   private isEditingSubscription: Subscription;
 
   constructor(
@@ -47,10 +46,11 @@ export class UserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.user$ = this.state.auth.user$
-      .filter((user: User) => user !== null);
+    this.userSubscription = this.state.auth.user$
+      .filter((user: User) => user !== null)
+      .subscribe((user: User) => this.state.controlPanel.user = user);
 
-    this.user$
+    this.state.controlPanel.user$
       .first()
       .subscribe((user: User) => {
         this.title.set(`${user.name} | Control Panel`);
@@ -69,6 +69,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
     this.isEditingSubscription.unsubscribe();
   }
 

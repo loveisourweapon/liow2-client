@@ -51,6 +51,58 @@ describe(`StateService`, () => {
     });
   });
 
+  describe(`controlPanel`, () => {
+    it(`should notify next deeds$ value when deeds value is set`, () => {
+      const testDeeds = [<Deed>{ _id: 'abc123' }];
+
+      service.controlPanel.deeds$.first()
+        .subscribe((deeds: Deed[]) => expect(deeds).toEqual([]));
+      service.controlPanel.deeds = testDeeds;
+      service.controlPanel.deeds$.first()
+        .subscribe((deeds: Deed[]) => expect(deeds).toBe(testDeeds));
+    });
+
+    it(`should notify next group$ value when group value is set`, () => {
+      const testGroup = <Group>{ _id: 'abc123' };
+
+      service.controlPanel.group$.first()
+        .subscribe((group: Group) => expect(group).toBeNull());
+      service.controlPanel.group = testGroup;
+      service.controlPanel.group$.first()
+        .subscribe((group: Group) => expect(group).toBe(testGroup));
+    });
+
+    it(`should notify next groups$ value when groups value is set`, () => {
+      const testGroups = [<Group>{ _id: 'abc123' }];
+
+      service.controlPanel.groups$.first()
+        .subscribe((groups: Group[]) => expect(groups).toEqual([]));
+      service.controlPanel.groups = testGroups;
+      service.controlPanel.groups$.first()
+        .subscribe((groups: Group[]) => expect(groups).toBe(testGroups));
+    });
+
+    it(`should notify next user$ value when user value is set`, () => {
+      const testUser = <User>{ _id: 'abc123' };
+
+      service.controlPanel.user$.first()
+        .subscribe((user: User) => expect(user).toBeNull());
+      service.controlPanel.user = testUser;
+      service.controlPanel.user$.first()
+        .subscribe((user: User) => expect(user).toBe(testUser));
+    });
+
+    it(`should notify next users$ value when users value is set`, () => {
+      const testUsers = [<User>{ _id: 'abc123' }];
+
+      service.controlPanel.users$.first()
+        .subscribe((users: User[]) => expect(users).toEqual([]));
+      service.controlPanel.users = testUsers;
+      service.controlPanel.users$.first()
+        .subscribe((users: User[]) => expect(users).toBe(testUsers));
+    });
+  });
+
   describe(`counters`, () => {
     const testCounterId = 'testCounter';
     const testCount = 123;

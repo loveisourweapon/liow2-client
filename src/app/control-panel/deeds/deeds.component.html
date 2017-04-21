@@ -11,7 +11,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let deed of (deeds$ | async); trackBy: identifyBy('_id')">
+        <tr *ngFor="let deed of (state.controlPanel.deeds$ | async); trackBy: identifyBy('_id')">
           <td class="text-center">
             <img [src]="deed.logo || '/images/deed.png'" class="img-circle icon">
           </td>

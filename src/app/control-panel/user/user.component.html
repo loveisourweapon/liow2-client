@@ -1,4 +1,4 @@
-<div class="row" *ngIf="(user$ | async) as user">
+<div class="row" *ngIf="(state.controlPanel.user$ | async) as user">
   <div class="col-sm-3 col-sm-push-9">
     <img [src]="user.picture" class="profile img-responsive img-circle">
   </div>

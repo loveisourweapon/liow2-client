@@ -26,13 +26,13 @@
             <th style="width: 95px;">Joined</th>
             <th style="width: 95px;">Last Seen</th>
             <th style="width: 90px;">Confirmed</th>
-            <!--<th *ngIf="(state$ | async)?.groupId">Admin</th>-->
+            <th *ngIf="groupId$ | async">Admin</th>
             <th *ngIf="(state.auth.user$ | async)?.superAdmin" style="width: 105px;">Super Admin</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr *ngFor="let user of users$ | async; trackBy: identifyBy('_id')">
+          <tr *ngFor="let user of (state.controlPanel.users$ | async); trackBy: identifyBy('_id')">
             <td class="text-center">
               <img [src]="user.picture || '/images/user0.png'" class="img-circle icon">
             </td>
@@ -43,10 +43,10 @@
             <td class="text-center">
               <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
             </td>
-            <!-- TODO: need full group?user? object for this check -->
-            <!--<td *ngIf="(state$ | async)?.groupId"class="text-center">
-              <ui-icon-checked [isChecked]="$ctrl.Group.isAdmin($ctrl.group, user)"></ui-icon-checked>
-            </td>-->
+            <td *ngIf="groupId$ | async" class="text-center">
+              ?
+              <!--<ui-icon-checked [isChecked]="$ctrl.Group.isAdmin($ctrl.group, user)"></ui-icon-checked>-->
+            </td>
             <td *ngIf="(state.auth.user$ | async)?.superAdmin" class="text-center">
               <ui-icon-checked [isChecked]="user.superAdmin"></ui-icon-checked>
             </td>

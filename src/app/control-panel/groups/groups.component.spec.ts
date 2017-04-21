@@ -14,7 +14,7 @@ import {
   RouterStubService,
   TitleStubService,
 } from '../../../testing';
-import { GroupService, TitleService } from '../../core/services';
+import { GroupService, StateService, TitleService } from '../../core/services';
 import { MomentPipe } from '../../shared';
 import { GroupsComponent } from './groups.component';
 
@@ -41,6 +41,7 @@ describe(`GroupsComponent`, () => {
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
           { provide: GroupService, useClass: GroupStubService },
           { provide: Router, useClass: RouterStubService },
+          StateService,
           { provide: TitleService, useClass: TitleStubService },
         ],
       })

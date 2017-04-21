@@ -24,12 +24,12 @@ export class UsersComponent implements OnInit, OnDestroy {
   page$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(20);
   numberOfPages$ = new BehaviorSubject<number>(1);
-  users$: Observable<User[]>;
   numberOfUsers$: Observable<number>;
   filterParams$: Observable<SearchParams>;
 
   identifyBy = identifyBy;
 
+  private usersSubscription: Subscription;
   private groupIdSubscription: Subscription;
 
   constructor(
@@ -61,8 +61,9 @@ export class UsersComponent implements OnInit, OnDestroy {
         sort: '-_id',
       }));
 
-    this.users$ = this.filterParams$
-      .switchMap((searchParams: SearchParams) => this.userService.find(searchParams));
+    this.usersSubscription = this.filterParams$
+      .switchMap((searchParams: SearchParams) => this.userService.find(searchParams))
+      .subscribe((users: User[]) => this.state.controlPanel.users = users);
     this.numberOfUsers$ = this.filterParams$
       .switchMap((searchParams: SearchParams) => this.userService.count(searchParams));
 
@@ -75,6 +76,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.usersSubscription.unsubscribe();
     this.groupIdSubscription.unsubscribe();
   }
 

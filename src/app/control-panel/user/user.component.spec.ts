@@ -55,6 +55,10 @@ describe(`UserComponent`, () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
+
+    const state = TestBed.get(StateService);
+    state.controlPanel.user$.next({});
+
     fixture.detectChanges();
   });
 
