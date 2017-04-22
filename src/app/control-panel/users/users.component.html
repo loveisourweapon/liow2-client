@@ -43,9 +43,8 @@
             <td class="text-center">
               <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
             </td>
-            <td *ngIf="groupId$ | async" class="text-center">
-              ?
-              <!--<ui-icon-checked [isChecked]="$ctrl.Group.isAdmin($ctrl.group, user)"></ui-icon-checked>-->
+            <td *ngIf="(groupId$ | async) && (state.controlPanel.group$ | async) as group" class="text-center">
+              <ui-icon-checked [isChecked]="isAdmin(user, group)"></ui-icon-checked>
             </td>
             <td *ngIf="(state.auth.user$ | async)?.superAdmin" class="text-center">
               <ui-icon-checked [isChecked]="user.superAdmin"></ui-icon-checked>

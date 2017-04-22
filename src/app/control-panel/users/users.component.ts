@@ -85,6 +85,10 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.groupIdSubscription.unsubscribe();
   }
 
+  isAdmin(user: User, group: Group): boolean {
+    return has(group, 'admins') && has(user, '_id') && group.admins.includes(user._id);
+  }
+
   onSearch(query: string): void {
     this.query$.next(query);
     this.page$.next(1);
