@@ -109,14 +109,14 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
             this.state.group = group;
           }
 
-          this.onClose();
-          this.alertify.success(`${this.action}d group <b>${group.name}</b>`);
-
           if (this.action === EditAction.Create) {
             this.router.navigate(['/g', group.urlName], {
               queryParams: setupCampaign ? { setupCampaign: true } : {},
             });
           }
+
+          this.alertify.success(`${this.action}d group <b>${group.name}</b>`);
+          this.onClose();
         },
         (error: ApiError) => {
           if (has(error, 'errors') && keys(error.errors).length) {
@@ -141,6 +141,7 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
 
   private initGroup(group: Group): void {
     this.group = group;
+    this.setupCampaign = false;
     this.userService.find({ groups: group._id })
       .subscribe((groupUsers: User[]) => this.groupUsers = groupUsers);
   }
