@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ModalDirective } from 'ng2-bootstrap/modal';
 import { DragulaService } from 'ng2-dragula';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { assign, has } from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';

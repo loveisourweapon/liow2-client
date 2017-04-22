@@ -1,12 +1,12 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
-import { AlertModule } from 'ng2-bootstrap/alert';
-import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
-import { ModalModule } from 'ng2-bootstrap/modal';
-import { PaginationModule } from 'ng2-bootstrap/pagination';
-import { TabsModule } from 'ng2-bootstrap/tabs';
-import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 // Hardcode locale to en-AU
 const locale = 'en-AU';

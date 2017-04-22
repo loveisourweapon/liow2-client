@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BsDropdownModule } from 'ng2-bootstrap/dropdown';
-import { ModalModule } from 'ng2-bootstrap/modal';
-import { PaginationModule } from 'ng2-bootstrap/pagination';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { SharedModule } from '../shared';
 import { ControlPanelRoutingModule } from './control-panel-routing.module';
