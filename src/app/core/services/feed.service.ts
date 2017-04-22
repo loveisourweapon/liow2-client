@@ -12,7 +12,7 @@ import { FeedCriteria, FeedItem } from '../models';
 @Injectable()
 export class FeedService {
   private readonly baseUrl = `${environment.apiBaseUrl}/feeds`;
-  private numberOfPictures = 12;
+  private readonly numberOfPictures = 12;
 
   constructor(
     private http: JwtHttp,

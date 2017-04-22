@@ -7,7 +7,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { Campaign, Counters, Deed, FeedItem, Group, ModalState, User } from '../models';
+import { Campaign, Comment, Counters, Deed, FeedItem, Group, ModalState, User } from '../models';
 
 @Injectable()
 export class StateService {
@@ -23,6 +23,9 @@ export class StateService {
   };
 
   controlPanel = {
+    comments$: new BehaviorSubject<Comment[]>([]),
+    set comments(comments: Comment[]) { this.comments$.next(comments); },
+
     deeds$: new BehaviorSubject<Deed[]>([]),
     set deeds(deeds: Deed[]) { this.deeds$.next(deeds); },
 

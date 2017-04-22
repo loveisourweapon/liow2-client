@@ -38,6 +38,8 @@ export class CampaignStubService {
 
 @Injectable()
 export class CommentStubService {
+  count() { }
+  find() { }
   save() { }
 }
 

@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
 
-import { Campaign, Counters, Deed, FeedItem, Group, ModalState, User } from '../models';
+import { Campaign, Comment, Counters, Deed, FeedItem, Group, ModalState, User } from '../models';
 import { StateService } from './state.service';
 
 describe(`StateService`, () => {
@@ -52,6 +52,16 @@ describe(`StateService`, () => {
   });
 
   describe(`controlPanel`, () => {
+    it(`should notify next comments$ value when comments value is set`, () => {
+      const testComments = [<Comment>{ _id: 'abc123' }];
+
+      service.controlPanel.comments$.first()
+        .subscribe((comments: Comment[]) => expect(comments).toEqual([]));
+      service.controlPanel.comments = testComments;
+      service.controlPanel.comments$.first()
+        .subscribe((comments: Comment[]) => expect(comments).toBe(testComments));
+    });
+
     it(`should notify next deeds$ value when deeds value is set`, () => {
       const testDeeds = [<Deed>{ _id: 'abc123' }];
 

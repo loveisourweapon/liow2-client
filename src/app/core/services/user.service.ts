@@ -15,9 +15,8 @@ import { JsonPatch, NewUser, User, UserId } from '../models';
 @Injectable()
 export class UserService {
   private readonly baseUrl = `${environment.apiBaseUrl}/users`;
-
-  private numberOfPictures = 12;
-  private numberOfCoverImages = 6;
+  private readonly numberOfPictures = 12;
+  private readonly numberOfCoverImages = 6;
 
   constructor(
     private http: JwtHttp,

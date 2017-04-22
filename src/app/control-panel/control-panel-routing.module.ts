@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ControlPanelComponent } from './control-panel.component';
+import { CommentsComponent } from './comments';
 import { DeedsComponent } from './deeds';
 import { GroupComponent, GroupDetailComponent } from './group';
 import { GroupsComponent } from './groups';
@@ -21,7 +22,7 @@ const controlPanelRoutes: Routes = [
         children: [
           { path: '', component: GroupDetailComponent },
           { path: 'users', component: UsersComponent },
-          // { path: 'testimonies', component: CommentsComponent },
+          { path: 'testimonies', component: CommentsComponent },
         ],
       },
       { path: 'groups', component: GroupsComponent, data: { title: 'Groups' } },

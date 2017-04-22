@@ -15,7 +15,7 @@ import { NewGroup, Group } from '../models';
 @Injectable()
 export class GroupService {
   private readonly baseUrl = `${environment.apiBaseUrl}/groups`;
-  private numberOfCoverImages = 6;
+  private readonly numberOfCoverImages = 6;
 
   constructor(
     private http: JwtHttp,

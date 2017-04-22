@@ -9,6 +9,7 @@ import { ControlPanelRoutingModule } from './control-panel-routing.module';
 import { ControlPanelComponent } from './control-panel.component';
 import { ControlPanelPaginationComponent } from './pagination';
 import { ControlPanelSearchComponent } from './search';
+import { CommentsComponent } from './comments';
 import { DeedsComponent } from './deeds';
 import { GroupComponent, GroupDetailComponent } from './group';
 import { GroupsComponent } from './groups';
@@ -27,6 +28,7 @@ import { UsersComponent } from './users';
     ControlPanelComponent,
     ControlPanelPaginationComponent,
     ControlPanelSearchComponent,
+    CommentsComponent,
     DeedsComponent,
     GroupComponent,
     GroupDetailComponent,
