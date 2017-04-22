@@ -15,6 +15,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 
 import { Campaign, Deed, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
@@ -166,7 +167,7 @@ export class GroupComponent implements OnDestroy, OnInit {
         ([user, group]: [User, Group]) => {
           this.openConfirmation(`Are you sure you want to leave <b>${group.name}</b>?`);
           this.confirmation$
-            .filter((isConfirmed: boolean) => isConfirmed !== null).first()
+            .skip(1)
             .filter((isConfirmed: boolean) => isConfirmed)
             .map(() => user.groups.findIndex((userGroup: Group) => userGroup._id === group._id))
             .switchMap((index: number) =>

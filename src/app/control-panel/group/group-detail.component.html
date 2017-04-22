@@ -55,3 +55,31 @@
     </table>
   </div>
 </div>
+
+<div
+  bsModal
+  #confirmModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Confirmation"
+  aria-hidden="true"
+  [config]="{ backdrop: 'static', keyboard: false }"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p [innerHTML]="confirmModalContent"></p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeConfirmation(false)">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="closeConfirmation(true)">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
