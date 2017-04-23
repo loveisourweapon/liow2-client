@@ -17,11 +17,11 @@ build:
 
     - script:
       name: test
-      code: yarn test:prod -- --code-coverage
+      code: yarn test:prod -- --code-coverage $NG_TEST_OPTIONS
 
     - script:
       name: build
-      code: yarn build:prod
+      code: yarn build:prod -- $NG_BUILD_OPTIONS
 
     - script:
       name: send test coverage report
