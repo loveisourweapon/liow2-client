@@ -36,9 +36,7 @@ deploy:
       bucket-url: $S3_BUCKET_NAME
       source-dir: dist
 
-    - dlapiduz/cf-invalidate:
-      name: invalidate CloudFront cache
-      key-id: $AWS_ACCESS_KEY_ID
-      key-secret: $AWS_SECRET_KEY
-      distribution-id: $CF_DISTRIBUTION_ID
-      path: /*
+    - seigyo/cloudflare-purge:
+      api: $CF_API_KEY
+      email: $CF_EMAIL
+      domain: $CF_DOMAIN
