@@ -36,7 +36,7 @@ deploy:
       bucket-url: $S3_BUCKET_NAME
       source-dir: dist
 
-    - seigyo/cloudflare-purge:
+    - dominikkukacka/cloudflare-purge:
       api: $CF_API_KEY
       email: $CF_EMAIL
       domain: $CF_DOMAIN
