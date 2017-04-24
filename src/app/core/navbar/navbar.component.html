@@ -53,7 +53,7 @@
           </a>
         </li>
         <li *ngIf="(state.auth.isAuthenticated$ | async) && (state.auth.group$ | async) as authGroup">
-          <a [routerLink]="['/g', authGroup.urlName]" [title]="authGroup.name">
+          <a [routerLink]="['/g', authGroup?.urlName]" [title]="authGroup?.name">
             Campaign
           </a>
         </li>
@@ -71,15 +71,15 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img [src]="authUser.picture || '/images/user0.png'" class="img-circle">
+            <img [src]="authUser?.picture || '/images/user0.png'" class="img-circle">
             <span class="caret"></span>
           </a>
           <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
             <li class="dropdown-header">
-              {{ authUser.name }}
+              {{ authUser?.name }}
             </li>
             <li>
-              <a [routerLink]="['/u', authUser._id]">
+              <a [routerLink]="['/u', authUser?._id]">
                 <i class="fa fa-fw fa-user"></i>
                 Your Profile
               </a>
@@ -99,8 +99,8 @@
               *ngFor="let group of authUser?.groups; trackBy: identifyBy('_id')"
               [class.active]="(state.auth.group$ | async)?._id === group._id"
             >
-              <a [routerLink]="['/g', group.urlName]">
-                {{ group.name }}
+              <a [routerLink]="['/g', group?.urlName]">
+                {{ group?.name }}
               </a>
             </li>
             <li>

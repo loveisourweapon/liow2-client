@@ -4,10 +4,10 @@
     *ngFor="let user of getSelectedUsers(userList, selectedIds); trackBy: identifyBy('_id')"
   >
     <div class="media-left">
-      <img [src]="user.picture" class="img-circle">
+      <img [src]="user?.picture" class="img-circle">
     </div>
     <div class="media-right media-middle">
-      {{ user.name }}
+      {{ user?.name }}
       <a
         class="btn btn-link btn-xs"
         (click)="onRemoveClick(user); $event.preventDefault()"
@@ -51,10 +51,10 @@
           class="list-group-item media m-t-none"
         >
           <div class="media-left">
-            <img [src]="user.picture" class="img-circle">
+            <img [src]="user?.picture" class="img-circle">
           </div>
           <div class="media-right media-middle">
-            {{ user.name }}
+            {{ user?.name }}
           </div>
         </button>
       </div>

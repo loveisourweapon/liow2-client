@@ -13,19 +13,19 @@
       <tbody>
         <tr *ngFor="let deed of (state.controlPanel.deeds$ | async); trackBy: identifyBy('_id')">
           <td class="text-center">
-            <img [src]="deed.logo || '/images/deed.png'" class="img-circle icon">
+            <img [src]="deed?.logo || '/images/deed.png'" class="img-circle icon">
           </td>
-          <td>{{ deed.title }}</td>
+          <td>{{ deed?.title }}</td>
           <td>
-            <div *ngIf="deed.videoUrl">
-              <a href="{{ deed.videoUrl }}" target="_blank">
+            <div *ngIf="deed.videoUrl as videoUrl; else noVideoLink">
+              <a href="{{ videoUrl }}" target="_blank">
                 <i class="fa fa-lg fa-youtube-play"></i>
-                {{ deed.videoUrl.split('/') | last }}
+                {{ videoUrl.split('/') | last }}
               </a>
             </div>
-            <div *ngIf="!deed.videoUrl" ng-if="::!deed.videoUrl">
+            <ng-template #noVideoLink>
               <ui-icon-checked [isChecked]="false"></ui-icon-checked>
-            </div>
+            </ng-template>
           </td>
           <td>
             <div dropdown placement="bottom right" class="btn-group dropdown">
@@ -41,7 +41,7 @@
                   </a>
                 </li>
                 <li>
-                  <a [routerLink]="['/d', deed.urlTitle]">
+                  <a [routerLink]="['/d', deed?.urlTitle]">
                     <i class="fa fa-fw fa-heart"></i>
                     View Public Page
                   </a>

@@ -36,14 +36,14 @@
         Global Activity Feed
       </a>
       <a
-        [routerLink]="['/g', authGroup.urlName]"
+        [routerLink]="['/g', authGroup?.urlName]"
         class="list-group-item list-group-item-inverse current-campaign"
         *ngIf="(state.auth.isAuthenticated$ | async) && (state.auth.group$ | async) as authGroup"
         (click)="closeMenu()"
       >
         <i class="fa fa-fw fa-users text-primary"></i>
         Current Campaign<br>
-        <small class="text-muted">{{ authGroup.name }}</small>
+        <small class="text-muted">{{ authGroup?.name }}</small>
       </a>
     </div>
 
@@ -53,7 +53,7 @@
     </h5>
     <div class="list-group" *ngIf="state.auth.isAuthenticated$ | async">
       <a
-        [routerLink]="['/u', authUser._id]"
+        [routerLink]="['/u', authUser?._id]"
         class="list-group-item list-group-item-inverse"
         (click)="closeMenu()"
         *ngIf="state.auth.user$ | async as authUser"
@@ -78,12 +78,12 @@
     <div class="list-group" *ngIf="state.auth.isAuthenticated$ | async">
       <a
         *ngFor="let group of (state.auth.user$ | async)?.groups; trackBy: identifyBy('_id')"
-        [routerLink]="['/g', group.urlName]"
+        [routerLink]="['/g', group?.urlName]"
         class="list-group-item list-group-item-inverse"
-        [class.active]="(state.auth.group$ | async)?._id === group._id"
+        [class.active]="(state.auth.group$ | async)?._id === group?._id"
       >
         <i class="fa fa-fw"></i><!-- this icon left intentionally blank -->
-        {{ group.name }}
+        {{ group?.name }}
       </a>
       <button
         type="button"

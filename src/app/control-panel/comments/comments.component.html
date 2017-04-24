@@ -32,27 +32,27 @@
             <td>
               <div class="media">
                 <div class="media-left">
-                  <img [src]="comment.user.picture || '/images/user0.png'" class="media-object img-circle icon">
+                  <img [src]="comment?.user?.picture || '/images/user0.png'" class="media-object img-circle icon">
                 </div>
                 <div class="media-body media-middle">
-                  {{ comment.user.name }}
+                  {{ comment?.user?.name }}
                 </div>
               </div>
             </td>
             <td>
               <div class="media">
                 <div class="media-left">
-                  <img [src]="comment.target.deed.logo" class="media-object img-circle icon">
+                  <img [src]="comment?.target?.deed?.logo" class="media-object img-circle icon">
                 </div>
                 <div class="media-body media-middle">
-                  {{ comment.target.deed.title }}
+                  {{ comment?.target?.deed?.title }}
                 </div>
               </div>
             </td>
             <td>
-              <ui-marked [content]="comment.content.text"></ui-marked>
+              <ui-marked [content]="comment?.content?.text"></ui-marked>
             </td>
-            <td>{{ comment.created | moment:'YYYY-MM-DD' }}</td>
+            <td>{{ comment?.created | moment:'YYYY-MM-DD' }}</td>
           </tr>
         </tbody>
       </table>
