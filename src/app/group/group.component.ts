@@ -93,12 +93,14 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.auth.isMemberOfGroup(group),
         this.state.auth.user$,
         this.state.group$,
+        this.state.campaign$,
       ))
       .distinctUntilChanged()
-      .subscribe(([isMemberOfGroup, authUser, group]: [boolean, User, Group]) => {
+      .subscribe(([isMemberOfGroup, authUser, group, campaign]: [boolean, User, Group, Campaign]) => {
         this.currentTab = isMemberOfGroup ? GroupTab.Feed : GroupTab.Welcome;
         if (isMemberOfGroup && authUser) {
           this.state.auth.group = group;
+          this.state.auth.campaign = campaign;
         }
       });
   }

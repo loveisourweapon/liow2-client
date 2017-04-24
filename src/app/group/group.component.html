@@ -5,10 +5,19 @@
 >
   <div jumbotron-title>{{ group?.name }}</div>
   <div jumbotron-text>
-    <span class="f-lg">
-      {{ state.counter$(group?._id) | async | number }}
-    </span>
-    acts of love
+    <span *ngIf="(state.campaign$ | async) && (state.campaign$ | async)?._id === (state.auth.campaign$ | async)?._id; then showCampaignCounter; else showGroupCounter"></span>
+    <ng-template #showCampaignCounter>
+      <span class="f-lg">
+        {{ state.counter$(group?._id) | async | number }}
+      </span>
+      acts of love (this campaign)
+    </ng-template>
+    <ng-template #showGroupCounter>
+      <span class="f-lg">
+        {{ state.counter$(group?._id) | async | number }}
+      </span>
+      acts of love
+    </ng-template>
   </div>
 </liow-jumbotron>
 
