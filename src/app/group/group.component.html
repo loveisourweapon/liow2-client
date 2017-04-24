@@ -3,10 +3,10 @@
   [background]="group.coverImage"
   *ngIf="state.group$ | async as group"
 >
-  <div jumbotron-title>{{ group.name }}</div>
+  <div jumbotron-title>{{ group?.name }}</div>
   <div jumbotron-text>
     <span class="f-lg">
-      {{ state.counter$(group._id) | async | number }}
+      {{ state.counter$(group?._id) | async | number }}
     </span>
     acts of love
   </div>
@@ -40,34 +40,34 @@
               *ngFor="let item of campaign.deeds; trackBy: identifyBy('deed._id')"
             >
               <a
-                [routerLink]="['/d', item.deed.urlTitle]"
+                [routerLink]="['/d', item?.deed?.urlTitle]"
                 class="btn"
-                [class.btn-primary]="item.published"
-                [class.btn-default]="!item.published"
-                [class.btn-lg]="isCurrentDeed(item.deed, campaign)"
+                [class.btn-primary]="item?.published"
+                [class.btn-default]="!item?.published"
+                [class.btn-lg]="isCurrentDeed(item?.deed, campaign)"
               >
-                {{ item.deed.title }}
+                {{ item?.deed?.title }}
               </a>
               <button
                 type="button"
                 dropdownToggle
                 class="btn dropdown-toggle"
-                [class.btn-primary]="item.published"
-                [class.btn-default]="!item.published"
-                [class.btn-lg]="isCurrentDeed(item.deed, campaign)"
+                [class.btn-primary]="item?.published"
+                [class.btn-default]="!item?.published"
+                [class.btn-lg]="isCurrentDeed(item?.deed, campaign)"
               >
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
-                <li *ngIf="!item.published">
-                  <a (click)="setPublished(item.deed, campaign, true); $event.preventDefault()" href>
+                <li *ngIf="!item?.published">
+                  <a (click)="setPublished(item?.deed, campaign, true); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-up"></i>
                     Publish
                   </a>
                 </li>
-                <li *ngIf="item.published">
-                  <a (click)="setPublished(item.deed, campaign, false); $event.preventDefault()" href>
+                <li *ngIf="item?.published">
+                  <a (click)="setPublished(item?.deed, campaign, false); $event.preventDefault()" href>
                     <i class="fa fa-fw fa-thumbs-down"></i>
                     Unpublish
                   </a>
@@ -98,13 +98,13 @@
           <div *ngSwitchCase="false">
             <a
               *ngFor="let item of campaign?.deeds; trackBy: identifyBy('deed._id')"
-              [routerLink]="['/d', item.deed.urlTitle]"
+              [routerLink]="['/d', item?.deed?.urlTitle]"
               class="btn btn-block"
-              [class.btn-primary]="item.published"
-              [class.btn-default]="!item.published"
-              [class.btn-lg]="isCurrentDeed(item.deed, campaign)"
+              [class.btn-primary]="item?.published"
+              [class.btn-default]="!item?.published"
+              [class.btn-lg]="isCurrentDeed(item?.deed, campaign)"
             >
-              {{ item.deed.title }}
+              {{ item?.deed?.title }}
             </a>
           </div>
         </div>
@@ -183,11 +183,11 @@
             Welcome
           </ng-template>
 
-          <blockquote *ngIf="group.welcomeMessage as welcomeMessage">
+          <blockquote *ngIf="group?.welcomeMessage as welcomeMessage">
             <ui-marked [content]="welcomeMessage"></ui-marked>
           </blockquote>
 
-          <div *ngIf="!group.welcomeMessage">
+          <div *ngIf="!group?.welcomeMessage">
             <h2>
               The Love is our Weapon Campaign is a youth movement that exists to
               change cities through the love of Jesus by doing strategic practical
@@ -211,13 +211,13 @@
           </ng-template>
 
           <liow-feed
-            [criteria]="{ group: group._id }"
+            [criteria]="{ group: group?._id }"
             *ngIf="group && (state.auth.isAuthenticated$ | async)"
           ></liow-feed>
 
           <p *ngIf="!(state.auth.isAuthenticated$ | async)">
             You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a>
-            to see {{ group.name }}'s Activity Feed.
+            to see {{ group?.name }}'s Activity Feed.
           </p>
         </tab>
       </tabset>

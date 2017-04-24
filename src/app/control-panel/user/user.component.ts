@@ -48,14 +48,11 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSubscription = this.state.auth.user$
       .filter((user: User) => user !== null)
-      .subscribe((user: User) => this.state.controlPanel.user = user);
-
-    this.state.controlPanel.user$
-      .first()
-      .subscribe((user: User) => {
+      .do((user: User) => {
         this.title.set(`${user.name} | Control Panel`);
         this.actService.count({ user: user._id });
-      });
+      })
+      .subscribe((user: User) => this.state.controlPanel.user = user);
 
     // Autofocus first name field when starting name editing
     this.isEditingSubscription = this.isEditingName$
