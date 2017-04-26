@@ -18,7 +18,15 @@
       </h2>
 
       <h1 class="pull-right text-right m-b-none">
-        {{ state.counter$(deed?._id) | async | number }}
+        <span *ngIf="state.auth.campaign$ | async as authCampaign">
+          {{ state.counter$(authCampaign?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
+          {{ state.counter$(authGroup?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!(state.auth.campaign$ | async) && !(state.auth.group$ | async)">
+          {{ state.counter$(deed?._id) | async | number }}
+        </span>
       </h1>
     </div>
   </div>
