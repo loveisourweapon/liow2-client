@@ -20,13 +20,16 @@ export class DeedListComponent implements OnInit, OnDestroy {
 
   private groupSubscription: Subscription;
 
+  @Input() filterBy: (Deed) => boolean = (deed: Deed) => true;
+
   constructor(
     private deedService: DeedService,
     private state: StateService,
   ) { }
 
   ngOnInit(): void {
-    this.deeds$ = this.deedService.find();
+    this.deeds$ = this.deedService.find()
+      .map((deeds: Deed[]) => deeds.filter(this.filterBy));
 
     this.groupSubscription = Observable.combineLatest(
       this.state.auth.group$,

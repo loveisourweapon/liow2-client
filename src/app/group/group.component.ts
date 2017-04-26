@@ -18,7 +18,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, Deed, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
+import { Campaign, Deed, DeedPublish, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -191,6 +191,11 @@ export class GroupComponent implements OnDestroy, OnInit {
         },
         (errorMessage: string) => this.alertify.log(errorMessage, 10000, false),
       );
+  }
+
+  campaignDeedListFilter(campaign: Campaign): (Deed) => boolean {
+    const campaignDeedIds = campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
+    return (deed: Deed) => campaignDeedIds.includes(deed._id);
   }
 
   finishCampaign(campaign: Campaign): void {
