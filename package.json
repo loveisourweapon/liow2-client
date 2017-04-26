@@ -54,10 +54,10 @@
     "seedrandom": "^2.4.2",
     "showdown": "^1.6.4",
     "to-markdown": "^3.0.3",
-    "zone.js": "0.8.5"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.0",
+    "@angular/cli": "1.0.1",
     "@angular/compiler-cli": "^4.0.0",
     "@types/jasmine": "2.5.38",
     "@types/lodash": "^4.14.63",
