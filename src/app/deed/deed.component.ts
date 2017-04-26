@@ -13,7 +13,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, CounterQuery, Deed, DeedSlug, Group, NewComment } from '../core/models';
+import { Campaign, CounterQuery, Deed, DeedPublish, DeedSlug, Group, NewComment } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -117,6 +117,11 @@ export class DeedComponent implements OnDestroy, OnInit {
         },
         () => this.alertify.error(`Failed registering deed`),
       );
+  }
+
+  campaignDeedListFilter(campaign: Campaign): (Deed) => boolean {
+    const campaignDeedIds = campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
+    return (deed: Deed) => campaignDeedIds.includes(deed._id);
   }
 
   private loadCounter(deed: Deed, group: Group, campaign: Campaign): void {
