@@ -14,6 +14,7 @@ import { SearchParams } from '../../shared';
 })
 export class DeedListComponent implements OnInit, OnDestroy {
   @Input() layout: string;
+  @Input() alwaysGlobal = false;
 
   deeds$: Observable<Deed[]>;
 
@@ -38,7 +39,7 @@ export class DeedListComponent implements OnInit, OnDestroy {
         } else if (group) {
           queryParams.group = group._id;
         }
-        this.deedService.countAll(queryParams);
+        this.deedService.countAll(this.alwaysGlobal ? {} : queryParams);
       });
   }
 
