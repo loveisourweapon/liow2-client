@@ -7,10 +7,10 @@
   <div jumbotron-text>
     <span *ngIf="(state.campaign$ | async) && (state.campaign$ | async)?._id === (state.auth.campaign$ | async)?._id; then showCampaignCounter; else showGroupCounter"></span>
     <ng-template #showCampaignCounter>
-      <span class="f-lg">
-        {{ state.counter$(group?._id) | async | number }}
+      <span class="f-lg" *ngIf="(state.campaign$ | async) as campaign">
+        {{ state.counter$(campaign?._id) | async | number }}
       </span>
-      acts of love (this campaign)
+      acts of love <span class="text-muted">this campaign</span>
     </ng-template>
     <ng-template #showGroupCounter>
       <span class="f-lg">
