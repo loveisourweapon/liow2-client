@@ -45,9 +45,11 @@ export class DeedService {
   }
 
   countAll(params: SearchParams = {}): void {
+    const baseCounterId = params.group || params.campaign || '';
     this.http.get(`${this.baseUrl}/counters`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
       .switchMap((counters: DeedCounterResult[]) => Observable.from(counters))
-      .subscribe((counter: DeedCounterResult) => this.state.updateCounter(counter.deed, counter.count));
+      .subscribe((counter: DeedCounterResult) =>
+        this.state.updateCounter(baseCounterId + counter.deed, counter.count));
   }
 }

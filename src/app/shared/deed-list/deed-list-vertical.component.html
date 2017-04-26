@@ -11,7 +11,17 @@
     <div class="deed-text">
       <span class="deed-title">{{ deed?.title }}</span>
       <br>
-      <span class="deed-count">{{ state.counter$(deed?._id) | async | number }}</span>
+      <span class="deed-count">
+        <span *ngIf="state.auth.campaign$ | async as authCampaign">
+          {{ state.counter$(authCampaign?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
+          {{ state.counter$(authGroup?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!(state.auth.campaign$ | async) && !(state.auth.group$ | async)">
+          {{ state.counter$(deed?._id) | async | number }}
+        </span>
+      </span>
       <span class="deed-subtext">Deeds Done</span>
     </div>
   </div>
