@@ -86,11 +86,11 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
 
         const options = <CampaignEditModalOptions>state.options;
         this.action = has(options, 'action') ? options.action : EditAction.Create;
-        if (has(options, 'campaign') && options.campaign) {
-          this.campaign = options.campaign;
-          this.campaignDeeds$.next(options.campaign.deeds);
-          this.selectedDeeds = <DeedPublish[]>[...options.campaign.deeds];
-        }
+        this.campaign = has(options, 'campaign') ? options.campaign : null;
+
+        const campaignDeeds = (this.campaign) ? options.campaign.deeds : [];
+        this.campaignDeeds$.next(campaignDeeds);
+        this.selectedDeeds = <DeedPublish[]>[...campaignDeeds];
       });
   }
 
