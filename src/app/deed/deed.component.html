@@ -37,7 +37,7 @@
     <div class="col-sm-3 col-sm-push-9 m-b-sm">
       <button
         type="button"
-        (click)="onDeedDone(state.deed$, state.auth.group$)"
+        (click)="onDeedDone(state.deed$, state.auth.group$, state.auth.campaign$)"
         class="btn btn-primary btn-block btn-lg"
         *ngIf="state.auth.isAuthenticated$ | async"
         [disabled]="isDoing$ | async"

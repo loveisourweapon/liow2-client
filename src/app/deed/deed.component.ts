@@ -64,14 +64,7 @@ export class DeedComponent implements OnDestroy, OnInit {
     )
       .filter(([deed, group, campaign]: [Deed, Group, Campaign]) => deed !== null)
       .subscribe(([deed, group, campaign]: [Deed, Group, Campaign]) => {
-        const counterQuery: CounterQuery = { deed: deed._id };
-        if (campaign) {
-          counterQuery.campaign = campaign._id;
-        } else if (group) {
-          counterQuery.group = group._id;
-        }
-        this.actService.count(counterQuery);
-
+        this.loadCounter(deed, group, campaign);
         this.title.set(deed.title);
       });
   }
@@ -107,14 +100,14 @@ export class DeedComponent implements OnDestroy, OnInit {
       );
   }
 
-  onDeedDone(deed$: Observable<Deed>, group$: Observable<Group|null>): void {
+  onDeedDone(deed$: Observable<Deed>, group$: Observable<Group|null>, campaign$: Observable<Campaign|null>): void {
     this.isDoing$.next(true);
-    Observable.combineLatest(deed$, group$)
+    Observable.combineLatest(deed$, group$, campaign$)
       .first()
-      .switchMap(([deed, group]: [Deed, Group]) => this.actService.done(deed, group)
+      .switchMap(([deed, group, campaign]: [Deed, Group, Campaign]) => this.actService.done(deed, group)
         .map(() => {
           this.actService.count();
-          this.actService.count({ deed: deed._id });
+          this.loadCounter(deed, group, campaign);
         }))
       .finally(() => this.isDoing$.next(false))
       .subscribe(
@@ -124,5 +117,15 @@ export class DeedComponent implements OnDestroy, OnInit {
         },
         () => this.alertify.error(`Failed registering deed`),
       );
+  }
+
+  private loadCounter(deed: Deed, group: Group, campaign: Campaign): void {
+    const counterQuery: CounterQuery = { deed: deed._id };
+    if (campaign) {
+      counterQuery.campaign = campaign._id;
+    } else if (group) {
+      counterQuery.group = group._id;
+    }
+    this.actService.count(counterQuery);
   }
 }
