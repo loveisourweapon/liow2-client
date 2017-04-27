@@ -87,11 +87,11 @@
           layout="vertical"
           [filterBy]="campaignDeedListFilter(campaign)"
         ></liow-deed-list>
+        <hr>
       </div>
 
       <!-- Campaign controls -->
       <div *ngIf="(auth.isAdminOfGroup(group) | async) && (state.campaign$ | async) as campaign">
-        <hr>
         <button
           type="button"
           class="btn btn-default btn-block"
