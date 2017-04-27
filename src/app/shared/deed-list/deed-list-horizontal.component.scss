@@ -3,9 +3,10 @@
 .deed-wrapper {
   float: left;
   width: calc(100% / 3);
-  padding: 6vw;
-  padding-bottom: 0 !important;
+  padding: 4vw;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 
   @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     width: calc(100% / 4);
@@ -21,10 +22,21 @@
   }
 
   &:hover {
-    .deed-text,
-    .deed-title-wrapper {
-      opacity: 1;
-    }
+    background: $gray-dark;
+    color: white;
+  }
+}
+
+.deed-title {
+  font-size: 12px;
+  font-weight: 200;
+  text-transform: uppercase;
+  text-align: center;
+  min-height: 38px;
+
+  @media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
+    font-size: 15px;
+    min-height: 45px;
   }
 }
 
@@ -32,40 +44,8 @@
   position: relative;
 }
 
-.deed-title-wrapper {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 50%;
-
-  .deed-title {
-    color: white;
-    font-size: 12px;
-    text-align: center;
-
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 50%;
-    transform: translate(0, -50%);
-
-    @media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
-      font-size: 15px;
-    }
-  }
-}
-
 .deed-text {
   margin-top: 6px;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
 
   .deed-count {
     color: $brand-primary;

@@ -1,7 +1,8 @@
 @import "../../../styles/variables";
 
-.home-signup-login {
-  background: $gray-lighter;
+liow-deed-list {
+  display: block;
+  margin-top: 30px;
 }
 
 .home-welcome {
@@ -24,67 +25,19 @@
   }
 }
 
-.home-how-to {
+.home-partners {
   background: $gray-lighter;
-  min-height: 55vw;
-  max-height: 730px;
-  position: relative;
+  padding: 30px 0;
 
-  .row > div {
-    position: inherit;
+  .partner-logos {
+    display: flex;
   }
 
-  h2 {
-    margin-top: 30px;
-    font-weight: bold;
-  }
+  .partner-logo {
+    flex: 1;
 
-  img {
-    position: absolute;
-    right: 0;
-    bottom: -22px;
-    max-width: 70%;
-
-    @media (max-width: $screen-xs-max) {
-      opacity: 0.7;
-      bottom: -5vw;
-    }
-  }
-
-  ol {
-    margin-top: 10vw;
-    margin-bottom: 10vw;
-    font-size: large;
-    width: 30%;
-    list-style-type: none;
-    position: relative;
-
-    li {
-      margin: 30px 30px 30px 0;
-      counter-increment: steps-counter;
-      font-weight: bold;
-
-      > small {
-        font-weight: normal;
-      }
-
-      &:before {
-        content: counter(steps-counter);
-        color: white;
-        background: $text-color;
-        display: inline-block;
-        width: 26px;
-        height: 26px;
-        line-height: 26px;
-        text-align: center;
-        margin-right: 8px;
-        border-radius: 13px;
-      }
-    }
-
-    @media (max-width: $screen-xs-max) {
-      width: 100%;
-      text-shadow: 0 0 1px $gray-lighter;
+    img {
+      max-width: 100%;
     }
   }
 }
@@ -93,8 +46,4 @@
   background: $gray-darker url("/images/footer-home.jpg") center;
   background-size: cover;
   color: white;
-}
-
-.home-spacer {
-  height: 80px;
 }

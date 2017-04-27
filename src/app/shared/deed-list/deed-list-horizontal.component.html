@@ -6,11 +6,9 @@
         class="deed-wrapper"
         [routerLink]="['/d', deed?.urlTitle]"
       >
+        <div class="deed-title">{{ deed?.title }}</div>
         <div class="deed-image">
           <img [src]="deed?.logo || '/images/deed.png'" class="img-responsive img-circle">
-          <div class="deed-title-wrapper">
-            <div class="deed-title">{{ deed?.title }}</div>
-          </div>
         </div>
         <div class="deed-text text-center">
           <div class="deed-count">{{ state.counter$(deed?._id) | async | number }}</div>
