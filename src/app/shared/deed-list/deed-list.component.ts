@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 
 import { Campaign, Deed, Group } from '../../core/models';
-import { DeedService, StateService } from '../../core/services';
+import { DeedService } from '../../core/services/deed.service';
+import { StateService } from '../../core/services/state.service';
 import { SearchParams } from '../../shared';
 
 @Component({
