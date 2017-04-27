@@ -114,8 +114,8 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isSaving$.next(false))
       .switchMap(() => this.campaignService.findOne({ group: group._id, active: true }))
       .subscribe(
-        (createdCampaign: Campaign) => {
-          this.state.campaign = createdCampaign;
+        (savedCampaign: Campaign) => {
+          this.state.campaign = savedCampaign;
 
           this.alertify.success(`${this.action}d campaign`);
           this.onClose();
