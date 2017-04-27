@@ -25,12 +25,25 @@ liow-deed-list {
   }
 }
 
+.home-partners {
+  background: $gray-lighter;
+  padding: 30px 0;
+
+  .partner-logos {
+    display: flex;
+  }
+
+  .partner-logo {
+    flex: 1;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
 .home-footer {
   background: $gray-darker url("/images/footer-home.jpg") center;
   background-size: cover;
   color: white;
-}
-
-.home-spacer {
-  height: 80px;
 }
