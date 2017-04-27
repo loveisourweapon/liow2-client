@@ -24,8 +24,14 @@
           <alert type="danger" *ngIf="errorMessage || (submitted && (campaignDeeds$ | async)?.length === 0)">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             <span *ngIf="errorMessage">
-              Failed sending request. Please try again or
-              <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
+              <span *ngIf="errorMessage.includes('active campaign'); then showActiveCampaign; else showGeneralError;"></span>
+              <ng-template #showActiveCampaign>
+                {{ errorMessage }}. Please
+              </ng-template>
+              <ng-template #showGeneralError>
+                Failed sending request. Please try again or
+              </ng-template>
+              <a href="mailto:support@loveisourweapon.com">contact us</a>.
             </span>
             <span *ngIf="submitted && (campaignDeeds$ | async)?.length === 0">
               Please select some deeds to start your campaign.

@@ -54,8 +54,8 @@ export class ForgotPasswordModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isSending$.next(false))
       .subscribe(
         () => {
-          this.onClose();
           this.alertify.success(`Sent password recovery email to <b>${emailAddress}</b>`);
+          this.onClose();
         },
         () => this.alertify.error(`Failed sending password recovery email`),
       );

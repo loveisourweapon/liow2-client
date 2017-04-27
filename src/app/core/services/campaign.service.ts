@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
-import { Observable } from 'rxjs/Observable';
 import { has } from 'lodash';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 import { environment } from '../../../environments/environment';
 import { buildUrlSearchParams, SearchParams } from '../../shared';
@@ -41,6 +44,7 @@ export class CampaignService {
       ;
 
     return request
+      .catch((response: Response) => Observable.throw(response.json().error))
       .map((response: Response) => response.json() || {})
       .map((savedCampaign: Campaign) => this.transformCampaign(savedCampaign));
   }
