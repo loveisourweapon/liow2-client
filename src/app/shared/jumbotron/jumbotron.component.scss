@@ -7,6 +7,10 @@
   color: white;
   height: 45vw;
 
+  /deep/ .text-muted {
+    color: darken(white, 35%);
+  }
+
   @media (min-width: $screen-sm-min) {
     height: 35vw;
   }

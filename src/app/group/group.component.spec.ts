@@ -10,6 +10,7 @@ import {
   AlertStubComponent,
   AuthStubService,
   CampaignStubService,
+  DeedListStubComponent,
   DropdownStubDirective,
   DropdownMenuStubDirective,
   DropdownToggleStubDirective,
@@ -51,6 +52,7 @@ describe(`GroupComponent`, () => {
         declarations: [
           GroupComponent,
           AlertStubComponent,
+          DeedListStubComponent,
           DropdownStubDirective,
           DropdownMenuStubDirective,
           DropdownToggleStubDirective,

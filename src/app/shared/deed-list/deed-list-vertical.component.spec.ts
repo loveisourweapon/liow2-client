@@ -42,8 +42,14 @@ describe(`DeedListVerticalComponent`, () => {
 });
 
 @Component({
-  template: `<liow-deed-list-vertical [deeds]="deeds"></liow-deed-list-vertical>`,
+  template: `
+    <liow-deed-list-vertical
+      [deeds]="deeds"
+      [alwaysGlobal]="alwaysGlobal"
+    ></liow-deed-list-vertical>
+  `,
 })
 class TestHostComponent {
   deeds: Deed[] = [];
+  alwaysGlobal = false;
 }

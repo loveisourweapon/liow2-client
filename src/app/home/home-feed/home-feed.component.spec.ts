@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeedStubComponent, RouterLinkStubDirective } from '../../../testing';
+import { DeedListStubComponent, FeedStubComponent, RouterLinkStubDirective } from '../../../testing';
 import { Group } from '../../core/models';
 import { StateService } from '../../core/services';
 import { HomeFeedComponent } from './home-feed.component';
@@ -14,6 +14,7 @@ describe(`HomeFeedComponent`, () => {
       .configureTestingModule({
         declarations: [
           HomeFeedComponent,
+          DeedListStubComponent,
           FeedStubComponent,
           RouterLinkStubDirective,
         ],

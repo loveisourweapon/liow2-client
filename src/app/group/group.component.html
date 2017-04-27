@@ -7,10 +7,10 @@
   <div jumbotron-text>
     <span *ngIf="(state.campaign$ | async) && (state.campaign$ | async)?._id === (state.auth.campaign$ | async)?._id; then showCampaignCounter; else showGroupCounter"></span>
     <ng-template #showCampaignCounter>
-      <span class="f-lg">
-        {{ state.counter$(group?._id) | async | number }}
+      <span class="f-lg" *ngIf="(state.campaign$ | async) as campaign">
+        {{ state.counter$(campaign?._id) | async | number }}
       </span>
-      acts of love (this campaign)
+      acts of love <span class="text-muted">this campaign</span>
     </ng-template>
     <ng-template #showGroupCounter>
       <span class="f-lg">
@@ -24,22 +24,8 @@
 <div class="container container-pad">
   <div class="row" *ngIf="state.group$ | async as group">
     <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
-      <div
-        class="well well-sm"
-        *ngIf="(auth.isMemberOfGroup(group) | async) && (state.campaign$ | async) as campaign"
-      >
-        <h5 class="text-center">
-          Current Campaign<br>
-          <small>
-            <span class="f-lg">
-              {{ state.counter$(campaign._id) | async | number }}
-            </span>
-            acts of love
-          </small>
-        </h5>
-
-        <div [ngSwitch]="auth.isAdminOfGroup(group) | async">
-          <!-- Show buttons with publish/unpublish menu for admins -->
+        <!--<div [ngSwitch]="auth.isAdminOfGroup(group) | async">
+          &lt;!&ndash; Show buttons with publish/unpublish menu for admins &ndash;&gt;
           <div *ngSwitchCase="true">
             <div
               dropdown
@@ -83,42 +69,49 @@
                 </li>
               </ul>
             </div>
+          </div>-->
 
-            <hr>
-            <button
-              type="button"
-              class="btn btn-default btn-block"
-              (click)="modal.openCampaignEdit('Update', campaign)"
-            >
-              <i class="fa fa-fw fa-edit"></i>
-              Update campaign
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-block"
-              (click)="finishCampaign(campaign)"
-            >
-              <i class="fa fa-fw fa-flag-checkered"></i>
-              Finish campaign
-            </button>
-          </div>
+      <!-- Campaign details -->
+      <div *ngIf="(auth.isMemberOfGroup(group) | async) && (state.campaign$ | async) as campaign">
+        <h4 class="text-center">
+          Current Campaign<br>
+          <small>
+            <span class="f-lg">
+              {{ state.counter$(campaign._id) | async | number }}
+            </span>
+            acts of love so far
+          </small>
+        </h4>
 
-          <!-- Show a normal button for non-admins -->
-          <div *ngSwitchCase="false">
-            <a
-              *ngFor="let item of campaign?.deeds; trackBy: identifyBy('deed._id')"
-              [routerLink]="['/d', item?.deed?.urlTitle]"
-              class="btn btn-block"
-              [class.btn-primary]="item?.published"
-              [class.btn-default]="!item?.published"
-              [class.btn-lg]="isCurrentDeed(item?.deed, campaign)"
-            >
-              {{ item?.deed?.title }}
-            </a>
-          </div>
-        </div>
+        <liow-deed-list
+          layout="vertical"
+          [filterBy]="campaignDeedListFilter(campaign)"
+        ></liow-deed-list>
       </div>
 
+      <!-- Campaign controls -->
+      <div *ngIf="(auth.isAdminOfGroup(group) | async) && (state.campaign$ | async) as campaign">
+        <hr>
+        <button
+          type="button"
+          class="btn btn-default btn-block"
+          (click)="modal.openCampaignEdit('Update', campaign)"
+        >
+          <i class="fa fa-fw fa-edit"></i>
+          Update campaign
+        </button>
+        <button
+          type="button"
+          class="btn btn-default btn-block"
+          (click)="finishCampaign(campaign)"
+        >
+          <i class="fa fa-fw fa-flag-checkered"></i>
+          Finish campaign
+        </button>
+        <hr>
+      </div>
+
+      <!-- Group controls -->
       <button
         type="button"
         class="btn btn-primary btn-block btn-lg"

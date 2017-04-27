@@ -18,7 +18,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, Deed, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
+import { Campaign, Deed, DeedPublish, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -45,6 +45,7 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   private routeSubscription: Subscription;
   private groupSubscription: Subscription;
+  private campaignSubscription: Subscription;
   private userSubscription: Subscription;
 
   @ViewChild('confirmModal') confirmModal: ModalDirective;
@@ -88,6 +89,10 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.title.set(group.name);
       });
 
+    this.campaignSubscription = this.state.campaign$
+      .filter((campaign: Campaign) => campaign !== null)
+      .subscribe((campaign: Campaign) => this.actService.count({ campaign: campaign._id }));
+
     this.userSubscription = this.state.group$
       .switchMap((group: Group) => Observable.combineLatest(
         this.auth.isMemberOfGroup(group),
@@ -108,6 +113,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
     this.groupSubscription.unsubscribe();
+    this.campaignSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
   }
 
@@ -187,6 +193,11 @@ export class GroupComponent implements OnDestroy, OnInit {
       );
   }
 
+  campaignDeedListFilter(campaign: Campaign): (Deed) => boolean {
+    const campaignDeedIds = campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
+    return (deed: Deed) => campaignDeedIds.includes(deed._id);
+  }
+
   finishCampaign(campaign: Campaign): void {
     this.openConfirmation(`Are you sure you want to finish the current campaign?`);
     this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null)
@@ -245,10 +256,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   private loadCampaign(group: Group): void {
     this.campaignService.findOne({ group: group._id, active: true })
       .subscribe(
-        (campaign: Campaign) => {
-          this.state.campaign = campaign;
-          this.actService.count({ campaign: campaign._id });
-        },
+        (campaign: Campaign) => this.state.campaign = campaign,
         () => null, // Ignore if not found
       );
   }
