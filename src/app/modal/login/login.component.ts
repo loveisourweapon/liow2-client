@@ -70,8 +70,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
         (user: User) => {
           if (group && joinGroup) { this.state.auth.group = group; }
 
-          this.onClose();
           this.alertify.success(`Signed in` + (!user.confirmed ? `. Please confirm your email address` : ``));
+          this.onClose();
         },
         (error: ApiError) => this.errorMessage = error.message,
       );
@@ -89,8 +89,8 @@ export class LoginModalComponent implements OnInit, OnDestroy {
         () => {
           if (group && joinGroup) { this.state.auth.group = group; }
 
-          this.onClose();
           this.alertify.success(`Signed in`);
+          this.onClose();
         },
         () => this.alertify.error(`Failed signing in`),
       );

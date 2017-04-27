@@ -65,8 +65,8 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isSaving$.next(false))
       .subscribe(
         () => {
-          this.onClose();
           this.alertify.success(`Password changed`);
+          this.onClose();
         },
         (error: ApiError) => this.errorMessage = error.message,
       );

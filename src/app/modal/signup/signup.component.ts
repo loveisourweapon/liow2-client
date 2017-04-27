@@ -104,8 +104,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
         () => {
           if (group && joinGroup) { this.state.auth.group = group; }
 
-          this.onClose();
           this.alertify.success(`Signed in`);
+          this.onClose();
         },
         () => this.alertify.error(`Failed signing in`),
       );

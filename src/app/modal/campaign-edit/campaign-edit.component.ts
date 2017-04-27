@@ -117,8 +117,8 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
         (createdCampaign: Campaign) => {
           this.state.campaign = createdCampaign;
 
-          this.onClose();
           this.alertify.success(`${this.action}d campaign`);
+          this.onClose();
         },
         (error: ApiError) => this.errorMessage = error.message,
       );
