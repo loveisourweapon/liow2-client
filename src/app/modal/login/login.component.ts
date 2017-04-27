@@ -68,7 +68,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isLoggingIn$.next(false))
       .subscribe(
         (user: User) => {
-          if (joinGroup) { this.state.auth.group = group; }
+          if (group && joinGroup) { this.state.auth.group = group; }
 
           this.onClose();
           this.alertify.success(`Signed in` + (!user.confirmed ? `. Please confirm your email address` : ``));
@@ -87,7 +87,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isLoggingIn$.next(false))
       .subscribe(
         () => {
-          if (joinGroup) { this.state.auth.group = group; }
+          if (group && joinGroup) { this.state.auth.group = group; }
 
           this.onClose();
           this.alertify.success(`Signed in`);
