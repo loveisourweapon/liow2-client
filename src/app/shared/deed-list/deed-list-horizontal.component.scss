@@ -13,11 +13,11 @@
     padding: 30px;
   }
   @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-    width: calc(100% / 6);
+    width: calc(100% / 5);
     padding: 25px;
   }
   @media (min-width: $screen-lg) {
-    width: calc(100% / 11);
+    width: calc(100% / 10);
     padding: 10px;
   }
 

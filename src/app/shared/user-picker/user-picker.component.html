@@ -57,6 +57,11 @@
             {{ user?.name }}
           </div>
         </button>
+
+        <div *ngIf="getNotSelectedUsers(userList, selectedIds).length === 0" class="m-md">
+          <p>There are no more users in your group that you can add as an admin.</p>
+          <p>You'll need to invite people to join your group, then you'll be able to add them as an admin.</p>
+        </div>
       </div>
     </div>
   </div>
