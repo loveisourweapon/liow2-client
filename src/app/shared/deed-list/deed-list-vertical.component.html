@@ -2,16 +2,26 @@
   <div
     *ngFor="let deed of deeds; trackBy: identifyBy('_id')"
     class="deed-wrapper"
-    [routerLink]="['/d', deed.urlTitle]"
-    [class.deed-current]="deed._id === (state.deed$ | async)?._id"
+    [routerLink]="['/d', deed?.urlTitle]"
+    [class.deed-current]="deed?._id === (state.deed$ | async)?._id"
   >
     <div class="deed-image">
-      <img [src]="deed.logo || 'images/deed.png'" class="img-responsive img-circle">
+      <img [src]="deed?.logo || 'images/deed.png'" class="img-responsive img-circle">
     </div>
     <div class="deed-text">
-      <span class="deed-title">{{ deed.title }}</span>
+      <span class="deed-title">{{ deed?.title }}</span>
       <br>
-      <span class="deed-count">{{ state.counter$(deed._id) | async | number }}</span>
+      <span class="deed-count">
+        <span *ngIf="!alwaysGlobal && (state.auth.campaign$ | async) as authCampaign">
+          {{ state.counter$(authCampaign?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!alwaysGlobal && !(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
+          {{ state.counter$(authGroup?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="alwaysGlobal || (!(state.auth.campaign$ | async) && !(state.auth.group$ | async))">
+          {{ state.counter$(deed?._id) | async | number }}
+        </span>
+      </span>
       <span class="deed-subtext">Deeds Done</span>
     </div>
   </div>

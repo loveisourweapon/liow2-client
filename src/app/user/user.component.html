@@ -1,17 +1,17 @@
 <liow-jumbotron
-  [image]="user.picture"
-  [background]="user.coverImage"
+  [image]="user?.picture"
+  [background]="user?.coverImage"
   [classes]="['jumbotron-small']"
   *ngIf="user$ | async as user"
 >
-  <div jumbotron-title>{{ user.name }}</div>
+  <div jumbotron-title>{{ user?.name }}</div>
   <div jumbotron-text>
-    <span class="f-lg">{{ state.counter$(user._id) | async | number }}</span>
+    <span class="f-lg">{{ state.counter$(user?._id) | async | number }}</span>
     acts of love
   </div>
 </liow-jumbotron>
 
-<div class="container container-pad">
+<div class="container container-pad" *ngIf="user$ | async as user">
   <div class="row">
     <div class="col-xs-12">
       <h3 class="m-t-none m-b-md">
@@ -20,13 +20,13 @@
       </h3>
 
       <liow-feed
-        [criteria]="{ user: (user$ | async)?._id }"
-        *ngIf="(state.auth.isAuthenticated$ | async) && (user$ | async)"
+        [criteria]="{ user: user?._id }"
+        *ngIf="user && (state.auth.isAuthenticated$ | async)"
       ></liow-feed>
 
       <p *ngIf="!(state.auth.isAuthenticated$ | async)">
         You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a>
-        to see {{ (user$ | async)?.firstName }}'s Activity Feed.
+        to see {{ user?.firstName }}'s Activity Feed.
       </p>
     </div>
   </div>

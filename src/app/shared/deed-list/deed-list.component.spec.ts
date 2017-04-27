@@ -6,7 +6,7 @@ import 'rxjs/add/observable/of';
 
 import { DeedStubService } from '../../../testing';
 import { Deed } from '../../core/models';
-import { DeedService } from '../../core/services';
+import { DeedService, StateService } from '../../core/services';
 import { DeedListComponent } from './deed-list.component';
 
 describe(`DeedListComponent`, () => {
@@ -14,7 +14,7 @@ describe(`DeedListComponent`, () => {
   let testHost: TestHostComponent;
   let element: DebugElement;
 
-  const deeds: Deed[] = [];
+  const deeds: Deed[] = [<Deed>{ _id: 'abc123' }];
 
   beforeEach(async(() => {
     TestBed
@@ -27,6 +27,7 @@ describe(`DeedListComponent`, () => {
         ],
         providers: [
           { provide: DeedService, useClass: DeedStubService },
+          StateService,
         ],
       })
       .compileComponents();
@@ -79,7 +80,7 @@ describe(`DeedListComponent`, () => {
 
     const horizontalElement = element.query(By.directive(DeedListHorizontalStubComponent));
     const horizontalComponent = horizontalElement.injector.get(DeedListHorizontalStubComponent);
-    expect(horizontalComponent.deeds).toBe(deeds);
+    expect(horizontalComponent.deeds).toEqual(deeds);
   });
 });
 
@@ -96,6 +97,7 @@ class TestHostComponent {
 })
 class DeedListHorizontalStubComponent {
   @Input() deeds: any;
+  @Input() alwaysGlobal: boolean;
 }
 
 @Component({
@@ -104,4 +106,5 @@ class DeedListHorizontalStubComponent {
 })
 class DeedListVerticalStubComponent {
   @Input() deeds: any;
+  @Input() alwaysGlobal: boolean;
 }

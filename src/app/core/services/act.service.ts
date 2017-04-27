@@ -39,6 +39,7 @@ export class ActService {
     const data = {
       deed: deed._id,
       group: has(group, '_id') ? group._id : null,
+      // The API works out current campaign for group
     };
 
     return this.http.post(this.baseUrl, data)

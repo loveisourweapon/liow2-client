@@ -40,6 +40,16 @@ describe(`StateService`, () => {
         .subscribe((group: Group) => expect(group).toBe(testGroup));
     });
 
+    it(`should notify next campaign$ value when campaign value is set`, () => {
+      const testCampaign = <Campaign>{};
+
+      service.auth.campaign$.first()
+        .subscribe((campaign: Campaign) => expect(campaign).toBeNull());
+      service.auth.campaign = testCampaign;
+      service.auth.campaign$.first()
+        .subscribe((campaign: Campaign) => expect(campaign).toBe(testCampaign));
+    });
+
     it(`should notify next user$ value when user value is set`, () => {
       const testUser = <User>{};
 

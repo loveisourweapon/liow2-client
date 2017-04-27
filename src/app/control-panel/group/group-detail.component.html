@@ -28,11 +28,11 @@
       <tbody>
       <tr>
         <th>Name</th>
-        <td>{{ group.name }}</td>
+        <td>{{ group?.name }}</td>
       </tr>
       <tr>
         <th>Created</th>
-        <td>{{ group.created | moment:'LL' }}</td>
+        <td>{{ group?.created | moment:'LL' }}</td>
       </tr>
       <tr>
         <th>Members</th>
@@ -40,14 +40,14 @@
       </tr>
       <tr>
         <th>Acts of Love</th>
-        <td>{{ state.counter$(group._id) | async | number }}</td>
+        <td>{{ state.counter$(group?._id) | async | number }}</td>
       </tr>
       <tr>
         <th>Welcome Message</th>
         <td>
           <ui-marked
-            [content]="group.welcomeMessage"
-            *ngIf="group.welcomeMessage"
+            [content]="welcomeMessage"
+            *ngIf="group?.welcomeMessage as welcomeMessage"
           ></ui-marked>
         </td>
       </tr>

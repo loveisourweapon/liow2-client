@@ -4,16 +4,14 @@
       <div
         *ngFor="let deed of deeds; trackBy: identifyBy('_id')"
         class="deed-wrapper"
-        [routerLink]="['/d', deed.urlTitle]"
+        [routerLink]="['/d', deed?.urlTitle]"
       >
+        <div class="deed-title">{{ deed?.title }}</div>
         <div class="deed-image">
-          <img [src]="deed.logo || '/images/deed.png'" class="img-responsive img-circle">
-          <div class="deed-title-wrapper">
-            <div class="deed-title">{{ deed.title }}</div>
-          </div>
+          <img [src]="deed?.logo || '/images/deed.png'" class="img-responsive img-circle">
         </div>
         <div class="deed-text text-center">
-          <div class="deed-count">{{ state.counter$(deed._id) | async | number }}</div>
+          <div class="deed-count">{{ state.counter$(deed?._id) | async | number }}</div>
           <div class="deed-subtext">Deeds Done</div>
         </div>
       </div>

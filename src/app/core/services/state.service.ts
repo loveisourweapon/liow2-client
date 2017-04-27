@@ -17,6 +17,8 @@ export class StateService {
 
     group$: new BehaviorSubject<Group>(null),
     set group(group: Group) { this.group$.next(group); },
+    campaign$: new BehaviorSubject<Campaign>(null),
+    set campaign(campaign: Campaign) { this.campaign$.next(campaign); },
 
     user$: new BehaviorSubject<User>(null),
     set user(user: User) { this.user$.next(user); },

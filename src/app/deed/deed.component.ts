@@ -13,7 +13,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { Deed, DeedSlug, Group, NewComment } from '../core/models';
+import { Campaign, CounterQuery, Deed, DeedPublish, DeedSlug, Group, NewComment } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -57,10 +57,14 @@ export class DeedComponent implements OnDestroy, OnInit {
       .switchMap((deedSlug: DeedSlug) => this.deedService.findOne({ urlTitle: deedSlug }))
       .subscribe((deed: Deed) => this.state.deed = deed);
 
-    this.deedSubscription = this.state.deed$
-      .filter((deed: Deed) => deed !== null)
-      .subscribe((deed: Deed) => {
-        this.actService.count({ deed: deed._id });
+    this.deedSubscription = Observable.combineLatest(
+      this.state.deed$,
+      this.state.auth.group$,
+      this.state.auth.campaign$,
+    )
+      .filter(([deed, group, campaign]: [Deed, Group, Campaign]) => deed !== null)
+      .subscribe(([deed, group, campaign]: [Deed, Group, Campaign]) => {
+        this.loadCounter(deed, group, campaign);
         this.title.set(deed.title);
       });
   }
@@ -96,14 +100,14 @@ export class DeedComponent implements OnDestroy, OnInit {
       );
   }
 
-  onDeedDone(deed$: Observable<Deed>, group$: Observable<Group|null>): void {
+  onDeedDone(deed$: Observable<Deed>, group$: Observable<Group|null>, campaign$: Observable<Campaign|null>): void {
     this.isDoing$.next(true);
-    Observable.combineLatest(deed$, group$)
+    Observable.combineLatest(deed$, group$, campaign$)
       .first()
-      .switchMap(([deed, group]: [Deed, Group]) => this.actService.done(deed, group)
+      .switchMap(([deed, group, campaign]: [Deed, Group, Campaign]) => this.actService.done(deed, group)
         .map(() => {
           this.actService.count();
-          this.actService.count({ deed: deed._id });
+          this.loadCounter(deed, group, campaign);
         }))
       .finally(() => this.isDoing$.next(false))
       .subscribe(
@@ -113,5 +117,20 @@ export class DeedComponent implements OnDestroy, OnInit {
         },
         () => this.alertify.error(`Failed registering deed`),
       );
+  }
+
+  campaignDeedListFilter(campaign: Campaign): (Deed) => boolean {
+    const campaignDeedIds = campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
+    return (deed: Deed) => campaignDeedIds.includes(deed._id);
+  }
+
+  private loadCounter(deed: Deed, group: Group, campaign: Campaign): void {
+    const counterQuery: CounterQuery = { deed: deed._id };
+    if (campaign) {
+      counterQuery.campaign = campaign._id;
+    } else if (group) {
+      counterQuery.group = group._id;
+    }
+    this.actService.count(counterQuery);
   }
 }

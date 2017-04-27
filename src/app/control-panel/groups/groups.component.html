@@ -31,8 +31,8 @@
         <td class="text-center">
           <img src="/images/group.png" class="img-circle icon">
         </td>
-        <td>{{ group.name }}</td>
-        <td>{{ group.created | moment:'YYYY-MM-DD' }}</td>
+        <td>{{ group?.name }}</td>
+        <td>{{ group?.created | moment:'YYYY-MM-DD' }}</td>
         <td>
           <div dropdown placement="bottom right" class="btn-group dropdown">
             <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
@@ -40,20 +40,20 @@
               <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
-              <li *ngIf="group.welcomeMessage">
+              <li *ngIf="group?.welcomeMessage">
                 <a (click)="openWelcomeMessage(group); $event.preventDefault()" href>
                   <i class="fa fa-fw fa-commenting"></i>
                   Welcome Message
                 </a>
               </li>
               <li>
-                <a [routerLink]="['/g', group.urlName]">
+                <a [routerLink]="['/g', group?.urlName]">
                   <i class="fa fa-fw fa-users"></i>
                   View Public Page
                 </a>
               </li>
               <li>
-                <a [routerLink]="['/control-panel/group', group._id]">
+                <a [routerLink]="['/control-panel/group', group?._id]">
                   <i class="fa fa-fw fa-cogs"></i>
                   View Admin Page
                 </a>

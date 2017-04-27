@@ -26,16 +26,16 @@
         <div class="list-group">
           <a
             class="list-group-item"
-            *ngFor="let group of authUser.groups; trackBy: identifyBy('_id')"
-            [routerLink]="['/control-panel/group', group._id]"
+            *ngFor="let group of authUser?.groups; trackBy: identifyBy('_id')"
+            [routerLink]="['/control-panel/group', group?._id]"
             routerLinkActive="active"
           >
-            {{ group.name }}
+            {{ group?.name }}
           </a>
         </div>
       </div>
 
-      <div *ngIf="authUser.superAdmin">
+      <div *ngIf="authUser?.superAdmin">
         <h4>Admin</h4>
         <div class="list-group">
           <a

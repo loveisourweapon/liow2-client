@@ -18,7 +18,15 @@
       </h2>
 
       <h1 class="pull-right text-right m-b-none">
-        {{ state.counter$(deed?._id) | async | number }}
+        <span *ngIf="state.auth.campaign$ | async as authCampaign">
+          {{ state.counter$(authCampaign?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
+          {{ state.counter$(authGroup?._id + deed?._id) | async | number }}
+        </span>
+        <span *ngIf="!(state.auth.campaign$ | async) && !(state.auth.group$ | async)">
+          {{ state.counter$(deed?._id) | async | number }}
+        </span>
       </h1>
     </div>
   </div>
@@ -29,7 +37,7 @@
     <div class="col-sm-3 col-sm-push-9 m-b-sm">
       <button
         type="button"
-        (click)="onDeedDone(state.deed$, state.auth.group$)"
+        (click)="onDeedDone(state.deed$, state.auth.group$, state.auth.campaign$)"
         class="btn btn-primary btn-block btn-lg"
         *ngIf="state.auth.isAuthenticated$ | async"
         [disabled]="isDoing$ | async"
@@ -49,7 +57,13 @@
         Login
       </button>
 
-      <liow-deed-list layout="vertical"></liow-deed-list>
+      <span *ngIf="state.auth.campaign$ | async as authCampaign; then showCampaignDeedList; else showFullDeedList"></span>
+      <ng-template #showCampaignDeedList let-authCampaign>
+        <liow-deed-list layout="vertical" [filterBy]="campaignDeedListFilter(authCampaign)"></liow-deed-list>
+      </ng-template>
+      <ng-template #showFullDeedList>
+        <liow-deed-list layout="vertical"></liow-deed-list>
+      </ng-template>
     </div>
 
     <div class="col-sm-9 col-sm-pull-3">

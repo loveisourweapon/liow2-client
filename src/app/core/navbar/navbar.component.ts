@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/timer';
 
 import { identifyBy } from '../../shared';
 import { ActService, AuthService, ModalService, StateService } from '../services';
@@ -9,8 +12,11 @@ import { ActService, AuthService, ModalService, StateService } from '../services
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   identifyBy = identifyBy;
+
+  private readonly refreshTimer = 10000;
+  private timerSubscription: Subscription;
 
   constructor(
     private actService: ActService,
@@ -20,8 +26,13 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Load initial global counter
-    this.actService.count();
+    // Load initial global counter and setup regular refresh
+    this.timerSubscription = Observable.timer(0, this.refreshTimer)
+      .subscribe(() => this.actService.count());
+  }
+
+  ngOnDestroy(): void {
+    this.timerSubscription.unsubscribe();
   }
 
   openMenu(): void {

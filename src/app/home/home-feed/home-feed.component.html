@@ -9,22 +9,24 @@
       <div class="list-group group-list">
         <a
           *ngFor="let group of (state.auth.user$ | async)?.groups; trackBy: identifyBy('_id')"
-          [routerLink]="['/g', group.urlName]"
+          [routerLink]="['/g', group?.urlName]"
           class="list-group-item clearfix"
         >
           <div class="group-list-img">
-            <img [src]="group.logo || '/images/group.png'" class="img-circle">
+            <img [src]="group?.logo || '/images/group.png'" class="img-circle">
           </div>
           <div class="group-list-content">
-            <h4 class="m-none">{{ group.name }}</h4>
+            <h4 class="m-none">{{ group?.name }}</h4>
             <p class="m-b-none">
               <span class='f-lg'>
-                {{ state.counter$(group._id) | async | number }}
+                {{ state.counter$(group?._id) | async | number }}
               </span> acts of love
             </p>
           </div>
         </a>
       </div>
+
+      <liow-deed-list layout="vertical"></liow-deed-list>
     </div>
 
     <div class="col-sm-8 col-sm-pull-4">

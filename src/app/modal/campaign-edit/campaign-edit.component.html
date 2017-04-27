@@ -21,7 +21,7 @@
         ></liow-modal-header>
 
         <div class="modal-body">
-          <alert type="danger" *ngIf="errorMessage || (submitted && (campaignDeeds$ | async).length === 0)">
+          <alert type="danger" *ngIf="errorMessage || (submitted && (campaignDeeds$ | async)?.length === 0)">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             <span *ngIf="errorMessage">
               Failed sending request. Please try again or
@@ -58,11 +58,11 @@
                   <button
                     type="button"
                     class="btn btn-link p-none pull-right"
-                    (click)="modalService.openDeedPreview(item.deed)"
+                    (click)="modalService.openDeedPreview(item?.deed)"
                   >
                     <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
                   </button>
-                  {{ item.deed.title }}
+                  {{ item?.deed?.title }}
                 </li>
               </ul>
             </div>
@@ -81,11 +81,11 @@
                   <button
                     type="button"
                     class="btn btn-link p-none pull-right"
-                    (click)="modalService.openDeedPreview(item.deed)"
+                    (click)="modalService.openDeedPreview(item?.deed)"
                   >
                     <i class="fa fa-lg fa-info-circle text-info m-l-xs"></i>
                   </button>
-                  {{ item.deed.title }}
+                  {{ item?.deed?.title }}
                 </li>
               </ul>
             </div>

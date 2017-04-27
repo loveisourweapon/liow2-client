@@ -1,13 +1,14 @@
 <liow-jumbotron background="/images/header-home.jpg" [classes]="['videotron']">
   <div jumbotron-content class="home-header">
-    <div class="text-center">
-      <h1 class="m-none">Love is our Weapon</h1>
-      <p class="m-t-none">Changing the world one deed at a time</p>
+    <div class="text-center home-counter">
+      <p>The Love is our Weapon Campaign</p>
+      <h1 class="m-none">{{ state.counter$('global') | async | number }}</h1>
+      <p class="m-t-none">Acts of love around the world</p>
     </div>
 
     <div class="embed-responsive embed-responsive-16by9 m-t-sm">
       <ui-youtube-player
-        videoId="rzvGAGKw8sU"
+        videoId="eG6A9w2HYJ8"
         class="embed-responsive-item"
       ></ui-youtube-player>
     </div>
@@ -24,6 +25,10 @@
   </div>
 </liow-jumbotron>
 
-<liow-welcome *ngIf="!(state.auth.isAuthenticated$ | async)"></liow-welcome>
-
-<liow-home-feed *ngIf="state.auth.isAuthenticated$ | async"></liow-home-feed>
+<div *ngIf="state.auth.isAuthenticated$ | async; then showHomeFeed; else showWelcome"></div>
+<ng-template #showWelcome>
+  <liow-welcome></liow-welcome>
+</ng-template>
+<ng-template #showHomeFeed>
+  <liow-home-feed></liow-home-feed>
+</ng-template>
