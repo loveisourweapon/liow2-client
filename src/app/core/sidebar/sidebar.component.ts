@@ -6,7 +6,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 
 import { identifyBy } from '../../shared';
-import { ModalService, StateService } from '../services';
+import { AuthService, ModalService, StateService } from '../services';
 
 @Component({
   selector: 'liow-sidebar',
@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   private bodySubscription: Subscription;
 
   constructor(
+    public auth: AuthService,
     public modal: ModalService,
     public state: StateService,
   ) { }
