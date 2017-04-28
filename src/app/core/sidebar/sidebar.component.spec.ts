@@ -1,8 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
-import { ModalStubDirective, NavbarSearchStubComponent, RouterLinkStubDirective } from '../../../testing';
-import { ModalService, StateService } from '../services';
+import {
+  AuthStubService,
+  ModalStubDirective,
+  NavbarSearchStubComponent,
+  RouterLinkStubDirective,
+} from '../../../testing';
+import { AuthService, ModalService, StateService } from '../services';
 import { SidebarComponent } from './sidebar.component';
 
 // TODO: add proper tests
@@ -21,6 +26,7 @@ describe(`SidebarComponent`, () => {
           RouterLinkStubDirective,
         ],
         providers: [
+          { provide: AuthService, useClass: AuthStubService },
           { provide: ModalService, useClass: ModalStubDirective },
           StateService,
         ],
