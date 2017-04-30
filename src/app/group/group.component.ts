@@ -111,6 +111,9 @@ export class GroupComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    this.state.group = null;
+    this.state.campaign = null;
+
     this.routeSubscription.unsubscribe();
     this.groupSubscription.unsubscribe();
     this.campaignSubscription.unsubscribe();
