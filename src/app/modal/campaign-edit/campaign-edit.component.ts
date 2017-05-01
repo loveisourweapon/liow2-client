@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
@@ -15,7 +16,6 @@ import {
   ApiError,
   Campaign,
   Deed,
-  DeedId,
   DeedPublish,
   EditAction,
   Group,
@@ -103,6 +103,7 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
 
     campaignDeeds$
+      .first()
       .filter((deeds: DeedPublish[]) => deeds.length > 0)
       .do(() => this.isSaving$.next(true))
       .map((deeds: DeedPublish[]) => deeds.map((item: DeedPublish) => assign({}, item, { deed: item.deed['_id'] })))
