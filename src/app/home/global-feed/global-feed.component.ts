@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { TitleService } from '../../core/services';
+import { StateService, TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './global-feed.component.html',
@@ -8,6 +8,7 @@ import { TitleService } from '../../core/services';
 })
 export class GlobalFeedComponent implements OnInit {
   constructor(
+    private state: StateService,
     private title: TitleService,
   ) { }
 

@@ -196,10 +196,6 @@ export class GroupComponent implements OnDestroy, OnInit {
       );
   }
 
-  campaignDeedIds(campaign: Campaign): DeedId[] {
-    return campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
-  }
-
   finishCampaign(campaign: Campaign): void {
     this.openConfirmation(`Are you sure you want to finish the current campaign?`);
     this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null)

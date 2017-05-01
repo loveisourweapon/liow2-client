@@ -30,7 +30,7 @@ export class ControlPanelSearchStubComponent {
 export class DeedListStubComponent {
   @Input() layout: string;
   @Input() alwaysGlobalCounters: boolean;
-  @Input() includeIds: any[];
+  @Input() campaign: any;
 }
 
 @Component({

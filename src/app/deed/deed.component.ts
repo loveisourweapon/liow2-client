@@ -119,10 +119,6 @@ export class DeedComponent implements OnDestroy, OnInit {
       );
   }
 
-  campaignDeedIds(campaign: Campaign): DeedId[] {
-    return campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
-  }
-
   private loadCounter(deed: Deed, group: Group, campaign: Campaign): void {
     const counterQuery: CounterQuery = { deed: deed._id };
     if (campaign) {
