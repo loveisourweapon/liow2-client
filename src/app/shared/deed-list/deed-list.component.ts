@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { has, isEqual } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 
-import { Campaign, Deed, Group } from '../../core/models';
+import { Campaign, Deed, DeedId, Group } from '../../core/models';
 import { DeedService } from '../../core/services/deed.service';
 import { StateService } from '../../core/services/state.service';
 import { SearchParams } from '../../shared';
@@ -13,24 +14,28 @@ import { SearchParams } from '../../shared';
   templateUrl: './deed-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeedListComponent implements OnInit, OnDestroy {
+export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
   @Input() layout: string;
   @Input() alwaysGlobal = false;
+  @Input() includeIds: DeedId[];
 
   deeds$: Observable<Deed[]>;
 
   private groupSubscription: Subscription;
-
-  @Input() filterBy: (Deed) => boolean = (deed: Deed) => true;
 
   constructor(
     private deedService: DeedService,
     private state: StateService,
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (has(changes, 'includeIds') && !isEqual(changes.includeIds.currentValue, changes.includeIds.previousValue)) {
+      this.loadDeeds();
+    }
+  }
+
   ngOnInit(): void {
-    this.deeds$ = this.deedService.find()
-      .map((deeds: Deed[]) => deeds.filter(this.filterBy));
+    this.loadDeeds();
 
     this.groupSubscription = Observable.combineLatest(
       this.state.auth.group$,
@@ -49,5 +54,12 @@ export class DeedListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.groupSubscription.unsubscribe();
+  }
+
+  private loadDeeds(): void {
+    this.deeds$ = this.deedService.find()
+      .map((deeds: Deed[]) => this.includeIds
+        ? deeds.filter((deed: Deed) => this.includeIds.includes(deed._id))
+        : deeds);
   }
 }
