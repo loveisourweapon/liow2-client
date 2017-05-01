@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { has, isEqual } from 'lodash';
+import { find, has, isEqual } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
@@ -59,7 +59,7 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
   private loadDeeds(): void {
     this.deeds$ = this.deedService.find()
       .map((deeds: Deed[]) => this.includeIds
-        ? deeds.filter((deed: Deed) => this.includeIds.includes(deed._id))
+        ? this.includeIds.map((deedId: DeedId) => find(deeds, { _id: deedId }))
         : deeds);
   }
 }
