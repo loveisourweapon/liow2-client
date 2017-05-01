@@ -97,7 +97,7 @@ class TestHostComponent {
 })
 class DeedListHorizontalStubComponent {
   @Input() deeds: any;
-  @Input() alwaysGlobal: boolean;
+  @Input() alwaysGlobalCounters: boolean;
 }
 
 @Component({
@@ -106,5 +106,5 @@ class DeedListHorizontalStubComponent {
 })
 class DeedListVerticalStubComponent {
   @Input() deeds: any;
-  @Input() alwaysGlobal: boolean;
+  @Input() alwaysGlobalCounters: boolean;
 }

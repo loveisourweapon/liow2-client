@@ -45,11 +45,11 @@ describe(`DeedListVerticalComponent`, () => {
   template: `
     <liow-deed-list-vertical
       [deeds]="deeds"
-      [alwaysGlobal]="alwaysGlobal"
+      [alwaysGlobalCounters]="alwaysGlobalCounters"
     ></liow-deed-list-vertical>
   `,
 })
 class TestHostComponent {
   deeds: Deed[] = [];
-  alwaysGlobal = false;
+  alwaysGlobalCounters = false;
 }
