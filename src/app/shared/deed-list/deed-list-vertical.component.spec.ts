@@ -43,13 +43,9 @@ describe(`DeedListVerticalComponent`, () => {
 
 @Component({
   template: `
-    <liow-deed-list-vertical
-      [deeds]="deeds"
-      [alwaysGlobalCounters]="alwaysGlobalCounters"
-    ></liow-deed-list-vertical>
+    <liow-deed-list-vertical [deeds]="deeds"></liow-deed-list-vertical>
   `,
 })
 class TestHostComponent {
   deeds: Deed[] = [];
-  alwaysGlobalCounters = false;
 }

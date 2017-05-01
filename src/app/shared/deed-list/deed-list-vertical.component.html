@@ -12,13 +12,13 @@
       <span class="deed-title">{{ deed?.title }}</span>
       <br>
       <span class="deed-count">
-        <span *ngIf="!alwaysGlobalCounters && (state.auth.campaign$ | async) as authCampaign">
+        <span *ngIf="state.auth.campaign$ | async as authCampaign">
           {{ state.counter$(authCampaign?._id + deed?._id) | async | number }}
         </span>
-        <span *ngIf="!alwaysGlobalCounters && !(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
+        <span *ngIf="!(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
           {{ state.counter$(authGroup?._id + deed?._id) | async | number }}
         </span>
-        <span *ngIf="alwaysGlobalCounters || (!(state.auth.campaign$ | async) && !(state.auth.group$ | async))">
+        <span *ngIf="!(state.auth.campaign$ | async) && !(state.auth.group$ | async)">
           {{ state.counter$(deed?._id) | async | number }}
         </span>
       </span>

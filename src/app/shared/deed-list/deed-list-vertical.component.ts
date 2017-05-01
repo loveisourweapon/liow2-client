@@ -12,7 +12,6 @@ import { identifyBy } from '../utils';
 })
 export class DeedListVerticalComponent {
   @Input() deeds: Deed[];
-  @Input() alwaysGlobalCounters: boolean;
 
   identifyBy = identifyBy;
 
