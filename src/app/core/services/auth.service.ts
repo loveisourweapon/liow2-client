@@ -106,7 +106,6 @@ export class AuthService {
     this.state.auth.isAuthenticated = false;
     this.state.auth.user = null;
     this.state.auth.group = null;
-    this.state.auth.campaign = null;
     this.alertify.log(`Logged out`);
     return this.auth.logout();
   }

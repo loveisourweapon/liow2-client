@@ -18,7 +18,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, Deed, DeedId, DeedPublish, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
+import { Campaign, Deed, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -71,19 +71,13 @@ export class GroupComponent implements OnDestroy, OnInit {
       .filter((params: Params) => has(params, 'groupSlug'))
       .map((params: Params) => params.groupSlug)
       .distinctUntilChanged()
-      .do(() => {
-        this.state.deed = null;
-        this.state.campaign = null;
-      })
+      .do(() => this.state.group = null)
       .switchMap((groupSlug: GroupSlug) => this.groupService.findOne({ urlName: groupSlug }))
       .subscribe((group: Group) => this.state.group = group);
 
     this.groupSubscription = this.state.group$
       .filter((group: Group) => group !== null)
-      .do((group: Group) => {
-        this.loadCampaign(group);
-        this.checkSetupCampaign();
-      })
+      .do(() => this.checkSetupCampaign())
       .subscribe((group: Group) => {
         this.actService.count({ group: group._id });
         this.title.set(group.name);
@@ -98,21 +92,18 @@ export class GroupComponent implements OnDestroy, OnInit {
         this.auth.isMemberOfGroup(group),
         this.state.auth.user$,
         this.state.group$,
-        this.state.campaign$,
       ))
       .distinctUntilChanged()
-      .subscribe(([isMemberOfGroup, authUser, group, campaign]: [boolean, User, Group, Campaign]) => {
+      .subscribe(([isMemberOfGroup, authUser, group]: [boolean, User, Group]) => {
         this.currentTab = isMemberOfGroup ? GroupTab.Feed : GroupTab.Welcome;
         if (isMemberOfGroup && authUser) {
           this.state.auth.group = group;
-          this.state.auth.campaign = campaign;
         }
       });
   }
 
   ngOnDestroy(): void {
     this.state.group = null;
-    this.state.campaign = null;
 
     this.routeSubscription.unsubscribe();
     this.groupSubscription.unsubscribe();
@@ -196,10 +187,6 @@ export class GroupComponent implements OnDestroy, OnInit {
       );
   }
 
-  campaignDeedIds(campaign: Campaign): DeedId[] {
-    return campaign.deeds.map((item: DeedPublish) => item.deed['_id']);
-  }
-
   finishCampaign(campaign: Campaign): void {
     this.openConfirmation(`Are you sure you want to finish the current campaign?`);
     this.confirmation$.filter((isConfirmed: boolean) => isConfirmed !== null)
@@ -253,14 +240,6 @@ export class GroupComponent implements OnDestroy, OnInit {
   closeConfirmation(isConfirmed: boolean): void {
     this.confirmation$.next(isConfirmed);
     this.confirmModal.hide();
-  }
-
-  private loadCampaign(group: Group): void {
-    this.campaignService.findOne({ group: group._id, active: true })
-      .subscribe(
-        (campaign: Campaign) => this.state.campaign = campaign,
-        () => null, // Ignore if not found
-      );
   }
 
   private checkSetupCampaign(): void {

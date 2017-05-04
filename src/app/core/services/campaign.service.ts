@@ -3,13 +3,16 @@ import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { has } from 'lodash';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 import { environment } from '../../../environments/environment';
 import { buildUrlSearchParams, SearchParams } from '../../shared';
-import { Campaign, NewCampaign, JsonPatch } from '../models';
+import { Campaign, Group, NewCampaign, JsonPatch } from '../models';
+import { StateService } from './state.service';
 
 @Injectable()
 export class CampaignService {
@@ -17,7 +20,14 @@ export class CampaignService {
 
   constructor(
     private http: JwtHttp,
-  ) { }
+    private state: StateService,
+  ) {
+    // Setup group$ and auth.group$ subscribers to set respective campaign$'s
+    this.getCampaignForGroup(this.state.group$)
+      .subscribe((campaign: Campaign) => this.state.campaign = campaign);
+    this.getCampaignForGroup(this.state.auth.group$)
+      .subscribe((campaign: Campaign) => this.state.auth.campaign = campaign);
+  }
 
   find(params: SearchParams = {}): Observable<Campaign[]> {
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
@@ -61,5 +71,14 @@ export class CampaignService {
     if (campaign.modified) { campaign.modified = new Date(campaign.modified); }
 
     return campaign;
+  }
+
+  private getCampaignForGroup(group$: Observable<Group>): Observable<Campaign> {
+    return group$
+      .switchMap((group: Group) => {
+        if (!group) { return Observable.of(null); }
+        return this.findOne({ group: group._id, active: true });
+      })
+      .catch(() => Observable.of(null));
   }
 }

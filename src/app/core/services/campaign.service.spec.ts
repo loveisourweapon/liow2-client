@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 import { HttpStubService } from '../../../testing';
 import { Campaign } from '../models';
 import { CampaignService } from './campaign.service';
+import { StateService } from './state.service';
 
 describe(`CampaignService`, () => {
   let service: CampaignService;
@@ -25,6 +26,7 @@ describe(`CampaignService`, () => {
       providers: [
         CampaignService,
         { provide: JwtHttp, useClass: HttpStubService },
+        StateService,
       ],
     });
   });

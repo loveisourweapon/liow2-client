@@ -29,8 +29,7 @@ export class ControlPanelSearchStubComponent {
 })
 export class DeedListStubComponent {
   @Input() layout: string;
-  @Input() alwaysGlobal: boolean;
-  @Input() includeIds: any[];
+  @Input() campaign: any;
 }
 
 @Component({
