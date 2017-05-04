@@ -117,6 +117,7 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
       .subscribe(
         (savedCampaign: Campaign) => {
           this.state.campaign = savedCampaign;
+          this.state.auth.campaign = savedCampaign;
 
           this.alertify.success(`${this.action}d campaign`);
           this.onClose();
