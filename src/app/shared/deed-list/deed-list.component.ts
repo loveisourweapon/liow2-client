@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 
-import { Campaign, Deed, DeedId, Group } from '../../core/models';
+import { Campaign, Deed, DeedPublish, Group } from '../../core/models';
 import { DeedService } from '../../core/services/deed.service';
 import { StateService } from '../../core/services/state.service';
 import { SearchParams } from '../../shared';
@@ -16,8 +16,7 @@ import { SearchParams } from '../../shared';
 })
 export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
   @Input() layout: string;
-  @Input() alwaysGlobal = false;
-  @Input() includeIds: DeedId[];
+  @Input() campaign: Campaign;
 
   deeds$: Observable<Deed[]>;
 
@@ -29,7 +28,7 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'includeIds') && !isEqual(changes.includeIds.currentValue, changes.includeIds.previousValue)) {
+    if (has(changes, 'campaign') && !isEqual(changes.campaign.currentValue, changes.campaign.previousValue)) {
       this.loadDeeds();
     }
   }
@@ -48,7 +47,7 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
         } else if (group) {
           queryParams.group = group._id;
         }
-        this.deedService.countAll(this.alwaysGlobal ? {} : queryParams);
+        this.deedService.countAll(queryParams);
       });
   }
 
@@ -58,8 +57,8 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
 
   private loadDeeds(): void {
     this.deeds$ = this.deedService.find()
-      .map((deeds: Deed[]) => this.includeIds
-        ? this.includeIds.map((deedId: DeedId) => find(deeds, { _id: deedId }))
+      .map((deeds: Deed[]) => this.campaign
+        ? this.campaign.deeds.map((item: DeedPublish) => find(deeds, { _id: item.deed['_id'] }))
         : deeds);
   }
 }

@@ -12,7 +12,6 @@ import { identifyBy } from '../utils';
 })
 export class DeedListHorizontalComponent {
   @Input() deeds: Deed[];
-  @Input() alwaysGlobal: boolean;
 
   identifyBy = identifyBy;
 

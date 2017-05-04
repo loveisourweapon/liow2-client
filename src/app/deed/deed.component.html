@@ -59,7 +59,7 @@
 
       <span *ngIf="state.auth.campaign$ | async as authCampaign; then showCampaignDeedList; else showFullDeedList"></span>
       <ng-template #showCampaignDeedList let-authCampaign>
-        <liow-deed-list layout="vertical" [includeIds]="campaignDeedIds(authCampaign)"></liow-deed-list>
+        <liow-deed-list layout="vertical" [campaign]="authCampaign"></liow-deed-list>
       </ng-template>
       <ng-template #showFullDeedList>
         <liow-deed-list layout="vertical"></liow-deed-list>
