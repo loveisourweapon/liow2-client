@@ -81,6 +81,7 @@
         [routerLink]="['/g', group?.urlName]"
         class="list-group-item list-group-item-inverse"
         [class.active]="(state.auth.group$ | async)?._id === group?._id"
+        (click)="closeMenu()"
       >
         <i class="fa fa-fw"></i><!-- this icon left intentionally blank -->
         {{ group?.name }}
