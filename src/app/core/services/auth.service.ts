@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response, URLSearchParams } from '@angular/http';
 import { AuthService as Ng2AuthService, JwtHttp } from 'ng2-ui-auth';
 import { has, some } from 'lodash';
+import * as Raven from 'raven-js';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
@@ -57,6 +58,7 @@ export class AuthService {
     return this.userService.getCurrent()
       .do((user: User) => {
         this.state.auth.user = user;
+        this.setSentryUserContext(user);
 
         // Set the current group as the users first group
         if (setGroup && has(user, 'groups') && user.groups.length) {
@@ -107,6 +109,14 @@ export class AuthService {
     this.state.auth.user = null;
     this.state.auth.group = null;
     this.alertify.log(`Logged out`);
+    this.setSentryUserContext();
     return this.auth.logout();
+  }
+
+  private setSentryUserContext(user?: User) {
+    if (environment.sentry) {
+      const sentryUser = user ? { id: user._id, email: user.email } : undefined;
+      Raven.setUserContext(sentryUser);
+    }
   }
 }
