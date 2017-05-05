@@ -1,6 +1,6 @@
 {
   "name": "liow2-client",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "The Love is our Weapon Campaign website client app",
   "keywords": [
     "Love",
@@ -43,6 +43,7 @@
     "dragula": "^3.7.2",
     "font-awesome": "^4.7.0",
     "in-viewport": "^3.4.2",
+    "intl": "^1.2.5",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "medium-editor": "^5.22.2",
@@ -69,7 +70,6 @@
     "@types/seedrandom": "^2.4.27",
     "codelyzer": "~2.0.0",
     "coveralls": "^2.11.16",
-    "intl": "^1.2.5",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
     "karma": "~1.4.1",
