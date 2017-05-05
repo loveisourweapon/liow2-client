@@ -3,4 +3,5 @@ export const environment = {
   apiBaseUrl: 'https://api.loveisourweapon.com',
   facebookClientId: '1432222363767216',
   googleAnalytics: true,
+  sentry: true,
 };
