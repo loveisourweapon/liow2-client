@@ -37,9 +37,12 @@ export class CampaignService {
   }
 
   findOne(params: SearchParams = {}): Observable<Campaign> {
+    // It's possible some groups created multiple campaigns by accident
+    // Get just the most recent campaign
+    params.sort = '-_id';
     return this.find(params)
       .map((campaigns: Campaign[]) => {
-        if (campaigns.length !== 1) {
+        if (campaigns.length === 0) {
           throw new Error(`Campaign not found`);
         }
 
