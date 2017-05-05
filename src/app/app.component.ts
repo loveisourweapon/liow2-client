@@ -6,6 +6,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
+import { environment } from '../environments/environment';
 import { StateService } from './core/services';
 
 @Component({
@@ -29,10 +30,19 @@ export class AppComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.state.layout.isSmallScreen = this.checkIsSmallScreen(window.innerWidth);
 
-    // Scroll to top of window when navigating
+    // Watch router navigation events
     this.routerSubscription = this.router.events
       .filter((event: Event) => event instanceof NavigationEnd)
-      .subscribe((event: NavigationEnd) => window.scrollTo(0, 0));
+      .subscribe((event: NavigationEnd) => {
+        // Scroll to top of window when navigating
+        window.scrollTo(0, 0);
+
+        if (environment.googleAnalytics) {
+          // Send Google Analytics pageview event
+          ga('set', 'page', event.urlAfterRedirects);
+          ga('send', 'pageview');
+        }
+      });
 
     // Listen for resize and update isSmallScreen
     this.resizeSubscription = Observable.fromEvent(window, 'resize')
