@@ -19,6 +19,7 @@ export class FeedService {
   ) { }
 
   load(criteria: FeedCriteria): Observable<FeedItem[]> {
+    console.log('FeedService#load', 'criteria', criteria);
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(criteria) })
       .map((response: Response) => response.json() || [])
       .map((feedItems: FeedItem[]) =>

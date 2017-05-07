@@ -23,24 +23,28 @@ export class UserService {
   ) { }
 
   find(params: SearchParams = {}): Observable<User[]> {
+    console.log('UserService#find', 'params', params);
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json())
       .map((users: User[]) => users.map((user: User) => this.transformUser(user)));
   }
 
   get(userId: UserId): Observable<User> {
+    console.log('UserService#get', 'userId', userId);
     return this.http.get(`${this.baseUrl}/${userId}`)
       .map((response: Response) => response.json() || {})
       .map((user: User) => this.transformUser(user));
   }
 
   getCurrent(): Observable<User> {
+    console.log('UserService#getCurrent');
     return this.http.get(`${this.baseUrl}/me`)
       .map((response: Response) => response.json() || {})
       .map((user: User) => this.transformUser(user));
   }
 
   save(user: NewUser|User): Observable<User> {
+    console.log('UserService#save', 'user', user);
     const request = has(user, '_id')
       ? this.http.put(`${this.baseUrl}/${user._id}`, user)
       : this.http.post(this.baseUrl, user)
@@ -53,6 +57,7 @@ export class UserService {
   }
 
   update(user: User, changes: JsonPatch[]): Observable<User> {
+    console.log('UserService#update', 'user', user, 'changes', changes);
     return this.http.patch(`${this.baseUrl}/${user._id}`, changes)
       .catch((response: Response) => Observable.throw(response.json().error))
       .map((response: Response) => response.json())
@@ -60,6 +65,7 @@ export class UserService {
   }
 
   count(params: SearchParams = {}): Observable<number> {
+    console.log('UserService#count', 'params', params);
     params['count'] = true;
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());

@@ -30,6 +30,7 @@ export class CampaignService {
   }
 
   find(params: SearchParams = {}): Observable<Campaign[]> {
+    console.log('CampaignService#find', 'params', params);
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
       .map((campaigns: Campaign[]) =>
@@ -37,6 +38,7 @@ export class CampaignService {
   }
 
   findOne(params: SearchParams = {}): Observable<Campaign> {
+    console.log('CampaignService#findOne', 'params', params);
     // It's possible some groups created multiple campaigns by accident
     // Get just the most recent campaign
     params.sort = '-_id';
@@ -51,6 +53,7 @@ export class CampaignService {
   }
 
   save(campaign: Campaign|NewCampaign): Observable<Campaign> {
+    console.log('CampaignService#save', 'campaign', campaign);
     const request = has(campaign, '_id')
       ? this.http.put(`${this.baseUrl}/${campaign._id}`, campaign)
       : this.http.post(this.baseUrl, campaign)
@@ -63,6 +66,7 @@ export class CampaignService {
   }
 
   update(campaign: Campaign, changes: JsonPatch[]): Observable<null> {
+    console.log('CampaignService#update', 'campaign', campaign, 'changes', changes);
     return this.http.patch(`${this.baseUrl}/${campaign._id}`, changes);
   }
 

@@ -22,6 +22,7 @@ export class GroupService {
   ) { }
 
   find(params: SearchParams = {}): Observable<Group[]> {
+    console.log('GroupService#find', 'params', params);
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
       .map((groups: Group[]) =>
@@ -29,6 +30,7 @@ export class GroupService {
   }
 
   findOne(params: SearchParams = {}): Observable<Group> {
+    console.log('GroupService#findOne', 'params', params);
     return this.find(params)
       .map((groups: Group[]) => {
         if (groups.length !== 1) {
@@ -40,6 +42,7 @@ export class GroupService {
   }
 
   save(group: Group|NewGroup): Observable<Group> {
+    console.log('GroupService#save', 'group', group);
     const request = has(group, '_id')
       ? this.http.put(`${this.baseUrl}/${group._id}`, group)
       : this.http.post(this.baseUrl, group)
@@ -52,6 +55,7 @@ export class GroupService {
   }
 
   count(params: SearchParams = {}): Observable<number> {
+    console.log('GroupService#count', 'params', params);
     params['count'] = true;
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
