@@ -10,6 +10,7 @@ export class AlertifyService {
   }
 
   error(message: string, timeout = 6000, useTemplate = true): void {
+    console.log('Alertify#error', message);
     return alertify
       .delay(timeout)
       .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('exclamation-circle', msg) : msg)
@@ -17,6 +18,7 @@ export class AlertifyService {
   }
 
   log(message: string, timeout = 6000, useTemplate = true): void {
+    console.log('Alertify#log', message);
     return alertify
       .delay(timeout)
       .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('info-circle', msg) : msg)
@@ -24,6 +26,7 @@ export class AlertifyService {
   }
 
   success(message: string, timeout = 6000, useTemplate = true): void {
+    console.log('Alertify#success', message);
     return alertify
       .delay(timeout)
       .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('check-circle', msg) : msg)

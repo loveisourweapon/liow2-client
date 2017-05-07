@@ -12,10 +12,12 @@ export class TitleService {
   }
 
   clear(): void {
+    console.log('TitleService#clear');
     this.title.setTitle(this.baseTitle);
   }
 
   set(newTitle: string): void {
+    console.log('TitleService#set', 'newTitle', newTitle);
     this.title.setTitle(`${newTitle} | ${this.baseTitle}`);
   }
 }

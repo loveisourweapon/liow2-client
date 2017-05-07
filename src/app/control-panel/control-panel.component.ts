@@ -47,7 +47,7 @@ export class ControlPanelComponent implements OnInit {
     // Redirect to user control panel if user doesn't have access
     Observable.combineLatest(
       this.state.auth.user$.filter((user: User) => user !== null && !user.superAdmin),
-      this.activePage$.filter((activePage: string) => this.superAdminPages.includes(activePage)),
+      this.activePage$.filter((activePage: string) => this.superAdminPages.indexOf(activePage) !== -1),
     )
       .first()
       .subscribe(() => this.router.navigate(['/control-panel']));

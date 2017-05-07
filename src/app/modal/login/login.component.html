@@ -51,7 +51,7 @@
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             {{ errorMessage }}
 
-            <span *ngIf="errorMessage.includes('Please confirm')">
+            <span *ngIf="errorMessage.indexOf('Please confirm') !== -1">
               <i class="fa fa-fw"></i>
               <a (click)="sendConfirmEmail(credentials.email); $event.preventDefault()" href>
                 Re-send confirmation email?

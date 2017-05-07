@@ -20,6 +20,7 @@ export class ActService {
   ) { }
 
   count(query: CounterQuery = {}): void {
+    console.log('ActService#count', 'query', query);
     let counterId =
       (query.user || '') +
       (query.group || '') +
@@ -36,6 +37,7 @@ export class ActService {
   }
 
   done(deed: Deed, group?: Group): Observable<Act> {
+    console.log('ActService#done', 'deed', deed, 'group', group);
     const data = {
       deed: deed._id,
       group: has(group, '_id') ? group._id : null,

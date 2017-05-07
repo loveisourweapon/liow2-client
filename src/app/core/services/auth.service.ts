@@ -37,6 +37,7 @@ export class AuthService {
   }
 
   authenticateEmail(credentials: Credentials): Observable<User> {
+    console.log('Auth#authenticateEmail', 'credentials', credentials);
     if (!(credentials.email && credentials.password)) {
       return Observable.throw(new Error(`Please provide email and password`));
     }
@@ -48,6 +49,7 @@ export class AuthService {
   }
 
   authenticateFacebook(userData?: { group: string }): Observable<User> {
+    console.log('Auth#authenticateFacebook', 'userData', userData);
     return this.auth.authenticate('facebook', userData)
       .catch((response: Response) => Observable.throw(response.json().error))
       .map(() => this.state.auth.isAuthenticated = true)
@@ -55,6 +57,7 @@ export class AuthService {
   }
 
   loadCurrentUser(setGroup = true): Observable<User> {
+    console.log('Auth#loadCurrentUser', 'setGroup', setGroup);
     return this.userService.getCurrent()
       .do((user: User) => {
         this.state.auth.user = user;
@@ -72,7 +75,7 @@ export class AuthService {
       .map((user: User) => (
         has(group, 'admins') &&
         has(user, '_id') &&
-        group.admins.indexOf(user._id) !== -1 // .includes is failing in PhantomJS
+        group.admins.indexOf(user._id) !== -1
       ));
   }
 
@@ -86,25 +89,30 @@ export class AuthService {
   }
 
   confirmEmail(token: string): Observable<null> {
+    console.log('Auth#confirmEmail', 'token', token);
     return this.http.post(`${this.baseUrl}/confirm`, { token })
       .map((response: Response) => response.json());
   }
 
   resetPassword(password: string, token: string): Observable<null> {
+    console.log('Auth#resetPassword', 'password', password, 'token', token);
     return this.http.post(`${this.baseUrl}/reset`, { password, token });
   }
 
   sendConfirmEmail(emailAddress: string): Observable<null> {
+    console.log('Auth#sendConfirmEmail', 'emailAddress', emailAddress);
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/confirm`, { search });
   }
 
   sendForgotPassword(emailAddress: string): Observable<null> {
+    console.log('Auth#sendForgotPassword', 'emailAddress', emailAddress);
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/forgot`, { search });
   }
 
   logout(): Observable<void> {
+    console.log('Auth#logout');
     this.state.auth.isAuthenticated = false;
     this.state.auth.user = null;
     this.state.auth.group = null;

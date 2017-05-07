@@ -21,6 +21,7 @@ export class DeedService {
   ) { }
 
   find(params: SearchParams = {}): Observable<Deed[]> {
+    console.log('DeedService#find', 'params', params);
     return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
       .map((deeds: Deed[]) =>
@@ -34,6 +35,7 @@ export class DeedService {
   }
 
   findOne(params: SearchParams = {}): Observable<Deed> {
+    console.log('DeedService#findOne', 'params', params);
     return this.find(params)
       .map((deeds: Deed[]) => {
         if (deeds.length !== 1) {
@@ -45,6 +47,7 @@ export class DeedService {
   }
 
   countAll(params: SearchParams = {}): void {
+    console.log('DeedService#countAll', 'params', params);
     const baseCounterId = params.group || params.campaign || '';
     this.http.get(`${this.baseUrl}/counters`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])

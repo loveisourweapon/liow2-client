@@ -20,6 +20,7 @@ export class CommentService {
   ) { }
 
   save(comment: Comment|NewComment): Observable<Comment> {
+    console.log('CommentService#save', 'comment', comment);
     const method = has(comment, '_id') ? 'put' : 'post';
     const urlSuffix = `/comments${has(comment, '_id') ? `/${comment._id}` : ''}`;
 
@@ -39,12 +40,14 @@ export class CommentService {
   }
 
   find(params: SearchParams = {}): Observable<Comment[]> {
+    console.log('CommentService#find', 'params', params);
     return this.http.get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json())
       .map((comments: Comment[]) => comments.map((comment: Comment) => this.transformComment(comment)));
   }
 
   count(params: SearchParams = {}): Observable<number> {
+    console.log('CommentService#count', 'params', params);
     params['count'] = true;
     return this.http.get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
