@@ -86,7 +86,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   isAdmin(user: User, group: Group): boolean {
-    return has(group, 'admins') && has(user, '_id') && group.admins.includes(user._id);
+    return has(group, 'admins') && has(user, '_id') && group.admins.indexOf(user._id) !== -1;
   }
 
   onSearch(query: string): void {

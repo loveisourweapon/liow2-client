@@ -135,7 +135,7 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
       .map((deeds: Deed[]) => deeds.map((deed: Deed) => <DeedPublish>{ deed }))
       .subscribe((deeds: DeedPublish[]) => {
         const selectedDeedIds = this.selectedDeeds.map((item: DeedPublish) => item.deed['_id']);
-        const remainingDeeds = deeds.filter((item: DeedPublish) => !selectedDeedIds.includes(item.deed['_id']));
+        const remainingDeeds = deeds.filter((item: DeedPublish) => selectedDeedIds.indexOf(item.deed['_id']) === -1);
 
         this.deeds$.next(remainingDeeds);
         this.availableDeeds = [...remainingDeeds];

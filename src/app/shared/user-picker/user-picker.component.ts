@@ -21,15 +21,15 @@ export class UserPickerComponent {
   identifyBy = identifyBy;
 
   getSelectedUsers(userList: User[], selectedIds: string[]): User[] {
-    return userList.filter((user: User) => selectedIds.includes(user._id));
+    return userList.filter((user: User) => selectedIds.indexOf(user._id) !== -1);
   }
 
   getNotSelectedUsers(userList: User[], selectedIds: string[]): User[] {
-    return userList.filter((user: User) => !selectedIds.includes(user._id));
+    return userList.filter((user: User) => selectedIds.indexOf(user._id) === -1);
   }
 
   showRemoveButton(user: User): boolean {
-    return !this.disabled && !this.lockedIds.includes(user._id);
+    return !this.disabled && this.lockedIds.indexOf(user._id) === -1;
   }
 
   onSelectClick(user: User): void {

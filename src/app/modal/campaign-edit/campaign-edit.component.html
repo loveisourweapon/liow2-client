@@ -24,7 +24,7 @@
           <alert type="danger" *ngIf="errorMessage || (submitted && (campaignDeeds$ | async)?.length === 0)">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
             <span *ngIf="errorMessage">
-              <span *ngIf="errorMessage.includes('active campaign'); then showActiveCampaign; else showGeneralError;"></span>
+              <span *ngIf="errorMessage.indexOf('active campaign') !== -1; then showActiveCampaign; else showGeneralError;"></span>
               <ng-template #showActiveCampaign>
                 {{ errorMessage }}. Please
               </ng-template>
