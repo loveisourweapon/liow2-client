@@ -3,6 +3,7 @@ import { find, has, isEqual } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/map';
 
 import { Campaign, Deed, DeedPublish, Group } from '../../core/models';
 import { DeedService } from '../../core/services/deed.service';
