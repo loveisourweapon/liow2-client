@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Response, URLSearchParams } from '@angular/http';
 import { AuthService as Ng2AuthService, JwtHttp } from 'ng2-ui-auth';
-import { has, some } from 'lodash';
+import { find, has, last, some } from 'lodash';
 import * as Raven from 'raven-js';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { environment } from '../../../environments/environment';
 import { NativeQueryEncoder } from '../../shared';
-import { Credentials, Group, User } from '../models';
+import { Credentials, Group, JsonPatchOp, User } from '../models';
 import { AlertifyService } from './alertify.service';
 import { StateService } from './state.service';
 import { UserService } from './user.service';
@@ -60,14 +61,45 @@ export class AuthService {
     console.log('Auth#loadCurrentUser', 'setGroup', setGroup);
     return this.userService.getCurrent()
       .do((user: User) => {
+        if (setGroup) {
+          let authGroup: Group;
+          // If user has currentGroup property use it
+          if (has(user, 'currentGroup')) {
+            const currentGroup = find(user.groups, (userGroup: Group) => userGroup._id === user.currentGroup);
+            if (currentGroup) {
+              authGroup = currentGroup;
+            }
+          }
+
+          // Otherwise set and update using the users most recent group
+          if (!authGroup && has(user, 'groups') && user.groups.length) {
+            authGroup = last(user.groups);
+            user.currentGroup = authGroup._id;
+            this.userService.update(user, [{
+              op: JsonPatchOp.Replace,
+              path: '/currentGroup',
+              value: user.currentGroup,
+            }]).subscribe();
+          }
+
+          this.state.auth.group = authGroup || null;
+        }
+
         this.state.auth.user = user;
         this.setSentryUserContext(user);
-
-        // Set the current group as the users first group
-        if (setGroup && has(user, 'groups') && user.groups.length) {
-          this.state.auth.group = user.groups[0];
-        }
       });
+  }
+
+  setAuthGroup(group: Group): void {
+    this.state.auth.group = group;
+    this.state.auth.user$
+      .first()
+      .switchMap((user: User) => this.userService.update(user, [{
+        op: JsonPatchOp.Replace,
+        path: '/currentGroup',
+        value: group._id,
+      }]))
+      .subscribe();
   }
 
   isAdminOfGroup(group: Group): Observable<boolean> {
@@ -121,7 +153,7 @@ export class AuthService {
     return this.auth.logout();
   }
 
-  private setSentryUserContext(user?: User) {
+  private setSentryUserContext(user?: User): void {
     if (environment.sentry) {
       const sentryUser = user ? { id: user._id, email: user.email } : undefined;
       Raven.setUserContext(sentryUser);
