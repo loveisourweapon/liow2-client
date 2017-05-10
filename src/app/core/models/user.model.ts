@@ -1,4 +1,4 @@
-import { Group } from './';
+import { Group, GroupId } from './';
 
 export type UserId = string;
 
@@ -14,6 +14,7 @@ export interface User {
   confirmed: boolean;
   superAdmin: boolean;
   groups: Group[];
+  currentGroup: GroupId;
   created: Date;
   modified: Date;
   lastSeen: Date;
