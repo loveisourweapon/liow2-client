@@ -92,10 +92,12 @@ describe(`AuthService`, () => {
       });
     });
 
-    it(`should store the current user and first group in the state service`, () => {
+    it(`should store the current user and last group in the state service`, () => {
       const userWithGroups = assign({}, testUser, { groups: [testGroup] });
       spyOn(userService, 'getCurrent').and.returnValue(Observable.of(userWithGroups));
+      const updateSpy = spyOn(userService, 'update').and.returnValue(Observable.of({}));
       service.loadCurrentUser().subscribe(() => {
+        expect(updateSpy).toHaveBeenCalled();
         state.auth.user$.first()
           .subscribe((user: User) => expect(user).toBe(userWithGroups));
         state.auth.group$.first()

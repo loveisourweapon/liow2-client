@@ -97,7 +97,7 @@ export class GroupComponent implements OnDestroy, OnInit {
       .subscribe(([isMemberOfGroup, authUser, group]: [boolean, User, Group]) => {
         this.currentTab = isMemberOfGroup ? GroupTab.Feed : GroupTab.Welcome;
         if (isMemberOfGroup && authUser && group) {
-          this.state.auth.group = group;
+          this.auth.setAuthGroup(group);
         }
       });
   }
@@ -137,7 +137,7 @@ export class GroupComponent implements OnDestroy, OnInit {
           value: currentGroup._id,
         }]))
       .switchMap(() => this.auth.loadCurrentUser())
-      .do(() => this.state.auth.group = group)
+      .do(() => this.auth.setAuthGroup(group))
       .subscribe(
         () => this.alertify.success(`Joined group <b>${group.name}</b>`),
         () => this.alertify.error(`Failed joining group <b>${group.name}</b>`),
