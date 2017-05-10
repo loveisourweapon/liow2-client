@@ -16,10 +16,18 @@
     <div class="text-center m-t-md">
       <button
         type="button"
-        (click)="modal.openGroupEdit();"
-        class="btn btn-primary btn-lg"
+        (click)="modal.openGroupEdit()"
+        class="btn btn-primary btn-lg m-r-sm"
       >
         Start a Campaign
+      </button>
+      or
+      <button
+        type="button"
+        (click)="modal.openGroupJoin()"
+        class="btn btn-primary btn-lg m-l-sm"
+      >
+        Join a Campaign
       </button>
     </div>
   </div>

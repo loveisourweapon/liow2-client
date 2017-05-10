@@ -108,6 +108,14 @@ describe(`ModalService`, () => {
     });
   });
 
+  describe(`#openGroupJoin`, () => {
+    it(`should set modal isOpen property to true`, () => {
+      service.openGroupJoin();
+      state.modal.groupJoin$.first()
+        .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
+    });
+  });
+
   describe(`#openLogin`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openLogin();

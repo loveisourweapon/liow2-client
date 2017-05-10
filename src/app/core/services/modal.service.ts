@@ -49,6 +49,13 @@ export class ModalService {
     });
   }
 
+  openGroupJoin(): void {
+    console.log('ModalService#openGroupJoin');
+    this.state.modal.groupJoin$.next({
+      isOpen: true,
+    });
+  }
+
   openLogin(canSwitch = true): void {
     console.log('ModalService#openLogin', 'canSwitch', canSwitch);
     this.state.modal.login$.next({
