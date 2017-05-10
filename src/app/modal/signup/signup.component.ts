@@ -72,8 +72,6 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     this.isSigningUp$.next(true);
     this.userService.save(newUser)
       .switchMap(() => {
-        if (group && joinGroup) { this.state.auth.group = group; }
-
         this.alertify.success(`Signed up. Please confirm your email address`);
         return this.auth.authenticateEmail(<Credentials>pick(newUser, ['email', 'password']));
       })
@@ -102,8 +100,6 @@ export class SignupModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isSigningUp$.next(false))
       .subscribe(
         () => {
-          if (group && joinGroup) { this.state.auth.group = group; }
-
           this.alertify.success(`Signed in`);
           this.onClose();
         },
