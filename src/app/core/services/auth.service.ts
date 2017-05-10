@@ -153,7 +153,7 @@ export class AuthService {
     return this.auth.logout();
   }
 
-  private setSentryUserContext(user?: User) {
+  private setSentryUserContext(user?: User): void {
     if (environment.sentry) {
       const sentryUser = user ? { id: user._id, email: user.email } : undefined;
       Raven.setUserContext(sentryUser);
