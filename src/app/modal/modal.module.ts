@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule as Ng2ModalModule } from 'ngx-bootstrap/modal';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { DragulaModule } from 'ng2-dragula';
 
 import { SharedModule } from '../shared';
@@ -12,6 +13,7 @@ import { ChangePasswordModalComponent } from './change-password';
 import { DeedPreviewModalComponent } from './deed-preview';
 import { ForgotPasswordModalComponent } from './forgot-password';
 import { GroupEditModalComponent } from './group-edit';
+import { GroupJoinModalComponent } from './group-join';
 import { LoginModalComponent } from './login';
 import { SignupModalComponent } from './signup';
 
@@ -20,6 +22,7 @@ import { SignupModalComponent } from './signup';
     SharedModule,
     AlertModule,
     Ng2ModalModule,
+    TypeaheadModule,
     DragulaModule,
   ],
   declarations: [
@@ -31,6 +34,7 @@ import { SignupModalComponent } from './signup';
     DeedPreviewModalComponent,
     ForgotPasswordModalComponent,
     GroupEditModalComponent,
+    GroupJoinModalComponent,
     LoginModalComponent,
     SignupModalComponent,
   ],
