@@ -7,8 +7,10 @@ describe('liow2-client App', function() {
     page = new Liow2ClientPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', done => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('liow works!');
+    page.getParagraphText()
+      .then(msg => expect(msg).toEqual('Welcome to liow!!'))
+      .then(done, done.fail);
   });
 });

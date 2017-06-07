@@ -1,13 +1,13 @@
-import { AbstractControl, NgModel } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 import { SameAsValidatorDirective } from './same-as-validator.directive';
 
 describe(`SameAsValidatorDirective`, () => {
   let directive: SameAsValidatorDirective;
-  let otherControl: NgModel;
+  let otherControl: any;
 
   beforeEach(() => {
-    otherControl = <NgModel>{ value: '' };
+    otherControl = { value: '' };
     directive = new SameAsValidatorDirective();
     directive.validateSameAs = otherControl;
   });
