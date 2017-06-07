@@ -8,7 +8,6 @@ import { StateService, TitleService } from '../../core/services';
 })
 export class GlobalFeedComponent implements OnInit {
   constructor(
-    public state: StateService,
     private title: TitleService,
   ) { }
 
