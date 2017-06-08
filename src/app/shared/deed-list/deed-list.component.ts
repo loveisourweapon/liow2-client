@@ -18,6 +18,7 @@ import { SearchParams } from '../../shared';
 export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
   @Input() layout: string;
   @Input() campaign: Campaign;
+  @Input() isGlobal = false;
 
   deeds$: Observable<Deed[]>;
 
@@ -43,10 +44,12 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
     )
       .subscribe(([group, campaign]: [Group, Campaign]) => {
         const queryParams: SearchParams = {};
-        if (campaign) {
-          queryParams.campaign = campaign._id;
-        } else if (group) {
-          queryParams.group = group._id;
+        if (!this.isGlobal) {
+          if (campaign) {
+            queryParams.campaign = campaign._id;
+          } else if (group) {
+            queryParams.group = group._id;
+          }
         }
         this.deedService.countAll(queryParams);
       });

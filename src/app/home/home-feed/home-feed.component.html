@@ -38,7 +38,8 @@
       <liow-feed
         [criteria]="{
           user: authUser?._id,
-          group: listGroupIds(authUser?.groups)
+          group: listGroupIds(authUser?.groups),
+          operator: '$or'
         }"
         *ngIf="state.auth.user$ | async as authUser"
       ></liow-feed>

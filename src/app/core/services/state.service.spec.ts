@@ -255,6 +255,11 @@ describe(`StateService`, () => {
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(false));
     });
 
+    it(`should initialise groupJoin$ isOpen property to false`, () => {
+      service.modal.groupJoin$.first()
+        .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(false));
+    });
+
     it(`should initialise login$ isOpen property to false`, () => {
       service.modal.login$.first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(false));

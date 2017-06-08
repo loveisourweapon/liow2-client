@@ -3,7 +3,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { DeedListStubComponent, FeedStubComponent, JumbtronStubComponent, TitleStubService } from '../../../testing';
-import { StateService, TitleService } from '../../core/services';
+import { TitleService } from '../../core/services';
 import { GlobalFeedComponent } from './global-feed.component';
 
 describe(`GlobalFeedComponent`, () => {
@@ -21,7 +21,6 @@ describe(`GlobalFeedComponent`, () => {
           JumbtronStubComponent,
         ],
         providers: [
-          StateService,
           { provide: TitleService, useClass: TitleStubService },
         ],
       })

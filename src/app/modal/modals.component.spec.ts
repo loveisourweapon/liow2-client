@@ -20,6 +20,7 @@ describe(`ModalsComponent`, () => {
           DeedPreviewModalStubComponent,
           ForgotPasswordModalStubComponent,
           GroupEditModalStubComponent,
+          GroupJoinModalStubComponent,
           LoginModalStubComponent,
           SignupModalStubComponent,
         ],
@@ -75,6 +76,12 @@ class GroupEditModalStubComponent {
   @Input() isAuthenticated: boolean;
   @Input() authUser: any;
 }
+
+@Component({
+  selector: 'liow-group-join-modal',
+  template: ``,
+})
+class GroupJoinModalStubComponent { }
 
 @Component({
   selector: 'liow-login-modal',
