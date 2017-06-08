@@ -83,7 +83,7 @@
       ></liow-comment-form>
 
       <liow-feed
-        [criteria]="{ 'target.deed': deed?._id }"
+        [criteria]="feedCriteria"
         *ngIf="state.deed$ | async as deed"
       ></liow-feed>
     </div>

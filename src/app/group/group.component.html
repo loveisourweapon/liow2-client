@@ -213,7 +213,7 @@
           </ng-template>
 
           <liow-feed
-            [criteria]="{ group: group?._id }"
+            [criteria]="feedCriteria"
             *ngIf="group && (state.auth.isAuthenticated$ | async)"
           ></liow-feed>
 

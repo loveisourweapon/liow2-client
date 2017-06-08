@@ -18,7 +18,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, Deed, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
+import { Campaign, Deed, FeedCriteria, Group, GroupSlug, JsonPatchOp, User } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -38,6 +38,7 @@ import { GroupTab } from './group-tab.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnDestroy, OnInit {
+  feedCriteria: FeedCriteria;
   currentTab: GroupTab;
   tabs = GroupTab;
 
@@ -47,6 +48,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   private groupSubscription: Subscription;
   private campaignSubscription: Subscription;
   private userSubscription: Subscription;
+  private feedCriteriaSubscription: Subscription;
 
   @ViewChild('confirmModal') confirmModal: ModalDirective;
   confirmModalContent: string;
@@ -100,6 +102,15 @@ export class GroupComponent implements OnDestroy, OnInit {
           this.auth.setAuthGroup(group);
         }
       });
+
+    this.feedCriteriaSubscription = Observable.combineLatest(this.state.group$, this.state.campaign$)
+      .filter(([group, campaign]: [Group, Campaign]) => group !== null)
+      .subscribe(([group, campaign]: [Group, Campaign]) => {
+        this.feedCriteria = campaign
+          ? { campaign: campaign._id }
+          : { group: group._id }
+          ;
+      });
   }
 
   ngOnDestroy(): void {
@@ -109,6 +120,7 @@ export class GroupComponent implements OnDestroy, OnInit {
     this.groupSubscription.unsubscribe();
     this.campaignSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
+    this.feedCriteriaSubscription.unsubscribe();
   }
 
   isCurrentDeed(deed: Deed, campaign: Campaign): boolean {
