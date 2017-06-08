@@ -10,6 +10,7 @@ import {
   AuthStubService,
   GroupStubService,
   ModalStubDirective,
+  ModalStubService,
   RouterStubService,
   TypeaheadStubDirective,
   UserStubService,
@@ -18,6 +19,7 @@ import {
   AlertifyService,
   AuthService,
   GroupService,
+  ModalService,
   StateService,
   UserService,
 } from '../../core/services';
@@ -50,6 +52,7 @@ describe(`GroupJoinModalComponent`, () => {
           { provide: AlertifyService, useClass: AlertifyStubService },
           { provide: AuthService, useClass: AuthStubService },
           { provide: GroupService, useClass: GroupStubService },
+          { provide: ModalService, useClass: ModalStubService },
           { provide: Router, useClass: RouterStubService },
           StateService,
           { provide: UserService, useClass: UserStubService },

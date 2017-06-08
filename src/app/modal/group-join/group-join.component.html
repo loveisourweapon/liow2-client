@@ -41,7 +41,12 @@
         </alert>
 
         <div class="form-group" *ngIf="selectedItem">
-          <p>Click <em>Join</em> to continue joining:</p>
+          <p>
+            Click
+            <em *ngIf="!(state.auth.isAuthenticated$ | async)">Login &amp; </em>
+            <em>Join</em>
+            to continue joining:
+          </p>
           <div class="media">
             <div class="media-left">
               <img src="/images/group.png" class="media-object img-circle" alt="Group logo">
@@ -70,6 +75,7 @@
           #joinButton
         >
           <i class="fa fa-cog fa-spin" [hidden]="!(isSaving$ | async)"></i>
+          <span *ngIf="!(state.auth.isAuthenticated$ | async)">Login &amp;</span>
           Join
         </button>
       </div><!-- .modal-footer -->

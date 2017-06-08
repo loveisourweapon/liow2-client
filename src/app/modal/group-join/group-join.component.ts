@@ -15,7 +15,14 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
 import { Group, GroupId, JsonPatchOp, ModalState, User } from '../../core/models';
-import { AlertifyService, AuthService, GroupService, StateService, UserService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  GroupService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
 
 @Component({
   selector: 'liow-group-join-modal',
@@ -40,8 +47,9 @@ export class GroupJoinModalComponent implements OnInit, OnDestroy {
     private alertify: AlertifyService,
     private auth: AuthService,
     private groupService: GroupService,
+    private modalService: ModalService,
     private router: Router,
-    private state: StateService,
+    public state: StateService,
     private userService: UserService,
   ) { }
 
@@ -78,30 +86,43 @@ export class GroupJoinModalComponent implements OnInit, OnDestroy {
     }
 
     this.isSaving$.next(true);
-    this.state.auth.user$
+
+    this.state.auth.isAuthenticated$
       .first()
-      .switchMap((authUser: User) => Observable.if(
-        () => findIndex(authUser.groups, (authGroup: Group) => authGroup._id === group._id) >= 0,
+      .switchMap((isAuthenticated: boolean) => Observable.if(
+        () => isAuthenticated,
 
-        // Already member of group, notify and close
-        Observable.of(true)
-          .do(() => this.alertify.log(`Already a member of group <b>${group.name}</b>`)),
+        // Join directly
+        this.state.auth.user$
+          .first()
+          .switchMap((authUser: User) => Observable.if(
+            () => findIndex(authUser.groups, (authGroup: Group) => authGroup._id === group._id) >= 0,
 
-        // Add user to group, notify and close
-        this.userService.update(authUser, [{
-          op: JsonPatchOp.Add,
-          path: `/groups/-`,
-          value: group._id,
-        }])
-          .switchMap(() => this.auth.loadCurrentUser())
-          .do(() => this.alertify.success(`Joined group <b>${group.name}</b>`))
+            // Already member of group, notify and close
+            Observable.of(true)
+              .do(() => this.alertify.log(`Already a member of group <b>${group.name}</b>`)),
+
+            // Add user to group, notify and close
+            this.userService.update(authUser, [{
+              op: JsonPatchOp.Add,
+              path: `/groups/-`,
+              value: group._id,
+            }])
+              .switchMap(() => this.auth.loadCurrentUser())
+              .do(() => this.alertify.success(`Joined group <b>${group.name}</b>`))
+          ))
+          .do(() => this.router.navigate(['/g', group.urlName])),
+
+        // Go to group page and open login
+        Observable.of(isAuthenticated)
+          .do(() => this.router.navigate(['/g', group.urlName]))
+          .do(() => this.modalService.openLogin()),
       ))
-      .do(() => this.router.navigate(['/g', group.urlName]))
       .finally(() => this.isSaving$.next(false))
       .subscribe(
         () => this.onClose(),
         () => this.alertify.error(`Failed joining group <b>${group.name}</b>`),
-      );
+      )
   }
 
   onSelectItem(item: SearchItem): void {
