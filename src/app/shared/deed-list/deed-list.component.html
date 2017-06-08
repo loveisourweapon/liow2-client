@@ -2,9 +2,11 @@
   <liow-deed-list-horizontal
     *ngSwitchCase="'horizontal'"
     [deeds]="deeds$ | async"
+    [isGlobal]="isGlobal"
   ></liow-deed-list-horizontal>
   <liow-deed-list-vertical
     *ngSwitchCase="'vertical'"
     [deeds]="deeds$ | async"
+    [isGlobal]="isGlobal"
   ></liow-deed-list-vertical>
 </div>

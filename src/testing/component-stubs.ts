@@ -30,6 +30,7 @@ export class ControlPanelSearchStubComponent {
 export class DeedListStubComponent {
   @Input() layout: string;
   @Input() campaign: any;
+  @Input() isGlobal: boolean;
 }
 
 @Component({
