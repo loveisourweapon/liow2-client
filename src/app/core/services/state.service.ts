@@ -90,6 +90,7 @@ export class StateService {
     deedPreview$: new BehaviorSubject<ModalState>({ isOpen: false }),
     forgotPassword$: new BehaviorSubject<ModalState>({ isOpen: false }),
     groupEdit$: new BehaviorSubject<ModalState>({ isOpen: false }),
+    groupJoin$: new BehaviorSubject<ModalState>({ isOpen: false }),
     login$: new BehaviorSubject<ModalState>({ isOpen: false }),
     signup$: new BehaviorSubject<ModalState>({ isOpen: false }),
   };

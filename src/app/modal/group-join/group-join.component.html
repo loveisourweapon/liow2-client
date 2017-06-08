@@ -1,0 +1,84 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Group join"
+  aria-hidden="true"
+  (onHidden)="onClose()"
+  (onShown)="groupSearch.focus()"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <liow-modal-header
+        modalTitle="Find a group to join"
+        (close)="onClose()"
+      ></liow-modal-header>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input
+              #groupSearch
+              [typeahead]="searchResults$"
+              [ngModel]="searchQuery$ | async"
+              (ngModelChange)="searchQuery$.next($event)"
+              (typeaheadOnSelect)="onSelectItem($event.item)"
+              typeaheadOptionField="name"
+              class="form-control"
+              placeholder="Search for groups..."
+            >
+          </label>
+        </div>
+
+        <alert type="danger" *ngIf="errorMessage">
+          <div class="media">
+            <div class="media-left"><i class="fa fa-fw fa-exclamation-triangle"></i></div>
+            <div class="media-body">{{ errorMessage }}</div>
+          </div>
+        </alert>
+
+        <div class="form-group" *ngIf="selectedItem">
+          <p>
+            Click
+            <em *ngIf="!(state.auth.isAuthenticated$ | async)">Login &amp; </em>
+            <em>Join</em>
+            to continue joining:
+          </p>
+          <div class="media">
+            <div class="media-left">
+              <img src="/images/group.png" class="media-object img-circle" alt="Group logo">
+            </div>
+            <div class="media-body media-middle">
+              <h5 class="media-heading">{{ selectedItem.name }}</h5>
+            </div>
+          </div>
+        </div>
+      </div><!-- .modal-body -->
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="onClose()"
+          class="btn btn-default"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          (click)="onSave(selectedItem)"
+          class="btn btn-primary"
+          [disabled]="isSaving$ | async"
+          #joinButton
+        >
+          <i class="fa fa-cog fa-spin" [hidden]="!(isSaving$ | async)"></i>
+          <span *ngIf="!(state.auth.isAuthenticated$ | async)">Login &amp;</span>
+          Join
+        </button>
+      </div><!-- .modal-footer -->
+    </div>
+  </div>
+</div>
