@@ -1,4 +1,4 @@
-import { Act, Campaign, Comment, Deed, DeedId, Group, GroupId, User, UserId } from './';
+import { Act, Campaign, CampaignId, Comment, Deed, DeedId, Group, GroupId, User, UserId } from './';
 
 export type FeedItemId = string;
 
@@ -19,8 +19,15 @@ export interface FeedItem {
 export interface FeedCriteria {
   after?: FeedItemId;
   before?: FeedItemId;
+  campaign?: CampaignId;
   group?: GroupId;
   user?: UserId;
   'target.deed'?: DeedId;
   'target.group'?: GroupId;
+  operator?: FeedJoinOperator;
+}
+
+export class FeedJoinOperator {
+  static readonly And = '$and';
+  static readonly Or = '$or';
 }

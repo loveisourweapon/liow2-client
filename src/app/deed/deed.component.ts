@@ -13,7 +13,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, CounterQuery, Deed, DeedId, DeedPublish, DeedSlug, Group, NewComment } from '../core/models';
+import { Campaign, CounterQuery, Deed, DeedSlug, FeedCriteria, Group, NewComment } from '../core/models';
 import {
   ActService,
   AlertifyService,
@@ -32,6 +32,7 @@ import {
 export class DeedComponent implements OnDestroy, OnInit {
   isDoing$ = new BehaviorSubject<boolean>(false);
   isSavingTestimony$ = new BehaviorSubject<boolean>(false);
+  feedCriteria: FeedCriteria;
   testimony = '';
 
   private routeSubscription: Subscription;
@@ -65,6 +66,7 @@ export class DeedComponent implements OnDestroy, OnInit {
       .filter(([deed, group, campaign]: [Deed, Group, Campaign]) => deed !== null)
       .subscribe(([deed, group, campaign]: [Deed, Group, Campaign]) => {
         this.loadCounter(deed, group, campaign);
+        this.setFeedCriteria(deed, group, campaign);
         this.title.set(deed.title);
       });
   }
@@ -127,5 +129,14 @@ export class DeedComponent implements OnDestroy, OnInit {
       counterQuery.group = group._id;
     }
     this.actService.count(counterQuery);
+  }
+
+  private setFeedCriteria(deed: Deed, group: Group, campaign: Campaign): void {
+    this.feedCriteria = { 'target.deed': deed._id };
+    if (campaign) {
+      this.feedCriteria.campaign = campaign._id;
+    } else if (group) {
+      this.feedCriteria.group = group._id;
+    }
   }
 }
