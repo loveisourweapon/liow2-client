@@ -13,7 +13,9 @@ export interface FeedItem {
   };
   act: Act;
   comment: Comment;
+  count: number;
   created: Date;
+  modified: Date;
 }
 
 export interface FeedCriteria {

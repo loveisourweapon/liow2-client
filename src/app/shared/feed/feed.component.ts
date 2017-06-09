@@ -45,21 +45,28 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (has(changes, 'criteria.currentValue') && changes['criteria'].currentValue) {
-      this.isLoading$.next(true);
-      this.feedService.load(this.criteria)
-        .finally(() => this.isLoading$.next(false))
-        .subscribe((feedItems: FeedItem[]) => this.state.feed.items = feedItems);
+      this.loadItems();
     }
   }
 
   ngOnInit(): void {
     this.updateSubscription = this.state.feed.update$
       .skip(1)
-      .subscribe((reload: boolean) => this.loadNewerItems());
+      .subscribe((reload: boolean) => reload
+        ? this.loadItems()
+        : this.loadNewerItems()
+      );
   }
 
   ngOnDestroy(): void {
     this.updateSubscription.unsubscribe();
+  }
+
+  loadItems(): void {
+    this.isLoading$.next(true);
+    this.feedService.load(this.criteria)
+      .finally(() => this.isLoading$.next(false))
+      .subscribe((feedItems: FeedItem[]) => this.state.feed.items = feedItems);
   }
 
   loadNewerItems(): void {

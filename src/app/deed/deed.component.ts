@@ -114,7 +114,7 @@ export class DeedComponent implements OnDestroy, OnInit {
       .finally(() => this.isDoing$.next(false))
       .subscribe(
         () => {
-          this.state.feed.update();
+          this.state.feed.update(true);
           this.alertify.success(`Deed done!`);
         },
         () => this.alertify.error(`Failed registering deed`),

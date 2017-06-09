@@ -47,6 +47,8 @@
       <a [routerLink]="['/g', item?.target?.group?.urlName]" *ngIf="item?.target?.group">
         {{ item?.target?.group?.name }}
       </a>
+
+      <span *ngIf="item?.count > 1">{{ item?.count }} times</span>
     </h6>
 
     <div class="feed-item-comment" *ngIf="item?.comment?.content?.text">
