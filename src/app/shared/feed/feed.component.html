@@ -1,4 +1,10 @@
-<div class="feed-refresh-button">
+<div class="feed-controls">
+  <ui-switch
+    [checked]="testimoniesOnly"
+    (change)="testimoniesOnly = $event; loadItems()"
+    size="small"
+  >Testimonies only</ui-switch>
+  |
   <button
     type="button"
     (click)="loadNewerItems()"
