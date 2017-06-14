@@ -15,9 +15,13 @@
   }
 }
 
-.feed-refresh-button {
+.feed-controls {
   float: right;
   margin-top: -50px;
+
+  ui-switch {
+    margin-right: 10px;
+  }
 }
 
 .loading-bounce {

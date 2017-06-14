@@ -86,6 +86,7 @@
  * Modals
  */
 .modal-body {
+  max-height: 72vh;
   overflow-y: auto;
 
   .alert {
