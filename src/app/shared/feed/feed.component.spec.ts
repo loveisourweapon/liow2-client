@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { FeedStubService } from '../../../testing';
+import { FeedStubService, SwitchStubComponent } from '../../../testing';
 import { FeedService, StateService } from '../../core/services';
 import { FeedComponent } from './feed.component';
 
@@ -16,6 +16,7 @@ describe(`FeedComponent`, () => {
           FeedComponent,
           FeedItemStubComponent,
           InViewportStubDirective,
+          SwitchStubComponent,
         ],
         providers: [
           { provide: FeedService, useClass: FeedStubService },
