@@ -20,4 +20,11 @@
   .btn {
     padding: 8px 10px;
   }
+
+  .home-campaign-buttons {
+    @media (min-width: $screen-sm-min) {
+      button:first-child { margin-right: 10px; }
+      button:last-child { margin-left: 10px; }
+    }
+  }
 }
