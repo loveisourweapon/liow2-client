@@ -33,6 +33,7 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
   @Input() criteria: FeedCriteria;
 
   isLoading$ = new BehaviorSubject<boolean>(false);
+  testimoniesOnly = false;
 
   identifyBy = identifyBy;
 
@@ -63,8 +64,13 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   loadItems(): void {
+    const criteria = this.testimoniesOnly
+      ? assign({}, this.criteria, { act: 'null' })
+      : this.criteria
+      ;
+
     this.isLoading$.next(true);
-    this.feedService.load(this.criteria)
+    this.feedService.load(criteria)
       .finally(() => this.isLoading$.next(false))
       .subscribe((feedItems: FeedItem[]) => this.state.feed.items = feedItems);
   }
@@ -75,10 +81,10 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
       .first()
       .switchMap((feedItems: FeedItem[]) => {
         const newestFeedItem = first(feedItems);
-        const criteria = newestFeedItem
-          ? assign({}, this.criteria, { after: newestFeedItem._id })
-          : this.criteria
-          ;
+        const criteria = assign({}, this.criteria, {
+          after: newestFeedItem ? newestFeedItem._id : undefined,
+          act: this.testimoniesOnly ? 'null' : undefined,
+        });
 
         return this.feedService.load(criteria)
           .map((moreFeedItems: FeedItem[]) => this.state.feed.items = [...moreFeedItems, ...feedItems]);
@@ -94,10 +100,10 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
       .debounceTime(300)
       .switchMap((feedItems: FeedItem[]) => {
         const oldestFeedItem = last(feedItems);
-        const criteria = oldestFeedItem
-          ? assign({}, this.criteria, { before: oldestFeedItem._id })
-          : this.criteria
-          ;
+        const criteria = assign({}, this.criteria, {
+          before: oldestFeedItem ? oldestFeedItem._id : undefined,
+          act: this.testimoniesOnly ? 'null' : undefined,
+        });
 
         return this.feedService.load(criteria)
           .map((moreFeedItems: FeedItem[]) => this.state.feed.items = [...feedItems, ...moreFeedItems]);
