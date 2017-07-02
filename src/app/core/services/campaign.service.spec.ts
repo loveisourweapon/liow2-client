@@ -63,7 +63,7 @@ describe(`CampaignService`, () => {
     it(`should return a single Campaign`, () => {
       const response = new Response(new ResponseOptions({ body: [testCampaign] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe((campaign: Campaign) => expect(campaign).toBe(testCampaign));
+      service.findOne().subscribe((campaign) => expect<any>(campaign).toBe(testCampaign));
     });
 
     it(`should throw an error if no Campaigns found`, () => {
