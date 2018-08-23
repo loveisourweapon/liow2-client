@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:3001',
-  facebookClientId: '1432544943734958',
+  facebookClientId: '1896569380638537',
   googleAnalytics: false,
   sentry: false,
 };
