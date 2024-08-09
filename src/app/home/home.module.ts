@@ -7,6 +7,7 @@ import { HomeComponent } from './home.component';
 import { HomeFeedComponent } from './home-feed';
 import { GlobalFeedComponent } from './global-feed';
 import { AboutUsComponent } from './about-us';
+import { ContactUsComponent } from './contact-us';
 import { WelcomeComponent } from './welcome';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { WelcomeComponent } from './welcome';
     HomeFeedComponent,
     GlobalFeedComponent,
     AboutUsComponent,
+    ContactUsComponent,
     WelcomeComponent,
   ],
 })
