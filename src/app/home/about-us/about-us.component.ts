@@ -9,7 +9,7 @@ import { TitleService } from '../../core/services';
 export class AboutUsComponent implements OnInit {
   constructor(
     private title: TitleService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.title.set(`About Us`);

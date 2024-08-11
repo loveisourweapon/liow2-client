@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { SelectModule } from 'ng2-select';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { SharedModule } from '../shared';
 import { HomeRoutingModule } from './home-routing.module';
@@ -13,6 +15,8 @@ import { WelcomeComponent } from './welcome';
 @NgModule({
   imports: [
     SharedModule,
+    SelectModule,
+    AlertModule,
     HomeRoutingModule,
   ],
   declarations: [
@@ -24,4 +28,4 @@ import { WelcomeComponent } from './welcome';
     WelcomeComponent,
   ],
 })
-export class HomeModule { }
+export class HomeModule {}
