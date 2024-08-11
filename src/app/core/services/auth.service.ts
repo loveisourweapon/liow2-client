@@ -49,13 +49,13 @@ export class AuthService {
       .switchMap(() => this.loadCurrentUser());
   }
 
-  authenticateFacebook(userData?: { group: string }): Observable<User> {
-    console.log('Auth#authenticateFacebook', 'userData', userData);
-    return this.auth.authenticate('facebook', userData)
-      .catch((response: Response) => Observable.throw(response.json().error))
-      .map(() => this.state.auth.isAuthenticated = true)
-      .switchMap(() => this.loadCurrentUser());
-  }
+  // authenticateFacebook(userData?: { group: string }): Observable<User> {
+  //   console.log('Auth#authenticateFacebook', 'userData', userData);
+  //   return this.auth.authenticate('facebook', userData)
+  //     .catch((response: Response) => Observable.throw(response.json().error))
+  //     .map(() => this.state.auth.isAuthenticated = true)
+  //     .switchMap(() => this.loadCurrentUser());
+  // }
 
   loadCurrentUser(setGroup = true): Observable<User> {
     console.log('Auth#loadCurrentUser', 'setGroup', setGroup);

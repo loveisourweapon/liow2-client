@@ -66,12 +66,12 @@ describe(`SignupModalComponent`, () => {
     fixture.detectChanges();
   });
 
-  it(`should call AuthService#authenticateFacebook when 'Sign in with Facebook' is clicked`, () => {
-    const facebookSpy = spyOn(auth, 'authenticateFacebook').and.returnValue(Observable.of({}));
-    const facebookButton = element.query(By.css('.btn-facebook'));
-    facebookButton.triggerEventHandler('click', null);
-    expect(facebookSpy).toHaveBeenCalled();
-  });
+  // it(`should call AuthService#authenticateFacebook when 'Sign in with Facebook' is clicked`, () => {
+  //   const facebookSpy = spyOn(auth, 'authenticateFacebook').and.returnValue(Observable.of({}));
+  //   const facebookButton = element.query(By.css('.btn-facebook'));
+  //   facebookButton.triggerEventHandler('click', null);
+  //   expect(facebookSpy).toHaveBeenCalled();
+  // });
 });
 
 @Component({
