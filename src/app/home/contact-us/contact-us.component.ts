@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ContactForm } from '../../core/models';
-import { AlertifyService, TitleService } from '../../core/services';
+import { AlertifyService, AuthService, TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './contact-us.component.html',
@@ -29,7 +29,11 @@ export class ContactUsComponent implements OnInit {
   errorMessage = '';
   errors: Record<string, any> = {};
 
-  constructor(private alertify: AlertifyService, private title: TitleService) {}
+  constructor(
+    private alertify: AlertifyService,
+    private auth: AuthService,
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.title.set(`Contact Us`);
@@ -40,13 +44,32 @@ export class ContactUsComponent implements OnInit {
     this.errors = {};
 
     this.isSaving$.next(true);
-    console.log('TODO: send contact message', contactForm);
+    this.auth
+      .sendContactEmail(contactForm)
+      .finally(() => this.isSaving$.next(false))
+      .subscribe(
+        () => {
+          this.alertify.success(`Your message has been sent. We will get back to you soon.`);
+          this.reset();
+        },
+        () => (this.errorMessage = `Failed sending contact email`)
+      );
 
-    this.alertify.success(`Your message has been sent. We will get back to you soon.`);
     this.isSaving$.next(false);
   }
 
   selectNatureOfEnquiry({ text: natureOfEnquiry }: { text: string }): void {
     this.contactForm.natureOfEnquiry = natureOfEnquiry;
+  }
+
+  private reset(): void {
+    this.isSaving$.next(false);
+    this.errorMessage = '';
+    this.errors = {};
+    this.contactForm.name = '';
+    this.contactForm.emailOrPhone = '';
+    this.contactForm.natureOfEnquiry = '';
+    this.contactForm.message = '';
+    this.form.resetForm();
   }
 }
