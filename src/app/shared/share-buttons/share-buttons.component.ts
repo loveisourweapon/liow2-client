@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   Renderer2,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
@@ -13,6 +14,8 @@ import { DOCUMENT } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShareButtonsComponent implements AfterViewInit {
+  @Input() classes: string[] = [];
+
   constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document: any) {}
 
   ngAfterViewInit(): void {

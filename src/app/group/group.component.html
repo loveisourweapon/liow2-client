@@ -74,7 +74,7 @@
       <!-- Campaign details -->
       <div *ngIf="(auth.isMemberOfGroup(group) | async) && (state.campaign$ | async) as campaign">
         <h4 class="text-center">
-          Current Campaign<br>
+          Current Campaign<br />
           <small>
             <span class="f-lg">
               {{ state.counter$(campaign._id) | async | number }}
@@ -87,7 +87,7 @@
           layout="vertical"
           [campaign]="campaign"
         ></liow-deed-list>
-        <hr>
+        <hr />
       </div>
 
       <!-- Campaign controls -->
@@ -108,7 +108,7 @@
           <i class="fa fa-fw fa-flag-checkered"></i>
           Finish campaign
         </button>
-        <hr>
+        <hr />
       </div>
 
       <!-- Group controls -->
@@ -157,6 +157,8 @@
         <i class="fa fa-fw fa-sign-out"></i>
         Leave group
       </button>
+
+      <ui-share-buttons [classes]="['m-t-md']"></ui-share-buttons>
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
@@ -191,14 +193,12 @@
 
           <div *ngIf="!group?.welcomeMessage">
             <h2>
-              The Love is our Weapon Campaign is a movement that exists to
-              change cities through the love of Jesus by doing strategic practical
-              acts of love.
+              The Love is our Weapon Campaign is a movement that exists to change cities through the
+              love of Jesus by doing strategic practical acts of love.
             </h2>
             <p>
-              Thousands of people, doing thousands of acts of love, bringing
-              change, value, healing and hope throughout cities and communities
-              everywhere.
+              Thousands of people, doing thousands of acts of love, bringing change, value, healing
+              and hope throughout cities and communities everywhere.
             </p>
           </div>
         </tab>
@@ -218,8 +218,8 @@
           ></liow-feed>
 
           <p *ngIf="!(state.auth.isAuthenticated$ | async)">
-            You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a>
-            to see {{ group?.name }}'s Activity Feed.
+            You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a> to see
+            {{ group?.name }}'s Activity Feed.
           </p>
         </tab>
       </tabset>
