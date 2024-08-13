@@ -1,17 +1,17 @@
 <liow-jumbotron [classes]="['videotron']">
   <div jumbotron-content>
-    <div class="embed-responsive embed-responsive-16by9" *ngIf="(state.deed$ | async)?.videoUrl as videoUrl">
-      <ui-youtube-player
-        [videoUrl]="videoUrl"
-        class="embed-responsive-item"
-      ></ui-youtube-player>
+    <div
+      class="embed-responsive embed-responsive-16by9"
+      *ngIf="(state.deed$ | async)?.videoUrl as videoUrl"
+    >
+      <ui-youtube-player [videoUrl]="videoUrl" class="embed-responsive-item"></ui-youtube-player>
     </div>
 
     <div class="deed-header" *ngIf="state.deed$ | async as deed">
       <img
         [src]="deed?.logo || '/images/deed.png'"
         class="img-responsive img-circle pull-left m-t-md m-r-sm"
-      >
+      />
 
       <h2 class="text-uppercase pull-left m-b-none">
         {{ deed?.title }}
@@ -42,7 +42,11 @@
         *ngIf="state.auth.isAuthenticated$ | async"
         [disabled]="isDoing$ | async"
       >
-        <img src="/images/logo-invert.png" class="img-responsive img-btn" [hidden]="isDoing$ | async">
+        <img
+          src="/images/logo-invert.png"
+          class="img-responsive img-btn"
+          [hidden]="isDoing$ | async"
+        />
         <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isDoing$ | async)"></i>
         Done
       </button>
@@ -57,7 +61,13 @@
         Login
       </button>
 
-      <span *ngIf="state.auth.campaign$ | async as authCampaign; then showCampaignDeedList; else showFullDeedList"></span>
+      <span
+        *ngIf="
+          state.auth.campaign$ | async as authCampaign;
+          then showCampaignDeedList;
+          else showFullDeedList
+        "
+      ></span>
       <ng-template #showCampaignDeedList let-authCampaign>
         <liow-deed-list layout="vertical" [campaign]="authCampaign"></liow-deed-list>
       </ng-template>
@@ -67,7 +77,16 @@
     </div>
 
     <div class="col-sm-9 col-sm-pull-3">
-      <h2 class="m-t-none">Devotional</h2>
+      <div class="row">
+        <div class="col-xs-6">
+          <h2 class="m-t-none">Devotional</h2>
+        </div>
+        <div class="col-xs-6">
+          <div class="pull-right">
+            <ui-share-buttons></ui-share-buttons>
+          </div>
+        </div>
+      </div>
 
       <ui-marked
         [content]="(state.deed$ | async)?.content"

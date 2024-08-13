@@ -15,6 +15,7 @@ import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
 import { MediumEditorComponent } from './medium-editor';
 import { SameAsValidatorDirective } from './same-as-validator.directive';
+import { ShareButtonsComponent } from './share-buttons';
 import { SwitchComponent } from './switch';
 import { UserPickerComponent } from './user-picker';
 import { YoutubePlayerComponent } from './youtube-player.component';
@@ -45,6 +46,7 @@ import { MomentPipe } from './moment.pipe';
     MarkedComponent,
     MediumEditorComponent,
     SameAsValidatorDirective,
+    ShareButtonsComponent,
     SwitchComponent,
     UserPickerComponent,
     YoutubePlayerComponent,
@@ -69,6 +71,7 @@ import { MomentPipe } from './moment.pipe';
     MarkedComponent,
     MediumEditorComponent,
     SameAsValidatorDirective,
+    ShareButtonsComponent,
     SwitchComponent,
     UserPickerComponent,
     YoutubePlayerComponent,
@@ -79,4 +82,4 @@ import { MomentPipe } from './moment.pipe';
     MomentPipe,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}
