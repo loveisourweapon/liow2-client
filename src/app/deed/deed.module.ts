@@ -16,4 +16,4 @@ import { DeedComponent } from './deed.component';
     DeedComponent,
   ],
 })
-export class DeedModule { }
+export class DeedModule {}
