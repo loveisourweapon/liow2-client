@@ -13,7 +13,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { environment } from '../../../environments/environment';
 import { NativeQueryEncoder } from '../../shared';
-import { Credentials, Group, JsonPatchOp, User } from '../models';
+import { ContactForm, Credentials, Group, JsonPatchOp, User } from '../models';
 import { AlertifyService } from './alertify.service';
 import { StateService } from './state.service';
 import { UserService } from './user.service';
@@ -49,13 +49,13 @@ export class AuthService {
       .switchMap(() => this.loadCurrentUser());
   }
 
-  authenticateFacebook(userData?: { group: string }): Observable<User> {
-    console.log('Auth#authenticateFacebook', 'userData', userData);
-    return this.auth.authenticate('facebook', userData)
-      .catch((response: Response) => Observable.throw(response.json().error))
-      .map(() => this.state.auth.isAuthenticated = true)
-      .switchMap(() => this.loadCurrentUser());
-  }
+  // authenticateFacebook(userData?: { group: string }): Observable<User> {
+  //   console.log('Auth#authenticateFacebook', 'userData', userData);
+  //   return this.auth.authenticate('facebook', userData)
+  //     .catch((response: Response) => Observable.throw(response.json().error))
+  //     .map(() => this.state.auth.isAuthenticated = true)
+  //     .switchMap(() => this.loadCurrentUser());
+  // }
 
   loadCurrentUser(setGroup = true): Observable<User> {
     console.log('Auth#loadCurrentUser', 'setGroup', setGroup);
@@ -126,18 +126,18 @@ export class AuthService {
       .map((response: Response) => response.json());
   }
 
-  resetPassword(password: string, token: string): Observable<null> {
+  resetPassword(password: string, token: string): Observable<Response> {
     console.log('Auth#resetPassword', 'password', password, 'token', token);
     return this.http.post(`${this.baseUrl}/reset`, { password, token });
   }
 
-  sendConfirmEmail(emailAddress: string): Observable<null> {
+  sendConfirmEmail(emailAddress: string): Observable<Response> {
     console.log('Auth#sendConfirmEmail', 'emailAddress', emailAddress);
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/confirm`, { search });
   }
 
-  sendForgotPassword(emailAddress: string): Observable<null> {
+  sendForgotPassword(emailAddress: string): Observable<Response> {
     console.log('Auth#sendForgotPassword', 'emailAddress', emailAddress);
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/forgot`, { search });
@@ -151,6 +151,11 @@ export class AuthService {
     this.alertify.log(`Logged out`);
     this.setSentryUserContext();
     return this.auth.logout();
+  }
+
+  sendContactEmail(contactForm: ContactForm): Observable<Response> {
+    console.log('Auth#sendContactEmail', 'contactForm', contactForm);
+    return this.http.post(`${this.baseUrl}/contact`, contactForm);
   }
 
   private setSentryUserContext(user?: User): void {

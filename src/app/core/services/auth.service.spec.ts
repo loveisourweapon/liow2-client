@@ -66,19 +66,19 @@ describe(`AuthService`, () => {
     });
   });
 
-  describe(`#authenticateFacebook`, () => {
-    it(`should call Ng2AuthService.authenticate with 'facebook' param then load current user`, () => {
-      const response = new Response(new ResponseOptions({ body: {} }));
-      const authSpy = spyOn(ng2Auth, 'authenticate').and.returnValue(Observable.of(response));
-      const userSpy = spyOn(service, 'loadCurrentUser').and.returnValue(Observable.of({}));
-      service.authenticateFacebook().subscribe(() => {
-        expect(authSpy.calls.mostRecent().args[0]).toBe('facebook');
-        expect(userSpy).toHaveBeenCalled();
-        state.auth.isAuthenticated$.first()
-          .subscribe((isAuthenticated: boolean) => expect(isAuthenticated).toBe(true));
-      });
-    });
-  });
+  // describe(`#authenticateFacebook`, () => {
+  //   it(`should call Ng2AuthService.authenticate with 'facebook' param then load current user`, () => {
+  //     const response = new Response(new ResponseOptions({ body: {} }));
+  //     const authSpy = spyOn(ng2Auth, 'authenticate').and.returnValue(Observable.of(response));
+  //     const userSpy = spyOn(service, 'loadCurrentUser').and.returnValue(Observable.of({}));
+  //     service.authenticateFacebook().subscribe(() => {
+  //       expect(authSpy.calls.mostRecent().args[0]).toBe('facebook');
+  //       expect(userSpy).toHaveBeenCalled();
+  //       state.auth.isAuthenticated$.first()
+  //         .subscribe((isAuthenticated: boolean) => expect(isAuthenticated).toBe(true));
+  //     });
+  //   });
+  // });
 
   describe(`#loadCurrentUser`, () => {
     const testUser = <User>{ _id: 'abc123' };

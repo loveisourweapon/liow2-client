@@ -88,24 +88,24 @@ export class SignupModalComponent implements OnInit, OnDestroy {
       );
   }
 
-  authenticateFacebook(joinGroup: boolean, group: Group): void {
-    const userData: any = {};
-    if (group && joinGroup) { userData.group = group._id; }
+  // authenticateFacebook(joinGroup: boolean, group: Group): void {
+  //   const userData: any = {};
+  //   if (group && joinGroup) { userData.group = group._id; }
 
-    this.errorMessage = '';
-    this.errors = {};
+  //   this.errorMessage = '';
+  //   this.errors = {};
 
-    this.isSigningUp$.next(true);
-    this.auth.authenticateFacebook(userData)
-      .finally(() => this.isSigningUp$.next(false))
-      .subscribe(
-        () => {
-          this.alertify.success(`Signed in`);
-          this.onClose();
-        },
-        () => this.alertify.error(`Failed signing in`),
-      );
-  }
+  //   this.isSigningUp$.next(true);
+  //   this.auth.authenticateFacebook(userData)
+  //     .finally(() => this.isSigningUp$.next(false))
+  //     .subscribe(
+  //       () => {
+  //         this.alertify.success(`Signed in`);
+  //         this.onClose();
+  //       },
+  //       () => this.alertify.error(`Failed signing in`),
+  //     );
+  // }
 
   onClose(): void {
     this.state.modal.signup$.next({ isOpen: false });

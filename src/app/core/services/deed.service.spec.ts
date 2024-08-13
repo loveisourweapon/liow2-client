@@ -60,7 +60,7 @@ describe(`DeedService`, () => {
     it(`should return a single Deed`, () => {
       const response = new Response(new ResponseOptions({ body: [testDeed] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe((deed: Deed) => expect(deed).toBe(testDeed));
+      service.findOne().subscribe((deed) => expect<any>(deed).toBe(testDeed));
     });
 
     it(`should throw an error if no Deeds found`, () => {

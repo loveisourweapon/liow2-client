@@ -75,22 +75,22 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       );
   }
 
-  authenticateFacebook(joinGroup: boolean, group: Group): void {
-    const userData: any = {};
-    if (group && joinGroup) { userData.group = group._id; }
+  // authenticateFacebook(joinGroup: boolean, group: Group): void {
+  //   const userData: any = {};
+  //   if (group && joinGroup) { userData.group = group._id; }
 
-    this.errorMessage = '';
-    this.isLoggingIn$.next(true);
-    this.auth.authenticateFacebook(userData)
-      .finally(() => this.isLoggingIn$.next(false))
-      .subscribe(
-        () => {
-          this.alertify.success(`Signed in`);
-          this.onClose();
-        },
-        () => this.alertify.error(`Failed signing in`),
-      );
-  }
+  //   this.errorMessage = '';
+  //   this.isLoggingIn$.next(true);
+  //   this.auth.authenticateFacebook(userData)
+  //     .finally(() => this.isLoggingIn$.next(false))
+  //     .subscribe(
+  //       () => {
+  //         this.alertify.success(`Signed in`);
+  //         this.onClose();
+  //       },
+  //       () => this.alertify.error(`Failed signing in`),
+  //     );
+  // }
 
   onClose(): void {
     this.state.modal.login$.next({ isOpen: false });

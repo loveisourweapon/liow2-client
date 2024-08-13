@@ -65,7 +65,7 @@ describe(`GroupService`, () => {
     it(`should return a single Group`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe((group: Group) => expect(group).toBe(testGroup));
+      service.findOne().subscribe((group) => expect<any>(group).toBe(testGroup));
     });
 
     it(`should throw an error if no Groups found`, () => {

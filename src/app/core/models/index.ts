@@ -2,6 +2,7 @@ export * from './act.model';
 export * from './api-error.model';
 export * from './campaign.model';
 export * from './comment.model';
+export * from './contact-form.model';
 export * from './counter.model';
 export * from './credentials.model';
 export * from './deed.model';

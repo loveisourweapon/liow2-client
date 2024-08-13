@@ -80,7 +80,8 @@ export class UserService {
     // Set a random picture and cover image seeded by the user ID
     const seed = seedrandom(user._id);
     user.coverImage = `/images/header${Math.floor(seed() * this.numberOfCoverImages)}.jpg`;
-    if (!user.picture) {
+    // Bypass Facebook user images for now
+    if (!user.picture || user.picture.includes('graph.facebook.com')) {
       user.picture = `/images/user${Math.floor(seed() * this.numberOfPictures)}.png`;
     }
 

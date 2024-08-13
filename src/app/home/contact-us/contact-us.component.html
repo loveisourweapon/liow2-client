@@ -1,0 +1,132 @@
+<liow-jumbotron background="/images/header.jpg"></liow-jumbotron>
+
+<div class="container container-pad">
+  <div class="row">
+    <div class="col-xs-12 col-sm-9">
+      <h3 class="m-t-none m-b-md">
+        <i class="fa fa-fw fa-comments-o"></i>
+        Send us a message
+      </h3>
+      <p>
+        Fill out the form to send us a message, we aim to get back to you within 1 business day.
+      </p>
+
+      <form
+        (ngSubmit)="
+          form.valid && contactForm.natureOfEnquiry && contactForm.message && send(contactForm)
+        "
+        #form="ngForm"
+        class="contact-us-form m-t-lg"
+        novalidate
+      >
+        <alert type="danger" *ngIf="errorMessage">
+          <i class="fa fa-fw fa-exclamation-triangle"></i>
+          Failed sending request. Please try again or
+          <a href="mailto:support@loveisourweapon.com">contact us</a>.
+        </alert>
+
+        <div class="form-group" [class.has-error]="form.submitted && (name.invalid || errors.name)">
+          <label class="control-label" for="name">Your name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            #name="ngModel"
+            [(ngModel)]="contactForm.name"
+            placeholder="Enter your name…"
+            required
+            #autofocus
+          />
+          <span class="help-block" *ngIf="form.submitted && name.errors?.required">
+            Please enter your name
+          </span>
+          <span class="help-block" *ngIf="errors.name">
+            {{ errors.name.message }}
+          </span>
+        </div>
+
+        <div
+          class="form-group"
+          [class.has-error]="form.submitted && (emailOrPhone.invalid || errors.emailOrPhone)"
+        >
+          <label class="control-label" for="emailOrPhone">Email or phone number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="emailOrPhone"
+            name="emailOrPhone"
+            #emailOrPhone="ngModel"
+            [(ngModel)]="contactForm.emailOrPhone"
+            placeholder="Enter your email or phone number…"
+            required
+          />
+          <span class="help-block" *ngIf="form.submitted && emailOrPhone.errors?.required">
+            Please enter an email or phone number
+          </span>
+          <span class="help-block" *ngIf="errors.emailOrPhone">
+            {{ errors.emailOrPhone.message }}
+          </span>
+        </div>
+
+        <div
+          class="form-group"
+          [class.has-error]="
+            form.submitted && (!contactForm.natureOfEnquiry || errors.natureOfEnquiry)
+          "
+        >
+          <label class="control-label" for="natureOfEnquiry">Nature of enquiry</label>
+          <ng-select
+            id="natureOfEnquiry"
+            name="natureOfEnquiry"
+            [items]="natureOfEnquiryOptions"
+            (data)="selectNatureOfEnquiry($event)"
+            placeholder="What are you enquiring about?"
+          ></ng-select>
+          <span class="help-block" *ngIf="form.submitted && !contactForm.natureOfEnquiry">
+            Please choose a nature of enquiry
+          </span>
+          <span class="help-block" *ngIf="errors.natureOfEnquiry">
+            {{ errors.natureOfEnquiry.message }}
+          </span>
+        </div>
+
+        <div
+          class="form-group"
+          [class.has-error]="form.submitted && (!contactForm.message || errors.message)"
+        >
+          <label class="control-label" for="message">Message</label>
+          <ui-medium-editor
+            id="message"
+            [content]="contactForm.message"
+            (change)="contactForm.message = $event"
+            placeholder="Enter your message…"
+          ></ui-medium-editor>
+          <span class="help-block" *ngIf="form.submitted && !contactForm.message">
+            Please enter your message
+          </span>
+          <span class="help-block" *ngIf="errors.message">
+            {{ errors.message.message }}
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving$ | async">
+          <i class="fa fa-cog fa-spin" [hidden]="!(isSaving$ | async)"></i>
+          Send
+        </button>
+      </form>
+    </div>
+
+    <div class="col-xs-12 col-sm-3">
+      <h4 class="m-t-none m-b-md hidden-xs">
+        <i class="fa fa-fw fa-envelope"></i>
+        Email us
+      </h4>
+      <p class="visible-xs m-t-lg"></p>
+      <p>
+        Need help?
+        <a href="mailto:hello@loveisourweapon.com?subject=Hello!">Say hello!</a>
+      </p>
+    </div>
+  </div>
+</div>
