@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { has } from 'lodash';
+import { has, get } from 'lodash';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -91,14 +91,22 @@ export class DeedComponent implements OnDestroy, OnInit {
       })
       .finally(() => {
         this.isSavingTestimony$.next(false);
-        this.testimony = '';
       })
       .subscribe(
         () => {
+          this.testimony = '';
           this.state.feed.update();
           this.alertify.success(`Comment saved`);
         },
-        () => this.alertify.error(`Failed saving comment`),
+        async (response) => {
+          const error = response.json();
+          console.log('error?', error);
+          this.alertify.error(
+            get(error, 'error.errors.content.kind') === 'isclean'
+              ? `Please keep your language friendly`
+              : `Failed saving comment`
+          );
+        },
       );
   }
 
