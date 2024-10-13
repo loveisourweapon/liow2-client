@@ -109,7 +109,10 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
             this.state.group = group;
           }
 
-          if (!currentGroup || group.urlName !== currentGroup.urlName) {
+          if (
+            this.action === EditAction.Create ||
+            (this.router.url.startsWith('/g/') && !this.router.url.endsWith(group.urlName))
+          ) {
             this.router.navigate(['/g', group.urlName], {
               queryParams: setupCampaign ? { setupCampaign: true } : {},
             });
