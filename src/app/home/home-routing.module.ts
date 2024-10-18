@@ -5,11 +5,13 @@ import { AboutUsComponent } from './about-us';
 import { ContactUsComponent } from './contact-us';
 import { GlobalFeedComponent } from './global-feed';
 import { HomeComponent } from './home.component';
+import { PrivacyPolicyComponent } from './privacy-policy';
 
 const homeRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'global', component: GlobalFeedComponent },
   { path: 'about', component: AboutUsComponent },
+  { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'contact', component: ContactUsComponent },
 ];
 
