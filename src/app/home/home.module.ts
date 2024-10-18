@@ -10,6 +10,8 @@ import { HomeFeedComponent } from './home-feed';
 import { GlobalFeedComponent } from './global-feed';
 import { AboutUsComponent } from './about-us';
 import { ContactUsComponent } from './contact-us';
+import { PrivacyPolicyComponent } from './privacy-policy';
+import { TermsAndConditionsComponent } from './terms-and-conditions';
 import { WelcomeComponent } from './welcome';
 
 @NgModule({
@@ -25,6 +27,8 @@ import { WelcomeComponent } from './welcome';
     GlobalFeedComponent,
     AboutUsComponent,
     ContactUsComponent,
+    PrivacyPolicyComponent,
+    TermsAndConditionsComponent,
     WelcomeComponent,
   ],
 })

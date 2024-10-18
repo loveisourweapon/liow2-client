@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
-import { buildUrlSearchParams, getUserImageUrl, SearchParams } from '../../shared';
+import { buildUrlSearchParams, SearchParams } from '../../shared';
 import { JsonPatch, NewUser, User, UserId } from '../models';
 
 @Injectable()
@@ -80,7 +80,7 @@ export class UserService {
     // Set a random picture and cover image seeded by the user ID
     const seed = seedrandom(user._id);
     user.coverImage = `/images/header${Math.floor(seed() * this.numberOfCoverImages)}.jpg`;
-    user.picture = getUserImageUrl(user._id); 
+    user.picture = `/images/user${Math.floor(seed() * this.numberOfPictures)}.png`;
 
     return user;
   }

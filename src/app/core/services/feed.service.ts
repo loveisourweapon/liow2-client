@@ -3,14 +3,16 @@ import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
-import { buildUrlSearchParams, getUserImageUrl } from '../../shared';
+import { buildUrlSearchParams } from '../../shared';
 import { FeedCriteria, FeedItem } from '../models';
 
 @Injectable()
 export class FeedService {
   private readonly baseUrl = `${environment.apiBaseUrl}/feeds`;
+  private readonly numberOfPictures = 12;
 
   constructor(
     private http: JwtHttp,
@@ -25,7 +27,9 @@ export class FeedService {
           // Convert date strings to Date objects
           if (feedItem.created) { feedItem.created = new Date(feedItem.created); }
 
-          feedItem.user.picture = getUserImageUrl(feedItem.user._id);
+          // Set a random user picture seeded by the user ID
+          const seed = seedrandom(feedItem.user._id);
+          feedItem.user.picture = `/images/user${Math.floor(seed() * this.numberOfPictures)}.png`;
 
           return feedItem;
         }));

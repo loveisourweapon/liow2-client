@@ -1,4 +1,4 @@
-@import "../styles/variables";
+@import '../styles/variables';
 
 :host {
   display: block;
@@ -26,5 +26,9 @@ footer {
 
   ul {
     margin-bottom: 0;
+
+    li {
+      padding: 0 2px;
+    }
   }
 }

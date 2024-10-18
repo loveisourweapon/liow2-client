@@ -4,14 +4,16 @@ import { JwtHttp } from 'ng2-ui-auth';
 import { has } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
 import { Comment, NewComment } from '../models';
-import { buildUrlSearchParams, getUserImageUrl, SearchParams } from '../../shared';
+import { buildUrlSearchParams, SearchParams } from '../../shared';
 
 @Injectable()
 export class CommentService {
   private readonly baseUrl = environment.apiBaseUrl;
+  private readonly numberOfUserPictures = 12;
 
   constructor(
     private http: JwtHttp,
@@ -55,7 +57,9 @@ export class CommentService {
     // Convert all date strings to Date objects
     if (comment.created) { comment.created = new Date(comment.created); }
 
-    comment.user.picture = getUserImageUrl(comment.user._id); 
+    // Set a random profile picture seeded by the user ID
+    const seed = seedrandom(comment.user._id);
+    comment.user.picture = `/images/user${Math.floor(seed() * this.numberOfUserPictures)}.png`;
 
     return comment;
   }

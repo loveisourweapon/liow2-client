@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -46,5 +47,15 @@ p:last-child {
 }
 
 // Fonts
-.f-sm { font-size: 85%; }
-.f-lg { font-size: 125%; }
+.f-sm {
+  font-size: 85%;
+}
+.f-lg {
+  font-size: 125%;
+}
+
+.content-wrapper ul:not(.list-inline) {
+  li + li {
+    margin-top: 10px;
+  }
+}
