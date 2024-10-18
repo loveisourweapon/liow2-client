@@ -56,7 +56,7 @@
                 Please enter a group name
               </span>
               <span class="help-block" *ngIf="errors.name || errors.urlName">
-                Entered name is already taken
+                {{ errors.name?.message?.includes('clean') ? errors.name.message : 'Entered name is already taken' }}
               </span>
             </div>
           </div>
