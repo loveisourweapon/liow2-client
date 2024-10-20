@@ -16,7 +16,7 @@ const controlPanelRoutes: Routes = [
     children: [
       { path: 'deeds', component: DeedsComponent, data: { title: 'Deeds' } },
       {
-        path: 'group/:groupId',
+        path: 'groups/:groupId',
         component: GroupComponent,
         data: { title: 'Group' },
         children: [
