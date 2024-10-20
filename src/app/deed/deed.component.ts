@@ -100,7 +100,6 @@ export class DeedComponent implements OnDestroy, OnInit {
         },
         async (response) => {
           const error = response.json();
-          console.log('error?', error);
           this.alertify.error(
             get(error, 'error.errors.content.kind') === 'isclean'
               ? `Please keep your language friendly`

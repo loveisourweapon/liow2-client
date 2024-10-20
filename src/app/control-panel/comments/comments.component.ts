@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { has } from 'lodash';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -13,7 +14,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { Comment, Group, GroupId } from '../../core/models';
-import { AuthService, CommentService, StateService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  CommentService,
+  StateService,
+  TitleService,
+} from '../../core/services';
 import { identifyBy, SearchParams } from '../../shared';
 
 @Component({
@@ -25,9 +32,14 @@ export class CommentsComponent implements OnInit, OnDestroy {
   query$ = new BehaviorSubject<string>('');
   page$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(20);
+  reload$ = new BehaviorSubject<Date>(new Date());
   numberOfPages$ = new BehaviorSubject<number>(1);
   numberOfComments$: Observable<number>;
   filterParams$: Observable<SearchParams>;
+
+  @ViewChild('confirmRemoveModal') confirmRemoveModal: ModalDirective;
+  removeComment: Comment | undefined;
+  isRemovingComment$ = new BehaviorSubject<boolean>(false);
 
   identifyBy = identifyBy;
 
@@ -36,12 +48,13 @@ export class CommentsComponent implements OnInit, OnDestroy {
 
   constructor(
     public auth: AuthService,
+    private alertify: AlertifyService,
     private commentService: CommentService,
     private route: ActivatedRoute,
     private router: Router,
     public state: StateService,
-    private title: TitleService,
-  ) { }
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.title.set(`Comments | Control Panel`);
@@ -59,22 +72,27 @@ export class CommentsComponent implements OnInit, OnDestroy {
       this.query$,
       this.page$,
       this.pageSize$,
+      this.reload$
     )
       .distinctUntilChanged()
-      .map(([groupId, query, page, limit]: [GroupId, string, number, number]) => (<SearchParams>{
-        group: groupId || undefined,
-        'target.group': 'null',
-        query,
-        limit,
-        skip: (page - 1) * limit,
-        sort: '-_id',
-      }));
+      .map(
+        ([groupId, query, page, limit, _]: [GroupId, string, number, number, Date]) =>
+          <SearchParams>{
+            group: groupId || undefined,
+            'target.group': 'null',
+            query,
+            limit,
+            skip: (page - 1) * limit,
+            sort: '-_id',
+          }
+      );
 
     this.commentsSubscription = this.filterParams$
       .switchMap((searchParams: SearchParams) => this.commentService.find(searchParams))
-      .subscribe((comments: Comment[]) => this.state.controlPanel.comments = comments);
-    this.numberOfComments$ = this.filterParams$
-      .switchMap((searchParams: SearchParams) => this.commentService.count(searchParams));
+      .subscribe((comments: Comment[]) => (this.state.controlPanel.comments = comments));
+    this.numberOfComments$ = this.filterParams$.switchMap((searchParams: SearchParams) =>
+      this.commentService.count(searchParams)
+    );
 
     // Get initial router params
     this.route.queryParams
@@ -93,5 +111,29 @@ export class CommentsComponent implements OnInit, OnDestroy {
     this.router.navigate([], {
       queryParams: { query },
     });
+  }
+
+  confirmRemoveComment(comment: Comment): void {
+    this.removeComment = comment;
+    this.confirmRemoveModal.show();
+  }
+
+  handleRemoveComment(comment: Comment): void {
+    this.isRemovingComment$.next(true);
+    this.commentService
+      .remove(comment)
+      .finally(() => {
+        this.isRemovingComment$.next(false);
+      })
+      .subscribe(
+        () => {
+          this.reload$.next(new Date());
+          this.alertify.success(`Deleted comment`);
+          this.confirmRemoveModal.hide();
+        },
+        () => {
+          this.alertify.error(`Failed deleting comment`);
+        }
+      );
   }
 }

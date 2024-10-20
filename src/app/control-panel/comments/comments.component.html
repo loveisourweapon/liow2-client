@@ -26,6 +26,7 @@
                 <th style="width: 190px">Deed</th>
                 <th>Content</th>
                 <th style="width: 95px">Date</th>
+                <th style="width: 102px">&nbsp;</th>
               </tr>
             </thead>
 
@@ -66,6 +67,22 @@
                   <ui-marked [content]="comment?.content?.text"></ui-marked>
                 </td>
                 <td>{{ comment?.created | moment : 'YYYY-MM-DD' }}</td>
+                <td>
+                  <div dropdown placement="bottom right" class="btn-group dropdown">
+                    <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
+                      Actions
+                      <span class="caret"></span>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                      <li>
+                        <a (click)="confirmRemoveComment(comment); $event.preventDefault()" href>
+                          <i class="fa fa-fw fa-trash-o"></i>
+                          Remove
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -74,3 +91,45 @@
     </div>
   </ng-container>
 </ng-container>
+
+<div
+  bsModal
+  #confirmRemoveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Are you sure you want to remove this comment?"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to remove this comment?</h4>
+      </div>
+
+      <div class="modal-body">
+        <blockquote>
+          <ui-marked [content]="removeComment?.content?.text"></ui-marked>
+          <footer class="m-t-sm">
+            {{ removeComment?.user?.name }} ({{ removeComment?.created | moment : 'YYYY-MM-DD' }})
+          </footer>
+        </blockquote>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="confirmRemoveModal.hide()">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="handleRemoveComment(removeComment)"
+          [disabled]="isRemovingComment$ | async"
+        >
+          <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isRemovingComment$ | async)"></i>
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

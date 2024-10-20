@@ -39,6 +39,11 @@ export class CommentService {
       .map((response: Response) => response.json() || {});
   }
 
+  remove(comment: Comment): Observable<void> {
+    console.log('CommentService#remove', 'comment', comment);
+    return this.http.delete(`${this.baseUrl}/comments/${comment._id}`).map(() => {});
+  }
+
   find(params: SearchParams = {}): Observable<Comment[]> {
     console.log('CommentService#find', 'params', params);
     return this.http.get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
