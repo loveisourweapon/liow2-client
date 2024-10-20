@@ -5,19 +5,17 @@ import { Title } from '@angular/platform-browser';
 export class TitleService {
   private readonly baseTitle = `Love is our Weapon`;
 
-  constructor(
-    private title: Title,
-  ) {
+  constructor(private title: Title) {
     this.clear();
   }
 
   clear(): void {
-    console.log('TitleService#clear');
+    console.info('TitleService#clear');
     this.title.setTitle(this.baseTitle);
   }
 
   set(newTitle: string): void {
-    console.log('TitleService#set', 'newTitle', newTitle);
+    console.info('TitleService#set', 'newTitle', newTitle);
     this.title.setTitle(`${newTitle} | ${this.baseTitle}`);
   }
 }

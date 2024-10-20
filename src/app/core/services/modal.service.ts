@@ -5,12 +5,10 @@ import { StateService } from './state.service';
 
 @Injectable()
 export class ModalService {
-  constructor(
-    private state: StateService,
-  ) { }
+  constructor(private state: StateService) {}
 
   openCampaignEdit(action = EditAction.Create, campaign?: Campaign): void {
-    console.log('ModalService#openCampaignEdit', 'action', action, 'campaign', campaign);
+    console.info('ModalService#openCampaignEdit', 'action', action, 'campaign', campaign);
     this.state.modal.campaignEdit$.next({
       isOpen: true,
       options: { action, campaign },
@@ -18,7 +16,7 @@ export class ModalService {
   }
 
   openChangePassword(user: User): void {
-    console.log('ModalService#openChangePassword', 'user', user);
+    console.info('ModalService#openChangePassword', 'user', user);
     this.state.modal.changePassword$.next({
       isOpen: true,
       options: { user },
@@ -26,7 +24,7 @@ export class ModalService {
   }
 
   openDeedPreview(deed: Deed): void {
-    console.log('ModalService#openDeedPreview', 'deed', deed);
+    console.info('ModalService#openDeedPreview', 'deed', deed);
     this.state.modal.deedPreview$.next({
       isOpen: true,
       options: { deed },
@@ -34,7 +32,7 @@ export class ModalService {
   }
 
   openForgotPassword(emailAddress = ''): void {
-    console.log('ModalService#openForgotPassword', 'emailAddress', emailAddress);
+    console.info('ModalService#openForgotPassword', 'emailAddress', emailAddress);
     this.state.modal.forgotPassword$.next({
       isOpen: true,
       options: { emailAddress },
@@ -42,7 +40,7 @@ export class ModalService {
   }
 
   openGroupEdit(action = EditAction.Create, group?: Group): void {
-    console.log('ModalService#openGroupEdit', 'action', action, 'group', group);
+    console.info('ModalService#openGroupEdit', 'action', action, 'group', group);
     this.state.modal.groupEdit$.next({
       isOpen: true,
       options: { action, group },
@@ -50,14 +48,14 @@ export class ModalService {
   }
 
   openGroupJoin(): void {
-    console.log('ModalService#openGroupJoin');
+    console.info('ModalService#openGroupJoin');
     this.state.modal.groupJoin$.next({
       isOpen: true,
     });
   }
 
   openLogin(canSwitch = true): void {
-    console.log('ModalService#openLogin', 'canSwitch', canSwitch);
+    console.info('ModalService#openLogin', 'canSwitch', canSwitch);
     this.state.modal.login$.next({
       isOpen: true,
       options: { canSwitch },
@@ -65,7 +63,7 @@ export class ModalService {
   }
 
   openSignup(canSwitch = true): void {
-    console.log('ModalService#openSignup', 'canSwitch', canSwitch);
+    console.info('ModalService#openSignup', 'canSwitch', canSwitch);
     this.state.modal.signup$.next({
       isOpen: true,
       options: { canSwitch },
