@@ -15,6 +15,7 @@ const controlPanelRoutes: Routes = [
     component: ControlPanelComponent,
     children: [
       { path: 'deeds', component: DeedsComponent, data: { title: 'Deeds' } },
+      { path: 'groups', component: GroupsComponent, data: { title: 'Groups' } },
       {
         path: 'groups/:groupId',
         component: GroupComponent,
@@ -25,7 +26,6 @@ const controlPanelRoutes: Routes = [
           { path: 'testimonies', component: CommentsComponent },
         ],
       },
-      { path: 'groups', component: GroupsComponent, data: { title: 'Groups' } },
       { path: 'user', component: UserComponent, data: { title: 'User' } },
       { path: 'users', component: UsersComponent, data: { title: 'Users' } },
 

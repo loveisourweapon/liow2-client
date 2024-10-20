@@ -1,19 +1,19 @@
-<div class="row">
+<div class="row" *ngIf="(state.auth.user$ | async)?.superAdmin">
   <div class="col-xs-12">
     <table class="table table-bordered table-striped table-middle">
       <thead>
         <tr>
-          <th style="width: 65px;">Logo</th>
+          <th style="width: 65px">Logo</th>
           <th>Title</th>
-          <th style="width: 150px;">Video</th>
-          <th style="width: 102px;">&nbsp;</th>
+          <th style="width: 150px">Video</th>
+          <th style="width: 102px">&nbsp;</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let deed of (state.controlPanel.deeds$ | async); trackBy: identifyBy('_id')">
+        <tr *ngFor="let deed of state.controlPanel.deeds$ | async; trackBy: identifyBy('_id')">
           <td class="text-center">
-            <img [src]="deed?.logo || '/images/deed.png'" class="img-circle icon">
+            <img [src]="deed?.logo || '/images/deed.png'" class="img-circle icon" />
           </td>
           <td>{{ deed?.title }}</td>
           <td>

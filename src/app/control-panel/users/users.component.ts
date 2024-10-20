@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { Group, GroupId, User } from '../../core/models';
-import { StateService, TitleService, UserService } from '../../core/services';
+import { AuthService, StateService, TitleService, UserService } from '../../core/services';
 import { identifyBy, SearchParams } from '../../shared';
 
 @Component({
@@ -35,6 +35,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   private groupIdSubscription: Subscription;
 
   constructor(
+    public auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     public state: StateService,

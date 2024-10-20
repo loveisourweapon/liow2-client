@@ -13,7 +13,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { Comment, Group, GroupId } from '../../core/models';
-import { CommentService, StateService, TitleService } from '../../core/services';
+import { AuthService, CommentService, StateService, TitleService } from '../../core/services';
 import { identifyBy, SearchParams } from '../../shared';
 
 @Component({
@@ -35,6 +35,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
   private groupIdSubscription: Subscription;
 
   constructor(
+    public auth: AuthService,
     private commentService: CommentService,
     private route: ActivatedRoute,
     private router: Router,

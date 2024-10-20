@@ -54,7 +54,7 @@ p:last-child {
   font-size: 125%;
 }
 
-.content-wrapper ul:not(.list-inline) {
+.content-wrapper ul:not(.list-inline, .nav) {
   li + li {
     margin-top: 10px;
   }

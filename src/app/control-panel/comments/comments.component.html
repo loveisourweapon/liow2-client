@@ -1,61 +1,76 @@
-<div class="row">
-  <div class="col-xs-12">
-    <liow-control-panel-search
-      [query]="query$ | async"
-      (search)="onSearch($event)"
-      autofocus
-    ></liow-control-panel-search>
+<ng-container *ngIf="state.auth.user$ | async as authUser">
+  <ng-container *ngIf="!(groupId$ | async) || (state.controlPanel.group$ | async) as group">
+    <div class="row" *ngIf="authUser?.superAdmin || (auth.isAdminOfGroup(group) | async)">
+      <div class="col-xs-12">
+        <liow-control-panel-search
+          [query]="query$ | async"
+          (search)="onSearch($event)"
+          autofocus
+        ></liow-control-panel-search>
 
-    <liow-control-panel-pagination
-      typeOfItems="comments"
-      [numberOfItems]="numberOfComments$ | async"
-      [numberOfPages]="numberOfPages$ | async"
-      [currentPage]="page$ | async"
-      [pageSize]="pageSize$ | async"
-      (numberOfPagesChanged)="numberOfPages$.next($event)"
-      (currentPageChanged)="page$.next($event)"
-    ></liow-control-panel-pagination>
+        <liow-control-panel-pagination
+          typeOfItems="comments"
+          [numberOfItems]="numberOfComments$ | async"
+          [numberOfPages]="numberOfPages$ | async"
+          [currentPage]="page$ | async"
+          [pageSize]="pageSize$ | async"
+          (numberOfPagesChanged)="numberOfPages$.next($event)"
+          (currentPageChanged)="page$.next($event)"
+        ></liow-control-panel-pagination>
 
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-middle">
-        <thead>
-          <tr>
-            <th style="width: 190px;">User</th>
-            <th style="width: 190px;">Deed</th>
-            <th>Content</th>
-            <th style="width: 95px;">Date</th>
-          </tr>
-        </thead>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-middle">
+            <thead>
+              <tr>
+                <th style="width: 190px">User</th>
+                <th style="width: 190px">Deed</th>
+                <th>Content</th>
+                <th style="width: 95px">Date</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          <tr *ngFor="let comment of (state.controlPanel.comments$ | async); trackBy: identifyBy('_id')">
-            <td>
-              <div class="media">
-                <div class="media-left">
-                  <img [src]="comment?.user?.picture || '/images/user0.png'" class="media-object img-circle icon">
-                </div>
-                <div class="media-body media-middle">
-                  {{ comment?.user?.name }}
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="media">
-                <div class="media-left">
-                  <img [src]="comment?.target?.deed?.logo" class="media-object img-circle icon">
-                </div>
-                <div class="media-body media-middle">
-                  {{ comment?.target?.deed?.title }}
-                </div>
-              </div>
-            </td>
-            <td>
-              <ui-marked [content]="comment?.content?.text"></ui-marked>
-            </td>
-            <td>{{ comment?.created | moment:'YYYY-MM-DD' }}</td>
-          </tr>
-        </tbody>
-      </table>
+            <tbody>
+              <tr
+                *ngFor="
+                  let comment of state.controlPanel.comments$ | async;
+                  trackBy: identifyBy('_id')
+                "
+              >
+                <td>
+                  <div class="media">
+                    <div class="media-left">
+                      <img
+                        [src]="comment?.user?.picture || '/images/user0.png'"
+                        class="media-object img-circle icon"
+                      />
+                    </div>
+                    <div class="media-body media-middle">
+                      {{ comment?.user?.name }}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="media">
+                    <div class="media-left">
+                      <img
+                        [src]="comment?.target?.deed?.logo"
+                        class="media-object img-circle icon"
+                      />
+                    </div>
+                    <div class="media-body media-middle">
+                      {{ comment?.target?.deed?.title }}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <ui-marked [content]="comment?.content?.text"></ui-marked>
+                </td>
+                <td>{{ comment?.created | moment : 'YYYY-MM-DD' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>

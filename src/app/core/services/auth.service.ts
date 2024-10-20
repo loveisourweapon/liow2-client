@@ -120,6 +120,10 @@ export class AuthService {
       ));
   }
 
+  isSuperAdmin(): Observable<boolean> {
+    return this.state.auth.user$.map((user: User) => has(user, 'superAdmin') && user.superAdmin);
+  }
+
   confirmEmail(token: string): Observable<null> {
     console.log('Auth#confirmEmail', 'token', token);
     return this.http.post(`${this.baseUrl}/confirm`, { token })
