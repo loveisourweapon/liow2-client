@@ -13,13 +13,9 @@
   <li
     [class.active]="rlaUsers.isActive"
     role="presentation"
-    *ngIf="(auth.isAdminOfGroup(group) | async) || (state.auth.user$ | async)?.superAdmin"
+    *ngIf="(auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async)"
   >
-    <a
-      [routerLink]="['users']"
-      routerLinkActive
-      #rlaUsers="routerLinkActive"
-    >
+    <a [routerLink]="['users']" routerLinkActive #rlaUsers="routerLinkActive">
       <i class="fa fa-fw fa-user"></i>
       Users
     </a>
@@ -27,13 +23,9 @@
   <li
     [class.active]="rlaTestimonies.isActive"
     role="presentation"
-    *ngIf="(auth.isAdminOfGroup(group) | async) || (state.auth.user$ | async)?.superAdmin"
+    *ngIf="(auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async)"
   >
-    <a
-      [routerLink]="['testimonies']"
-      routerLinkActive
-      #rlaTestimonies="routerLinkActive"
-    >
+    <a [routerLink]="['testimonies']" routerLinkActive #rlaTestimonies="routerLinkActive">
       <i class="fa fa-fw fa-comment"></i>
       Testimonies
     </a>

@@ -14,24 +14,26 @@ export class FeedService {
   private readonly baseUrl = `${environment.apiBaseUrl}/feeds`;
   private readonly numberOfPictures = 12;
 
-  constructor(
-    private http: JwtHttp,
-  ) { }
+  constructor(private http: JwtHttp) {}
 
   load(criteria: FeedCriteria): Observable<FeedItem[]> {
-    console.log('FeedService#load', 'criteria', criteria);
-    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(criteria) })
+    console.info('FeedService#load', 'criteria', criteria);
+    return this.http
+      .get(this.baseUrl, { search: buildUrlSearchParams(criteria) })
       .map((response: Response) => response.json() || [])
       .map((feedItems: FeedItem[]) =>
         feedItems.map((feedItem: FeedItem) => {
           // Convert date strings to Date objects
-          if (feedItem.created) { feedItem.created = new Date(feedItem.created); }
+          if (feedItem.created) {
+            feedItem.created = new Date(feedItem.created);
+          }
 
           // Set a random user picture seeded by the user ID
           const seed = seedrandom(feedItem.user._id);
           feedItem.user.picture = `/images/user${Math.floor(seed() * this.numberOfPictures)}.png`;
 
           return feedItem;
-        }));
+        })
+      );
   }
 }

@@ -6,7 +6,6 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { User } from '../core/models';
 import { StateService } from '../core/services';
 import { identifyBy } from '../shared';
 
@@ -19,8 +18,6 @@ export class ControlPanelComponent implements OnInit {
   activePage$: Observable<string>;
 
   identifyBy = identifyBy;
-
-  private superAdminPages = ['Deeds', 'Groups', 'Users'];
 
   constructor(
     private router: Router,
@@ -43,13 +40,5 @@ export class ControlPanelComponent implements OnInit {
       .filter((isAuthenticated: boolean) => isAuthenticated === false)
       .first()
       .subscribe(() => this.router.navigate(['/']));
-
-    // Redirect to user control panel if user doesn't have access
-    Observable.combineLatest(
-      this.state.auth.user$.filter((user: User) => user !== null && !user.superAdmin),
-      this.activePage$.filter((activePage: string) => this.superAdminPages.indexOf(activePage) !== -1),
-    )
-      .first()
-      .subscribe(() => this.router.navigate(['/control-panel']));
   }
 }

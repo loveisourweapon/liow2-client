@@ -15,12 +15,10 @@ export class CommentService {
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly numberOfUserPictures = 12;
 
-  constructor(
-    private http: JwtHttp,
-  ) { }
+  constructor(private http: JwtHttp) {}
 
-  save(comment: Comment|NewComment): Observable<Comment> {
-    console.log('CommentService#save', 'comment', comment);
+  save(comment: Comment | NewComment): Observable<Comment> {
+    console.info('CommentService#save', 'comment', comment);
     const method = has(comment, '_id') ? 'put' : 'post';
     const urlSuffix = `/comments${has(comment, '_id') ? `/${comment._id}` : ''}`;
 
@@ -35,27 +33,39 @@ export class CommentService {
       url = `/acts/${comment.target.act}${urlSuffix}`;
     }
 
-    return this.http[method](this.baseUrl + url, comment)
-      .map((response: Response) => response.json() || {});
+    return this.http[method](this.baseUrl + url, comment).map(
+      (response: Response) => response.json() || {}
+    );
+  }
+
+  remove(comment: Comment): Observable<void> {
+    console.info('CommentService#remove', 'comment', comment);
+    return this.http.delete(`${this.baseUrl}/comments/${comment._id}`).map(() => {});
   }
 
   find(params: SearchParams = {}): Observable<Comment[]> {
-    console.log('CommentService#find', 'params', params);
-    return this.http.get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
+    console.info('CommentService#find', 'params', params);
+    return this.http
+      .get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json())
-      .map((comments: Comment[]) => comments.map((comment: Comment) => this.transformComment(comment)));
+      .map((comments: Comment[]) =>
+        comments.map((comment: Comment) => this.transformComment(comment))
+      );
   }
 
   count(params: SearchParams = {}): Observable<number> {
-    console.log('CommentService#count', 'params', params);
+    console.info('CommentService#count', 'params', params);
     params['count'] = true;
-    return this.http.get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
+    return this.http
+      .get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
   }
 
   private transformComment(comment: Comment): Comment {
     // Convert all date strings to Date objects
-    if (comment.created) { comment.created = new Date(comment.created); }
+    if (comment.created) {
+      comment.created = new Date(comment.created);
+    }
 
     // Set a random profile picture seeded by the user ID
     const seed = seedrandom(comment.user._id);

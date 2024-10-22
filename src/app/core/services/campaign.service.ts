@@ -18,47 +18,45 @@ import { StateService } from './state.service';
 export class CampaignService {
   private readonly baseUrl = `${environment.apiBaseUrl}/campaigns`;
 
-  constructor(
-    private http: JwtHttp,
-    private state: StateService,
-  ) {
+  constructor(private http: JwtHttp, private state: StateService) {
     // Setup group$ and auth.group$ subscribers to set respective campaign$'s
-    this.getCampaignForGroup(this.state.group$)
-      .subscribe((campaign: Campaign) => this.state.campaign = campaign);
-    this.getCampaignForGroup(this.state.auth.group$)
-      .subscribe((campaign: Campaign) => this.state.auth.campaign = campaign);
+    this.getCampaignForGroup(this.state.group$).subscribe(
+      (campaign: Campaign) => (this.state.campaign = campaign)
+    );
+    this.getCampaignForGroup(this.state.auth.group$).subscribe(
+      (campaign: Campaign) => (this.state.auth.campaign = campaign)
+    );
   }
 
   find(params: SearchParams = {}): Observable<Campaign[]> {
-    console.log('CampaignService#find', 'params', params);
-    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
+    console.info('CampaignService#find', 'params', params);
+    return this.http
+      .get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
       .map((campaigns: Campaign[]) =>
-        campaigns.map((campaign: Campaign) => this.transformCampaign(campaign)));
+        campaigns.map((campaign: Campaign) => this.transformCampaign(campaign))
+      );
   }
 
   findOne(params: SearchParams = {}): Observable<Campaign> {
-    console.log('CampaignService#findOne', 'params', params);
+    console.info('CampaignService#findOne', 'params', params);
     // It's possible some groups created multiple campaigns by accident
     // Get just the most recent campaign
     params.sort = '-_id';
-    return this.find(params)
-      .map((campaigns: Campaign[]) => {
-        if (campaigns.length === 0) {
-          throw new Error(`Campaign not found`);
-        }
+    return this.find(params).map((campaigns: Campaign[]) => {
+      if (campaigns.length === 0) {
+        throw new Error(`Campaign not found`);
+      }
 
-        return campaigns[0];
-      });
+      return campaigns[0];
+    });
   }
 
-  save(campaign: Campaign|NewCampaign): Observable<Campaign> {
-    console.log('CampaignService#save', 'campaign', campaign);
+  save(campaign: Campaign | NewCampaign): Observable<Campaign> {
+    console.info('CampaignService#save', 'campaign', campaign);
     const request = has(campaign, '_id')
       ? this.http.put(`${this.baseUrl}/${campaign._id}`, campaign)
-      : this.http.post(this.baseUrl, campaign)
-      ;
-
+      : this.http.post(this.baseUrl, campaign);
     return request
       .catch((response: Response) => Observable.throw(response.json().error))
       .map((response: Response) => response.json() || {})
@@ -66,16 +64,24 @@ export class CampaignService {
   }
 
   update(campaign: Campaign, changes: JsonPatch[]): Observable<null> {
-    console.log('CampaignService#update', 'campaign', campaign, 'changes', changes);
+    console.info('CampaignService#update', 'campaign', campaign, 'changes', changes);
     return this.http.patch(`${this.baseUrl}/${campaign._id}`, changes);
   }
 
   private transformCampaign(campaign: Campaign): Campaign {
     // Convert all date strings to Date objects
-    if (campaign.dateStart) { campaign.dateStart = new Date(campaign.dateStart); }
-    if (campaign.dateEnd) { campaign.dateEnd = new Date(campaign.dateEnd); }
-    if (campaign.created) { campaign.created = new Date(campaign.created); }
-    if (campaign.modified) { campaign.modified = new Date(campaign.modified); }
+    if (campaign.dateStart) {
+      campaign.dateStart = new Date(campaign.dateStart);
+    }
+    if (campaign.dateEnd) {
+      campaign.dateEnd = new Date(campaign.dateEnd);
+    }
+    if (campaign.created) {
+      campaign.created = new Date(campaign.created);
+    }
+    if (campaign.modified) {
+      campaign.modified = new Date(campaign.modified);
+    }
 
     return campaign;
   }
@@ -83,7 +89,9 @@ export class CampaignService {
   private getCampaignForGroup(group$: Observable<Group>): Observable<Campaign> {
     return group$
       .switchMap((group: Group) => {
-        if (!group) { return Observable.of(null); }
+        if (!group) {
+          return Observable.of(null);
+        }
         return this.findOne({ group: group._id, active: true });
       })
       .catch(() => Observable.of(null));

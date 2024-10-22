@@ -10,13 +10,9 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-3" *ngIf="(state.auth.user$ | async) as authUser">
+    <div class="col-sm-3" *ngIf="state.auth.user$ | async as authUser">
       <div class="list-group">
-        <a
-          class="list-group-item"
-          routerLink="/control-panel/user"
-          routerLinkActive="active"
-        >
+        <a class="list-group-item" routerLink="/control-panel/user" routerLinkActive="active">
           User
         </a>
       </div>
@@ -27,7 +23,7 @@
           <a
             class="list-group-item"
             *ngFor="let group of authUser?.groups; trackBy: identifyBy('_id')"
-            [routerLink]="['/control-panel/group', group?._id]"
+            [routerLink]="['/control-panel/groups', group?._id]"
             routerLinkActive="active"
           >
             {{ group?.name }}
@@ -38,25 +34,13 @@
       <div *ngIf="authUser?.superAdmin">
         <h4>Admin</h4>
         <div class="list-group">
-          <a
-            class="list-group-item"
-            routerLink="/control-panel/deeds"
-            routerLinkActive="active"
-          >
+          <a class="list-group-item" routerLink="/control-panel/deeds" routerLinkActive="active">
             Deeds
           </a>
-          <a
-            class="list-group-item"
-            routerLink="/control-panel/users"
-            routerLinkActive="active"
-          >
+          <a class="list-group-item" routerLink="/control-panel/users" routerLinkActive="active">
             Users
           </a>
-          <a
-            class="list-group-item"
-            routerLink="/control-panel/groups"
-            routerLinkActive="active"
-          >
+          <a class="list-group-item" routerLink="/control-panel/groups" routerLinkActive="active">
             Groups
           </a>
         </div>

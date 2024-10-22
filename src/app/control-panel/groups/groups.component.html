@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="(state.auth.user$ | async)?.superAdmin">
   <div class="col-xs-12">
     <liow-control-panel-search
       [query]="query$ | async"
@@ -18,50 +18,52 @@
 
     <table class="table table-bordered table-striped table-middle">
       <thead>
-      <tr>
-        <th style="width: 65px;">Logo</th>
-        <th>Name</th>
-        <th style="width: 95px;">Created</th>
-        <th style="width: 102px;">&nbsp;</th>
-      </tr>
+        <tr>
+          <th style="width: 65px">Logo</th>
+          <th>Name</th>
+          <th style="width: 95px">Created</th>
+          <th style="width: 102px">&nbsp;</th>
+        </tr>
       </thead>
 
       <tbody>
-      <tr *ngFor="let group of (state.controlPanel.groups$ | async); trackBy: identifyBy('_id')">
-        <td class="text-center">
-          <img src="/images/group.png" class="img-circle icon">
-        </td>
-        <td>{{ group?.name }}</td>
-        <td>{{ group?.created | moment:'YYYY-MM-DD' }}</td>
-        <td>
-          <div dropdown placement="bottom right" class="btn-group dropdown">
-            <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
-              Actions
-              <span class="caret"></span>
-            </button>
-            <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
-              <li *ngIf="group?.welcomeMessage">
-                <a (click)="openWelcomeMessage(group); $event.preventDefault()" href>
-                  <i class="fa fa-fw fa-commenting"></i>
-                  Welcome Message
-                </a>
-              </li>
-              <li>
-                <a [routerLink]="['/g', group?.urlName]">
-                  <i class="fa fa-fw fa-users"></i>
-                  View Public Page
-                </a>
-              </li>
-              <li>
-                <a [routerLink]="['/control-panel/group', group?._id]">
-                  <i class="fa fa-fw fa-cogs"></i>
-                  View Admin Page
-                </a>
-              </li>
-            </ul>
-          </div>
-        </td>
-      </tr>
+        <tr *ngFor="let group of state.controlPanel.groups$ | async; trackBy: identifyBy('_id')">
+          <td class="text-center">
+            <img src="/images/group.png" class="img-circle icon" />
+          </td>
+          <td>
+            <a [routerLink]="['/control-panel/groups', group?._id]">{{ group?.name }}</a>
+          </td>
+          <td>{{ group?.created | moment : 'YYYY-MM-DD' }}</td>
+          <td>
+            <div dropdown placement="bottom right" class="btn-group dropdown">
+              <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
+                Actions
+                <span class="caret"></span>
+              </button>
+              <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                <li *ngIf="group?.welcomeMessage">
+                  <a (click)="openWelcomeMessage(group); $event.preventDefault()" href>
+                    <i class="fa fa-fw fa-commenting"></i>
+                    Welcome Message
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/g', group?.urlName]">
+                    <i class="fa fa-fw fa-users"></i>
+                    View Public Page
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/control-panel/groups', group?._id]">
+                    <i class="fa fa-fw fa-cogs"></i>
+                    View Admin Page
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -73,7 +75,7 @@
   class="modal fade"
   tabindex="-1"
   role="dialog"
-  aria-labelledby="Welcome Message"
+  aria-label="Welcome Message"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-md">
@@ -96,9 +98,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="closeWelcomeMessage()">
-          OK
-        </button>
+        <button type="button" class="btn btn-primary" (click)="closeWelcomeMessage()">OK</button>
       </div>
     </div>
   </div>

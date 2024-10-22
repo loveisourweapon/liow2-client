@@ -17,37 +17,32 @@ export class GroupService {
   private readonly baseUrl = `${environment.apiBaseUrl}/groups`;
   private readonly numberOfCoverImages = 6;
 
-  constructor(
-    private http: JwtHttp,
-  ) { }
+  constructor(private http: JwtHttp) {}
 
   find(params: SearchParams = {}): Observable<Group[]> {
-    console.log('GroupService#find', 'params', params);
-    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
+    console.info('GroupService#find', 'params', params);
+    return this.http
+      .get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json() || [])
-      .map((groups: Group[]) =>
-        groups.map((group: Group) => this.transformGroup(group)));
+      .map((groups: Group[]) => groups.map((group: Group) => this.transformGroup(group)));
   }
 
   findOne(params: SearchParams = {}): Observable<Group> {
-    console.log('GroupService#findOne', 'params', params);
-    return this.find(params)
-      .map((groups: Group[]) => {
-        if (groups.length !== 1) {
-          throw new Error(`Group not found`);
-        }
+    console.info('GroupService#findOne', 'params', params);
+    return this.find(params).map((groups: Group[]) => {
+      if (groups.length !== 1) {
+        throw new Error(`Group not found`);
+      }
 
-        return groups[0];
-      });
+      return groups[0];
+    });
   }
 
-  save(group: Group|NewGroup): Observable<Group> {
-    console.log('GroupService#save', 'group', group);
+  save(group: Group | NewGroup): Observable<Group> {
+    console.info('GroupService#save', 'group', group);
     const request = has(group, '_id')
       ? this.http.put(`${this.baseUrl}/${group._id}`, group)
-      : this.http.post(this.baseUrl, group)
-      ;
-
+      : this.http.post(this.baseUrl, group);
     return request
       .catch((response: Response) => Observable.throw(response.json().error))
       .map((response: Response) => response.json() || {})
@@ -55,19 +50,26 @@ export class GroupService {
   }
 
   count(params: SearchParams = {}): Observable<number> {
-    console.log('GroupService#count', 'params', params);
+    console.info('GroupService#count', 'params', params);
     params['count'] = true;
-    return this.http.get(this.baseUrl, { search: buildUrlSearchParams(params) })
+    return this.http
+      .get(this.baseUrl, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
   }
 
   private transformGroup(group: Group): Group {
     // Convert all date strings to Date objects
-    if (group.created) { group.created = new Date(group.created); }
-    if (group.modified) { group.modified = new Date(group.modified); }
+    if (group.created) {
+      group.created = new Date(group.created);
+    }
+    if (group.modified) {
+      group.modified = new Date(group.modified);
+    }
 
     // Set a random cover image seeded by the group ID
-    group.coverImage = `/images/header${Math.floor(seedrandom(group._id)() * this.numberOfCoverImages)}.jpg`;
+    group.coverImage = `/images/header${Math.floor(
+      seedrandom(group._id)() * this.numberOfCoverImages
+    )}.jpg`;
 
     return group;
   }

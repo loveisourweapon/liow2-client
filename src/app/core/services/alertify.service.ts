@@ -4,32 +4,36 @@ import * as alertify from 'alertify.js';
 @Injectable()
 export class AlertifyService {
   constructor() {
-    alertify
-      .logPosition('top right')
-      .closeLogOnClick(true);
+    alertify.logPosition('top right').closeLogOnClick(true);
   }
 
   error(message: string, timeout = 6000, useTemplate = true): void {
-    console.log('Alertify#error', message);
+    console.info('Alertify#error', message);
     return alertify
       .delay(timeout)
-      .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('exclamation-circle', msg) : msg)
+      .setLogTemplate((msg: string) =>
+        useTemplate ? this.getLogTemplate('exclamation-circle', msg) : msg
+      )
       .error(message);
   }
 
   log(message: string, timeout = 6000, useTemplate = true): void {
-    console.log('Alertify#log', message);
+    console.info('Alertify#log', message);
     return alertify
       .delay(timeout)
-      .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('info-circle', msg) : msg)
+      .setLogTemplate((msg: string) =>
+        useTemplate ? this.getLogTemplate('info-circle', msg) : msg
+      )
       .log(message);
   }
 
   success(message: string, timeout = 6000, useTemplate = true): void {
-    console.log('Alertify#success', message);
+    console.info('Alertify#success', message);
     return alertify
       .delay(timeout)
-      .setLogTemplate((msg: string) => useTemplate ? this.getLogTemplate('check-circle', msg) : msg)
+      .setLogTemplate((msg: string) =>
+        useTemplate ? this.getLogTemplate('check-circle', msg) : msg
+      )
       .success(message);
   }
 

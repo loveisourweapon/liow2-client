@@ -27,7 +27,7 @@ export class AuthService {
     private auth: Ng2AuthService,
     private http: JwtHttp,
     private state: StateService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     // Set initial auth state
     const isAuthenticated = this.auth.isAuthenticated();
@@ -38,19 +38,20 @@ export class AuthService {
   }
 
   authenticateEmail(credentials: Credentials): Observable<User> {
-    console.log('Auth#authenticateEmail', 'credentials', credentials);
+    console.info('Auth#authenticateEmail', 'credentials', credentials);
     if (!(credentials.email && credentials.password)) {
       return Observable.throw(new Error(`Please provide email and password`));
     }
 
-    return this.auth.login(credentials)
+    return this.auth
+      .login(credentials)
       .catch((response: Response) => Observable.throw(response.json().error))
-      .map(() => this.state.auth.isAuthenticated = true)
+      .map(() => (this.state.auth.isAuthenticated = true))
       .switchMap(() => this.loadCurrentUser());
   }
 
   // authenticateFacebook(userData?: { group: string }): Observable<User> {
-  //   console.log('Auth#authenticateFacebook', 'userData', userData);
+  //   console.info('Auth#authenticateFacebook', 'userData', userData);
   //   return this.auth.authenticate('facebook', userData)
   //     .catch((response: Response) => Observable.throw(response.json().error))
   //     .map(() => this.state.auth.isAuthenticated = true)
@@ -58,93 +59,106 @@ export class AuthService {
   // }
 
   loadCurrentUser(setGroup = true): Observable<User> {
-    console.log('Auth#loadCurrentUser', 'setGroup', setGroup);
-    return this.userService.getCurrent()
-      .do((user: User) => {
-        if (setGroup) {
-          let authGroup: Group;
-          // If user has currentGroup property use it
-          if (has(user, 'currentGroup')) {
-            const currentGroup = find(user.groups, (userGroup: Group) => userGroup._id === user.currentGroup);
-            if (currentGroup) {
-              authGroup = currentGroup;
-            }
+    console.info('Auth#loadCurrentUser', 'setGroup', setGroup);
+    return this.userService.getCurrent().do((user: User) => {
+      if (setGroup) {
+        let authGroup: Group;
+        // If user has currentGroup property use it
+        if (has(user, 'currentGroup')) {
+          const currentGroup = find(
+            user.groups,
+            (userGroup: Group) => userGroup._id === user.currentGroup
+          );
+          if (currentGroup) {
+            authGroup = currentGroup;
           }
-
-          // Otherwise set and update using the users most recent group
-          if (!authGroup && has(user, 'groups') && user.groups.length) {
-            authGroup = last(user.groups);
-            user.currentGroup = authGroup._id;
-            this.userService.update(user, [{
-              op: JsonPatchOp.Replace,
-              path: '/currentGroup',
-              value: user.currentGroup,
-            }]).subscribe();
-          }
-
-          this.state.auth.group = authGroup || null;
         }
 
-        this.state.auth.user = user;
-        this.setSentryUserContext(user);
-      });
+        // Otherwise set and update using the users most recent group
+        if (!authGroup && has(user, 'groups') && user.groups.length) {
+          authGroup = last(user.groups);
+          user.currentGroup = authGroup._id;
+          this.userService
+            .update(user, [
+              {
+                op: JsonPatchOp.Replace,
+                path: '/currentGroup',
+                value: user.currentGroup,
+              },
+            ])
+            .subscribe();
+        }
+
+        this.state.auth.group = authGroup || null;
+      }
+
+      this.state.auth.user = user;
+      this.setSentryUserContext(user);
+    });
   }
 
   setAuthGroup(group: Group): void {
     this.state.auth.group = group;
     this.state.auth.user$
       .first()
-      .switchMap((user: User) => this.userService.update(user, [{
-        op: JsonPatchOp.Replace,
-        path: '/currentGroup',
-        value: group._id,
-      }]))
+      .switchMap((user: User) =>
+        this.userService.update(user, [
+          {
+            op: JsonPatchOp.Replace,
+            path: '/currentGroup',
+            value: group._id,
+          },
+        ])
+      )
       .subscribe();
   }
 
   isAdminOfGroup(group: Group): Observable<boolean> {
-    return this.state.auth.user$
-      .map((user: User) => (
-        has(group, 'admins') &&
-        has(user, '_id') &&
-        group.admins.indexOf(user._id) !== -1
-      ));
+    return this.state.auth.user$.map(
+      (user: User) =>
+        has(group, 'admins') && has(user, '_id') && group.admins.indexOf(user._id) !== -1
+    );
   }
 
   isMemberOfGroup(group: Group): Observable<boolean> {
-    return this.state.auth.user$
-      .map((user: User) => (
+    return this.state.auth.user$.map(
+      (user: User) =>
         has(user, 'groups') &&
         has(group, '_id') &&
         some(user.groups, (userGroup: Group) => userGroup._id === group._id)
-      ));
+    );
+  }
+
+  isSuperAdmin(): Observable<boolean> {
+    return this.state.auth.user$.map((user: User) => has(user, 'superAdmin') && user.superAdmin);
   }
 
   confirmEmail(token: string): Observable<null> {
-    console.log('Auth#confirmEmail', 'token', token);
-    return this.http.post(`${this.baseUrl}/confirm`, { token })
+    console.info('Auth#confirmEmail', 'token', token);
+    return this.http
+      .post(`${this.baseUrl}/confirm`, { token })
       .map((response: Response) => response.json());
   }
 
   resetPassword(password: string, token: string): Observable<Response> {
-    console.log('Auth#resetPassword', 'password', password, 'token', token);
+    console.info('Auth#resetPassword', 'password', password, 'token', token);
     return this.http.post(`${this.baseUrl}/reset`, { password, token });
   }
 
   sendConfirmEmail(emailAddress: string): Observable<Response> {
-    console.log('Auth#sendConfirmEmail', 'emailAddress', emailAddress);
+    console.info('Auth#sendConfirmEmail', 'emailAddress', emailAddress);
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/confirm`, { search });
   }
 
   sendForgotPassword(emailAddress: string): Observable<Response> {
-    console.log('Auth#sendForgotPassword', 'emailAddress', emailAddress);
+    console.info('Auth#sendForgotPassword', 'emailAddress', emailAddress);
     const search = new URLSearchParams(`email=${emailAddress}`, new NativeQueryEncoder());
     return this.http.get(`${this.baseUrl}/forgot`, { search });
   }
 
   logout(): Observable<void> {
-    console.log('Auth#logout');
+    console.info('Auth#logout');
     this.state.auth.isAuthenticated = false;
     this.state.auth.user = null;
     this.state.auth.group = null;
@@ -154,7 +168,7 @@ export class AuthService {
   }
 
   sendContactEmail(contactForm: ContactForm): Observable<Response> {
-    console.log('Auth#sendContactEmail', 'contactForm', contactForm);
+    console.info('Auth#sendContactEmail', 'contactForm', contactForm);
     return this.http.post(`${this.baseUrl}/contact`, contactForm);
   }
 
