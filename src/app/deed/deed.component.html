@@ -40,14 +40,18 @@
         (click)="onDeedDone(state.deed$, state.auth.group$, state.auth.campaign$)"
         class="btn btn-primary btn-block btn-lg"
         *ngIf="state.auth.isAuthenticated$ | async"
-        [disabled]="isDoing$ | async"
+        [disabled]="(isDoing$ | async) || (isDelaying$ | async)"
       >
         <img
           src="/images/logo-invert.png"
           class="img-responsive img-btn"
-          [hidden]="isDoing$ | async"
+          [hidden]="(isDoing$ | async) || (isDelaying$ | async)"
         />
         <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isDoing$ | async)"></i>
+        <i
+          class="fa fa-hourglass-{{ isDelaying$ | async }}"
+          [hidden]="(isDoing$ | async) || !(isDelaying$ | async)"
+        ></i>
         Done
       </button>
 
@@ -88,10 +92,7 @@
         </div>
       </div>
 
-      <ui-marked
-        [content]="(state.deed$ | async)?.content"
-        class="m-b-md"
-      ></ui-marked>
+      <ui-marked [content]="(state.deed$ | async)?.content" class="m-b-md"></ui-marked>
 
       <liow-comment-form
         [content]="testimony"
@@ -101,10 +102,7 @@
         *ngIf="(state.auth.isAuthenticated$ | async) && (state.deed$ | async)"
       ></liow-comment-form>
 
-      <liow-feed
-        [criteria]="feedCriteria"
-        *ngIf="state.deed$ | async as deed"
-      ></liow-feed>
+      <liow-feed [criteria]="feedCriteria" *ngIf="state.deed$ | async as deed"></liow-feed>
     </div>
   </div>
 </div>

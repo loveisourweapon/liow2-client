@@ -31,6 +31,7 @@ import {
 })
 export class DeedComponent implements OnDestroy, OnInit {
   isDoing$ = new BehaviorSubject<boolean>(false);
+  isDelaying$ = new BehaviorSubject<number>(0);
   isSavingTestimony$ = new BehaviorSubject<boolean>(false);
   feedCriteria: FeedCriteria;
   testimony = '';
@@ -123,9 +124,25 @@ export class DeedComponent implements OnDestroy, OnInit {
         () => {
           this.state.feed.update(true);
           this.alertify.success(`Deed done!`);
+
+          // Delay the user from doing the deed again for 5 seconds
+          this.animateDeedDoneDelay();
         },
         () => this.alertify.error(`Failed registering deed`),
       );
+  }
+
+  private animateDeedDoneDelay(): void {
+    this.isDelaying$.next(1);
+    setTimeout(() => {
+      this.isDelaying$.next(2)
+      setTimeout(() => {
+        this.isDelaying$.next(3)
+        setTimeout(() => {
+          this.isDelaying$.next(0)
+        }, 1600);
+      }, 1600);
+    }, 1600);
   }
 
   private loadCounter(deed: Deed, group: Group, campaign: Campaign): void {
