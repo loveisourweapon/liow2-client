@@ -52,9 +52,17 @@
             Global
           </a>
         </li>
-        <li *ngIf="(state.auth.isAuthenticated$ | async) && (state.auth.group$ | async) as authGroup">
+        <li
+          *ngIf="(state.auth.isAuthenticated$ | async) && (state.auth.group$ | async) as authGroup"
+          class="visible-md-block visible-lg-block"
+        >
           <a [routerLink]="['/g', authGroup?.urlName]" [title]="authGroup?.name">
             Campaign
+          </a>
+        </li>
+        <li>
+          <a href="https://liowstore.square.site/" target="_blank">
+            Shop
           </a>
         </li>
 
