@@ -45,6 +45,15 @@
         Current Campaign<br>
         <small class="text-muted">{{ authGroup?.name }}</small>
       </a>
+      <a
+        href="https://liowstore.square.site/"
+        target="_blank"
+        class="list-group-item list-group-item-inverse"
+        (click)="closeMenu()"
+      >
+        <i class="fa fa-fw fa-shopping-bag text-primary"></i>
+        Shop
+      </a>
     </div>
 
     <h5 class="text-uppercase text-muted" *ngIf="state.auth.isAuthenticated$ | async">
