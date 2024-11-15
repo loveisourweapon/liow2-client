@@ -140,9 +140,9 @@ export class DeedComponent implements OnDestroy, OnInit {
         this.isDelaying$.next(3)
         setTimeout(() => {
           this.isDelaying$.next(0)
-        }, 1600);
-      }, 1600);
-    }, 1600);
+        }, 600);
+      }, 600);
+    }, 600);
   }
 
   private loadCounter(deed: Deed, group: Group, campaign: Campaign): void {
