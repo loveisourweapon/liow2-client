@@ -157,8 +157,9 @@ export class UsersComponent implements OnInit, OnDestroy {
       return this.alertify.error(`Cannot delete a super admin`);
     }
 
-    this.removeUser = user;
-    this.confirmDeleteModal.show();
+    return this.alertify.error(`Not implemented yet`);
+    // this.removeUser = user;
+    // this.confirmDeleteModal.show();
   }
 
   handleDeleteUser(user: User): void {
