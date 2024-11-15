@@ -18,7 +18,7 @@
           (currentPageChanged)="page$.next($event)"
         ></liow-control-panel-pagination>
 
-        <div class="table-responsive">
+        <div class="table-responsive p-b-xl">
           <table class="table table-bordered table-striped table-middle">
             <thead>
               <tr>
@@ -28,8 +28,9 @@
                 <th style="width: 95px">Joined</th>
                 <th style="width: 95px">Last Seen</th>
                 <th style="width: 90px">Confirmed</th>
-                <th *ngIf="groupId$ | async">Admin</th>
+                <th *ngIf="group !== true">Admin</th>
                 <th *ngIf="authUser?.superAdmin" style="width: 105px">Super Admin</th>
+                <th style="width: 102px">&nbsp;</th>
               </tr>
             </thead>
 
@@ -47,11 +48,33 @@
                 <td class="text-center">
                   <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
                 </td>
-                <td *ngIf="group" class="text-center">
+                <td *ngIf="group !== true" class="text-center">
                   <ui-icon-checked [isChecked]="isAdmin(user, group)"></ui-icon-checked>
                 </td>
                 <td *ngIf="authUser?.superAdmin" class="text-center">
                   <ui-icon-checked [isChecked]="user.superAdmin"></ui-icon-checked>
+                </td>
+                <td>
+                  <div dropdown placement="bottom right" class="btn-group dropdown">
+                    <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
+                      Actions
+                      <span class="caret"></span>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                      <li *ngIf="group !== true">
+                        <a (click)="confirmRemoveUser(user, group); $event.preventDefault()" href>
+                          <i class="fa fa-fw fa-sign-out"></i>
+                          Remove from group
+                        </a>
+                      </li>
+                      <li *ngIf="authUser?.superAdmin">
+                        <a (click)="confirmDeleteUser(user); $event.preventDefault()" href>
+                          <i class="fa fa-fw fa-trash-o"></i>
+                          Delete user
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -61,3 +84,86 @@
     </div>
   </ng-container>
 </ng-container>
+
+<div
+  bsModal
+  #confirmRemoveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Are you sure you want to remove this user?"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to remove this user?</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="media">
+          <div class="media-left">
+            <img
+              [src]="removeUser?.picture || '/images/user0.png'"
+              class="media-object img-circle icon"
+            />
+          </div>
+          <div class="media-body media-middle">
+            <h4 class="media-heading">{{ removeUser?.name }}</h4>
+            <p>{{ removeUser?.email }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="confirmRemoveModal.hide()">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="handleRemoveUser(removeUser)"
+          [disabled]="isRemovingUser$ | async"
+        >
+          <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isRemovingUser$ | async)"></i>
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #confirmDeleteModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Are you sure you want to delete this user?"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to delete this user?</h4>
+      </div>
+
+      <div class="modal-body"></div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="confirmDeleteModal.hide()">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="handleDeleteUser(removeUser)"
+          [disabled]="isRemovingUser$ | async"
+        >
+          <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isRemovingUser$ | async)"></i>
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
