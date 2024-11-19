@@ -132,6 +132,7 @@ export class GroupDetailComponent implements OnInit {
         () => {
           this.alertify.success(`Removed group`);
           this.confirmRemoveModal.hide();
+          this.auth.loadCurrentUser();
           this.router.navigate(['/control-panel/user']);
         },
         () => this.alertify.error(`Failed removing group`)

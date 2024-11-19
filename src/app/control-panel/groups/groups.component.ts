@@ -11,7 +11,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { Group } from '../../core/models';
-import { AlertifyService, GroupService, StateService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  GroupService,
+  StateService,
+  TitleService,
+} from '../../core/services';
 import { identifyBy, SearchParams } from '../../shared';
 
 @Component({
@@ -41,6 +47,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertify: AlertifyService,
+    private auth: AuthService,
     private groupService: GroupService,
     private route: ActivatedRoute,
     private router: Router,
@@ -120,6 +127,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
           this.alertify.success(`Removed group`);
           this.confirmRemoveModal.hide();
           this.removeGroup = undefined;
+          this.auth.loadCurrentUser();
           this.refetch$.next(new Date());
         },
         () => this.alertify.error(`Failed removing group`)
