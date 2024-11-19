@@ -49,6 +49,13 @@ export class GroupService {
       .map((savedGroup: Group) => this.transformGroup(savedGroup));
   }
 
+  delete(group: Group): Observable<void> {
+    console.info('GroupService#delete', 'group', group);
+    return this.http
+      .delete(`${this.baseUrl}/${group._id}`)
+      .catch((response: Response) => Observable.throw(response.json().error));
+  }
+
   count(params: SearchParams = {}): Observable<number> {
     console.info('GroupService#count', 'params', params);
     params['count'] = true;

@@ -1,73 +1,81 @@
-<div class="row" *ngIf="(state.auth.user$ | async)?.superAdmin">
-  <div class="col-xs-12">
-    <liow-control-panel-search
-      [query]="query$ | async"
-      (search)="onSearch($event)"
-      autofocus
-    ></liow-control-panel-search>
+<ng-container *ngIf="state.auth.user$ | async as authUser">
+  <div class="row" *ngIf="authUser?.superAdmin">
+    <div class="col-xs-12">
+      <liow-control-panel-search
+        [query]="query$ | async"
+        (search)="onSearch($event)"
+        autofocus
+      ></liow-control-panel-search>
 
-    <liow-control-panel-pagination
-      typeOfItems="groups"
-      [numberOfItems]="numberOfGroups$ | async"
-      [numberOfPages]="numberOfPages$ | async"
-      [currentPage]="page$ | async"
-      [pageSize]="pageSize$ | async"
-      (numberOfPagesChanged)="numberOfPages$.next($event)"
-      (currentPageChanged)="page$.next($event)"
-    ></liow-control-panel-pagination>
+      <liow-control-panel-pagination
+        typeOfItems="groups"
+        [numberOfItems]="numberOfGroups$ | async"
+        [numberOfPages]="numberOfPages$ | async"
+        [currentPage]="page$ | async"
+        [pageSize]="pageSize$ | async"
+        (numberOfPagesChanged)="numberOfPages$.next($event)"
+        (currentPageChanged)="page$.next($event)"
+      ></liow-control-panel-pagination>
 
-    <table class="table table-bordered table-striped table-middle">
-      <thead>
-        <tr>
-          <th style="width: 65px">Logo</th>
-          <th>Name</th>
-          <th style="width: 95px">Created</th>
-          <th style="width: 102px">&nbsp;</th>
-        </tr>
-      </thead>
+      <table class="table table-bordered table-striped table-middle">
+        <thead>
+          <tr>
+            <th style="width: 65px">Logo</th>
+            <th>Name</th>
+            <th style="width: 95px">Created</th>
+            <th style="width: 102px">&nbsp;</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr *ngFor="let group of state.controlPanel.groups$ | async; trackBy: identifyBy('_id')">
-          <td class="text-center">
-            <img src="/images/group.png" class="img-circle icon" />
-          </td>
-          <td>
-            <a [routerLink]="['/control-panel/groups', group?._id]">{{ group?.name }}</a>
-          </td>
-          <td>{{ group?.created | moment : 'YYYY-MM-DD' }}</td>
-          <td>
-            <div dropdown placement="bottom right" class="btn-group dropdown">
-              <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
-                Actions
-                <span class="caret"></span>
-              </button>
-              <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
-                <li *ngIf="group?.welcomeMessage">
-                  <a (click)="openWelcomeMessage(group); $event.preventDefault()" href>
-                    <i class="fa fa-fw fa-commenting"></i>
-                    Welcome Message
-                  </a>
-                </li>
-                <li>
-                  <a [routerLink]="['/g', group?.urlName]">
-                    <i class="fa fa-fw fa-users"></i>
-                    View Public Page
-                  </a>
-                </li>
-                <li>
-                  <a [routerLink]="['/control-panel/groups', group?._id]">
-                    <i class="fa fa-fw fa-cogs"></i>
-                    View Admin Page
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <tbody>
+          <tr *ngFor="let group of state.controlPanel.groups$ | async; trackBy: identifyBy('_id')">
+            <td class="text-center">
+              <img src="/images/group.png" class="img-circle icon" />
+            </td>
+            <td>
+              <a [routerLink]="['/control-panel/groups', group?._id]">{{ group?.name }}</a>
+            </td>
+            <td>{{ group?.created | moment : 'YYYY-MM-DD' }}</td>
+            <td>
+              <div dropdown placement="bottom right" class="btn-group dropdown">
+                <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
+                  Actions
+                  <span class="caret"></span>
+                </button>
+                <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                  <li *ngIf="group?.welcomeMessage">
+                    <a (click)="openWelcomeMessage(group); $event.preventDefault()" href>
+                      <i class="fa fa-fw fa-commenting"></i>
+                      Welcome Message
+                    </a>
+                  </li>
+                  <li>
+                    <a [routerLink]="['/g', group?.urlName]">
+                      <i class="fa fa-fw fa-users"></i>
+                      View Public Page
+                    </a>
+                  </li>
+                  <li>
+                    <a [routerLink]="['/control-panel/groups', group?._id]">
+                      <i class="fa fa-fw fa-cogs"></i>
+                      View Admin Page
+                    </a>
+                  </li>
+                  <li *ngIf="authUser?.superAdmin">
+                    <a (click)="confirmRemoveGroup(group); $event.preventDefault()" href>
+                      <i class="fa fa-fw fa-trash-o"></i>
+                      Remove
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+</ng-container>
 
 <div
   bsModal
@@ -99,6 +107,58 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="closeWelcomeMessage()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #confirmRemoveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Are you sure you want to remove this group?"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to remove this group?</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="media">
+          <div class="media-left">
+            <img src="/images/group.png" class="media-object img-circle icon" />
+          </div>
+          <div class="media-body media-middle">
+            <h4 class="media-heading">{{ removeGroup?.name }}</h4>
+          </div>
+        </div>
+        <div class="m-t-md">
+          <ui-marked [content]="removeGroup?.welcomeMessage"></ui-marked>
+        </div>
+        <p class="m-t-lg">
+          <b>Note:</b> This will completely delete the group from Love is our Weapon including all
+          testimonies and deeds done. The global counter might go down from this action. All users
+          will be removed from the group, but they will not be deleted from Love is our Weapon.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="confirmRemoveModal.hide()">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="handleRemoveGroup(removeGroup)"
+          [disabled]="isRemovingGroup$ | async"
+        >
+          <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isRemovingGroup$ | async)"></i>
+          Confirm
+        </button>
       </div>
     </div>
   </div>

@@ -168,6 +168,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         () => {
           this.alertify.success(`Deleted user`);
           this.confirmDeleteModal.hide();
+          this.removeUser = undefined;
           this.refetch$.next(new Date());
         },
         () => this.alertify.error(`Failed deleting user`)

@@ -14,6 +14,15 @@
     <button
       type="button"
       class="btn btn-default btn-block"
+      (click)="confirmRemoveModal.show()"
+      *ngIf="(auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async)"
+    >
+      <i class="fa fa-fw fa-trash-o"></i>
+      Remove
+    </button>
+    <button
+      type="button"
+      class="btn btn-default btn-block"
       (click)="leaveGroup(authUser, group)"
       *ngIf="(auth.isMemberOfGroup(group) | async) && (state.auth.user$ | async) as authUser"
     >
@@ -76,6 +85,58 @@
           Cancel
         </button>
         <button type="button" class="btn btn-primary" (click)="closeConfirmation(true)">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #confirmRemoveModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Are you sure you want to remove this group?"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md" *ngIf="state.controlPanel.group$ | async as group">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to remove this group?</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="media">
+          <div class="media-left">
+            <img src="/images/group.png" class="media-object img-circle icon" />
+          </div>
+          <div class="media-body media-middle">
+            <h4 class="media-heading">{{ group?.name }}</h4>
+          </div>
+        </div>
+        <div class="m-t-md">
+          <ui-marked [content]="group?.welcomeMessage"></ui-marked>
+        </div>
+        <p class="m-t-lg">
+          <b>Note:</b> This will completely delete the group from Love is our Weapon including all
+          testimonies and deeds done. The global counter might go down from this action. All users
+          will be removed from the group, but they will not be deleted from Love is our Weapon.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="confirmRemoveModal.hide()">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="handleRemove(group)"
+          [disabled]="isRemoving$ | async"
+        >
+          <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isRemoving$ | async)"></i>
           Confirm
         </button>
       </div>
