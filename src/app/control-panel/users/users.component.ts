@@ -139,9 +139,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           },
         ])
       )
-      .finally(() => {
-        this.isRemovingUser$.next(false);
-      })
+      .finally(() => this.isRemovingUser$.next(false))
       .subscribe(
         () => {
           this.alertify.success(`Removed user`);
@@ -157,18 +155,23 @@ export class UsersComponent implements OnInit, OnDestroy {
       return this.alertify.error(`Cannot delete a super admin`);
     }
 
-    return this.alertify.error(`Not implemented yet`);
-    // this.removeUser = user;
-    // this.confirmDeleteModal.show();
+    this.removeUser = user;
+    this.confirmDeleteModal.show();
   }
 
   handleDeleteUser(user: User): void {
     this.isRemovingUser$.next(true);
-
-    setTimeout(() => {
-      this.isRemovingUser$.next(false);
-      this.alertify.success(`Deleted user`);
-      this.confirmDeleteModal.hide();
-    }, 1000);
+    this.userService
+      .delete(user)
+      .finally(() => this.isRemovingUser$.next(false))
+      .subscribe(
+        () => {
+          this.alertify.success(`Deleted user`);
+          this.confirmDeleteModal.hide();
+          this.removeUser = undefined;
+          this.refetch$.next(new Date());
+        },
+        () => this.alertify.error(`Failed deleting user`)
+      );
   }
 }

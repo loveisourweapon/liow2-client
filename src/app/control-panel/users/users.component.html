@@ -113,6 +113,12 @@
             <p>{{ removeUser?.email }}</p>
           </div>
         </div>
+
+        <p class="m-t-lg">
+          <b>Note:</b> This will not remove the user's testimonies or deeds done. You can remove
+          unwanted testimonies using the Testimonies tab. Please
+          <a routerLink="/contact">contact us</a> if you need help.
+        </p>
       </div>
 
       <div class="modal-footer">
@@ -148,7 +154,25 @@
         <h4 class="modal-title">Are you sure you want to delete this user?</h4>
       </div>
 
-      <div class="modal-body"></div>
+      <div class="modal-body">
+        <div class="media">
+          <div class="media-left">
+            <img
+              [src]="removeUser?.picture || '/images/user0.png'"
+              class="media-object img-circle icon"
+            />
+          </div>
+          <div class="media-body media-middle">
+            <h4 class="media-heading">{{ removeUser?.name }}</h4>
+            <p>{{ removeUser?.email }}</p>
+          </div>
+        </div>
+
+        <p class="m-t-lg">
+          <b>Note:</b> This will completely delete the user from Love is our Weapon including all
+          testimonies and deeds done. The global counter might go down from this action.
+        </p>
+      </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="confirmDeleteModal.hide()">

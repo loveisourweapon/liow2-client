@@ -3,6 +3,7 @@
 
 .feed-wrapper {
   position: relative;
+  clear: both;
 
   &:before {
     content: '';
@@ -17,7 +18,10 @@
 
 .feed-controls {
   float: right;
-  margin-top: -50px;
+
+  @media screen and (min-width: 550px) {
+    margin-top: -48px;
+  }
 
   ui-switch {
     margin-right: 10px;

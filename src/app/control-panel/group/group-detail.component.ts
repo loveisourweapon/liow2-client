@@ -18,6 +18,7 @@ import {
   ActService,
   AlertifyService,
   AuthService,
+  GroupService,
   ModalService,
   StateService,
   TitleService,
@@ -36,6 +37,9 @@ export class GroupDetailComponent implements OnInit {
   confirmModalContent: string;
   private confirmation$ = new BehaviorSubject<boolean>(null);
 
+  @ViewChild('confirmRemoveModal') confirmRemoveModal: ModalDirective;
+  isRemoving$ = new BehaviorSubject<boolean>(false);
+
   constructor(
     private actService: ActService,
     private alertify: AlertifyService,
@@ -45,7 +49,8 @@ export class GroupDetailComponent implements OnInit {
     public state: StateService,
     private title: TitleService,
     private userService: UserService,
-  ) { }
+    private groupService: GroupService
+  ) {}
 
   ngOnInit(): void {
     this.numberOfMembers$ = this.state.controlPanel.group$
@@ -53,30 +58,34 @@ export class GroupDetailComponent implements OnInit {
         this.actService.count({ group: group._id });
         this.title.set(`${group.name} | Control Panel`);
       })
-      .map((group: Group) => (<SearchParams>{ groups: group._id }))
+      .map((group: Group) => <SearchParams>{ groups: group._id })
       .switchMap((searchParams: SearchParams) => this.userService.count(searchParams));
   }
 
   leaveGroup(user: User, group: Group): void {
-    this.auth.isAdminOfGroup(group)
+    this.auth
+      .isAdminOfGroup(group)
       .first()
-      .switchMap((isAdminOfGroup: boolean) => Observable.if(
-        // Prevent group owner and group admins from leaving
-        () => group.owner !== user._id && !isAdminOfGroup,
-        Observable.of(null),
-        Observable.throw(group.owner === user._id
-          // User is the group owner
-          ? `
+      .switchMap((isAdminOfGroup: boolean) =>
+        Observable.if(
+          // Prevent group owner and group admins from leaving
+          () => group.owner !== user._id && !isAdminOfGroup,
+          Observable.of(null),
+          Observable.throw(
+            group.owner === user._id
+              ? // User is the group owner
+                `
             <p>You are the current owner of <b>${group.name}</b>.</p>
             <p>You'll need to make someone else the owner before leaving.</p>
           `
-          // User is a group admin
-          : `
+              : // User is a group admin
+                `
             <p>You are currently an admin of <b>${group.name}</b>.</p>
             <p>You'll need to be removed as an admin before leaving.</p>
           `
+          )
         )
-      ))
+      )
       .subscribe(
         () => {
           this.openConfirmation(`Are you sure you want to leave <b>${group.name}</b>?`);
@@ -85,18 +94,21 @@ export class GroupDetailComponent implements OnInit {
             .filter((isConfirmed: boolean) => isConfirmed)
             .map(() => user.groups.findIndex((userGroup: Group) => userGroup._id === group._id))
             .switchMap((index: number) =>
-              this.userService.update(user, [{
-                op: JsonPatchOp.Remove,
-                path: `/groups/${index}`,
-              }]))
+              this.userService.update(user, [
+                {
+                  op: JsonPatchOp.Remove,
+                  path: `/groups/${index}`,
+                },
+              ])
+            )
             .switchMap(() => this.auth.loadCurrentUser())
             .do(() => this.router.navigate(['/control-panel']))
             .subscribe(
               () => this.alertify.log(`Left group <b>${group.name}</b>`),
-              () => this.alertify.error(`Failed leaving group <b>${group.name}</b>`),
+              () => this.alertify.error(`Failed leaving group <b>${group.name}</b>`)
             );
         },
-        (errorMessage: string) => this.alertify.log(errorMessage, 10000, false),
+        (errorMessage: string) => this.alertify.log(errorMessage, 10000, false)
       );
   }
 
@@ -109,5 +121,21 @@ export class GroupDetailComponent implements OnInit {
   closeConfirmation(isConfirmed: boolean): void {
     this.confirmation$.next(isConfirmed);
     this.confirmModal.hide();
+  }
+
+  handleRemove(group: Group): void {
+    this.isRemoving$.next(true);
+    this.groupService
+      .delete(group)
+      .finally(() => this.isRemoving$.next(false))
+      .subscribe(
+        () => {
+          this.alertify.success(`Removed group`);
+          this.confirmRemoveModal.hide();
+          this.auth.loadCurrentUser();
+          this.router.navigate(['/control-panel/user']);
+        },
+        () => this.alertify.error(`Failed removing group`)
+      );
   }
 }

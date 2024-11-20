@@ -64,6 +64,13 @@ export class UserService {
       .map((updatedUser: User) => this.transformUser(updatedUser));
   }
 
+  delete(user: User): Observable<void> {
+    console.info('UserService#delete', 'user', user);
+    return this.http
+      .delete(`${this.baseUrl}/${user._id}`)
+      .catch((response: Response) => Observable.throw(response.json().error));
+  }
+
   count(params: SearchParams = {}): Observable<number> {
     console.info('UserService#count', 'params', params);
     params['count'] = true;
