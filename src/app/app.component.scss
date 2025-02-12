@@ -8,6 +8,10 @@
 .content-wrapper {
   padding-top: $navbar-height;
   padding-bottom: $footer-height;
+
+  @media (max-width: $screen-xs-max) {
+    padding-bottom: $footer-height-sm;
+  }
 }
 
 footer {
@@ -19,9 +23,49 @@ footer {
   border-top: 1px solid $gray-border;
   background: $body-bg;
 
+  @media (max-width: $screen-xs-max) {
+    height: $footer-height-sm;
+  }
+
   > .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 15px;
     line-height: 30px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      flex-direction: column;
+
+      .footer-copyright {
+        order: 3;
+      }
+    }
+  }
+
+  .footer-social {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+
+    @media (max-width: $screen-xs-max) {
+      align-items: flex-start;
+    }
+
+    a {
+      display: inline-flex;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   ul {
