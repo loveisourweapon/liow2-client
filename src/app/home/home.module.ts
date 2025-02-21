@@ -12,6 +12,7 @@ import { AboutUsComponent } from './about-us';
 import { ContactUsComponent } from './contact-us';
 import { PrivacyPolicyComponent } from './privacy-policy';
 import { TermsAndConditionsComponent } from './terms-and-conditions';
+import { FAQsComponent } from './faqs';
 import { WelcomeComponent } from './welcome';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { WelcomeComponent } from './welcome';
     ContactUsComponent,
     PrivacyPolicyComponent,
     TermsAndConditionsComponent,
+    FAQsComponent,
     WelcomeComponent,
   ],
 })
