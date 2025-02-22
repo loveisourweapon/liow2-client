@@ -15,6 +15,7 @@ import { GroupComponent, GroupDetailComponent } from './group';
 import { GroupsComponent } from './groups';
 import { UserComponent } from './user';
 import { UsersComponent } from './users';
+import { ApproveGroupComponent } from './approve-group';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { UsersComponent } from './users';
     GroupsComponent,
     UserComponent,
     UsersComponent,
+    ApproveGroupComponent,
   ],
 })
 export class ControlPanelModule { }

@@ -8,6 +8,7 @@ import { GroupComponent, GroupDetailComponent } from './group';
 import { GroupsComponent } from './groups';
 import { UserComponent } from './user';
 import { UsersComponent } from './users';
+import { ApproveGroupComponent } from './approve-group';
 
 const controlPanelRoutes: Routes = [
   {
@@ -32,6 +33,7 @@ const controlPanelRoutes: Routes = [
       { path: '', redirectTo: '/control-panel/user', pathMatch: 'full' },
     ],
   },
+  { path: 'approve/:token', component: ApproveGroupComponent },
 ];
 
 @NgModule({
