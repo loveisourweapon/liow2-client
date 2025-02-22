@@ -9,28 +9,46 @@
 
 <footer>
   <div class="container f-sm">
-    <div class="pull-left">
+    <div class="footer-copyright">
       &copy; {{ date | moment:'YYYY' }}
       <span class="hidden-xs">The</span>
       Love is our Weapon
       <span class="hidden-xs">Campaign</span>
     </div>
-    <div class="pull-right">
+    <div class="footer-social">
+      <a href="https://www.facebook.com/loveisourweaponcampaign" target="_blank">
+        <img src="/images/logo-facebook.png" alt="Facebook logo" />
+      </a>
+      <a href="https://www.instagram.com/loveisourweaponcampaign" target="_blank">
+        <img src="/images/logo-instagram.png" alt="Instagram logo" />
+      </a>
+      <a href="https://www.youtube.com/@loveisourweaponcampaign" target="_blank">
+        <img src="/images/logo-youtube.png" alt="YouTube logo" />
+      </a>
+    </div>
+    <div class="footer-links">
       <ul class="list-inline">
         <li>
-          <a routerLink="/about">About<span class="hidden-xs"> us</span></a>
+          <a routerLink="/about">About<span class="hidden-xs hidden-sm"> us</span></a>
         </li>
         <li>&middot;</li>
         <li>
-          <a routerLink="/privacy">Privacy<span class="hidden-xs"> policy</span></a>
+          <a routerLink="/faqs">
+            <span class="visible-xs visible-sm">FAQs</span>
+            <span class="hidden-xs hidden-sm">Frequently asked</span>
+          </a>
         </li>
         <li>&middot;</li>
         <li>
-          <a routerLink="/terms">Terms<span class="hidden-xs"> and conditions</span></a>
+          <a routerLink="/privacy">Privacy<span class="hidden-xs hidden-sm"> policy</span></a>
         </li>
         <li>&middot;</li>
         <li>
-          <a routerLink="/contact">Contact<span class="hidden-xs"> us</span></a>
+          <a routerLink="/terms">Terms<span class="hidden-xs hidden-sm"> and conditions</span></a>
+        </li>
+        <li>&middot;</li>
+        <li>
+          <a routerLink="/contact">Contact<span class="hidden-xs hidden-sm"> us</span></a>
         </li>
       </ul>
     </div>
