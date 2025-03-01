@@ -52,6 +52,12 @@
           <td>{{ group?.created | moment : 'LL' }}</td>
         </tr>
         <tr>
+          <th>Approved</th>
+          <td>
+            <ui-icon-checked [isChecked]="group?.approved"></ui-icon-checked>
+          </td>
+        </tr>
+        <tr>
           <th>Members</th>
           <td>{{ numberOfMembers$ | async | number }}</td>
         </tr>
