@@ -27,7 +27,7 @@ export class ApproveGroupComponent implements OnInit {
     this.route.params
       .filter((params: Params) => has(params, 'token'))
       .first()
-      .switchMap((params: Params) => this.groupService.approve(params.token))
+      .switchMap((params: Params) => this.groupService.approveWithToken(params.token))
       .switchMap(() => this.auth.loadCurrentUser())
       .finally(() => this.router.navigate(['/']))
       .subscribe(

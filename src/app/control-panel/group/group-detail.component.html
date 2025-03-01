@@ -5,6 +5,15 @@
     <button
       type="button"
       class="btn btn-default btn-block"
+      (click)="handleApprove(group)"
+      *ngIf="!group.approved && (auth.isSuperAdmin() | async)"
+    >
+      <i class="fa fa-fw fa-check"></i>
+      Approve
+    </button>
+    <button
+      type="button"
+      class="btn btn-default btn-block"
       (click)="modal.openGroupEdit('Update', group)"
       *ngIf="(auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async)"
     >

@@ -32,6 +32,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   numberOfPages$ = new BehaviorSubject<number>(1);
   numberOfGroups$: Observable<number>;
   filterParams$: Observable<SearchParams>;
+  isApprovingGroup$ = new BehaviorSubject<boolean>(false);
 
   @ViewChild('welcomeMessageModal') welcomeMessageModal: ModalDirective;
   welcomeMessage: string;
@@ -110,6 +111,21 @@ export class GroupsComponent implements OnInit, OnDestroy {
     if (this.welcomeMessageModal.isShown) {
       this.welcomeMessageModal.hide();
     }
+  }
+
+  handleApproveGroup(group: Group): void {
+    this.isApprovingGroup$.next(true);
+    this.groupService
+      .approve(group)
+      .finally(() => this.isApprovingGroup$.next(false))
+      .subscribe(
+        () => {
+          this.alertify.success(`Approved group`);
+          this.auth.loadCurrentUser();
+          this.refetch$.next(new Date());
+        },
+        () => this.alertify.error(`Failed approving group`)
+      );
   }
 
   confirmRemoveGroup(group: Group): void {

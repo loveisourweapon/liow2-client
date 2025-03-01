@@ -56,8 +56,15 @@ export class GroupService {
       .catch((response: Response) => Observable.throw(response.json().error));
   }
 
-  approve(token: string): Observable<null> {
-    console.info('GroupService#approve', 'token', token);
+  approve(group: Group): Observable<null> {
+    console.info('GroupService#approve', 'group', group);
+    return this.http
+      .post(`${this.baseUrl}/${group._id}/approve`, {})
+      .map((response: Response) => response.json());
+  }
+
+  approveWithToken(token: string): Observable<null> {
+    console.info('GroupService#approveWithToken', 'token', token);
     return this.http
       .post(`${this.baseUrl}/approve`, { token })
       .map((response: Response) => response.json());
