@@ -40,6 +40,7 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
   isSaving$ = new BehaviorSubject<boolean>(false);
   group: Group | NewGroup = <NewGroup>{
     name: '',
+    contactNumber: '',
     logo: null,
     coverImage: null,
     admins: [],
@@ -152,6 +153,7 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
     this.action = EditAction.Create;
     this.isSaving$.next(false);
     this.group.name = '';
+    this.group.contactNumber = '';
     this.group.logo = null;
     this.group.coverImage = null;
     this.group.admins = [];
