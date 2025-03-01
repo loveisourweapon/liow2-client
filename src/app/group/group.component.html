@@ -5,9 +5,16 @@
 >
   <div jumbotron-title>{{ group?.name }}</div>
   <div jumbotron-text>
-    <span *ngIf="(state.campaign$ | async) && (state.campaign$ | async)?._id === (state.auth.campaign$ | async)?._id; then showCampaignCounter; else showGroupCounter"></span>
+    <span
+      *ngIf="
+        (state.campaign$ | async) &&
+          (state.campaign$ | async)?._id === (state.auth.campaign$ | async)?._id;
+        then showCampaignCounter;
+        else showGroupCounter
+      "
+    ></span>
     <ng-template #showCampaignCounter>
-      <span class="f-lg" *ngIf="(state.campaign$ | async) as campaign">
+      <span class="f-lg" *ngIf="state.campaign$ | async as campaign">
         {{ state.counter$(campaign?._id) | async | number }}
       </span>
       acts of love <span class="text-muted">this campaign</span>
@@ -24,7 +31,7 @@
 <div class="container container-pad">
   <div class="row" *ngIf="state.group$ | async as group">
     <div class="col-sm-4 col-md-3 col-sm-push-8 col-md-push-9 m-b-lg">
-        <!--<div [ngSwitch]="auth.isAdminOfGroup(group) | async">
+      <!--<div [ngSwitch]="auth.isAdminOfGroup(group) | async">
           &lt;!&ndash; Show buttons with publish/unpublish menu for admins &ndash;&gt;
           <div *ngSwitchCase="true">
             <div
@@ -83,10 +90,7 @@
           </small>
         </h4>
 
-        <liow-deed-list
-          layout="vertical"
-          [campaign]="campaign"
-        ></liow-deed-list>
+        <liow-deed-list layout="vertical" [campaign]="campaign"></liow-deed-list>
         <hr />
       </div>
 
@@ -100,11 +104,7 @@
           <i class="fa fa-fw fa-edit"></i>
           Update campaign
         </button>
-        <button
-          type="button"
-          class="btn btn-default btn-block"
-          (click)="finishCampaign(campaign)"
-        >
+        <button type="button" class="btn btn-default btn-block" (click)="finishCampaign(campaign)">
           <i class="fa fa-fw fa-flag-checkered"></i>
           Finish campaign
         </button>
@@ -116,7 +116,11 @@
         type="button"
         class="btn btn-primary btn-block btn-lg"
         (click)="joinGroup(state.auth.user$, state.group$)"
-        *ngIf="(state.auth.isAuthenticated$ | async) && !(auth.isMemberOfGroup(group) | async)"
+        *ngIf="
+          group.approved &&
+          (state.auth.isAuthenticated$ | async) &&
+          !(auth.isMemberOfGroup(group) | async)
+        "
       >
         <i class="fa fa-fw fa-users"></i>
         Join us
@@ -125,7 +129,7 @@
         type="button"
         class="btn btn-primary btn-block btn-lg"
         (click)="modal.openLogin()"
-        *ngIf="!(state.auth.isAuthenticated$ | async)"
+        *ngIf="group.approved && !(state.auth.isAuthenticated$ | async)"
       >
         <i class="fa fa-fw fa-users"></i>
         Login &amp; Join us
@@ -134,7 +138,7 @@
         type="button"
         class="btn btn-default btn-block"
         (click)="modal.openCampaignEdit()"
-        *ngIf="!(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
+        *ngIf="group.approved && !(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
       >
         <i class="fa fa-fw fa-bullhorn"></i>
         Setup campaign
@@ -162,10 +166,13 @@
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
+      <alert type="info" *ngIf="!group.approved && (auth.isAdminOfGroup(group) | async)">
+        Your group hasn't been approved yet, we'll be in contact soon!
+      </alert>
       <alert
         type="info"
         [dismissible]="true"
-        *ngIf="!(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
+        *ngIf="group.approved && !(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
       >
         You haven't got an active campaign, would you like to set one up now?&nbsp;
         <button
@@ -178,10 +185,7 @@
       </alert>
 
       <tabset type="pills">
-        <tab
-          [active]="currentTab === tabs.Welcome"
-          (select)="currentTab = tabs.Welcome"
-        >
+        <tab [active]="currentTab === tabs.Welcome" (select)="currentTab = tabs.Welcome">
           <ng-template tabHeading>
             <i class="fa fa-fw fa-commenting"></i>
             Welcome
@@ -203,10 +207,7 @@
           </div>
         </tab>
 
-        <tab
-          [active]="currentTab === tabs.Feed"
-          (select)="currentTab = tabs.Feed"
-        >
+        <tab [active]="currentTab === tabs.Feed" (select)="currentTab = tabs.Feed">
           <ng-template tabHeading>
             <i class="fa fa-fw fa-list"></i>
             Activity Feed
