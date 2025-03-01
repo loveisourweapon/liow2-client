@@ -17,20 +17,14 @@
         class="form-horizontal"
         novalidate
       >
-        <liow-modal-header
-          modalTitle="Sign up"
-          (close)="onClose()"
-        ></liow-modal-header>
+        <liow-modal-header modalTitle="Sign up" (close)="onClose()"></liow-modal-header>
 
         <div class="modal-body">
           <div *ngIf="group">
-            <ui-switch
-              [checked]="joinGroup"
-              (change)="joinGroup = $event"
-            >
+            <ui-switch [checked]="joinGroup" (change)="joinGroup = $event">
               Join {{ group.name }}
             </ui-switch>
-            <hr>
+            <hr />
           </div>
 
           <!-- <p>
@@ -50,8 +44,13 @@
 
           <alert type="danger" *ngIf="errorMessage">
             <i class="fa fa-fw fa-exclamation-triangle"></i>
-            There was an error signing up. Please try again or
-            <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
+            <span *ngIf="errorMessage.includes('accept the terms'); else genericError">{{
+              errorMessage
+            }}</span>
+            <ng-template #genericError>
+              There was an error signing up. Please try again or
+              <a href="mailto:support@loveisourweapon.com">contact us</a> about it.
+            </ng-template>
           </alert>
 
           <div
@@ -72,7 +71,7 @@
                     placeholder="First..."
                     required
                     #autofocus
-                  >
+                  />
                 </div>
                 <div class="col-xs-6">
                   <input
@@ -83,7 +82,7 @@
                     #lastName="ngModel"
                     [(ngModel)]="user.lastName"
                     placeholder="Last..."
-                  >
+                  />
                 </div>
               </div>
             </div>
@@ -111,11 +110,8 @@
                 [(ngModel)]="user.email"
                 placeholder="Email address..."
                 validateEmail
-              >
-              <span
-                class="help-block"
-                *ngIf="form.submitted && (email.invalid || errors.email)"
-              >
+              />
+              <span class="help-block" *ngIf="form.submitted && (email.invalid || errors.email)">
                 <span *ngIf="email.errors?.validEmail">Please enter a valid email address</span>
                 <span *ngIf="errors?.email">
                   {{ errors.email.message }}
@@ -148,22 +144,21 @@
                 placeholder="Enter a password..."
                 minlength="8"
                 required
-              >
+              />
               <span
                 class="help-block"
                 *ngIf="form.submitted && (password.invalid || errors.password)"
               >
                 <span *ngIf="password.errors?.required">Please enter a password</span>
-                <span *ngIf="password.errors?.minlength">Password must be at least 8 characters</span>
+                <span *ngIf="password.errors?.minlength"
+                  >Password must be at least 8 characters</span
+                >
                 <span *ngIf="errors?.password">{{ errors.password.message }}</span>
               </span>
             </div>
           </div>
 
-          <div
-            class="form-group"
-            [class.has-error]="form.submitted && errors.picture"
-          >
+          <div class="form-group" [class.has-error]="form.submitted && errors.picture">
             <label for="picture" class="col-xs-3 control-label">Picture</label>
             <div class="col-xs-9 col-sm-8">
               <input
@@ -175,13 +170,33 @@
                 [(ngModel)]="user.picture"
                 placeholder="Image upload coming soon..."
                 disabled
-              >
-              <span
-                class="help-block"
-                *ngIf="form.submitted && errors.picture"
-              >
+              />
+              <span class="help-block" *ngIf="form.submitted && errors.picture">
                 <span *ngIf="errors?.picture">{{ errors.picture.message }}</span>
               </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-xs-9 col-xs-push-3">
+              <div>
+                <ui-switch
+                  size="small"
+                  [checked]="user.acceptTerms"
+                  (change)="user.acceptTerms = $event"
+                >
+                  I accept the <a href="/terms" target="_blank">terms and conditions</a>
+                </ui-switch>
+              </div>
+              <div>
+                <ui-switch
+                  size="small"
+                  [checked]="user.marketingOptIn"
+                  (change)="user.marketingOptIn = $event"
+                >
+                  I agree to receive marketing emails
+                </ui-switch>
+              </div>
             </div>
           </div>
 
@@ -202,16 +217,11 @@
         </div><!-- .modal-body -->
 
         <div class="modal-footer">
-          <button
-            type="submit"
-            class="btn btn-primary btn-block"
-            [disabled]="isSigningUp$ | async"
-          >
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="isSigningUp$ | async">
             <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isSigningUp$ | async)"></i>
             Sign up
           </button>
         </div><!-- .modal-footer -->
-
       </form>
     </div>
   </div>

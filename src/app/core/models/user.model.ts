@@ -26,6 +26,8 @@ export interface NewUser {
   password: string;
   firstName: string;
   lastName: string;
+  acceptTerms: boolean;
+  marketingOptIn: boolean;
   picture?: string;
   groups?: string[];
 }
