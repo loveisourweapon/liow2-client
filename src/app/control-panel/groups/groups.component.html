@@ -43,6 +43,12 @@
                   <span class="caret"></span>
                 </button>
                 <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                  <li *ngIf="!group.approved && authUser?.superAdmin">
+                    <a (click)="handleApproveGroup(group); $event.preventDefault()" href>
+                      <i class="fa fa-fw fa-check"></i>
+                      Approve
+                    </a>
+                  </li>
                   <li *ngIf="group?.welcomeMessage">
                     <a (click)="openWelcomeMessage(group); $event.preventDefault()" href>
                       <i class="fa fa-fw fa-commenting"></i>

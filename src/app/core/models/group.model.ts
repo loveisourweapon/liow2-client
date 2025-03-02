@@ -8,11 +8,13 @@ export interface Group {
   name: string;
   urlName: GroupSlug;
   owner: string;
+  contactNumber: string;
   admins: UserId[];
   country: string;
   logo: string;
   coverImage: string;
   welcomeMessage: string;
+  approved: boolean;
   created: Date;
   modified: Date;
 }
@@ -20,6 +22,7 @@ export interface Group {
 export interface NewGroup {
   _id?: GroupId;
   name: string;
+  contactNumber?: string;
   logo?: string;
   coverImage?: string;
   admins: string[];

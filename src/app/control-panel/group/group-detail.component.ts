@@ -32,6 +32,7 @@ import { SearchParams } from '../../shared';
 })
 export class GroupDetailComponent implements OnInit {
   numberOfMembers$: Observable<number>;
+  isApproving$ = new BehaviorSubject<boolean>(false);
 
   @ViewChild('confirmModal') confirmModal: ModalDirective;
   confirmModalContent: string;
@@ -121,6 +122,20 @@ export class GroupDetailComponent implements OnInit {
   closeConfirmation(isConfirmed: boolean): void {
     this.confirmation$.next(isConfirmed);
     this.confirmModal.hide();
+  }
+
+  handleApprove(group: Group): void {
+    this.isApproving$.next(true);
+    this.groupService
+      .approve(group)
+      .finally(() => this.isApproving$.next(false))
+      .subscribe(
+        () => {
+          this.alertify.success(`Approved group`);
+          this.auth.loadCurrentUser();
+        },
+        () => this.alertify.error(`Failed approving group`)
+      );
   }
 
   handleRemove(group: Group): void {

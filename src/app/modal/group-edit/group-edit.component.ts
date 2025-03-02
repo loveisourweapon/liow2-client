@@ -38,15 +38,15 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
 
   action: EditAction = EditAction.Create;
   isSaving$ = new BehaviorSubject<boolean>(false);
-  group: Group|NewGroup = <NewGroup>{
+  group: Group | NewGroup = <NewGroup>{
     name: '',
+    contactNumber: '',
     logo: null,
     coverImage: null,
     admins: [],
     welcomeMessage: '',
   };
   groupUsers = [];
-  setupCampaign = true;
   errorMessage = '';
   errors: { [key: string]: any } = {};
 
@@ -59,8 +59,8 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
     public modalService: ModalService,
     private router: Router,
     private state: StateService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (has(changes, 'authUser.currentValue')) {
@@ -69,41 +69,43 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.stateSubscription = this.state.modal.groupEdit$
-      .subscribe((state: ModalState) => {
-        if (state.isOpen && !this.modal.isShown) {
-          this.reset();
-          this.initAuthUser();
-          this.modal.show();
-        } else if (!state.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.groupEdit$.subscribe((state: ModalState) => {
+      if (state.isOpen && !this.modal.isShown) {
+        this.reset();
+        this.initAuthUser();
+        this.modal.show();
+      } else if (!state.isOpen && this.modal.isShown) {
+        this.modal.hide();
+      }
 
-        const options = <GroupEditModalOptions>state.options;
-        this.action = has(options, 'action') ? options.action : EditAction.Create;
-        if (has(options, 'group') && options.group) { this.initGroup(options.group); }
-      });
+      const options = <GroupEditModalOptions>state.options;
+      this.action = has(options, 'action') ? options.action : EditAction.Create;
+      if (has(options, 'group') && options.group) {
+        this.initGroup(options.group);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.stateSubscription.unsubscribe();
   }
 
-  save(groupToSave: Group|NewGroup, setupCampaign): void {
+  save(groupToSave: Group | NewGroup): void {
     this.errorMessage = '';
     this.errors = {};
 
     this.isSaving$.next(true);
-    this.groupService.save(groupToSave)
+    this.groupService
+      .save(groupToSave)
       .finally(() => this.isSaving$.next(false))
-      .switchMap((group: Group) => this.state.group$
-        .first()
-        .map((currentGroup: Group) => ({ group, currentGroup })))
+      .switchMap((group: Group) =>
+        this.state.group$.first().map((currentGroup: Group) => ({ group, currentGroup }))
+      )
       .subscribe(
         ({ group, currentGroup }) => {
           if (
             this.action === EditAction.Create ||
-            currentGroup && currentGroup._id === group._id
+            (currentGroup && currentGroup._id === group._id)
           ) {
             this.auth.loadCurrentUser(false).subscribe();
             this.state.group = group;
@@ -113,9 +115,7 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
             this.action === EditAction.Create ||
             (this.router.url.startsWith('/g/') && !this.router.url.endsWith(group.urlName))
           ) {
-            this.router.navigate(['/g', group.urlName], {
-              queryParams: setupCampaign ? { setupCampaign: true } : {},
-            });
+            this.router.navigate(['/g', group.urlName]);
           }
 
           this.alertify.success(`${this.action}d group <b>${group.name}</b>`);
@@ -127,7 +127,7 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
           } else {
             this.errorMessage = error.message;
           }
-        },
+        }
       );
   }
 
@@ -144,21 +144,21 @@ export class GroupEditModalComponent implements OnChanges, OnInit, OnDestroy {
 
   private initGroup(group: Group): void {
     this.group = group;
-    this.setupCampaign = false;
-    this.userService.find({ groups: group._id })
-      .subscribe((groupUsers: User[]) => this.groupUsers = groupUsers);
+    this.userService
+      .find({ groups: group._id })
+      .subscribe((groupUsers: User[]) => (this.groupUsers = groupUsers));
   }
 
   private reset(): void {
     this.action = EditAction.Create;
     this.isSaving$.next(false);
     this.group.name = '';
+    this.group.contactNumber = '';
     this.group.logo = null;
     this.group.coverImage = null;
     this.group.admins = [];
     this.group.welcomeMessage = '';
     this.groupUsers = [];
-    this.setupCampaign = true;
     this.errorMessage = '';
     this.errors = {};
     this.form.resetForm();

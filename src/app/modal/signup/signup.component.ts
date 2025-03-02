@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { assign, has, keys, pick } from 'lodash';
@@ -8,7 +15,13 @@ import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/switchMap';
 
 import { ApiError, Credentials, Group, ModalState, NewUser } from '../../core/models';
-import { AlertifyService, AuthService, ModalService, StateService, UserService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
 
 @Component({
   selector: 'liow-signup-modal',
@@ -27,6 +40,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     password: '',
     firstName: '',
     lastName: '',
+    acceptTerms: false,
+    marketingOptIn: false,
   };
   joinGroup = true;
   errorMessage = '';
@@ -39,22 +54,21 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     public modalService: ModalService,
     private state: StateService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.stateSubscription = this.state.modal.signup$
-      .subscribe((state: ModalState) => {
-        if (state.isOpen && !this.modal.isShown) {
-          this.reset();
-          this.modal.show();
-        } else if (!state.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.signup$.subscribe((state: ModalState) => {
+      if (state.isOpen && !this.modal.isShown) {
+        this.reset();
+        this.modal.show();
+      } else if (!state.isOpen && this.modal.isShown) {
+        this.modal.hide();
+      }
 
-        const options = <SignupModalOptions>state.options;
-        this.canSwitch = has(options, 'canSwitch') ? options.canSwitch : true;
-      });
+      const options = <SignupModalOptions>state.options;
+      this.canSwitch = has(options, 'canSwitch') ? options.canSwitch : true;
+    });
   }
 
   ngOnDestroy(): void {
@@ -70,7 +84,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     this.errors = {};
 
     this.isSigningUp$.next(true);
-    this.userService.save(newUser)
+    this.userService
+      .save(newUser)
       .switchMap(() => {
         this.alertify.success(`Signed up. Please confirm your email address`);
         return this.auth.authenticateEmail(<Credentials>pick(newUser, ['email', 'password']));
@@ -84,7 +99,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
           } else {
             this.errorMessage = error.message;
           }
-        },
+        }
       );
   }
 
@@ -117,6 +132,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     this.user.password = '';
     this.user.firstName = '';
     this.user.lastName = '';
+    this.user.acceptTerms = false;
+    this.user.marketingOptIn = false;
     this.joinGroup = true;
     this.errorMessage = '';
     this.errors = {};

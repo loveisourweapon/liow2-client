@@ -56,6 +56,20 @@ export class GroupService {
       .catch((response: Response) => Observable.throw(response.json().error));
   }
 
+  approve(group: Group): Observable<null> {
+    console.info('GroupService#approve', 'group', group);
+    return this.http
+      .post(`${this.baseUrl}/${group._id}/approve`, {})
+      .map((response: Response) => response.json());
+  }
+
+  approveWithToken(token: string): Observable<null> {
+    console.info('GroupService#approveWithToken', 'token', token);
+    return this.http
+      .post(`${this.baseUrl}/approve`, { token })
+      .map((response: Response) => response.json());
+  }
+
   count(params: SearchParams = {}): Observable<number> {
     console.info('GroupService#count', 'params', params);
     params['count'] = true;
