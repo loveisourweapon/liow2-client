@@ -54,6 +54,15 @@
         <i class="fa fa-fw fa-shopping-bag text-primary"></i>
         Shop
       </a>
+      <a
+        href="https://checkout.square.site/merchant/MLD5Q339MGHCP/checkout/KW7OEATX34QS3ZRIPKO6DH2W"
+        target="_blank"
+        class="list-group-item list-group-item-inverse"
+        (click)="closeMenu()"
+      >
+        <i class="fa fa-fw fa-heartbeat text-primary"></i>
+        Donate
+      </a>
     </div>
 
     <h5 class="text-uppercase text-muted" *ngIf="state.auth.isAuthenticated$ | async">
