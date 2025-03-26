@@ -1,0 +1,41 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Salvation testimony"
+  aria-hidden="true"
+  (onHidden)="onClose()"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <liow-modal-header
+        modalTitle="Praise God!"
+        (close)="onClose()"
+      ></liow-modal-header>
+
+      <div class="modal-body" *ngIf="deed$ | async as deed">
+        <div class="text-center">
+          <i class="fa fa-heart fa-3x text-primary m-b-md"></i>
+          <h3 class="m-b-md">Thank you for sharing this amazing moment!</h3>
+          <p class="lead">
+            Your testimony of leading someone to Christ is a powerful reminder of God's love and grace.
+            We're excited to hear more about this life-changing moment.
+          </p>
+        </div>
+      </div><!-- .modal-body -->
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="onClose()"
+          class="btn btn-primary"
+        >
+          Continue
+        </button>
+      </div><!-- .modal-footer -->
+
+    </div>
+  </div>
+</div>

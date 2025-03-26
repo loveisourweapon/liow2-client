@@ -15,6 +15,7 @@ import { ForgotPasswordModalComponent } from './forgot-password';
 import { GroupEditModalComponent } from './group-edit';
 import { GroupJoinModalComponent } from './group-join';
 import { LoginModalComponent } from './login';
+import { SalvationTestimonyModalComponent } from './salvation-testimony';
 import { SignupModalComponent } from './signup';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { SignupModalComponent } from './signup';
     GroupEditModalComponent,
     GroupJoinModalComponent,
     LoginModalComponent,
+    SalvationTestimonyModalComponent,
     SignupModalComponent,
   ],
   exports: [
