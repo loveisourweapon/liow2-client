@@ -60,6 +60,11 @@
 .navbar-nav > li > a {
   &:hover { background: $dropdown-link-hover-bg; }
   &:focus { background: inherit; }
+
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
 }
 
 a.user-dropdown {

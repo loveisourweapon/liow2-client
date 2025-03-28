@@ -114,16 +114,23 @@ export class DeedComponent implements OnDestroy, OnInit {
     this.isDoing$.next(true);
     Observable.combineLatest(deed$, group$, campaign$)
       .first()
-      .switchMap(([deed, group, campaign]: [Deed, Group, Campaign]) => this.actService.done(deed, group)
-        .map(() => {
+      .switchMap(([deed, group, campaign]: [Deed, Group, Campaign]) =>
+        this.actService.done(deed, group).map(() => {
           this.actService.count();
           this.loadCounter(deed, group, campaign);
-        }))
+          return deed;
+        })
+      )
       .finally(() => this.isDoing$.next(false))
       .subscribe(
-        () => {
+        (deed: Deed) => {
           this.state.feed.update(true);
           this.alertify.success(`Deed done!`);
+
+          // Show salvation testimony modal for Save a Soul deed
+          if (deed.urlTitle === 'save-a-soul') {
+            this.state.modal.salvationTestimony$.next({ deed, isOpen: true });
+          }
 
           // Delay the user from doing the deed again for 5 seconds
           this.animateDeedDoneDelay();
@@ -135,11 +142,11 @@ export class DeedComponent implements OnDestroy, OnInit {
   private animateDeedDoneDelay(): void {
     this.isDelaying$.next(1);
     setTimeout(() => {
-      this.isDelaying$.next(2)
+      this.isDelaying$.next(2);
       setTimeout(() => {
-        this.isDelaying$.next(3)
+        this.isDelaying$.next(3);
         setTimeout(() => {
-          this.isDelaying$.next(0)
+          this.isDelaying$.next(0);
         }, 600);
       }, 600);
     }, 600);

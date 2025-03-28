@@ -7,5 +7,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class ModalHeaderComponent {
   @Input() modalTitle: string;
+  @Input() showCloseButton = true;
   @Output() close = new EventEmitter();
 }

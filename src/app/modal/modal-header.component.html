@@ -1,5 +1,6 @@
 <div class="modal-header">
   <button
+    *ngIf="showCloseButton"
     type="button"
     (click)="close.emit()"
     class="close"

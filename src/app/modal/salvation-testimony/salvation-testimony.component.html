@@ -1,0 +1,145 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Salvation testimony"
+  aria-hidden="true"
+  (onHidden)="onClose()"
+  (onShown)="autofocus.focus()"
+  [config]="{ backdrop: 'static', keyboard: false }"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <form
+        (ngSubmit)="onSubmit()"
+        #form="ngForm"
+        class="form-horizontal"
+        novalidate
+      >
+        <liow-modal-header
+          modalTitle="Salvation Testimony"
+          [showCloseButton]="false"
+        ></liow-modal-header>
+
+        <div class="modal-body">
+          <alert type="danger" *ngIf="errorMessage">
+            <i class="fa fa-fw fa-exclamation-triangle"></i>
+            {{ errorMessage }}
+          </alert>
+
+          <p class="text-center lead">
+            Congratuations! This is a special moment in your faith journey.<br />
+            Please take a moment to share a few details…
+          </p>
+
+          <div class="form-group" [class.has-error]="form.submitted && !formData.isFor">
+            <label class="col-xs-5 control-label">I'm sharing this for</label>
+            <div class="col-xs-7">
+              <select
+                class="form-control"
+                id="isFor"
+                name="isFor"
+                [(ngModel)]="formData.isFor"
+                required
+                #autofocus
+              >
+                <option value="">Select an option…</option>
+                <option value="myself">Myself</option>
+                <option value="someone else">Someone else</option>
+              </select>
+              <span class="help-block" *ngIf="form.submitted && !formData.isFor">
+                Please select an option
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" [class.has-error]="form.submitted && !formData.commitmentType">
+            <label class="col-xs-5 control-label">This decision is a</label>
+            <div class="col-xs-7">
+              <select
+                class="form-control"
+                id="commitmentType"
+                name="commitmentType"
+                [(ngModel)]="formData.commitmentType"
+                required
+                #autofocus
+              >
+                <option value="">Select an option…</option>
+                <option value="first time">First time commitment</option>
+                <option value="recommitment">Recommitment</option>
+              </select>
+              <span class="help-block" *ngIf="form.submitted && !formData.commitmentType">
+                Please select an option
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" [class.has-error]="form.submitted && !formData.ageRange">
+            <label for="ageRange" class="col-xs-5 control-label">The person is approximately</label>
+            <div class="col-xs-7">
+              <select
+                class="form-control"
+                id="ageRange"
+                name="ageRange"
+                [(ngModel)]="formData.ageRange"
+                required
+                #autofocus
+              >
+                <option value="">Select age range…</option>
+                <option value="0-12">0-12 years</option>
+                <option value="13-17">13-17 years</option>
+                <option value="18-24">18-24 years</option>
+                <option value="25-34">25-34 years</option>
+                <option value="35-44">35-44 years</option>
+                <option value="45-54">45-54 years</option>
+                <option value="55-64">55-64 years</option>
+                <option value="65+">65+ years</option>
+              </select>
+              <span class="help-block" *ngIf="form.submitted && !formData.ageRange">
+                Please select an age range
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" [class.has-error]="form.submitted && !formData.churchConnection">
+            <label class="col-xs-5 control-label">This person</label>
+            <div class="col-xs-7">
+              <div class="input-church-connection clearfix">
+                <select
+                    class="form-control"
+                    id="churchConnection"
+                    name="churchConnection"
+                    [(ngModel)]="formData.churchConnection"
+                    required
+                    #autofocus
+                >
+                    <option value="">Select an option…</option>
+                    <option value="already connected">Is already</option>
+                    <option value="would like connection">Would like to be</option>
+                </select>
+                <span class="input-church-connection-suffix">connected to a church</span>
+              </div>
+              <span class="help-block" *ngIf="form.submitted && !formData.churchConnection">
+                Please select an option
+              </span>
+            </div>
+          </div>
+        </div><!-- .modal-body -->
+
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="isSubmitting$ | async"
+          >
+            <i class="fa fa-cog fa-spin" [hidden]="!(isSubmitting$ | async)"></i>
+            Submit
+          </button>
+        </div><!-- .modal-footer -->
+
+      </form>
+    </div>
+  </div>
+</div>
