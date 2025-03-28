@@ -8,6 +8,7 @@
   aria-hidden="true"
   (onHidden)="onClose()"
   (onShown)="autofocus.focus()"
+  [config]="{ backdrop: 'static', keyboard: false }"
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -19,7 +20,7 @@
       >
         <liow-modal-header
           modalTitle="Salvation Testimony"
-          (close)="onClose()"
+          [showCloseButton]="false"
         ></liow-modal-header>
 
         <div class="modal-body">
