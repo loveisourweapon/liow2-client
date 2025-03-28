@@ -129,14 +129,6 @@
 
         <div class="modal-footer">
           <button
-            type="button"
-            (click)="onClose()"
-            class="btn btn-default"
-          >
-            Cancel
-          </button>
-
-          <button
             type="submit"
             class="btn btn-primary"
             [disabled]="isSubmitting$ | async"

@@ -2,18 +2,14 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from
 import { NgForm } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/observable/from';
 
-import { ModalState } from '../../core/models';
-import { AlertifyService, StateService } from '../../core/services';
-
-interface SalvationForm {
-  isFor: string;
-  commitmentType: string;
-  ageRange: string;
-  churchConnection: string;
-}
+import { ModalState, NewSalvationTestimony } from '../../core/models';
+import { ActService, AlertifyService, StateService } from '../../core/services';
 
 @Component({
   selector: 'liow-salvation-testimony-modal',
@@ -26,7 +22,7 @@ export class SalvationTestimonyModalComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: NgForm;
 
   isSubmitting$ = new BehaviorSubject<boolean>(false);
-  formData: SalvationForm = {
+  formData: NewSalvationTestimony = {
     isFor: '',
     commitmentType: '',
     ageRange: '',
@@ -36,7 +32,11 @@ export class SalvationTestimonyModalComponent implements OnInit, OnDestroy {
 
   private stateSubscription: Subscription;
 
-  constructor(private alertify: AlertifyService, private state: StateService) {}
+  constructor(
+    private actService: ActService,
+    private alertify: AlertifyService,
+    private state: StateService
+  ) {}
 
   ngOnInit(): void {
     this.stateSubscription = this.state.modal.salvationTestimony$.subscribe(
@@ -62,9 +62,20 @@ export class SalvationTestimonyModalComponent implements OnInit, OnDestroy {
     }
 
     this.isSubmitting$.next(true);
-    // TODO: Implement API call to POST /salvations
-    // For now just close the modal
-    this.onClose();
+    Observable.from(this.state.auth.group$)
+      .first()
+      .switchMap((group) => this.actService.sendSalvationTestimony(this.formData, group))
+      .finally(() => this.isSubmitting$.next(false))
+      .subscribe(
+        () => {
+          this.alertify.success('Salvation testimony submitted successfully');
+          this.onClose();
+        },
+        (error) => {
+          this.errorMessage = error.message || 'Failed to submit salvation testimony';
+          this.alertify.error(this.errorMessage);
+        }
+      );
   }
 
   onClose(): void {

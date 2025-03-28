@@ -12,4 +12,5 @@ export * from './group.model';
 export * from './json-patch.model';
 export * from './like.model';
 export * from './modal-state.model';
+export * from './salvation-testimony.model';
 export * from './user.model';
