@@ -62,6 +62,14 @@ export class ModalService {
     });
   }
 
+  openSalvationTestimony(deed?: Deed): void {
+    console.info('ModalService#openSalvationTestimony', 'deed', deed);
+    this.state.modal.salvationTestimony$.next({
+      isOpen: true,
+      deed,
+    });
+  }
+
   openSignup(canSwitch = true): void {
     console.info('ModalService#openSignup', 'canSwitch', canSwitch);
     this.state.modal.signup$.next({

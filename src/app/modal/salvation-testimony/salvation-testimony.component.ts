@@ -1,9 +1,19 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/finally';
 
-import { Deed } from '../../core/models';
-import { StateService } from '../../core/services';
+import { ModalState } from '../../core/models';
+import { AlertifyService, StateService } from '../../core/services';
+
+interface SalvationForm {
+  isFor: string;
+  commitmentType: string;
+  ageRange: string;
+  churchConnection: string;
+}
 
 @Component({
   selector: 'liow-salvation-testimony-modal',
@@ -11,25 +21,66 @@ import { StateService } from '../../core/services';
   styleUrls: ['./salvation-testimony.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SalvationTestimonyModalComponent implements OnInit {
+export class SalvationTestimonyModalComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('form') form: NgForm;
 
-  deed$: Observable<Deed>;
+  isSubmitting$ = new BehaviorSubject<boolean>(false);
+  formData: SalvationForm = {
+    isFor: '',
+    commitmentType: '',
+    ageRange: '',
+    churchConnection: '',
+  };
+  errorMessage = '';
 
-  constructor(public state: StateService) {}
+  private stateSubscription: Subscription;
+
+  constructor(private alertify: AlertifyService, private state: StateService) {}
 
   ngOnInit(): void {
-    this.deed$ = this.state.modal.salvationTestimony$.map((state) => {
-      if (state.isOpen && !this.modal.isShown) {
-        this.modal.show();
-      } else if (!state.isOpen && this.modal.isShown) {
-        this.modal.hide();
+    this.stateSubscription = this.state.modal.salvationTestimony$.subscribe(
+      (modalState: ModalState) => {
+        if (modalState.isOpen && !this.modal.isShown) {
+          this.modal.show();
+        } else if (!modalState.isOpen && this.modal.isShown) {
+          this.modal.hide();
+        }
       }
-      return state.deed;
-    });
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.stateSubscription) {
+      this.stateSubscription.unsubscribe();
+    }
+  }
+
+  onSubmit(): void {
+    if (!this.form.valid) {
+      return;
+    }
+
+    this.isSubmitting$.next(true);
+    // TODO: Implement API call to POST /salvations
+    // For now just close the modal
+    this.onClose();
   }
 
   onClose(): void {
     this.state.modal.salvationTestimony$.next({ isOpen: false });
+    this.reset();
+  }
+
+  private reset(): void {
+    this.isSubmitting$.next(false);
+    this.formData = {
+      isFor: '',
+      commitmentType: '',
+      ageRange: '',
+      churchConnection: '',
+    };
+    this.errorMessage = '';
+    this.form.resetForm();
   }
 }
