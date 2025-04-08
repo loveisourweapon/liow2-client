@@ -12,12 +12,7 @@
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <form
-        (ngSubmit)="onSubmit()"
-        #form="ngForm"
-        class="form-horizontal"
-        novalidate
-      >
+      <form (ngSubmit)="onSubmit()" #form="ngForm" class="form-horizontal" novalidate>
         <liow-modal-header
           modalTitle="Salvation Testimony"
           [showCloseButton]="false"
@@ -67,7 +62,7 @@
                 #autofocus
               >
                 <option value="">Select an option…</option>
-                <option value="first time">First time commitment</option>
+                <option value="first time commitment">First time commitment</option>
                 <option value="recommitment">Recommitment</option>
               </select>
               <span class="help-block" *ngIf="form.submitted && !formData.commitmentType">
@@ -108,16 +103,16 @@
             <div class="col-xs-7">
               <div class="input-church-connection clearfix">
                 <select
-                    class="form-control"
-                    id="churchConnection"
-                    name="churchConnection"
-                    [(ngModel)]="formData.churchConnection"
-                    required
-                    #autofocus
+                  class="form-control"
+                  id="churchConnection"
+                  name="churchConnection"
+                  [(ngModel)]="formData.churchConnection"
+                  required
+                  #autofocus
                 >
-                    <option value="">Select an option…</option>
-                    <option value="already connected">Is already</option>
-                    <option value="would like connection">Would like to be</option>
+                  <option value="">Select an option…</option>
+                  <option value="is already">Is already</option>
+                  <option value="would like to be">Would like to be</option>
                 </select>
                 <span class="input-church-connection-suffix">connected to a church</span>
               </div>
@@ -129,16 +124,11 @@
         </div><!-- .modal-body -->
 
         <div class="modal-footer">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="isSubmitting$ | async"
-          >
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting$ | async">
             <i class="fa fa-cog fa-spin" [hidden]="!(isSubmitting$ | async)"></i>
             Submit
           </button>
         </div><!-- .modal-footer -->
-
       </form>
     </div>
   </div>
