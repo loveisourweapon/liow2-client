@@ -8,14 +8,13 @@
   aria-hidden="true"
   (onHidden)="onClose()"
   (onShown)="autofocus.focus()"
-  [config]="{ backdrop: 'static', keyboard: false }"
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <form (ngSubmit)="onSubmit()" #form="ngForm" class="form-horizontal" novalidate>
         <liow-modal-header
           modalTitle="Salvation Testimony"
-          [showCloseButton]="false"
+          (close)="onClose()"
         ></liow-modal-header>
 
         <div class="modal-body">
