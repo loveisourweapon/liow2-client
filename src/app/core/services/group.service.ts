@@ -29,6 +29,7 @@ export class GroupService {
 
   findOne(params: SearchParams = {}): Observable<Group> {
     console.info('GroupService#findOne', 'params', params);
+    params.includeArchived = true;
     return this.find(params).map((groups: Group[]) => {
       if (groups.length !== 1) {
         throw new Error(`Group not found`);
