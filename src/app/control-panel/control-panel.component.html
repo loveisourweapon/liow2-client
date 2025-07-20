@@ -26,6 +26,7 @@
             [routerLink]="['/control-panel/groups', group?._id]"
             routerLinkActive="active"
           >
+            <i class="fa fa-fw fa-archive" *ngIf="group?.archived" title="Archived group"></i>
             {{ group?.name }}
           </a>
         </div>

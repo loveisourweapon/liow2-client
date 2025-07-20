@@ -10,7 +10,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { Group } from '../../core/models';
+import { Group, JsonPatchOp } from '../../core/models';
 import {
   AlertifyService,
   AuthService,
@@ -71,6 +71,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
             limit,
             skip: (page - 1) * limit,
             sort: '-_id',
+            includeArchived: true,
           }
       );
 
@@ -147,6 +148,27 @@ export class GroupsComponent implements OnInit, OnDestroy {
           this.refetch$.next(new Date());
         },
         () => this.alertify.error(`Failed removing group`)
+      );
+  }
+
+  setArchived(group: Group, isArchived: boolean): void {
+    this.groupService
+      .update(group, [
+        {
+          op: JsonPatchOp.Replace,
+          path: `/archived`,
+          value: isArchived,
+        },
+      ])
+      .subscribe(
+        () => {
+          this.alertify.success(
+            `${isArchived ? `Archived` : `Unarchived`} group <b>${group.name}</b>`
+          );
+          this.auth.loadCurrentUser();
+          this.refetch$.next(new Date());
+        },
+        () => this.alertify.error(`Failed ${isArchived ? `archiving` : `unarchiving`} group`)
       );
   }
 }

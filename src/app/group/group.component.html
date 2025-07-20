@@ -118,6 +118,7 @@
         (click)="joinGroup(state.auth.user$, state.group$)"
         *ngIf="
           group.approved &&
+          !group.archived &&
           (state.auth.isAuthenticated$ | async) &&
           !(auth.isMemberOfGroup(group) | async)
         "
@@ -129,7 +130,7 @@
         type="button"
         class="btn btn-primary btn-block btn-lg"
         (click)="modal.openLogin()"
-        *ngIf="group.approved && !(state.auth.isAuthenticated$ | async)"
+        *ngIf="group.approved && !group.archived && !(state.auth.isAuthenticated$ | async)"
       >
         <i class="fa fa-fw fa-users"></i>
         Login &amp; Join us
@@ -138,7 +139,12 @@
         type="button"
         class="btn btn-default btn-block"
         (click)="modal.openCampaignEdit()"
-        *ngIf="group.approved && !(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
+        *ngIf="
+          group.approved &&
+          !group.archived &&
+          !(state.campaign$ | async) &&
+          (auth.isAdminOfGroup(group) | async)
+        "
       >
         <i class="fa fa-fw fa-bullhorn"></i>
         Setup campaign
@@ -155,6 +161,24 @@
       <button
         type="button"
         class="btn btn-default btn-block"
+        (click)="setArchived(group, true)"
+        *ngIf="!group.archived && (auth.isAdminOfGroup(group) | async)"
+      >
+        <i class="fa fa-fw fa-archive"></i>
+        Archive group
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="setArchived(group, false)"
+        *ngIf="group.archived && (auth.isAdminOfGroup(group) | async)"
+      >
+        <i class="fa fa-fw fa-archive"></i>
+        Unarchive group
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
         (click)="leaveGroup(state.auth.user$, state.group$)"
         *ngIf="auth.isMemberOfGroup(group) | async"
       >
@@ -162,17 +186,26 @@
         Leave group
       </button>
 
-      <ui-share-buttons [classes]="['m-t-md']"></ui-share-buttons>
+      <ui-share-buttons [classes]="['m-t-md']" *ngIf="!group.archived"></ui-share-buttons>
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
+      <alert type="info" *ngIf="group.archived">
+        <i class="fa fa-fw fa-archive"></i>
+        This group has been archived.
+      </alert>
       <alert type="info" *ngIf="!group.approved && (auth.isAdminOfGroup(group) | async)">
         Your group hasn't been approved yet, we'll be in contact soon!
       </alert>
       <alert
         type="info"
         [dismissible]="true"
-        *ngIf="group.approved && !(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
+        *ngIf="
+          group.approved &&
+          !group.archived &&
+          !(state.campaign$ | async) &&
+          (auth.isAdminOfGroup(group) | async)
+        "
       >
         You haven't got an active campaign, would you like to set one up now?&nbsp;
         <button
@@ -207,21 +240,17 @@
           </div>
         </tab>
 
-        <tab [active]="currentTab === tabs.Feed" (select)="currentTab = tabs.Feed">
+        <tab
+          [active]="currentTab === tabs.Feed"
+          (select)="currentTab = tabs.Feed"
+          *ngIf="state.auth.isAuthenticated$ | async"
+        >
           <ng-template tabHeading>
             <i class="fa fa-fw fa-list"></i>
             Activity Feed
           </ng-template>
 
-          <liow-feed
-            [criteria]="feedCriteria"
-            *ngIf="group && (state.auth.isAuthenticated$ | async)"
-          ></liow-feed>
-
-          <p *ngIf="!(state.auth.isAuthenticated$ | async)">
-            You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a> to see
-            {{ group?.name }}'s Activity Feed.
-          </p>
+          <liow-feed [criteria]="feedCriteria" *ngIf="group"></liow-feed>
         </tab>
       </tabset>
     </div>

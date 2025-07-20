@@ -20,7 +20,7 @@
         <liow-modal-header modalTitle="Sign up" (close)="onClose()"></liow-modal-header>
 
         <div class="modal-body">
-          <div *ngIf="group">
+          <div *ngIf="group && group.approved && !group.archived">
             <ui-switch [checked]="joinGroup" (change)="joinGroup = $event">
               Join {{ group.name }}
             </ui-switch>

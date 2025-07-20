@@ -15,6 +15,7 @@ export interface Group {
   coverImage: string;
   welcomeMessage: string;
   approved: boolean;
+  archived: boolean;
   created: Date;
   modified: Date;
 }

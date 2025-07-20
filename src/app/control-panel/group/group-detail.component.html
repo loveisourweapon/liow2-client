@@ -23,6 +23,28 @@
     <button
       type="button"
       class="btn btn-default btn-block"
+      (click)="setArchived(group, true)"
+      *ngIf="
+        !group.archived && ((auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async))
+      "
+    >
+      <i class="fa fa-fw fa-archive"></i>
+      Archive
+    </button>
+    <button
+      type="button"
+      class="btn btn-default btn-block"
+      (click)="setArchived(group, false)"
+      *ngIf="
+        group.archived && ((auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async))
+      "
+    >
+      <i class="fa fa-fw fa-archive"></i>
+      Unarchive
+    </button>
+    <button
+      type="button"
+      class="btn btn-default btn-block"
       (click)="confirmRemoveModal.show()"
       *ngIf="(auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async)"
     >
@@ -55,6 +77,12 @@
           <th>Approved</th>
           <td>
             <ui-icon-checked [isChecked]="group?.approved"></ui-icon-checked>
+          </td>
+        </tr>
+        <tr>
+          <th>Archived</th>
+          <td>
+            <ui-icon-checked [isChecked]="group?.archived"></ui-icon-checked>
           </td>
         </tr>
         <tr>
