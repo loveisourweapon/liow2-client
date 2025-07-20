@@ -76,7 +76,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   }
 
   signup(newUser: NewUser, joinGroup: boolean, group: Group): void {
-    if (group && joinGroup) {
+    if (joinGroup && group && group.approved && !group.archived) {
       newUser = assign({}, newUser, { groups: [group._id] });
     }
 

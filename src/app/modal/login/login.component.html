@@ -16,20 +16,14 @@
         #form="ngForm"
         novalidate
       >
-        <liow-modal-header
-          modalTitle="Login"
-          (close)="onClose()"
-        ></liow-modal-header>
+        <liow-modal-header modalTitle="Login" (close)="onClose()"></liow-modal-header>
 
         <div class="modal-body">
-          <div *ngIf="group">
-            <ui-switch
-              [checked]="joinGroup"
-              (change)="joinGroup = $event"
-            >
+          <div *ngIf="group && group.approved && !group.archived">
+            <ui-switch [checked]="joinGroup" (change)="joinGroup = $event">
               Join {{ group.name }}
             </ui-switch>
-            <hr>
+            <hr />
           </div>
 
           <!-- <p>
@@ -74,7 +68,7 @@
                 placeholder="Email"
                 required
                 #autofocus
-              >
+              />
             </div>
           </div>
 
@@ -91,7 +85,7 @@
                 [(ngModel)]="credentials.password"
                 required
                 placeholder="Password"
-              >
+              />
             </div>
             <span class="help-block">
               <button
@@ -117,16 +111,11 @@
         </div><!-- .modal-body -->
 
         <div class="modal-footer">
-          <button
-            type="submit"
-            class="btn btn-primary btn-block"
-            [disabled]="isLoggingIn$ | async"
-          >
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoggingIn$ | async">
             <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isLoggingIn$ | async)"></i>
             Login
           </button>
         </div><!-- .modal-footer -->
-
       </form>
     </div>
   </div>

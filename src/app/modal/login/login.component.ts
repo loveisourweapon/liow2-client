@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { assign, has } from 'lodash';
@@ -35,22 +42,21 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     private alertify: AlertifyService,
     private auth: AuthService,
     public modalService: ModalService,
-    private state: StateService,
-  ) { }
+    private state: StateService
+  ) {}
 
   ngOnInit(): void {
-    this.stateSubscription = this.state.modal.login$
-      .subscribe((state: ModalState) => {
-        if (state.isOpen && !this.modal.isShown) {
-          this.reset();
-          this.modal.show();
-        } else if (!state.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.login$.subscribe((state: ModalState) => {
+      if (state.isOpen && !this.modal.isShown) {
+        this.reset();
+        this.modal.show();
+      } else if (!state.isOpen && this.modal.isShown) {
+        this.modal.hide();
+      }
 
-        const options = <LoginModalOptions>state.options;
-        this.canSwitch = has(options, 'canSwitch') ? options.canSwitch : true;
-      });
+      const options = <LoginModalOptions>state.options;
+      this.canSwitch = has(options, 'canSwitch') ? options.canSwitch : true;
+    });
   }
 
   ngOnDestroy(): void {
@@ -58,20 +64,23 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   }
 
   authenticateEmail(credentials: Credentials, joinGroup: boolean, group: Group): void {
-    if (group && joinGroup) {
+    if (joinGroup && group && group.approved && !group.archived) {
       credentials = assign({}, credentials, { group: group._id });
     }
 
     this.errorMessage = '';
     this.isLoggingIn$.next(true);
-    this.auth.authenticateEmail(credentials)
+    this.auth
+      .authenticateEmail(credentials)
       .finally(() => this.isLoggingIn$.next(false))
       .subscribe(
         (user: User) => {
-          this.alertify.success(`Signed in` + (!user.confirmed ? `. Please confirm your email address` : ``));
+          this.alertify.success(
+            `Signed in` + (!user.confirmed ? `. Please confirm your email address` : ``)
+          );
           this.onClose();
         },
-        (error: ApiError) => this.errorMessage = error.message,
+        (error: ApiError) => (this.errorMessage = error.message)
       );
   }
 
@@ -98,11 +107,12 @@ export class LoginModalComponent implements OnInit, OnDestroy {
 
   sendConfirmEmail(emailAddress: string): void {
     this.isSendingConfirmEmail$.next(true);
-    this.auth.sendConfirmEmail(emailAddress)
+    this.auth
+      .sendConfirmEmail(emailAddress)
       .finally(() => this.isSendingConfirmEmail$.next(false))
       .subscribe(
         () => this.alertify.success(`Sent confirmation email to <b>${emailAddress}</b>`),
-        () => this.alertify.error(`Failed sending confirmation email`),
+        () => this.alertify.error(`Failed sending confirmation email`)
       );
   }
 
