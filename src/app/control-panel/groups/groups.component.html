@@ -33,7 +33,10 @@
               <img src="/images/group.png" class="img-circle icon" />
             </td>
             <td>
-              <a [routerLink]="['/control-panel/groups', group?._id]">{{ group?.name }}</a>
+              <a [routerLink]="['/control-panel/groups', group?._id]">
+                <i class="fa fa-fw fa-archive" *ngIf="group?.archived" title="Archived group"></i>
+                {{ group?.name }}
+              </a>
             </td>
             <td>{{ group?.created | moment : 'YYYY-MM-DD' }}</td>
             <td>
@@ -65,6 +68,18 @@
                     <a [routerLink]="['/control-panel/groups', group?._id]">
                       <i class="fa fa-fw fa-cogs"></i>
                       View Admin Page
+                    </a>
+                  </li>
+                  <li *ngIf="!group.archived">
+                    <a (click)="setArchived(group, true); $event.preventDefault()" href>
+                      <i class="fa fa-fw fa-archive"></i>
+                      Archive
+                    </a>
+                  </li>
+                  <li *ngIf="group.archived">
+                    <a (click)="setArchived(group, false); $event.preventDefault()" href>
+                      <i class="fa fa-fw fa-archive"></i>
+                      Unarchive
                     </a>
                   </li>
                   <li *ngIf="authUser?.superAdmin">
