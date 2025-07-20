@@ -129,11 +129,11 @@ export class GroupDetailComponent implements OnInit {
     this.groupService
       .approve(group)
       .finally(() => this.isApproving$.next(false))
+      .switchMap(() => this.auth.loadCurrentUser())
+      .switchMap(() => this.groupService.findOne({ _id: group._id }))
+      .do((updatedGroup: Group) => (this.state.controlPanel.group = updatedGroup))
       .subscribe(
-        () => {
-          this.alertify.success(`Approved group`);
-          this.auth.loadCurrentUser();
-        },
+        () => this.alertify.success(`Approved group <b>${group.name}</b>`),
         () => this.alertify.error(`Failed approving group`)
       );
   }
@@ -151,6 +151,27 @@ export class GroupDetailComponent implements OnInit {
           this.router.navigate(['/control-panel/user']);
         },
         () => this.alertify.error(`Failed removing group`)
+      );
+  }
+
+  setArchived(group: Group, isArchived: boolean): void {
+    this.groupService
+      .update(group, [
+        {
+          op: JsonPatchOp.Replace,
+          path: `/archived`,
+          value: isArchived,
+        },
+      ])
+      .switchMap(() => this.auth.loadCurrentUser())
+      .switchMap(() => this.groupService.findOne({ _id: group._id }))
+      .do((updatedGroup: Group) => (this.state.controlPanel.group = updatedGroup))
+      .subscribe(
+        () =>
+          this.alertify.success(
+            `${isArchived ? `Archived` : `Unarchived`} group <b>${group.name}</b>`
+          ),
+        () => this.alertify.error(`Failed ${isArchived ? `archiving` : `unarchiving`} group`)
       );
   }
 }
