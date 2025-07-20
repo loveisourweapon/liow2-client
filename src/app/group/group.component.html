@@ -139,7 +139,12 @@
         type="button"
         class="btn btn-default btn-block"
         (click)="modal.openCampaignEdit()"
-        *ngIf="group.approved && !(state.campaign$ | async) && (auth.isAdminOfGroup(group) | async)"
+        *ngIf="
+          group.approved &&
+          !group.archived &&
+          !(state.campaign$ | async) &&
+          (auth.isAdminOfGroup(group) | async)
+        "
       >
         <i class="fa fa-fw fa-bullhorn"></i>
         Setup campaign
@@ -152,6 +157,24 @@
       >
         <i class="fa fa-fw fa-edit"></i>
         Update group
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="setArchived(group, true)"
+        *ngIf="!group.archived && (auth.isAdminOfGroup(group) | async)"
+      >
+        <i class="fa fa-fw fa-archive"></i>
+        Archive group
+      </button>
+      <button
+        type="button"
+        class="btn btn-default btn-block"
+        (click)="setArchived(group, false)"
+        *ngIf="group.archived && (auth.isAdminOfGroup(group) | async)"
+      >
+        <i class="fa fa-fw fa-archive"></i>
+        Unarchive group
       </button>
       <button
         type="button"

@@ -242,6 +242,26 @@ export class GroupComponent implements OnDestroy, OnInit {
       );
   }
 
+  setArchived(group: Group, isArchived: boolean): void {
+    this.groupService
+      .update(group, [
+        {
+          op: JsonPatchOp.Replace,
+          path: `/archived`,
+          value: isArchived,
+        },
+      ])
+      .switchMap(() => this.groupService.findOne({ _id: group._id }))
+      .do((updatedGroup: Group) => (this.state.group = updatedGroup))
+      .subscribe(
+        () =>
+          this.alertify.success(
+            `${isArchived ? `Archived` : `Unarchived`} group <b>${group.name}</b>`
+          ),
+        () => this.alertify.error(`Failed ${isArchived ? `archiving` : `unarchiving`} group`)
+      );
+  }
+
   setPublished(deed: Deed, campaign: Campaign, isPublished: boolean): void {
     const deedIndex = findIndex(campaign.deeds, { deed: { _id: deed._id } });
     const patch = {

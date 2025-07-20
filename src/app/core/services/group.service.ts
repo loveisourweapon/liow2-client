@@ -10,7 +10,7 @@ import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
 import { buildUrlSearchParams, SearchParams } from '../../shared';
-import { NewGroup, Group } from '../models';
+import { NewGroup, Group, JsonPatch } from '../models';
 
 @Injectable()
 export class GroupService {
@@ -48,6 +48,11 @@ export class GroupService {
       .catch((response: Response) => Observable.throw(response.json().error))
       .map((response: Response) => response.json() || {})
       .map((savedGroup: Group) => this.transformGroup(savedGroup));
+  }
+
+  update(group: Group, changes: JsonPatch[]): Observable<null> {
+    console.info('GroupService#update', 'group', group, 'changes', changes);
+    return this.http.patch(`${this.baseUrl}/${group._id}`, changes);
   }
 
   delete(group: Group): Observable<void> {
