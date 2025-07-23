@@ -87,6 +87,9 @@
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
   },
+  "resolutions": {
+    "stylus": "github:stylus/stylus#0.54.4"
+  },
   "engines": {
     "node": "8"
   }
