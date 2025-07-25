@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 
 @Injectable()
 export class TitleService {
-  private readonly baseTitle = `Love is our Weapon`;
+  private readonly baseTitle = `BeKind`;
 
   constructor(private title: Title) {
     this.clear();
