@@ -1,12 +1,16 @@
 # Stage 1: Build the Angular application
 FROM mhart/alpine-node:8 AS builder
 
+# Install envsubst (gettext)
+RUN apk add --no-cache gettext
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
+RUN yarn config-env
 RUN yarn build:prod
 
 # Stage 2: Serve the static files with NGINX

@@ -25,7 +25,8 @@
     "test:prod": "ng test --single-run --browsers PhantomJS",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "coveralls": "coveralls"
+    "coveralls": "coveralls",
+    "config-env": "envsubst < src/environments/environment.prod.template.ts > src/environments/environment.prod.ts"
   },
   "private": true,
   "dependencies": {
