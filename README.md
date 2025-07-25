@@ -1,5 +1,5 @@
-# The Love is our Weapon Campaign
+# BeKind
 
 ## Client / Front-end
 
-Source code for the re-development of [loveisourweapon.com](https://loveisourweapon.com/)
+Source code for the re-development of [bekind.school](https://bekind.school/)

@@ -8,7 +8,7 @@ describe(`TitleService`, () => {
   let service: TitleService;
   let title: Title;
 
-  const baseTitle = `Love is our Weapon`;
+  const baseTitle = `BeKind`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
