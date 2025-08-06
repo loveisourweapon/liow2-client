@@ -4,6 +4,12 @@ FROM mhart/alpine-node:8 AS builder
 # Install envsubst (gettext)
 RUN apk add --no-cache gettext
 
+# Declare build arguments from environment variables
+ARG API_BASE_URL
+ARG APP_ENV
+ARG APP_NAME
+ARG APP_NAME_LONG
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
