@@ -17,11 +17,11 @@ export class WelcomeComponent implements OnInit {
     private groupService: GroupService,
     public modal: ModalService,
     public state: StateService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.numberOfGroups$ = this.groupService.count();
+    this.numberOfGroups$ = this.groupService.count({ includeArchived: true });
     this.numberOfUsers$ = this.userService.count();
   }
 }
