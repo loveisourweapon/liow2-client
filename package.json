@@ -15,7 +15,7 @@
   "author": "Ben Booth <hey@benbooth.dev>",
   "license": "MIT",
   "angular-cli": {},
-  "repository": "git@github.com:loveisourweapon/liow2-client.git",
+  "repository": "github:loveisourweapon/liow2-client",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
