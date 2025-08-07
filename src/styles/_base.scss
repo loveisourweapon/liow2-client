@@ -55,7 +55,7 @@ p:last-child {
 }
 
 .content-wrapper ul:not(.list-inline, .nav) {
-  li + li {
+  li {
     margin-top: 10px;
   }
 }
