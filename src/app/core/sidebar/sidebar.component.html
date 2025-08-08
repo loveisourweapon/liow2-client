@@ -95,7 +95,10 @@
     </h5>
     <div class="list-group" *ngIf="state.auth.isAuthenticated$ | async">
       <a
-        *ngFor="let group of (state.auth.user$ | async)?.groups; trackBy: identifyBy('_id')"
+        *ngFor="
+          let group of getNonArchivedGroups((state.auth.user$ | async)?.groups);
+          trackBy: identifyBy('_id')
+        "
         [routerLink]="['/g', group?.urlName]"
         class="list-group-item list-group-item-inverse"
         [class.active]="(state.auth.group$ | async)?._id === group?._id"

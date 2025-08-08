@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/timer';
 
 import { identifyBy } from '../../shared';
+import { Group } from '../models';
 import { ActService, AuthService, ModalService, StateService } from '../services';
 
 @Component({
@@ -22,13 +23,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private actService: ActService,
     public auth: AuthService,
     public modal: ModalService,
-    public state: StateService,
-  ) { }
+    public state: StateService
+  ) {}
 
   ngOnInit(): void {
     // Load initial global counter and setup regular refresh
-    this.timerSubscription = Observable.timer(0, this.refreshTimer)
-      .subscribe(() => this.actService.count());
+    this.timerSubscription = Observable.timer(0, this.refreshTimer).subscribe(() =>
+      this.actService.count()
+    );
   }
 
   ngOnDestroy(): void {
@@ -37,5 +39,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   openMenu(): void {
     this.state.layout.isMenuOpen = true;
+  }
+
+  getNonArchivedGroups(groups: Group[]): Group[] {
+    return groups ? groups.filter((group) => !group.archived) : [];
   }
 }
