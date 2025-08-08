@@ -14,7 +14,7 @@ export interface User {
   confirmed: boolean;
   superAdmin: boolean;
   groups: Group[];
-  currentGroup: GroupId;
+  currentGroup?: GroupId;
   created: Date;
   modified: Date;
   lastSeen: Date;

@@ -64,30 +64,40 @@ export class AuthService {
       if (setGroup) {
         let authGroup: Group;
         // If user has currentGroup property use it
-        if (has(user, 'currentGroup')) {
+        if (has(user, 'currentGroup') && user.currentGroup) {
           const currentGroup = find(
             user.groups,
             (userGroup: Group) => userGroup._id === user.currentGroup
           );
-          if (currentGroup) {
+          // Only use currentGroup if it exists and is not archived
+          if (currentGroup && !currentGroup.archived) {
             authGroup = currentGroup;
           }
         }
 
-        // Otherwise set and update using the users most recent group
+        // Clear currentGroup if there are no non-archived groups
+        let currentGroup: string | undefined = undefined;
+        // Attempt to find the users most recent non-archived group
         if (!authGroup && has(user, 'groups') && user.groups.length) {
-          authGroup = last(user.groups);
-          user.currentGroup = authGroup._id;
-          this.userService
-            .update(user, [
-              {
-                op: JsonPatchOp.Replace,
-                path: '/currentGroup',
-                value: user.currentGroup,
-              },
-            ])
-            .subscribe();
+          const nonArchivedGroups = user.groups.filter((group: Group) => !group.archived);
+          if (nonArchivedGroups.length > 0) {
+            authGroup = last(nonArchivedGroups);
+            currentGroup = authGroup._id;
+          } else {
+            authGroup = null;
+          }
         }
+        // Set and update the users currentGroup
+        user.currentGroup = currentGroup;
+        this.userService
+          .update(user, [
+            {
+              op: JsonPatchOp.Replace,
+              path: '/currentGroup',
+              value: user.currentGroup,
+            },
+          ])
+          .subscribe();
 
         this.state.auth.group = authGroup || null;
       }
@@ -98,6 +108,11 @@ export class AuthService {
   }
 
   setAuthGroup(group: Group): void {
+    // Don't allow setting archived groups as currentGroup
+    if (group && group.archived) {
+      return;
+    }
+
     this.state.auth.group = group;
     this.state.auth.user$
       .first()
