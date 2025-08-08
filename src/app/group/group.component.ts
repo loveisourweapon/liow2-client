@@ -251,6 +251,7 @@ export class GroupComponent implements OnDestroy, OnInit {
           value: isArchived,
         },
       ])
+      .switchMap(() => this.auth.loadCurrentUser())
       .switchMap(() => this.groupService.findOne({ _id: group._id }))
       .do((updatedGroup: Group) => (this.state.group = updatedGroup))
       .subscribe(
