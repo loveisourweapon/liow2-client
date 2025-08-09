@@ -109,7 +109,10 @@
               Groups
             </li>
             <li
-              *ngFor="let group of authUser?.groups; trackBy: identifyBy('_id')"
+              *ngFor="
+                let group of getNonArchivedGroups(authUser?.groups);
+                trackBy: identifyBy('_id')
+              "
               [class.active]="(state.auth.group$ | async)?._id === group._id"
             >
               <a [routerLink]="['/g', group?.urlName]">

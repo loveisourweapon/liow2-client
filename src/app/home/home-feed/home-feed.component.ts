@@ -13,11 +13,13 @@ import { identifyBy } from '../../shared';
 export class HomeFeedComponent {
   identifyBy = identifyBy;
 
-  constructor(
-    public state: StateService,
-  ) { }
+  constructor(public state: StateService) {}
 
-  listGroupIds(groups: Group[]): string|null {
-    return (groups && groups.length) ? groups.map((group: Group) => group._id).join(',') : null;
+  listGroupIds(groups: Group[]): string | null {
+    return groups && groups.length ? groups.map((group: Group) => group._id).join(',') : null;
+  }
+
+  getNonArchivedGroups(groups: Group[]): Group[] {
+    return groups ? groups.filter((group) => !group.archived) : [];
   }
 }

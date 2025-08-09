@@ -6,6 +6,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 
 import { identifyBy } from '../../shared';
+import { Group } from '../models';
 import { AuthService, ModalService, StateService } from '../services';
 
 @Component({
@@ -19,16 +20,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private bodySubscription: Subscription;
 
-  constructor(
-    public auth: AuthService,
-    public modal: ModalService,
-    public state: StateService,
-  ) { }
+  constructor(public auth: AuthService, public modal: ModalService, public state: StateService) {}
 
   ngOnInit(): void {
     // Add/remove the .modal-open class to the document body to prevent scrolling
     const bodyElement = document.querySelector('body');
-    this.bodySubscription = Observable.combineLatest(this.state.layout.isSmallScreen$, this.state.layout.isMenuOpen$)
+    this.bodySubscription = Observable.combineLatest(
+      this.state.layout.isSmallScreen$,
+      this.state.layout.isMenuOpen$
+    )
       .map(([isSmallScreen, isMenuOpen]: [boolean, boolean]) => isSmallScreen && isMenuOpen)
       .distinctUntilChanged()
       .subscribe((isShowing) => bodyElement.classList[isShowing ? 'add' : 'remove']('modal-open'));
@@ -40,5 +40,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   closeMenu(): void {
     this.state.layout.isMenuOpen = false;
+  }
+
+  getNonArchivedGroups(groups: Group[]): Group[] {
+    return groups ? groups.filter((group) => !group.archived) : [];
   }
 }
