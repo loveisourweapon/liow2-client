@@ -1,16 +1,15 @@
-<span
-  class="switch switch-{{ size }}"
-  [class.checked]="checked"
-  [class.disabled]="disabled"
-  [style.background-color]="getBackgroundColor()"
-  [style.border-color]="borderColor"
->
+<div class="switch-container switch-{{ size }}">
   <span
-    class="switch-handle"
-    [style.background]="getHandleColor()"
-  ></span>
-</span>
+    class="switch"
+    [class.checked]="checked"
+    [class.disabled]="disabled"
+    [style.background-color]="getBackgroundColor()"
+    [style.border-color]="borderColor"
+  >
+    <span class="switch-handle" [style.background]="getHandleColor()"></span>
+  </span>
 
-<div class="switch-label">
-  <ng-content></ng-content>
+  <div class="switch-label">
+    <ng-content></ng-content>
+  </div>
 </div>
