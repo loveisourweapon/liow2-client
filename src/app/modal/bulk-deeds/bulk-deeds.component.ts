@@ -95,7 +95,9 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
       .finally(() => this.isSubmitting$.next(false))
       .subscribe(
         () => {
-          this.alertify.success(`Successfully registered ${count} deed${count !== 1 ? 's' : ''}`);
+          this.alertify.success(
+            `Successfully registered ${count} deed${count !== 1 ? 's' : ''} done`
+          );
           // Refresh counters
           this.actService.count({ group: this.group._id });
           if (this.campaign) {
