@@ -1,4 +1,4 @@
-@import "../../styles/variables";
+@import '../../styles/variables';
 
 .control-panel {
   .list-group button {
@@ -30,6 +30,10 @@
 
     .table td p:last-child {
       margin-bottom: 0;
+    }
+
+    .table tr .switch-container {
+      margin-top: 0;
     }
   }
 }
