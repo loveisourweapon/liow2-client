@@ -109,6 +109,8 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
           } else {
             this.deedService.countAll({ group: this.group._id });
           }
+          // Refresh feed to show the new bulk deeds
+          this.state.feed.update(true);
           this.onClose();
         },
         (error) => {
