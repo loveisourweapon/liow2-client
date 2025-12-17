@@ -14,21 +14,22 @@
   </div>
 
   <div class="feed-item-image">
-    <img [src]="item?.user?.picture" class="img-circle">
+    <img [src]="item?.user?.picture" class="img-circle" />
   </div>
 
   <div class="feed-item-content">
     <h6 class="m-t-none">
-      <span [ngSwitch]="(state.auth.user$ | async)?._id === item?.user?._id || (auth.isMemberOfGroup(item?.group) | async)">
-        <a
-          [routerLink]="['/u', item?.user?._id]"
-          *ngSwitchCase="true"
-        >
+      <span
+        [ngSwitch]="
+          !item?.user?.anonymous &&
+          ((state.auth.user$ | async)?._id === item?.user?._id ||
+            (auth.isMemberOfGroup(item?.group) | async))
+        "
+      >
+        <a [routerLink]="['/u', item?.user?._id]" *ngSwitchCase="true">
           {{ item?.user?.firstName }}
         </a>
-        <span *ngSwitchCase="false">
-          Someone
-        </span>
+        <span *ngSwitchCase="false"> Someone </span>
       </span>
 
       <span *ngIf="item?.group && !item?.target?.group">
@@ -59,7 +60,7 @@
       {{ item?.created | fromNow }}
       &middot;
       <span class="text-muted">
-        {{ item?.created | moment:'ddd, D MMM YYYY [at] HH:mm' }}
+        {{ item?.created | moment : 'ddd, D MMM YYYY [at] HH:mm' }}
       </span>
     </p>
   </div>

@@ -12,6 +12,7 @@ export interface User {
   coverImage: string;
   country: string;
   confirmed: boolean;
+  anonymous: boolean;
   superAdmin: boolean;
   groups: Group[];
   currentGroup?: GroupId;
@@ -28,6 +29,7 @@ export interface NewUser {
   lastName: string;
   acceptTerms: boolean;
   marketingOptIn: boolean;
+  anonymous?: boolean;
   picture?: string;
   groups?: string[];
 }
