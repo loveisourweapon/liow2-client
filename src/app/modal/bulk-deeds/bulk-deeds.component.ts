@@ -10,7 +10,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
 import { Campaign, Deed, DeedPublish, Group, ModalState } from '../../core/models';
-import { ActService, AlertifyService, StateService } from '../../core/services';
+import { ActService, AlertifyService, DeedService, StateService } from '../../core/services';
 
 interface BulkDeedsFormData {
   deed: string;
@@ -46,23 +46,22 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   constructor(
     private actService: ActService,
     private alertify: AlertifyService,
+    private deedService: DeedService,
     private state: StateService
   ) {}
 
   ngOnInit(): void {
-    this.stateSubscription = this.state.modal.bulkDeeds$.subscribe(
-      (modalState: ModalState) => {
-        if (modalState.isOpen && !this.modal.isShown) {
-          const options = <BulkDeedsModalOptions>modalState.options;
-          this.campaign = options.campaign;
-          this.group = options.group;
-          this.loadDeeds();
-          this.modal.show();
-        } else if (!modalState.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.bulkDeeds$.subscribe((modalState: ModalState) => {
+      if (modalState.isOpen && !this.modal.isShown) {
+        const options = <BulkDeedsModalOptions>modalState.options;
+        this.campaign = options.campaign;
+        this.group = options.group;
+        this.loadDeeds();
+        this.modal.show();
+      } else if (!modalState.isOpen && this.modal.isShown) {
+        this.modal.hide();
       }
-    );
+    });
   }
 
   ngOnDestroy(): void {
@@ -101,6 +100,12 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
           this.actService.count({ group: this.group._id });
           if (this.campaign) {
             this.actService.count({ campaign: this.campaign._id });
+          }
+          // Refresh individual deed counters for the sidebar
+          if (this.campaign) {
+            this.deedService.countAll({ campaign: this.campaign._id });
+          } else {
+            this.deedService.countAll({ group: this.group._id });
           }
           this.onClose();
         },
