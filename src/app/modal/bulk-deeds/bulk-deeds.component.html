@@ -1,0 +1,90 @@
+<div
+  bsModal
+  #modal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-label="Register bulk deeds"
+  aria-hidden="true"
+  (onHidden)="onClose()"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <form (ngSubmit)="onSubmit()" #form="ngForm" class="form-horizontal" novalidate>
+        <liow-modal-header
+          modalTitle="Register Deeds Done"
+          (close)="onClose()"
+        ></liow-modal-header>
+
+        <div class="modal-body">
+          <alert type="danger" *ngIf="errorMessage">
+            <i class="fa fa-fw fa-exclamation-triangle"></i>
+            {{ errorMessage }}
+          </alert>
+
+          <p>
+            This allows you to register a number of deeds that were done offline or by members
+            of your community that aren't registered for Love is our Weapon.
+          </p>
+
+          <div class="form-group" [class.has-error]="form.submitted && !formData.deed">
+            <label for="deed" class="col-xs-4 control-label">Deed</label>
+            <div class="col-xs-8">
+              <select
+                class="form-control"
+                id="deed"
+                name="deed"
+                [(ngModel)]="formData.deed"
+                required
+                #deedSelect="ngModel"
+              >
+                <option value="">Select a deed…</option>
+                <option *ngFor="let deed of deeds" [value]="deed._id">
+                  {{ deed.title }}
+                </option>
+              </select>
+              <span class="help-block" *ngIf="form.submitted && deedSelect.invalid">
+                Please select a deed
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" [class.has-error]="form.submitted && (!formData.count || formData.count <= 0)">
+            <label for="count" class="col-xs-4 control-label">Number of deeds</label>
+            <div class="col-xs-8">
+              <input
+                type="number"
+                class="form-control"
+                id="count"
+                name="count"
+                [(ngModel)]="formData.count"
+                required
+                min="1"
+                step="1"
+                #countInput="ngModel"
+              />
+              <span class="help-block" *ngIf="form.submitted && (countInput.invalid || formData.count <= 0)">
+                Please enter a valid number greater than 0
+              </span>
+            </div>
+          </div>
+        </div><!-- .modal-body -->
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            (click)="onClose()"
+            class="btn btn-default"
+            [disabled]="isSubmitting$ | async"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting$ | async">
+            <i class="fa fa-cog fa-spin" [hidden]="!(isSubmitting$ | async)"></i>
+            Register
+          </button>
+        </div><!-- .modal-footer -->
+      </form>
+    </div>
+  </div>
+</div>

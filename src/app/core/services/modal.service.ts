@@ -7,6 +7,14 @@ import { StateService } from './state.service';
 export class ModalService {
   constructor(private state: StateService) {}
 
+  openBulkDeeds(group: Group, campaign: Campaign): void {
+    console.info('ModalService#openBulkDeeds', 'group', group, 'campaign', campaign);
+    this.state.modal.bulkDeeds$.next({
+      isOpen: true,
+      options: { group, campaign },
+    });
+  }
+
   openCampaignEdit(action = EditAction.Create, campaign?: Campaign): void {
     console.info('ModalService#openCampaignEdit', 'action', action, 'campaign', campaign);
     this.state.modal.campaignEdit$.next({

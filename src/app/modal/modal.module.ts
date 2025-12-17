@@ -8,6 +8,7 @@ import { SharedModule } from '../shared';
 import { ModalHeaderComponent } from './modal-header.component';
 import { ModalsComponent } from './modals.component';
 
+import { BulkDeedsModalComponent } from './bulk-deeds';
 import { CampaignEditModalComponent } from './campaign-edit';
 import { ChangePasswordModalComponent } from './change-password';
 import { DeedPreviewModalComponent } from './deed-preview';
@@ -30,6 +31,7 @@ import { SignupModalComponent } from './signup';
     ModalHeaderComponent,
     ModalsComponent,
 
+    BulkDeedsModalComponent,
     CampaignEditModalComponent,
     ChangePasswordModalComponent,
     DeedPreviewModalComponent,

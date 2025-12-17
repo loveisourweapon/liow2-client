@@ -64,4 +64,17 @@ export class ActService {
 
     return this.http.post(this.salvationsUrl, payload).map((response: Response) => response.json());
   }
+
+  bulkDeeds(deed: Deed, group: Group, count: number): Observable<any> {
+    console.info('ActService#bulkDeeds', 'deed', deed, 'group', group, 'count', count);
+    const payload = {
+      deed: deed._id,
+      group: group._id,
+      count: count,
+    };
+
+    return this.http
+      .post(`${this.baseUrl}/bulk`, payload)
+      .map((response: Response) => response.json());
+  }
 }
