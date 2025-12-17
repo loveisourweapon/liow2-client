@@ -5,7 +5,7 @@
       <i
         class="fa fa-stack-1x fa-inverse"
         [ngClass]="{
-          'fa-heart': item?.act,
+          'fa-heart': item?.act || item?.bulk,
           'fa-quote-right': item?.comment && item?.target?.deed,
           'fa-bullhorn': item?.comment && item?.target?.group
         }"
@@ -21,6 +21,7 @@
     <h6 class="m-t-none">
       <span
         [ngSwitch]="
+          !item?.bulk &&
           !item?.user?.anonymous &&
           ((state.auth.user$ | async)?._id === item?.user?._id ||
             (auth.isMemberOfGroup(item?.group) | async))
@@ -29,7 +30,9 @@
         <a [routerLink]="['/u', item?.user?._id]" *ngSwitchCase="true">
           {{ item?.user?.firstName }}
         </a>
-        <span *ngSwitchCase="false"> Someone </span>
+        <span *ngSwitchCase="false">
+          {{ item?.bulk && item?.count > 1 ? 'People' : 'Someone' }}
+        </span>
       </span>
 
       <span *ngIf="item?.group && !item?.target?.group">
@@ -37,7 +40,7 @@
         <a [routerLink]="['/g', item?.group?.urlName]">{{ item?.group?.name }}</a>
       </span>
 
-      <span *ngIf="item?.act">did the act of love</span>
+      <span *ngIf="item?.act || item?.bulk">did the act of love</span>
       <span *ngIf="item?.comment && item?.target?.deed">left a testimony on</span>
       <span *ngIf="item?.comment && item?.target?.group">wrote a message to</span>
 
