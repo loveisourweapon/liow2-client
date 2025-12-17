@@ -31,7 +31,7 @@
             </ng-template>
             <ng-template #editNameForm let-isEditingName>
               <a
-                (click)="setEditingName(!isEditingName); $event.preventDefault()"
+                (click)="setEditingName(!isEditingName, user); $event.preventDefault()"
                 class="pull-right"
                 href
               >
