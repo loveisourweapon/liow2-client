@@ -85,6 +85,7 @@ export class StateService {
   };
 
   modal = {
+    bulkDeeds$: new BehaviorSubject<ModalState>({ isOpen: false }),
     campaignEdit$: new BehaviorSubject<ModalState>({ isOpen: false }),
     changePassword$: new BehaviorSubject<ModalState>({ isOpen: false }),
     deedPreview$: new BehaviorSubject<ModalState>({ isOpen: false }),

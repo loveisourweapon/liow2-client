@@ -42,6 +42,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     lastName: '',
     acceptTerms: false,
     marketingOptIn: true,
+    anonymous: false,
   };
   joinGroup = true;
   errorMessage = '';
@@ -134,6 +135,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     this.user.lastName = '';
     this.user.acceptTerms = false;
     this.user.marketingOptIn = true;
+    this.user.anonymous = false;
     this.joinGroup = true;
     this.errorMessage = '';
     this.errors = {};

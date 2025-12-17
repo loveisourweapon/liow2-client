@@ -42,8 +42,8 @@ export class UserComponent implements OnInit, OnDestroy {
     public modal: ModalService,
     public state: StateService,
     private title: TitleService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.userSubscription = this.state.auth.user$
@@ -52,7 +52,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.title.set(`${user.name} | Control Panel`);
         this.actService.count({ user: user._id });
       })
-      .subscribe((user: User) => this.state.controlPanel.user = user);
+      .subscribe((user: User) => (this.state.controlPanel.user = user));
 
     // Autofocus first name field when starting name editing
     this.isEditingSubscription = this.isEditingName$
@@ -61,7 +61,9 @@ export class UserComponent implements OnInit, OnDestroy {
       .delay(100) // allow time for form to be added to DOM
       .subscribe(() => {
         const firstNameElement = this.element.nativeElement.querySelector('#firstName');
-        if (firstNameElement) { firstNameElement.focus(); }
+        if (firstNameElement) {
+          firstNameElement.focus();
+        }
       });
   }
 
@@ -78,10 +80,11 @@ export class UserComponent implements OnInit, OnDestroy {
 
   saveUserName(user: User, firstName: string, lastName: string): void {
     this.isEditingName$.next(false);
-    this.userService.update(user, [
-      { op: JsonPatchOp.Replace, path: `/firstName`, value: firstName },
-      { op: JsonPatchOp.Replace, path: `/lastName`, value: lastName },
-    ])
+    this.userService
+      .update(user, [
+        { op: JsonPatchOp.Replace, path: `/firstName`, value: firstName },
+        { op: JsonPatchOp.Replace, path: `/lastName`, value: lastName },
+      ])
       .switchMap(() => this.auth.loadCurrentUser(false))
       .finally(() => {
         this.isEditingName$.next(false);
@@ -90,17 +93,28 @@ export class UserComponent implements OnInit, OnDestroy {
       })
       .subscribe(
         () => this.alertify.success(`Updated name`),
-        () => this.alertify.error(`Failed updating name`),
+        () => this.alertify.error(`Failed updating name`)
       );
   }
 
   sendConfirmEmail(emailAddress: string): void {
     this.isSendingConfirmEmail$.next(true);
-    this.auth.sendConfirmEmail(emailAddress)
+    this.auth
+      .sendConfirmEmail(emailAddress)
       .finally(() => this.isSendingConfirmEmail$.next(false))
       .subscribe(
         () => this.alertify.success(`Sent confirmation email to <b>${emailAddress}</b>`),
-        () => this.alertify.error(`Failed sending confirmation email`),
+        () => this.alertify.error(`Failed sending confirmation email`)
+      );
+  }
+
+  updateAnonymousStatus(user: User, anonymous: boolean): void {
+    this.userService
+      .update(user, [{ op: JsonPatchOp.Replace, path: `/anonymous`, value: anonymous }])
+      .switchMap(() => this.auth.loadCurrentUser(false))
+      .subscribe(
+        () => this.alertify.success(`${anonymous ? `Enabled` : `Disabled`} anonymous status`),
+        () => this.alertify.error(`Failed updating anonymous status`)
       );
   }
 }

@@ -14,6 +14,7 @@ export interface FeedItem {
   act: Act;
   comment: Comment;
   count: number;
+  bulk?: boolean;
   created: Date;
   modified: Date;
 }
