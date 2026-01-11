@@ -7,7 +7,7 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": ["images", "favicon.png"],
+      "assets": ["images", "favicon.png", "favicon-bekind.png"],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
