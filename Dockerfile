@@ -9,6 +9,7 @@ ARG API_BASE_URL
 ARG APP_ENV
 ARG APP_NAME
 ARG APP_NAME_LONG
+ARG INDEX_FILE
 
 WORKDIR /app
 
@@ -17,6 +18,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 RUN yarn config-env
+RUN yarn config-index
 RUN yarn build:prod
 
 # Stage 2: Serve the static files with NGINX

@@ -10,10 +10,9 @@
 <footer>
   <div class="container f-sm">
     <div class="footer-copyright">
-      &copy; {{ date | moment:'YYYY' }}
-      <span class="hidden-xs">The</span>
-      Love is our Weapon
-      <span class="hidden-xs">Campaign</span>
+      &copy; {{ date | moment : 'YYYY' }}
+      <span class="visible-xs-inline">{{ env.appName }}</span>
+      <span class="hidden-xs">{{ env.appNameLong }}</span>
     </div>
     <div class="footer-social">
       <a href="https://www.facebook.com/loveisourweaponcampaign" target="_blank">

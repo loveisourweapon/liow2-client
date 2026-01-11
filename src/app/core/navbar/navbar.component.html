@@ -8,8 +8,11 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a routerLink="/" class="navbar-brand" title="Love is our Weapon">
-        <img src="/images/logo-bekind.svg" alt="Love is our Weapon" />
+      <a routerLink="/" class="navbar-brand" title="{{ env.appName }}">
+        <img
+          src="{{ env.appId === 'liow' ? '/images/logo-liow.png' : '/images/logo-bekind.svg' }}"
+          alt="{{ env.appName }}"
+        />
         <div class="navbar-brand-label">
           <span class="text-primary">
             {{ state.counter$('global') | async | number }}

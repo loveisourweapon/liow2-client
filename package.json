@@ -26,7 +26,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "coveralls": "coveralls",
-    "config-env": "envsubst < src/environments/environment.prod.template.ts > src/environments/environment.prod.ts"
+    "config-env": "envsubst < src/environments/environment.prod.template.ts > src/environments/environment.prod.ts",
+    "config-index": "node scripts/config-index-file.js"
   },
   "private": true,
   "dependencies": {

@@ -7,20 +7,15 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": [
-        "images",
-        "favicon.png"
-      ],
-      "index": "index.html",
+      "assets": ["images", "favicon.png"],
+      "index": "index.liow.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "liow",
-      "styles": [
-        "styles/styles.scss"
-      ],
+      "styles": ["styles/styles.scss"],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
