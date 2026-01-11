@@ -17,8 +17,9 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
+COPY src/${INDEX_FILE} src/index.html
+
 RUN yarn config-env
-RUN yarn config-index
 RUN yarn build:prod
 
 # Stage 2: Serve the static files with NGINX
