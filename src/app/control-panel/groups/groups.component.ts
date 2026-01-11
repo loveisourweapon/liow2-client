@@ -14,6 +14,7 @@ import { Group, JsonPatchOp } from '../../core/models';
 import {
   AlertifyService,
   AuthService,
+  EnvironmentService,
   GroupService,
   StateService,
   TitleService,
@@ -48,6 +49,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertify: AlertifyService,
+    public env: EnvironmentService,
     private auth: AuthService,
     private groupService: GroupService,
     private route: ActivatedRoute,

@@ -1,34 +1,23 @@
 <liow-jumbotron background="/images/header-home.jpg" [classes]="['videotron']">
   <div jumbotron-content class="home-header">
     <div class="text-center home-counter">
-      <p>The Love is our Weapon Campaign</p>
+      <p>{{ env.appNameLong }}</p>
       <h1 class="m-none">{{ state.counter$('global') | async | number }}</h1>
       <p class="m-t-none">Acts of love around the world</p>
     </div>
 
     <div class="embed-responsive embed-responsive-16by9 m-t-sm">
-      <ui-youtube-player
-        videoId="ZUhZXc9PooE"
-        class="embed-responsive-item"
-      ></ui-youtube-player>
+      <ui-youtube-player videoId="ZUhZXc9PooE" class="embed-responsive-item"></ui-youtube-player>
     </div>
 
     <div class="text-center m-t-md home-campaign-buttons">
-      <button
-        type="button"
-        (click)="modal.openGroupEdit()"
-        class="btn btn-primary btn-lg"
-      >
+      <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary btn-lg">
         Start a Campaign
       </button>
-      <br class="visible-xs-inline">
+      <br class="visible-xs-inline" />
       or
-      <br class="visible-xs-inline">
-      <button
-        type="button"
-        (click)="modal.openGroupJoin()"
-        class="btn btn-primary btn-lg"
-      >
+      <br class="visible-xs-inline" />
+      <button type="button" (click)="modal.openGroupJoin()" class="btn btn-primary btn-lg">
         Join a Campaign
       </button>
     </div>

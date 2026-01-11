@@ -24,6 +24,7 @@ import {
   AlertifyService,
   AuthService,
   CampaignService,
+  EnvironmentService,
   GroupService,
   ModalService,
   StateService,
@@ -57,6 +58,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   constructor(
     private actService: ActService,
     private alertify: AlertifyService,
+    public env: EnvironmentService,
     public auth: AuthService,
     private campaignService: CampaignService,
     private groupService: GroupService,

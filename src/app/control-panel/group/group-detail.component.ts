@@ -18,6 +18,7 @@ import {
   ActService,
   AlertifyService,
   AuthService,
+  EnvironmentService,
   GroupService,
   ModalService,
   StateService,
@@ -44,6 +45,7 @@ export class GroupDetailComponent implements OnInit {
   constructor(
     private actService: ActService,
     private alertify: AlertifyService,
+    public env: EnvironmentService,
     public auth: AuthService,
     public modal: ModalService,
     private router: Router,
