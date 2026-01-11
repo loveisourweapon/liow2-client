@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private actService: ActService,
-    private env: EnvironmentService,
+    public env: EnvironmentService,
     public modal: ModalService,
     public state: StateService,
     private title: TitleService
