@@ -10,7 +10,13 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
 import { Campaign, Deed, DeedPublish, Group, ModalState } from '../../core/models';
-import { ActService, AlertifyService, DeedService, StateService } from '../../core/services';
+import {
+  ActService,
+  AlertifyService,
+  DeedService,
+  EnvironmentService,
+  StateService,
+} from '../../core/services';
 
 interface BulkDeedsFormData {
   deed: string;
@@ -44,6 +50,7 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription;
 
   constructor(
+    public env: EnvironmentService,
     private actService: ActService,
     private alertify: AlertifyService,
     private deedService: DeedService,
