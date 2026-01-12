@@ -3,7 +3,12 @@ import { NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ContactForm } from '../../core/models';
-import { AlertifyService, AuthService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  TitleService,
+} from '../../core/services';
 
 @Component({
   templateUrl: './contact-us.component.html',
@@ -32,7 +37,8 @@ export class ContactUsComponent implements OnInit {
   constructor(
     private alertify: AlertifyService,
     private auth: AuthService,
-    private title: TitleService
+    private title: TitleService,
+    public env: EnvironmentService
   ) {}
 
   ngOnInit(): void {
