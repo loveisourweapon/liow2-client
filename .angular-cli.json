@@ -20,6 +20,8 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
+        "dev-liow": "environments/environment.dev-liow.ts",
+        "dev-bekind": "environments/environment.dev-bekind.ts",
         "prod": "environments/environment.prod.ts",
         "test": "environments/environment.test.ts"
       }

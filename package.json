@@ -19,6 +19,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
+    "start:liow": "cp src/index.liow.html src/index.html && ng serve --host 0.0.0.0 --environment dev-liow",
+    "start:bekind": "cp src/index.bekind.html src/index.html && ng serve --host 0.0.0.0 --environment dev-bekind",
     "build": "ng build",
     "build:prod": "ng build --prod --aot",
     "test": "ng test",
