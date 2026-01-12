@@ -4,9 +4,7 @@ import { environment } from 'environments/environment';
 
 @Injectable()
 export class TitleService {
-  private readonly baseTitle = environment.appEnv.startsWith('liow-')
-    ? environment.appName
-    : environment.appNameLong;
+  private readonly baseTitle = environment.appName;
 
   constructor(private title: Title) {
     this.clear();

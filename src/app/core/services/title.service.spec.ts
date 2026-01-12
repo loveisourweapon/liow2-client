@@ -9,9 +9,7 @@ describe(`TitleService`, () => {
   let service: TitleService;
   let title: Title;
 
-  const baseTitle = environment.appEnv.startsWith('liow-')
-    ? environment.appName
-    : environment.appNameLong;
+  const baseTitle = environment.appName;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
