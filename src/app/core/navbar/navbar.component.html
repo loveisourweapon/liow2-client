@@ -47,10 +47,10 @@
         >
           <a [routerLink]="['/g', authGroup?.urlName]" [title]="authGroup?.name"> Campaign </a>
         </li>
-        <li>
+        <li *ngIf="env.appId === 'liow'">
           <a href="https://liowstore.square.site/" target="_blank"> Shop </a>
         </li>
-        <li>
+        <li *ngIf="env.appId === 'liow'">
           <a
             href="https://checkout.square.site/merchant/MLD5Q339MGHCP/checkout/KW7OEATX34QS3ZRIPKO6DH2W"
             target="_blank"

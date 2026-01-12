@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 
 import { identifyBy } from '../../shared';
 import { Group } from '../models';
-import { AuthService, ModalService, StateService } from '../services';
+import { AuthService, EnvironmentService, ModalService, StateService } from '../services';
 
 @Component({
   selector: 'liow-sidebar',
@@ -20,7 +20,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private bodySubscription: Subscription;
 
-  constructor(public auth: AuthService, public modal: ModalService, public state: StateService) {}
+  constructor(
+    public env: EnvironmentService,
+    public auth: AuthService,
+    public modal: ModalService,
+    public state: StateService
+  ) {}
 
   ngOnInit(): void {
     // Add/remove the .modal-open class to the document body to prevent scrolling
