@@ -27,7 +27,7 @@
               <span class="f-lg">
                 {{ state.counter$(group?._id) | async | number }}
               </span>
-              acts of love
+              acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}
             </p>
           </div>
         </a>

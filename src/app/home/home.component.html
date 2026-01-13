@@ -3,7 +3,9 @@
     <div class="text-center home-counter">
       <p>{{ env.appNameLong }}</p>
       <h1 class="m-none">{{ state.counter$('global') | async | number }}</h1>
-      <p class="m-t-none">Acts of love around the world</p>
+      <p class="m-t-none">
+        Acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }} around the world
+      </p>
     </div>
 
     <div class="embed-responsive embed-responsive-16by9 m-t-sm">

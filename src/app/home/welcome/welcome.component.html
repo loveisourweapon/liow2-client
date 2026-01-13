@@ -5,17 +5,19 @@
     <div class="row">
       <div class="col-sm-9">
         <h2>
-          {{ env.appNameLong }} is a movement that exists to change cities through the love of Jesus
-          by doing strategic practical acts of love.
+          {{ env.appNameLong }} is a movement that exists to change
+          {{ env.appId === 'liow' ? 'cities through the love of Jesus' : 'schools' }} by doing
+          strategic practical acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}.
         </h2>
         <p>
-          Thousands of people, doing thousands of acts of love, bringing change, value, healing and
-          hope throughout cities and communities everywhere.
+          Thousands of people, doing thousands of acts of
+          {{ env.appId === 'liow' ? 'love' : 'kindness' }}, bringing change, value, healing and hope
+          throughout {{ env.appId === 'liow' ? 'cities' : 'schools' }} and communities everywhere.
         </p>
         <p>
           <br /><br /><br />
           <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
-            Start a Campaign for your Group!
+            Start a Campaign for your {{ env.appId === 'liow' ? 'Group' : 'School' }}!
           </button>
         </p>
       </div>
@@ -24,13 +26,13 @@
         <h1 class="text-primary m-b-none">
           <span>{{ state.counter$('global') | async | number }}</span>
         </h1>
-        <h4 class="m-none">acts of love</h4>
+        <h4 class="m-none">acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}</h4>
         <p class="m-t-none">done around the world</p>
 
         <h1 class="text-primary m-b-none">
           <span>{{ numberOfGroups$ | async | number }}</span>
         </h1>
-        <h4 class="m-none">groups</h4>
+        <h4 class="m-none">{{ env.appId === 'liow' ? 'groups' : 'schools' }}</h4>
         <p class="m-t-none">serving together</p>
 
         <h1 class="text-primary m-b-none">

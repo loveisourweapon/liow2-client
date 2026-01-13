@@ -8,7 +8,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { User, UserId } from '../core/models';
-import { ActService, ModalService, StateService, TitleService, UserService } from '../core/services';
+import {
+  ActService,
+  EnvironmentService,
+  ModalService,
+  StateService,
+  TitleService,
+  UserService,
+} from '../core/services';
 
 @Component({
   templateUrl: './user.component.html',
@@ -21,12 +28,13 @@ export class UserComponent implements OnDestroy, OnInit {
 
   constructor(
     private actService: ActService,
+    public env: EnvironmentService,
     public modal: ModalService,
     private route: ActivatedRoute,
     public state: StateService,
     private title: TitleService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.user$ = this.route.params

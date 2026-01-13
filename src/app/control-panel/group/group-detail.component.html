@@ -90,7 +90,7 @@
           <td>{{ numberOfMembers$ | async | number }}</td>
         </tr>
         <tr>
-          <th>Acts of Love</th>
+          <th>Acts of {{ env.appId === 'liow' ? 'Love' : 'Kindness' }}</th>
           <td>{{ state.counter$(group?._id) | async | number }}</td>
         </tr>
         <tr>

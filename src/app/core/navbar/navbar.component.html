@@ -17,7 +17,7 @@
           <span class="text-primary">
             {{ state.counter$('global') | async | number }}
           </span>
-          <br /><small>acts of love</small>
+          <br /><small>acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}</small>
         </div>
       </a>
     </div>
