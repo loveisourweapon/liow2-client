@@ -3,24 +3,47 @@
 <div class="home-welcome">
   <div class="container container-pad">
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-9" *ngIf="env.appId === 'liow'; else bekindWelcome">
         <h2>
-          {{ env.appNameLong }} is a movement that exists to change
-          {{ env.appId === 'liow' ? 'cities through the love of Jesus' : 'schools' }} by doing
-          strategic practical acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}.
+          {{ env.appNameLong }} is a movement that exists to change cities through the love of Jesus
+          by doing strategic practical acts of love.
         </h2>
         <p>
-          Thousands of people, doing thousands of acts of
-          {{ env.appId === 'liow' ? 'love' : 'kindness' }}, bringing change, value, healing and hope
-          throughout {{ env.appId === 'liow' ? 'cities' : 'schools' }} and communities everywhere.
+          Thousands of people, doing thousands of acts of love, bringing change, value, healing and
+          hope throughout cities and communities everywhere.
         </p>
         <p>
           <br /><br /><br />
           <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
-            Start a Campaign for your {{ env.appId === 'liow' ? 'Group' : 'School' }}!
+            Start a Campaign for your Group!
           </button>
         </p>
       </div>
+      <ng-template #bekindWelcome>
+        <div class="col-sm-9">
+          <h2>
+            {{ env.appNameShort }} is a movement empowering students to positively impact their
+            schools and communities through radical acts of kindness.
+          </h2>
+          <p>
+            It’s about turning compassion into action; choosing to notice, include, and uplift
+            others in ways that make a real difference.
+          </p>
+          <p>
+            When thousands of students take part in thousands of radical acts of kindness, it
+            creates a ripple effect of hope, connection, and positive change that can transform
+            entire communities.
+          </p>
+          <p>Because kindness isn’t small, it’s powerful.</p>
+          <p>And when we live it boldly, it has the power to change the world.</p>
+          <p>
+            <br /><br />
+            <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
+              Start a Campaign for your School!
+            </button>
+          </p>
+        </div>
+      </ng-template>
 
       <div class="col-sm-3">
         <h1 class="text-primary m-b-none">
