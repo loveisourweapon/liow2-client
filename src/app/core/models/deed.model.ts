@@ -8,6 +8,7 @@ export interface Deed {
   content: string;
   logo: string;
   videoUrl: string;
+  videoId?: string;
   coverImage: string;
   created: Date;
   modified: Date;

@@ -5,7 +5,7 @@
         <tr>
           <th style="width: 65px">Logo</th>
           <th>Title</th>
-          <th style="width: 150px">Video</th>
+          <th style="width: 192px">Video</th>
           <th style="width: 102px">&nbsp;</th>
         </tr>
       </thead>
@@ -19,8 +19,8 @@
           <td>
             <div *ngIf="deed.videoUrl as videoUrl; else noVideoLink">
               <a href="{{ videoUrl }}" target="_blank">
-                <i class="fa fa-lg fa-youtube-play"></i>
-                {{ videoUrl.split('/') | last }}
+                <i class="fa fa-lg fa-play-circle"></i>
+                {{ deed.videoId }}
               </a>
             </div>
             <ng-template #noVideoLink>
