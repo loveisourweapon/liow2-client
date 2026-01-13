@@ -5,7 +5,11 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { DeedListComponent, DeedListHorizontalComponent, DeedListVerticalComponent } from './deed-list';
+import {
+  DeedListComponent,
+  DeedListHorizontalComponent,
+  DeedListVerticalComponent,
+} from './deed-list';
 import { EmailValidatorDirective } from './email-validator.directive';
 import { FeedComponent, FeedItemComponent } from './feed';
 import { IconCheckedComponent } from './icon-checked';
@@ -18,7 +22,7 @@ import { SameAsValidatorDirective } from './same-as-validator.directive';
 import { ShareButtonsComponent } from './share-buttons';
 import { SwitchComponent } from './switch';
 import { UserPickerComponent } from './user-picker';
-import { YoutubePlayerComponent } from './youtube-player.component';
+import { EmbedPlayerComponent } from './embed-player.component';
 
 import { FromNowPipe } from './from-now.pipe';
 import { KebabCasePipe } from './kebab-case.pipe';
@@ -26,12 +30,7 @@ import { LastPipe } from './last.pipe';
 import { MomentPipe } from './moment.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    ModalModule,
-  ],
+  imports: [CommonModule, FormsModule, RouterModule, ModalModule],
   declarations: [
     DeedListComponent,
     DeedListHorizontalComponent,
@@ -49,7 +48,7 @@ import { MomentPipe } from './moment.pipe';
     ShareButtonsComponent,
     SwitchComponent,
     UserPickerComponent,
-    YoutubePlayerComponent,
+    EmbedPlayerComponent,
 
     FromNowPipe,
     KebabCasePipe,
@@ -74,7 +73,7 @@ import { MomentPipe } from './moment.pipe';
     ShareButtonsComponent,
     SwitchComponent,
     UserPickerComponent,
-    YoutubePlayerComponent,
+    EmbedPlayerComponent,
 
     FromNowPipe,
     KebabCasePipe,

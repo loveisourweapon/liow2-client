@@ -3,19 +3,23 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { has } from 'lodash';
 
 @Component({
-  selector: 'ui-youtube-player',
-  template: `<iframe [src]="safeUrl" frameborder="0" allowfullscreen></iframe>`,
+  selector: 'ui-embed-player',
+  template: `<iframe
+    [src]="safeUrl"
+    style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
+    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+    allowfullscreen
+    frameborder="0"
+  ></iframe>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class YoutubePlayerComponent implements OnChanges {
+export class EmbedPlayerComponent implements OnChanges {
   @Input() videoId: string;
   @Input() videoUrl: string;
 
   safeUrl: SafeResourceUrl;
 
-  constructor(
-    private sanitizer: DomSanitizer,
-  ) { }
+  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     let url = 'about:blank';

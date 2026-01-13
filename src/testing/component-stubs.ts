@@ -116,10 +116,10 @@ export class UserPickerStubComponent {
 }
 
 @Component({
-  selector: 'ui-youtube-player',
+  selector: 'ui-embed-player',
   template: ``,
 })
-export class YoutubePlayerStubComponent {
+export class EmbedPlayerStubComponent {
   @Input() videoId: string;
   @Input() videoUrl: string;
 }

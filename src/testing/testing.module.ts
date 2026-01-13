@@ -30,7 +30,7 @@ import {
   NavbarSearchStubComponent,
   SwitchStubComponent,
   UserPickerStubComponent,
-  YoutubePlayerStubComponent,
+  EmbedPlayerStubComponent,
 } from './component-stubs';
 import {
   ActivatedRouteStubService,
@@ -79,7 +79,7 @@ import {
     NavbarSearchStubComponent,
     SwitchStubComponent,
     UserPickerStubComponent,
-    YoutubePlayerStubComponent,
+    EmbedPlayerStubComponent,
 
     RouterLinkStubDirective,
     RouterLinkActiveStubDirective,
@@ -104,4 +104,4 @@ import {
     UserStubService,
   ],
 })
-export class TestingModule { }
+export class TestingModule {}

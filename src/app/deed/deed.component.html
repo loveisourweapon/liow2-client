@@ -4,7 +4,7 @@
       class="embed-responsive embed-responsive-16by9"
       *ngIf="(state.deed$ | async)?.videoUrl as videoUrl"
     >
-      <ui-youtube-player [videoUrl]="videoUrl" class="embed-responsive-item"></ui-youtube-player>
+      <ui-embed-player [videoUrl]="videoUrl" class="embed-responsive-item"></ui-embed-player>
     </div>
 
     <div class="deed-header" *ngIf="state.deed$ | async as deed">

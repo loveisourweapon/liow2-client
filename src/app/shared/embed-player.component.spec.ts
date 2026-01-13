@@ -2,22 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { YoutubePlayerComponent } from './youtube-player.component';
+import { EmbedPlayerComponent } from './embed-player.component';
 
-describe(`YoutubePlayerComponent`, () => {
+describe(`EmbedPlayerComponent`, () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHost: TestHostComponent;
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          YoutubePlayerComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [EmbedPlayerComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,17 +35,14 @@ describe(`YoutubePlayerComponent`, () => {
   it(`should generate a YouTube embed URL with the provided videoId for the iframe src`, () => {
     testHost.videoId = 'abc123';
     fixture.detectChanges();
-    expect(element.nativeElement.getAttribute('src')).toBe(`https://www.youtube.com/embed/${testHost.videoId}`);
+    expect(element.nativeElement.getAttribute('src')).toBe(
+      `https://www.youtube.com/embed/${testHost.videoId}`
+    );
   });
 });
 
 @Component({
-  template: `
-    <ui-youtube-player
-      [videoId]="videoId"
-      [videoUrl]="videoUrl"
-    ></ui-youtube-player>
-  `,
+  template: ` <ui-embed-player [videoId]="videoId" [videoUrl]="videoUrl"></ui-embed-player> `,
 })
 class TestHostComponent {
   videoId: string;
