@@ -7,7 +7,16 @@
     </div>
 
     <div class="embed-responsive embed-responsive-16by9 m-t-sm">
-      <ui-embed-player videoId="ZUhZXc9PooE" class="embed-responsive-item"></ui-embed-player>
+      <ui-embed-player
+        videoId="ZUhZXc9PooE"
+        class="embed-responsive-item"
+        *ngIf="env.appId === 'liow'"
+      ></ui-embed-player>
+      <ui-embed-player
+        videoUrl="https://player.cloudinary.com/embed/?cloud_name=liow&public_id=bekind-promo_h8xjiq"
+        class="embed-responsive-item"
+        *ngIf="env.appId === 'bekind'"
+      ></ui-embed-player>
     </div>
 
     <div class="text-center m-t-md home-campaign-buttons">
