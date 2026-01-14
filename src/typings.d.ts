@@ -5,7 +5,11 @@ interface NodeModule {
 }
 
 // Google Analytics
-declare var ga: (operation: string, key: string, value?: string) => void;
+type GATracker = (operation: string, key: string, value?: string) => void;
+interface Window {
+  ga?: GATracker;
+}
+declare var ga: GATracker;
 
 declare module 'alertify.js';
 declare module 'in-viewport';
