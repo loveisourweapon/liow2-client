@@ -8,7 +8,6 @@ import { has } from 'lodash';
     [src]="safeUrl"
     style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
     allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-    allowfullscreen
     frameborder="0"
   ></iframe>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
