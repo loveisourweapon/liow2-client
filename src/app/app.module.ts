@@ -16,9 +16,11 @@ import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
 if (environment.sentry) {
-  Raven
-    .config('https://09637593de7a40beaed831589ac1ea37@sentry.io/165315')
-    .install();
+  Raven.config(
+    environment.appEnv.startsWith('liow')
+      ? 'https://09637593de7a40beaed831589ac1ea37@o76421.ingest.us.sentry.io/165315'
+      : 'https://18f0f543772ec0c294e58984840fd302@o76421.ingest.us.sentry.io/4510708686389248'
+  ).install();
 }
 
 export class RavenErrorHandler implements ErrorHandler {
@@ -42,14 +44,8 @@ export class RavenErrorHandler implements ErrorHandler {
     UserModule,
     AppRoutingModule,
   ],
-  providers: [
-    { provide: ErrorHandler, useClass: RavenErrorHandler },
-  ],
-  declarations: [
-    AppComponent,
-  ],
-  bootstrap: [
-    AppComponent,
-  ],
+  providers: [{ provide: ErrorHandler, useClass: RavenErrorHandler }],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
