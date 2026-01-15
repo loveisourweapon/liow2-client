@@ -81,11 +81,8 @@
     </div>
 
     <div class="col-sm-9 col-sm-pull-3">
-      <div class="row">
-        <div class="col-xs-6">
-          <h2 class="m-t-none">{{ env.appId === 'liow' ? 'Devotional' : 'Encouragement' }}</h2>
-        </div>
-        <div class="col-xs-6">
+      <div class="row" *ngIf="env.appId === 'liow'">
+        <div class="col-xs-12">
           <div class="pull-right">
             <ui-share-buttons></ui-share-buttons>
           </div>
