@@ -1,6 +1,6 @@
 <div class="container container-pad-sm">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 deed-row">
       <div
         *ngFor="let deed of deeds; trackBy: identifyBy('_id')"
         class="deed-wrapper"
@@ -8,7 +8,11 @@
       >
         <div class="deed-title">{{ deed?.title }}</div>
         <div class="deed-image">
-          <img [src]="deed?.logo || '/images/deed.png'" class="img-responsive img-circle">
+          <img
+            [src]="deed?.logo || '/images/deed.png'"
+            [alt]="deed?.title + ' logo'"
+            class="img-responsive img-circle"
+          />
         </div>
         <div class="deed-text text-center">
           <div class="deed-count">{{ state.counter$(deed?._id) | async | number }}</div>
