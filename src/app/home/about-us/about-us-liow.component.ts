@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'liow-about-us-liow',
+  selector: 'liow-about-liow',
   templateUrl: './about-us-liow.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
