@@ -56,7 +56,7 @@
           <span>{{ numberOfGroups$ | async | number }}</span>
         </h1>
         <h4 class="m-none">{{ env.appId === 'liow' ? 'groups' : 'schools' }}</h4>
-        <p class="m-t-none">serving together</p>
+        <p class="m-t-none">{{ env.appId === 'liow' ? 'serving together' : 'causing change' }}</p>
 
         <h1 class="text-primary m-b-none">
           <span>{{ numberOfUsers$ | async | number }}</span>
