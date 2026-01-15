@@ -195,7 +195,10 @@
         Leave group
       </button>
 
-      <ui-share-buttons [classes]="['m-t-md']" *ngIf="!group.archived"></ui-share-buttons>
+      <ui-share-buttons
+        [classes]="['m-t-md']"
+        *ngIf="env.appId === 'liow' && !group.archived"
+      ></ui-share-buttons>
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
