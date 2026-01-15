@@ -18,6 +18,7 @@ import { ApiError, Credentials, Group, ModalState, NewUser } from '../../core/mo
 import {
   AlertifyService,
   AuthService,
+  EnvironmentService,
   ModalService,
   StateService,
   UserService,
@@ -54,6 +55,7 @@ export class SignupModalComponent implements OnInit, OnDestroy {
     private alertify: AlertifyService,
     private auth: AuthService,
     public modalService: ModalService,
+    public env: EnvironmentService,
     private state: StateService,
     private userService: UserService
   ) {}

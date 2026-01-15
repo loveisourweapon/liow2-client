@@ -203,7 +203,8 @@
                   [checked]="user.marketingOptIn"
                   (change)="user.marketingOptIn = $event"
                 >
-                  I want to receive news and updates from the LIOW team
+                  I want to receive news and updates from the
+                  {{ env.appId === 'liow' ? 'LIOW' : env.appNameShort }} team
                 </ui-switch>
               </div>
             </div>
