@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Deed } from '../../core/models';
 import { StateService } from '../../core/services/state.service';
 import { identifyBy } from '../utils';
+import { EnvironmentService } from '../../core/services/environment.service';
 
 @Component({
   selector: 'liow-deed-list-vertical',
@@ -16,7 +17,5 @@ export class DeedListVerticalComponent {
 
   identifyBy = identifyBy;
 
-  constructor(
-    public state: StateService,
-  ) { }
+  constructor(public env: EnvironmentService, public state: StateService) {}
 }

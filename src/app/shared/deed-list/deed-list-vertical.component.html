@@ -30,7 +30,7 @@
           {{ state.counter$(deed?._id) | async | number }}
         </span>
       </span>
-      <span class="deed-subtext">Deeds Done</span>
+      <span class="deed-subtext">{{ env.appId === 'liow' ? 'Deeds' : 'Acts' }} Done</span>
     </div>
   </div>
 </div>
