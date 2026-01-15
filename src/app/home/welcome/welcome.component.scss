@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@import '../../../styles/variables';
 
 liow-deed-list {
   display: block;
@@ -43,7 +43,11 @@ liow-deed-list {
 }
 
 .home-footer {
-  background: $gray-darker url("/images/footer-home.jpg") center;
+  background: $gray-darker url('/images/footer-home.jpg') center;
   background-size: cover;
   color: white;
+
+  &--bekind {
+    background-image: url('/images/footer-bekind.jpg');
+  }
 }
