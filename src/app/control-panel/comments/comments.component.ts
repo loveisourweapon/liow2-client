@@ -18,6 +18,7 @@ import {
   AlertifyService,
   AuthService,
   CommentService,
+  EnvironmentService,
   StateService,
   TitleService,
 } from '../../core/services';
@@ -47,6 +48,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
   private groupIdSubscription: Subscription;
 
   constructor(
+    public env: EnvironmentService,
     public auth: AuthService,
     private alertify: AlertifyService,
     private commentService: CommentService,
@@ -65,7 +67,13 @@ export class CommentsComponent implements OnInit, OnDestroy {
       .do((groupId: GroupId) => this.groupId$.next(groupId))
       .switchMap(() => this.state.controlPanel.group$)
       .filter((group: Group) => group !== null)
-      .subscribe((group: Group) => this.title.set(`Testimonies | ${group.name} | Control Panel`));
+      .subscribe((group: Group) =>
+        this.title.set(
+          `${this.env.appId === 'liow' ? 'Testimonies' : 'Stories of Impact'} | ${
+            group.name
+          } | Control Panel`
+        )
+      );
 
     this.filterParams$ = Observable.combineLatest(
       this.groupId$,

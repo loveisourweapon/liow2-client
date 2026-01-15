@@ -3,7 +3,8 @@
     [checked]="testimoniesOnly"
     (change)="testimoniesOnly = $event; loadItems()"
     size="small"
-  >Testimonies only</ui-switch>
+    >{{ env.appId === 'liow' ? 'Testimonies' : 'Stories of Impact' }} only</ui-switch
+  >
   |
   <button
     type="button"
@@ -17,7 +18,11 @@
 
 <div class="feed-wrapper">
   <liow-feed-item
-    *ngFor="let feedItem of (state.feed.items$ | async); trackBy: identifyBy('_id'); let isLastItem = first"
+    *ngFor="
+      let feedItem of state.feed.items$ | async;
+      trackBy: identifyBy('_id');
+      let isLastItem = first
+    "
     [item]="feedItem"
   ></liow-feed-item>
 
@@ -34,10 +39,7 @@
     </div>
   </div>
 
-  <div
-    class="feed-item"
-    *ngIf="!(isLoading$ | async) && (state.feed.items$ | async)?.length === 0"
-  >
+  <div class="feed-item" *ngIf="!(isLoading$ | async) && (state.feed.items$ | async)?.length === 0">
     No feed items to show.
   </div>
 </div>
