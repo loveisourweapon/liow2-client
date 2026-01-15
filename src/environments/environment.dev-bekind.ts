@@ -11,6 +11,5 @@ export const environment = {
   appNameLong: 'BeKind Schools',
   appNameShort: 'BeKind',
   facebookClientId: '1896569380638537',
-  googleAnalytics: false,
   sentry: false,
 };

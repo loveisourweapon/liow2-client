@@ -6,6 +6,5 @@ export const environment = {
   appNameLong: '${APP_NAME_LONG}',
   appNameShort: '${APP_NAME_SHORT}',
   facebookClientId: '304256106822142',
-  googleAnalytics: true,
   sentry: true,
 };

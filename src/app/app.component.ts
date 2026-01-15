@@ -36,12 +36,6 @@ export class AppComponent implements OnDestroy, OnInit {
       .subscribe((event: NavigationEnd) => {
         // Scroll to top of window when navigating
         window.scrollTo(0, 0);
-
-        if (this.env.googleAnalytics && typeof window.ga === 'function') {
-          // Send Google Analytics pageview event
-          ga('set', 'page', event.urlAfterRedirects);
-          ga('send', 'pageview');
-        }
       });
 
     // Listen for resize and update isSmallScreen

@@ -11,6 +11,5 @@ export const environment = {
   appNameLong: 'The Love is our Weapon Campaign',
   appNameShort: 'Love is our Weapon',
   facebookClientId: '1896569380638537',
-  googleAnalytics: false,
   sentry: false,
 };
