@@ -10,7 +10,11 @@ import { HomeFeedComponent } from './home-feed';
 import { GlobalFeedComponent } from './global-feed';
 import { AboutUsComponent, AboutUsLiowComponent, AboutUsBeKindComponent } from './about-us';
 import { ContactUsComponent } from './contact-us';
-import { PrivacyPolicyComponent } from './privacy-policy';
+import {
+  PrivacyPolicyComponent,
+  PrivacyPolicyLiowComponent,
+  PrivacyPolicyBeKindComponent,
+} from './privacy-policy';
 import { TermsAndConditionsComponent } from './terms-and-conditions';
 import { FAQsComponent, FAQsLiowComponent, FAQsBeKindComponent } from './faqs';
 import { WelcomeComponent } from './welcome';
@@ -26,6 +30,8 @@ import { WelcomeComponent } from './welcome';
     AboutUsBeKindComponent,
     ContactUsComponent,
     PrivacyPolicyComponent,
+    PrivacyPolicyLiowComponent,
+    PrivacyPolicyBeKindComponent,
     TermsAndConditionsComponent,
     FAQsComponent,
     FAQsLiowComponent,
