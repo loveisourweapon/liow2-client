@@ -15,7 +15,11 @@ import {
   PrivacyPolicyLiowComponent,
   PrivacyPolicyBeKindComponent,
 } from './privacy-policy';
-import { TermsAndConditionsComponent } from './terms-and-conditions';
+import {
+  TermsAndConditionsComponent,
+  TermsAndConditionsLiowComponent,
+  TermsAndConditionsBeKindComponent,
+} from './terms-and-conditions';
 import { FAQsComponent, FAQsLiowComponent, FAQsBeKindComponent } from './faqs';
 import { WelcomeComponent } from './welcome';
 
@@ -33,6 +37,8 @@ import { WelcomeComponent } from './welcome';
     PrivacyPolicyLiowComponent,
     PrivacyPolicyBeKindComponent,
     TermsAndConditionsComponent,
+    TermsAndConditionsLiowComponent,
+    TermsAndConditionsBeKindComponent,
     FAQsComponent,
     FAQsLiowComponent,
     FAQsBeKindComponent,
