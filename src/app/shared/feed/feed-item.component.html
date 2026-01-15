@@ -40,8 +40,12 @@
         <a [routerLink]="['/g', item?.group?.urlName]">{{ item?.group?.name }}</a>
       </span>
 
-      <span *ngIf="item?.act || item?.bulk">did the act of love</span>
-      <span *ngIf="item?.comment && item?.target?.deed">left a testimony on</span>
+      <span *ngIf="item?.act || item?.bulk"
+        >did the act of {{ env.appId === 'liow' ? 'love' : 'kindness' }}</span
+      >
+      <span *ngIf="item?.comment && item?.target?.deed"
+        >left a {{ env.appId === 'liow' ? 'testimony' : 'story of impact' }} on</span
+      >
       <span *ngIf="item?.comment && item?.target?.group">wrote a message to</span>
 
       <a [routerLink]="['/d', item?.target?.deed?.urlTitle]" *ngIf="item?.target?.deed">

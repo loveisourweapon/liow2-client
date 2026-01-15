@@ -3,41 +3,60 @@
 <div class="home-welcome">
   <div class="container container-pad">
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-9" *ngIf="env.appId === 'liow'; else bekindWelcome">
         <h2>
-          The Love is our Weapon Campaign is a movement that exists to
-          change cities through the love of Jesus by doing strategic practical
-          acts of love.
+          {{ env.appNameLong }} is a movement that exists to change cities through the love of Jesus
+          by doing strategic practical acts of love.
         </h2>
         <p>
-          Thousands of people, doing thousands of acts of love, bringing
-          change, value, healing and hope throughout cities and communities
-          everywhere.
+          Thousands of people, doing thousands of acts of love, bringing change, value, healing and
+          hope throughout cities and communities everywhere.
         </p>
         <p>
-          <br><br><br>
-          <button
-            type="button"
-            (click)="modal.openGroupEdit()"
-            class="btn btn-primary"
-          >
+          <br /><br /><br />
+          <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
             Start a Campaign for your Group!
           </button>
         </p>
       </div>
+      <ng-template #bekindWelcome>
+        <div class="col-sm-9">
+          <h2>
+            {{ env.appNameShort }} is a movement empowering students to positively impact their
+            schools and communities through radical acts of kindness.
+          </h2>
+          <p>
+            It’s about turning compassion into action; choosing to notice, include, and uplift
+            others in ways that make a real difference.
+          </p>
+          <p>
+            When thousands of students take part in thousands of radical acts of kindness, it
+            creates a ripple effect of hope, connection, and positive change that can transform
+            entire communities.
+          </p>
+          <p>Because kindness isn’t small, it’s powerful.</p>
+          <p>And when we live it boldly, it has the power to change the world.</p>
+          <p>
+            <br /><br />
+            <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
+              Start a Campaign for your School!
+            </button>
+          </p>
+        </div>
+      </ng-template>
 
       <div class="col-sm-3">
         <h1 class="text-primary m-b-none">
           <span>{{ state.counter$('global') | async | number }}</span>
         </h1>
-        <h4 class="m-none">acts of love</h4>
+        <h4 class="m-none">acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}</h4>
         <p class="m-t-none">done around the world</p>
 
         <h1 class="text-primary m-b-none">
           <span>{{ numberOfGroups$ | async | number }}</span>
         </h1>
-        <h4 class="m-none">groups</h4>
-        <p class="m-t-none">serving together</p>
+        <h4 class="m-none">{{ env.appId === 'liow' ? 'groups' : 'schools' }}</h4>
+        <p class="m-t-none">{{ env.appId === 'liow' ? 'serving together' : 'causing change' }}</p>
 
         <h1 class="text-primary m-b-none">
           <span>{{ numberOfUsers$ | async | number }}</span>
@@ -49,18 +68,18 @@
   </div>
 </div>
 
-<div class="home-partners">
+<div class="home-partners" *ngIf="env.appId === 'liow'">
   <div class="container container-pad text-center">
     <div class="row">
       <div class="col-xs-12">
-        <p>These great organisations have partnered with The Love is our Weapon campaign.</p>
+        <p>These great organisations have partnered with {{ env.appNameLong }}.</p>
 
         <div class="partner-logos">
-          <div class="partner-logo"><img src="/images/partners/hillsong.png"></div>
-          <div class="partner-logo"><img src="/images/partners/c3.png"></div>
-          <div class="partner-logo"><img src="/images/partners/acc.png"></div>
-          <div class="partner-logo"><img src="/images/partners/a21.png"></div>
-          <div class="partner-logo"><img src="/images/partners/baptist-nsw-act.png"></div>
+          <div class="partner-logo"><img src="/images/partners/hillsong.png" /></div>
+          <div class="partner-logo"><img src="/images/partners/c3.png" /></div>
+          <div class="partner-logo"><img src="/images/partners/acc.png" /></div>
+          <div class="partner-logo"><img src="/images/partners/a21.png" /></div>
+          <div class="partner-logo"><img src="/images/partners/baptist-nsw-act.png" /></div>
         </div>
       </div>
     </div>
@@ -71,14 +90,10 @@
   <div class="container container-pad text-center">
     <div class="row">
       <div class="col-xs-12">
-        <h1>Love is our Weapon</h1>
+        <h1>{{ env.appName }}</h1>
         <p>
-          <br><br><br>
-          <button
-            type="button"
-            (click)="modal.openGroupEdit()"
-            class="btn btn-primary"
-          >
+          <br /><br /><br />
+          <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
             Start a Campaign
           </button>
         </p>

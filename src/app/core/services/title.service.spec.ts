@@ -3,19 +3,17 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { TitleService } from './title.service';
+import { environment } from 'environments/environment';
 
 describe(`TitleService`, () => {
   let service: TitleService;
   let title: Title;
 
-  const baseTitle = `Love is our Weapon`;
+  const baseTitle = environment.appName;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        TitleService,
-        { provide: Title, useClass: TitleStubService },
-      ],
+      providers: [TitleService, { provide: Title, useClass: TitleStubService }],
     });
   });
 
@@ -44,5 +42,5 @@ describe(`TitleService`, () => {
 
 @Injectable()
 class TitleStubService {
-  setTitle() { }
+  setTitle() {}
 }

@@ -27,7 +27,7 @@
   >
     <a [routerLink]="['testimonies']" routerLinkActive #rlaTestimonies="routerLinkActive">
       <i class="fa fa-fw fa-comment"></i>
-      Testimonies
+      {{ env.appId === 'liow' ? 'Testimonies' : 'Stories of Impact' }}
     </a>
   </li>
 </ul>

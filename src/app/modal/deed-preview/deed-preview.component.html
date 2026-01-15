@@ -10,25 +10,19 @@
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
-      <liow-modal-header
-        modalTitle="Preview Deed"
-        (close)="onClose()"
-      ></liow-modal-header>
+      <liow-modal-header modalTitle="Preview Deed" (close)="onClose()"></liow-modal-header>
 
       <div class="modal-body" *ngIf="deed$ | async as deed">
         <div class="modal-jumbotron">
           <div class="embed-responsive embed-responsive-16by9" *ngIf="deed?.videoUrl as videoUrl">
-            <ui-youtube-player
-              [videoUrl]="videoUrl"
-              class="embed-responsive-item"
-            ></ui-youtube-player>
+            <ui-embed-player [videoUrl]="videoUrl" class="embed-responsive-item"></ui-embed-player>
           </div>
 
           <div class="deed-header clearfix">
             <img
               [src]="deed?.logo || '/images/deed.png'"
               class="img-responsive img-circle pull-left m-t-md m-r-sm"
-            >
+            />
 
             <h2 class="text-uppercase pull-left m-b-none">
               {{ deed?.title }}
@@ -44,15 +38,8 @@
       </div><!-- .modal-body -->
 
       <div class="modal-footer">
-        <button
-          type="button"
-          (click)="onClose()"
-          class="btn btn-default"
-        >
-          Close
-        </button>
+        <button type="button" (click)="onClose()" class="btn btn-default">Close</button>
       </div><!-- .modal-footer -->
-
     </div>
   </div>
 </div>

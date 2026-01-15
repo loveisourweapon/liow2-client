@@ -11,7 +11,7 @@ import {
   JumbtronStubComponent,
   MarkedStubComponent,
   ModalStubDirective,
-  YoutubePlayerStubComponent,
+  EmbedPlayerStubComponent,
 } from '../../../testing';
 import { ActService, DeedService, StateService } from '../../core/services';
 import { ModalHeaderComponent } from '../modal-header.component';
@@ -26,27 +26,23 @@ describe(`DeedPreviewModalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          DeedPreviewModalComponent,
-          TestHostComponent,
-          JumbtronStubComponent,
-          MarkedStubComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-          YoutubePlayerStubComponent,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: DeedService, useClass: DeedStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        DeedPreviewModalComponent,
+        TestHostComponent,
+        JumbtronStubComponent,
+        MarkedStubComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+        EmbedPlayerStubComponent,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: DeedService, useClass: DeedStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -69,4 +65,4 @@ describe(`DeedPreviewModalComponent`, () => {
 @Component({
   template: `<liow-deed-preview-modal></liow-deed-preview-modal>`,
 })
-class TestHostComponent { }
+class TestHostComponent {}

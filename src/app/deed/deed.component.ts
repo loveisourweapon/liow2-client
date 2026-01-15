@@ -13,12 +13,21 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { Campaign, CounterQuery, Deed, DeedSlug, FeedCriteria, Group, NewComment } from '../core/models';
+import {
+  Campaign,
+  CounterQuery,
+  Deed,
+  DeedSlug,
+  FeedCriteria,
+  Group,
+  NewComment,
+} from '../core/models';
 import {
   ActService,
   AlertifyService,
   CommentService,
   DeedService,
+  EnvironmentService,
   ModalService,
   StateService,
   TitleService,
@@ -44,11 +53,12 @@ export class DeedComponent implements OnDestroy, OnInit {
     private alertify: AlertifyService,
     private commentService: CommentService,
     private deedService: DeedService,
+    public env: EnvironmentService,
     public modal: ModalService,
     private route: ActivatedRoute,
     public state: StateService,
-    private title: TitleService,
-  ) { }
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params
@@ -57,12 +67,12 @@ export class DeedComponent implements OnDestroy, OnInit {
       .distinctUntilChanged()
       .do(() => this.state.deed$.next(null))
       .switchMap((deedSlug: DeedSlug) => this.deedService.findOne({ urlTitle: deedSlug }))
-      .subscribe((deed: Deed) => this.state.deed = deed);
+      .subscribe((deed: Deed) => (this.state.deed = deed));
 
     this.deedSubscription = Observable.combineLatest(
       this.state.deed$,
       this.state.auth.group$,
-      this.state.auth.campaign$,
+      this.state.auth.campaign$
     )
       .filter(([deed, group, campaign]: [Deed, Group, Campaign]) => deed !== null)
       .subscribe(([deed, group, campaign]: [Deed, Group, Campaign]) => {
@@ -77,7 +87,11 @@ export class DeedComponent implements OnDestroy, OnInit {
     this.deedSubscription.unsubscribe();
   }
 
-  onSaveTestimony(content: string, deed$: Observable<Deed>, group$: Observable<Group|null>): void {
+  onSaveTestimony(
+    content: string,
+    deed$: Observable<Deed>,
+    group$: Observable<Group | null>
+  ): void {
     this.isSavingTestimony$.next(true);
     Observable.combineLatest(deed$, group$)
       .first()
@@ -86,7 +100,9 @@ export class DeedComponent implements OnDestroy, OnInit {
           content: { text: content },
           target: { deed: deed._id },
         };
-        if (group) { newComment.group = group._id; }
+        if (group) {
+          newComment.group = group._id;
+        }
 
         return this.commentService.save(newComment);
       })
@@ -106,11 +122,15 @@ export class DeedComponent implements OnDestroy, OnInit {
               ? `Please keep your language friendly`
               : `Failed saving comment`
           );
-        },
+        }
       );
   }
 
-  onDeedDone(deed$: Observable<Deed>, group$: Observable<Group|null>, campaign$: Observable<Campaign|null>): void {
+  onDeedDone(
+    deed$: Observable<Deed>,
+    group$: Observable<Group | null>,
+    campaign$: Observable<Campaign | null>
+  ): void {
     this.isDoing$.next(true);
     Observable.combineLatest(deed$, group$, campaign$)
       .first()
@@ -135,7 +155,7 @@ export class DeedComponent implements OnDestroy, OnInit {
           // Delay the user from doing the deed again for 5 seconds
           this.animateDeedDoneDelay();
         },
-        () => this.alertify.error(`Failed registering deed`),
+        () => this.alertify.error(`Failed registering deed`)
       );
   }
 

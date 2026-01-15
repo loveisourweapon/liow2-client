@@ -1,29 +1,23 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header" [class.navbar-flex]="state.layout.isSmallScreen$ | async">
-      <button
-        type="button"
-        (click)="openMenu()"
-        class="navbar-toggle"
-        aria-expanded="false"
-      >
+      <button type="button" (click)="openMenu()" class="navbar-toggle" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
 
-      <a
-        routerLink="/"
-        class="navbar-brand"
-        title="Love is our Weapon"
-      >
-        <img src="/images/logo-navbar.png" alt="Love is our Weapon">
+      <a routerLink="/" class="navbar-brand" title="{{ env.appName }}">
+        <img
+          src="{{ env.appId === 'liow' ? '/images/logo-liow.png' : '/images/logo-bekind.svg' }}"
+          alt="{{ env.appName }} logo"
+        />
         <div class="navbar-brand-label">
           <span class="text-primary">
             {{ state.counter$('global') | async | number }}
           </span>
-          <br><small>acts of love</small>
+          <br /><small>acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}</small>
         </div>
       </a>
     </div>
@@ -31,11 +25,8 @@
     <div *ngIf="(state.layout.isSmallScreen$ | async) && (state.auth.isAuthenticated$ | async)">
       <ul class="nav navbar-nav navbar-right m-none">
         <li dropdown>
-          <a
-            class="user-dropdown"
-            (click)="openMenu(); $event.preventDefault()"
-            href>
-            <img [src]="(state.auth.user$ | async)?.picture" class="img-circle">
+          <a class="user-dropdown" (click)="openMenu(); $event.preventDefault()" href>
+            <img [src]="(state.auth.user$ | async)?.picture" class="img-circle" />
           </a>
         </li>
       </ul>
@@ -48,25 +39,22 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a routerLink="/global" title="Global Activity Feed">
-            Global
-          </a>
+          <a routerLink="/global" title="Global Activity Feed"> Global </a>
         </li>
         <li
           *ngIf="(state.auth.isAuthenticated$ | async) && (state.auth.group$ | async) as authGroup"
           class="visible-md-block visible-lg-block"
         >
-          <a [routerLink]="['/g', authGroup?.urlName]" [title]="authGroup?.name">
-            Campaign
-          </a>
+          <a [routerLink]="['/g', authGroup?.urlName]" [title]="authGroup?.name"> Campaign </a>
         </li>
-        <li>
-          <a href="https://liowstore.square.site/" target="_blank">
-            Shop
-          </a>
+        <li *ngIf="env.appId === 'liow'">
+          <a href="https://liowstore.square.site/" target="_blank"> Shop </a>
         </li>
-        <li>
-          <a href="https://checkout.square.site/merchant/MLD5Q339MGHCP/checkout/KW7OEATX34QS3ZRIPKO6DH2W" target="_blank">
+        <li *ngIf="env.appId === 'liow'">
+          <a
+            href="https://checkout.square.site/merchant/MLD5Q339MGHCP/checkout/KW7OEATX34QS3ZRIPKO6DH2W"
+            target="_blank"
+          >
             Donate
           </a>
         </li>
@@ -84,7 +72,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img [src]="authUser?.picture || '/images/user0.png'" class="img-circle">
+            <img [src]="authUser?.picture || '/images/user0.png'" class="img-circle" />
             <span class="caret"></span>
           </a>
           <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
@@ -135,7 +123,12 @@
           </ul>
         </li><!-- [dropdown](isAuthenticated) -->
 
-        <li dropdown placement="bottom right" class="dropdown" *ngIf="!(state.auth.isAuthenticated$ | async)">
+        <li
+          dropdown
+          placement="bottom right"
+          class="dropdown"
+          *ngIf="!(state.auth.isAuthenticated$ | async)"
+        >
           <a
             dropdownToggle
             class="user-dropdown dropdown-toggle"
@@ -143,7 +136,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            <img src="/images/user0.png" class="img-circle">
+            <img src="/images/user0.png" class="img-circle" />
             <span class="caret"></span>
           </a>
           <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">

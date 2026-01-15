@@ -19,6 +19,7 @@ import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/switchMap';
 
 import { FeedCriteria, FeedItem } from '../../core/models';
+import { EnvironmentService } from '../../core/services/environment.service';
 import { FeedService } from '../../core/services/feed.service';
 import { StateService } from '../../core/services/state.service';
 import { identifyBy } from '../utils';
@@ -40,9 +41,10 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
   private updateSubscription: Subscription;
 
   constructor(
+    public env: EnvironmentService,
     private feedService: FeedService,
-    public state: StateService,
-  ) { }
+    public state: StateService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (has(changes, 'criteria.currentValue') && changes['criteria'].currentValue) {
@@ -53,10 +55,7 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
   ngOnInit(): void {
     this.updateSubscription = this.state.feed.update$
       .skip(1)
-      .subscribe((reload: boolean) => reload
-        ? this.loadItems()
-        : this.loadNewerItems()
-      );
+      .subscribe((reload: boolean) => (reload ? this.loadItems() : this.loadNewerItems()));
   }
 
   ngOnDestroy(): void {
@@ -66,13 +65,12 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
   loadItems(): void {
     const criteria = this.testimoniesOnly
       ? assign({}, this.criteria, { act: 'null' })
-      : this.criteria
-      ;
-
+      : this.criteria;
     this.isLoading$.next(true);
-    this.feedService.load(criteria)
+    this.feedService
+      .load(criteria)
       .finally(() => this.isLoading$.next(false))
-      .subscribe((feedItems: FeedItem[]) => this.state.feed.items = feedItems);
+      .subscribe((feedItems: FeedItem[]) => (this.state.feed.items = feedItems));
   }
 
   loadNewerItems(): void {
@@ -86,8 +84,12 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
           act: this.testimoniesOnly ? 'null' : undefined,
         });
 
-        return this.feedService.load(criteria)
-          .map((moreFeedItems: FeedItem[]) => this.state.feed.items = [...moreFeedItems, ...feedItems]);
+        return this.feedService
+          .load(criteria)
+          .map(
+            (moreFeedItems: FeedItem[]) =>
+              (this.state.feed.items = [...moreFeedItems, ...feedItems])
+          );
       })
       .finally(() => this.isLoading$.next(false))
       .subscribe();
@@ -105,8 +107,12 @@ export class FeedComponent implements OnChanges, OnInit, OnDestroy {
           act: this.testimoniesOnly ? 'null' : undefined,
         });
 
-        return this.feedService.load(criteria)
-          .map((moreFeedItems: FeedItem[]) => this.state.feed.items = [...feedItems, ...moreFeedItems]);
+        return this.feedService
+          .load(criteria)
+          .map(
+            (moreFeedItems: FeedItem[]) =>
+              (this.state.feed.items = [...feedItems, ...moreFeedItems])
+          );
       })
       .finally(() => this.isLoading$.next(false))
       .subscribe();

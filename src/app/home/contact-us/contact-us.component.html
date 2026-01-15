@@ -125,7 +125,12 @@
       <p class="visible-xs m-t-lg"></p>
       <p>
         Need help?
-        <a href="mailto:hello@loveisourweapon.com?subject=Hello!">Say hello!</a>
+        <a
+          href="mailto:hello@{{
+            env.appId === 'liow' ? 'loveisourweapon.com' : 'bekind.school'
+          }}?subject=Hello!"
+          >Say hello!</a
+        >
       </p>
     </div>
   </div>

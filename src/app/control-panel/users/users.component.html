@@ -115,8 +115,11 @@
         </div>
 
         <p class="m-t-lg">
-          <b>Note:</b> This will not remove the user's testimonies or deeds done. You can remove
-          unwanted testimonies using the Testimonies tab. Please
+          <b>Note:</b> This will not remove the user's
+          {{ env.appId === 'liow' ? 'testimonies or deeds' : 'stories of impact or acts' }} done.
+          You can remove unwanted
+          {{ env.appId === 'liow' ? 'testimonies' : 'stories of impact' }} using the
+          {{ env.appId === 'liow' ? 'Testimonies' : 'Stories of Impact' }} tab. Please
           <a routerLink="/contact">contact us</a> if you need help.
         </p>
       </div>
@@ -169,8 +172,10 @@
         </div>
 
         <p class="m-t-lg">
-          <b>Note:</b> This will completely delete the user from Love is our Weapon including all
-          testimonies and deeds done. The global counter might go down from this action.
+          <b>Note:</b> This will completely delete the user from {{ env.appNameShort }} including
+          all
+          {{ env.appId === 'liow' ? 'testimonies and deeds' : 'stories of impact and acts' }} done.
+          The global counter might go down from this action.
         </p>
       </div>
 

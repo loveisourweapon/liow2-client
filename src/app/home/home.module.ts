@@ -8,29 +8,40 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { HomeFeedComponent } from './home-feed';
 import { GlobalFeedComponent } from './global-feed';
-import { AboutUsComponent } from './about-us';
+import { AboutUsComponent, AboutUsLiowComponent, AboutUsBeKindComponent } from './about-us';
 import { ContactUsComponent } from './contact-us';
-import { PrivacyPolicyComponent } from './privacy-policy';
-import { TermsAndConditionsComponent } from './terms-and-conditions';
-import { FAQsComponent } from './faqs';
+import {
+  PrivacyPolicyComponent,
+  PrivacyPolicyLiowComponent,
+  PrivacyPolicyBeKindComponent,
+} from './privacy-policy';
+import {
+  TermsAndConditionsComponent,
+  TermsAndConditionsLiowComponent,
+  TermsAndConditionsBeKindComponent,
+} from './terms-and-conditions';
+import { FAQsComponent, FAQsLiowComponent, FAQsBeKindComponent } from './faqs';
 import { WelcomeComponent } from './welcome';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    SelectModule,
-    AlertModule,
-    HomeRoutingModule,
-  ],
+  imports: [SharedModule, SelectModule, AlertModule, HomeRoutingModule],
   declarations: [
     HomeComponent,
     HomeFeedComponent,
     GlobalFeedComponent,
     AboutUsComponent,
+    AboutUsLiowComponent,
+    AboutUsBeKindComponent,
     ContactUsComponent,
     PrivacyPolicyComponent,
+    PrivacyPolicyLiowComponent,
+    PrivacyPolicyBeKindComponent,
     TermsAndConditionsComponent,
+    TermsAndConditionsLiowComponent,
+    TermsAndConditionsBeKindComponent,
     FAQsComponent,
+    FAQsLiowComponent,
+    FAQsBeKindComponent,
     WelcomeComponent,
   ],
 })

@@ -5,7 +5,13 @@ import 'rxjs/add/observable/timer';
 
 import { identifyBy } from '../../shared';
 import { Group } from '../models';
-import { ActService, AuthService, ModalService, StateService } from '../services';
+import {
+  ActService,
+  AuthService,
+  EnvironmentService,
+  ModalService,
+  StateService,
+} from '../services';
 
 @Component({
   selector: 'liow-navbar',
@@ -21,6 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private actService: ActService,
+    public env: EnvironmentService,
     public auth: AuthService,
     public modal: ModalService,
     public state: StateService

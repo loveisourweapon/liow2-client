@@ -14,7 +14,7 @@ import {
   MarkedStubComponent,
   ModalStubService,
   TitleStubService,
-  YoutubePlayerStubComponent,
+  EmbedPlayerStubComponent,
 } from '../../testing';
 import {
   ActService,
@@ -34,29 +34,27 @@ describe(`DeedComponent`, () => {
   let component: DeedComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          DeedComponent,
-          CommentFormStubComponent,
-          DeedListStubComponent,
-          FeedStubComponent,
-          JumbtronStubComponent,
-          MarkedStubComponent,
-          YoutubePlayerStubComponent,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: CommentService, useClass: CommentStubService },
-          { provide: DeedService, useClass: DeedStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        DeedComponent,
+        CommentFormStubComponent,
+        DeedListStubComponent,
+        FeedStubComponent,
+        JumbtronStubComponent,
+        MarkedStubComponent,
+        EmbedPlayerStubComponent,
+      ],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: CommentService, useClass: CommentStubService },
+        { provide: DeedService, useClass: DeedStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

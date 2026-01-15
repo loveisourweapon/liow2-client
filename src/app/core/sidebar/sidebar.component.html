@@ -6,19 +6,15 @@
   <div class="sidebar-header">
     <div class="media user-profile">
       <div class="media-left" *ngIf="state.auth.isAuthenticated$ | async">
-        <img [src]="(state.auth.user$ | async)?.picture" class="img-circle b-xs">
+        <img [src]="(state.auth.user$ | async)?.picture" class="img-circle b-xs" />
       </div>
       <div class="media-right media-middle">
-        {{ (state.auth.user$ | async)?.name }}<br>
+        {{ (state.auth.user$ | async)?.name }}<br />
         <small class="text-muted">{{ (state.auth.user$ | async)?.email }}</small>
       </div>
     </div>
 
-    <button
-      type="button"
-      class="btn btn-lg btn-close"
-      (click)="closeMenu()"
-    >
+    <button type="button" class="btn btn-lg btn-close" (click)="closeMenu()">
       <i class="fa fa-times"></i>
     </button>
   </div>
@@ -27,11 +23,7 @@
     <liow-navbar-search (select)="closeMenu()"></liow-navbar-search>
 
     <div class="list-group">
-      <a
-        routerLink="/global"
-        class="list-group-item list-group-item-inverse"
-        (click)="closeMenu()"
-      >
+      <a routerLink="/global" class="list-group-item list-group-item-inverse" (click)="closeMenu()">
         <i class="fa fa-fw fa-globe text-primary"></i>
         Global Activity Feed
       </a>
@@ -42,13 +34,14 @@
         (click)="closeMenu()"
       >
         <i class="fa fa-fw fa-users text-primary"></i>
-        Current Campaign<br>
+        Current Campaign<br />
         <small class="text-muted">{{ authGroup?.name }}</small>
       </a>
       <a
         href="https://liowstore.square.site/"
         target="_blank"
         class="list-group-item list-group-item-inverse"
+        *ngIf="env.appId === 'liow'"
         (click)="closeMenu()"
       >
         <i class="fa fa-fw fa-shopping-bag text-primary"></i>
@@ -58,6 +51,7 @@
         href="https://checkout.square.site/merchant/MLD5Q339MGHCP/checkout/KW7OEATX34QS3ZRIPKO6DH2W"
         target="_blank"
         class="list-group-item list-group-item-inverse"
+        *ngIf="env.appId === 'liow'"
         (click)="closeMenu()"
       >
         <i class="fa fa-fw fa-heartbeat text-primary"></i>

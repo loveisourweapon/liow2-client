@@ -6,7 +6,7 @@ import {
   JumbtronStubComponent,
   ModalStubService,
   TitleStubService,
-  YoutubePlayerStubComponent,
+  EmbedPlayerStubComponent,
 } from '../../testing';
 import { ActService, ModalService, StateService, TitleService } from '../core/services';
 import { HomeComponent } from './home.component';
@@ -18,23 +18,21 @@ describe(`HomeComponent`, () => {
   let component: HomeComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          HomeComponent,
-          JumbtronStubComponent,
-          WelcomeStubComponent,
-          HomeFeedStubComponent,
-          YoutubePlayerStubComponent,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          { provide: TitleService, useClass: TitleStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        HomeComponent,
+        JumbtronStubComponent,
+        WelcomeStubComponent,
+        HomeFeedStubComponent,
+        EmbedPlayerStubComponent,
+      ],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        { provide: TitleService, useClass: TitleStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -53,7 +51,7 @@ describe(`HomeComponent`, () => {
   selector: 'liow-welcome',
   template: ``,
 })
-class WelcomeStubComponent { }
+class WelcomeStubComponent {}
 
 @Component({
   selector: 'liow-home-feed',

@@ -17,13 +17,14 @@
       <span class="f-lg" *ngIf="state.campaign$ | async as campaign">
         {{ state.counter$(campaign?._id) | async | number }}
       </span>
-      acts of love <span class="text-muted">this campaign</span>
+      acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}
+      <span class="text-muted">this campaign</span>
     </ng-template>
     <ng-template #showGroupCounter>
       <span class="f-lg">
         {{ state.counter$(group?._id) | async | number }}
       </span>
-      acts of love
+      acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}
     </ng-template>
   </div>
 </liow-jumbotron>
@@ -86,7 +87,7 @@
             <span class="f-lg">
               {{ state.counter$(campaign._id) | async | number }}
             </span>
-            acts of love so far
+            acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }} so far
           </small>
         </h4>
 
@@ -194,7 +195,10 @@
         Leave group
       </button>
 
-      <ui-share-buttons [classes]="['m-t-md']" *ngIf="!group.archived"></ui-share-buttons>
+      <ui-share-buttons
+        [classes]="['m-t-md']"
+        *ngIf="env.appId === 'liow' && !group.archived"
+      ></ui-share-buttons>
     </div>
 
     <div class="col-sm-8 col-md-9 col-sm-pull-4 col-md-pull-3">
@@ -238,12 +242,18 @@
 
           <div *ngIf="!group?.welcomeMessage">
             <h2>
-              The Love is our Weapon Campaign is a movement that exists to change cities through the
-              love of Jesus by doing strategic practical acts of love.
+              {{ env.appNameLong }} is a movement that exists
+              {{
+                env.appid === 'liow'
+                  ? 'to change cities through the love of Jesus by doing strategic practical acts of love.'
+                  : 'to change schools by doing strategic practical acts of kindness.'
+              }}
             </h2>
             <p>
-              Thousands of people, doing thousands of acts of love, bringing change, value, healing
-              and hope throughout cities and communities everywhere.
+              Thousands of people, doing thousands of acts of
+              {{ env.appId === 'liow' ? 'love' : 'kindness' }}, bringing change, value, healing and
+              hope throughout {{ env.appId === 'liow' ? 'cities' : 'schools' }} and communities
+              everywhere.
             </p>
           </div>
         </tab>

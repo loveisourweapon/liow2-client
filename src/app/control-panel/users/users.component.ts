@@ -17,6 +17,7 @@ import { Group, GroupId, JsonPatchOp, User } from '../../core/models';
 import {
   AlertifyService,
   AuthService,
+  EnvironmentService,
   StateService,
   TitleService,
   UserService,
@@ -48,6 +49,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   private groupIdSubscription: Subscription;
 
   constructor(
+    public env: EnvironmentService,
     public auth: AuthService,
     private alertify: AlertifyService,
     private route: ActivatedRoute,

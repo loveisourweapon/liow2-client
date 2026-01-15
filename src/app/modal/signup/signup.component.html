@@ -99,12 +99,12 @@
             class="form-group"
             [class.has-error]="form.submitted && (email.invalid || errors.email)"
           >
-            <label for="email" class="col-xs-3 control-label">Email</label>
+            <label for="email-signup" class="col-xs-3 control-label">Email</label>
             <div class="col-xs-9 col-sm-8">
               <input
                 type="email"
                 class="form-control"
-                id="email"
+                id="email-signup"
                 name="email"
                 #email="ngModel"
                 [(ngModel)]="user.email"
@@ -203,7 +203,8 @@
                   [checked]="user.marketingOptIn"
                   (change)="user.marketingOptIn = $event"
                 >
-                  I want to receive news and updates from the LIOW team
+                  I want to receive news and updates from the
+                  {{ env.appId === 'liow' ? 'LIOW' : env.appNameShort }} team
                 </ui-switch>
               </div>
             </div>
@@ -223,16 +224,14 @@
               </p>
             </div>
           </div>
-        </div>
-        <!-- .modal-body -->
+        </div><!-- .modal-body -->
 
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary btn-block" [disabled]="isSigningUp$ | async">
             <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isSigningUp$ | async)"></i>
             Sign up
           </button>
-        </div>
-        <!-- .modal-footer -->
+        </div><!-- .modal-footer -->
       </form>
     </div>
   </div>

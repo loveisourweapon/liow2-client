@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class TitleService {
-  private readonly baseTitle = `Love is our Weapon`;
+  private readonly baseTitle = environment.appName;
 
   constructor(private title: Title) {
     this.clear();

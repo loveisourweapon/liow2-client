@@ -10,19 +10,32 @@
 <footer>
   <div class="container f-sm">
     <div class="footer-copyright">
-      &copy; {{ date | moment:'YYYY' }}
-      <span class="hidden-xs">The</span>
-      Love is our Weapon
-      <span class="hidden-xs">Campaign</span>
+      &copy; {{ date | moment : 'YYYY' }}
+      <span class="visible-xs-inline">{{ env.appName }}</span>
+      <span class="hidden-xs">{{ env.appNameLong }}</span>
     </div>
     <div class="footer-social">
-      <a href="https://www.facebook.com/loveisourweaponcampaign" target="_blank">
+      <a
+        href="https://www.facebook.com/{{
+          env.appId === 'liow' ? 'loveisourweaponcampaign' : 'profile.php?id=61586151431873'
+        }}"
+        target="_blank"
+      >
         <img src="/images/logo-facebook.png" alt="Facebook logo" />
       </a>
-      <a href="https://www.instagram.com/loveisourweaponcampaign" target="_blank">
+      <a
+        href="https://www.instagram.com/{{
+          env.appId === 'liow' ? 'loveisourweaponcampaign' : 'bekind.schools'
+        }}"
+        target="_blank"
+      >
         <img src="/images/logo-instagram.png" alt="Instagram logo" />
       </a>
-      <a href="https://www.youtube.com/@loveisourweaponcampaign" target="_blank">
+      <a
+        href="https://www.youtube.com/@loveisourweaponcampaign"
+        target="_blank"
+        *ngIf="env.appId === 'liow'"
+      >
         <img src="/images/logo-youtube.png" alt="YouTube logo" />
       </a>
     </div>

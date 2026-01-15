@@ -1,7 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { GroupService, ModalService, StateService, UserService } from '../../core/services';
+import {
+  EnvironmentService,
+  GroupService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
 
 @Component({
   selector: 'liow-welcome',
@@ -15,9 +21,10 @@ export class WelcomeComponent implements OnInit {
 
   constructor(
     private groupService: GroupService,
+    private userService: UserService,
+    public env: EnvironmentService,
     public modal: ModalService,
-    public state: StateService,
-    private userService: UserService
+    public state: StateService
   ) {}
 
   ngOnInit(): void {

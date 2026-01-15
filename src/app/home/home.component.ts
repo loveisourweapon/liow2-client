@@ -3,7 +3,13 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 
 import { Group, User } from '../core/models';
-import { ActService, ModalService, StateService, TitleService } from '../core/services';
+import {
+  ActService,
+  EnvironmentService,
+  ModalService,
+  StateService,
+  TitleService,
+} from '../core/services';
 
 @Component({
   templateUrl: './home.component.html',
@@ -15,10 +21,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private actService: ActService,
+    public env: EnvironmentService,
     public modal: ModalService,
     public state: StateService,
-    private title: TitleService,
-  ) { }
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.title.clear();
@@ -27,8 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.userSubscription = this.state.auth.user$
       .filter((user: User) => user !== null)
       .subscribe((user: User) =>
-        user.groups.forEach((group: Group) =>
-          this.actService.count({ group: group._id })));
+        user.groups.forEach((group: Group) => this.actService.count({ group: group._id }))
+      );
   }
 
   ngOnDestroy(): void {

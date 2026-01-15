@@ -108,7 +108,7 @@
           <td>{{ user?.created | moment : 'LL' }}</td>
         </tr>
         <tr>
-          <th>Acts of Love</th>
+          <th>Acts of {{ env.appId === 'liow' ? 'Love' : 'Kindness' }}</th>
           <td>{{ state.counter$(user?._id) | async | number }}</td>
         </tr>
         <tr>

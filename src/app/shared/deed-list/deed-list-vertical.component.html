@@ -6,23 +6,31 @@
     [class.deed-current]="deed?._id === (state.deed$ | async)?._id"
   >
     <div class="deed-image">
-      <img [src]="deed?.logo || 'images/deed.png'" class="img-responsive img-circle">
+      <img
+        [src]="deed?.logo || 'images/deed.png'"
+        [alt]="deed?.title + ' logo'"
+        class="img-responsive img-circle"
+      />
     </div>
     <div class="deed-text">
       <span class="deed-title">{{ deed?.title }}</span>
-      <br>
+      <br />
       <span class="deed-count">
         <span *ngIf="!isGlobal && state.auth.campaign$ | async as authCampaign">
           {{ state.counter$(authCampaign?._id + deed?._id) | async | number }}
         </span>
-        <span *ngIf="!isGlobal && !(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup">
+        <span
+          *ngIf="
+            !isGlobal && !(state.auth.campaign$ | async) && (state.auth.group$ | async) as authGroup
+          "
+        >
           {{ state.counter$(authGroup?._id + deed?._id) | async | number }}
         </span>
         <span *ngIf="isGlobal || !((state.auth.campaign$ | async) || (state.auth.group$ | async))">
           {{ state.counter$(deed?._id) | async | number }}
         </span>
       </span>
-      <span class="deed-subtext">Deeds Done</span>
+      <span class="deed-subtext">{{ env.appId === 'liow' ? 'Deeds' : 'Acts' }} Done</span>
     </div>
   </div>
 </div>

@@ -7,7 +7,7 @@
   <div jumbotron-title>{{ user?.name }}</div>
   <div jumbotron-text>
     <span class="f-lg">{{ state.counter$(user?._id) | async | number }}</span>
-    acts of love
+    acts of {{ env.appId === 'liow' ? 'love' : 'kindness' }}
   </div>
 </liow-jumbotron>
 
@@ -25,8 +25,8 @@
       ></liow-feed>
 
       <p *ngIf="!(state.auth.isAuthenticated$ | async)">
-        You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a>
-        to see {{ user?.firstName }}'s Activity Feed.
+        You must <a (click)="modal.openLogin(); $event.preventDefault()" href>login</a> to see
+        {{ user?.firstName }}'s Activity Feed.
       </p>
     </div>
   </div>

@@ -9,6 +9,8 @@ ARG API_BASE_URL
 ARG APP_ENV
 ARG APP_NAME
 ARG APP_NAME_LONG
+ARG APP_NAME_SHORT
+ARG INDEX_FILE
 
 WORKDIR /app
 
@@ -16,6 +18,8 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY . .
+COPY src/${INDEX_FILE} src/index.html
+
 RUN yarn config-env
 RUN yarn build:prod
 
