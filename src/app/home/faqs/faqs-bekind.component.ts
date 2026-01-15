@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'liow-about-us-bekind',
-  templateUrl: './about-us-bekind.component.html',
+  selector: 'liow-faqs-bekind',
+  templateUrl: './faqs-bekind.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AboutUsBeKindComponent {}
+export class FAQsBeKindComponent {}

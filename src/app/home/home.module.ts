@@ -12,7 +12,7 @@ import { AboutUsComponent, AboutUsLiowComponent, AboutUsBeKindComponent } from '
 import { ContactUsComponent } from './contact-us';
 import { PrivacyPolicyComponent } from './privacy-policy';
 import { TermsAndConditionsComponent } from './terms-and-conditions';
-import { FAQsComponent } from './faqs';
+import { FAQsComponent, FAQsLiowComponent, FAQsBeKindComponent } from './faqs';
 import { WelcomeComponent } from './welcome';
 
 @NgModule({
@@ -28,6 +28,8 @@ import { WelcomeComponent } from './welcome';
     PrivacyPolicyComponent,
     TermsAndConditionsComponent,
     FAQsComponent,
+    FAQsLiowComponent,
+    FAQsBeKindComponent,
     WelcomeComponent,
   ],
 })
