@@ -3,6 +3,7 @@
 .home-header {
   h1 {
     font-size: 70px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 
     @media (min-width: $screen-sm-min) {
       font-size: 100px;
@@ -11,6 +12,7 @@
 
   p {
     font-size: 18px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 
     @media (min-width: $screen-sm-min) {
       font-size: 24px;

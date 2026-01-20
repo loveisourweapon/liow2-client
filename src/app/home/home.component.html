@@ -1,4 +1,4 @@
-<liow-jumbotron background="/images/header-home.jpg" [classes]="['videotron']">
+<liow-jumbotron [background]="env.appId === 'liow' ? '/images/header-home.jpg' : 'https://res.cloudinary.com/liow/image/upload/v1768946554/hero-library_ipqagl.jpg'" [classes]="['videotron']">
   <div jumbotron-content class="home-header">
     <div class="text-center home-counter">
       <p>{{ env.appNameLong }}</p>
