@@ -43,11 +43,11 @@ liow-deed-list {
 }
 
 .home-footer {
-  background: $gray-darker url('/images/footer-home.jpg') center;
+  background: $gray-darker url('https://res.cloudinary.com/liow/image/upload/v1768945357/footer-conference_ixkkbh.jpg') center;
   background-size: cover;
   color: white;
 
   &--bekind {
-    background-image: url('/images/footer-bekind.jpg');
+    background-image: url('https://res.cloudinary.com/liow/image/upload/v1768945279/footer-hallway_xu0qoy.jpg');
   }
 }

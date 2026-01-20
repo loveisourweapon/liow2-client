@@ -7,7 +7,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { AlertifyService, AuthService, TitleService } from '../../core/services';
+import { AlertifyService, AuthService, EnvironmentService, TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './confirm-email.component.html',
@@ -15,6 +15,7 @@ import { AlertifyService, AuthService, TitleService } from '../../core/services'
 })
 export class ConfirmEmailComponent implements OnInit {
   constructor(
+    public env: EnvironmentService,
     private alertify: AlertifyService,
     private auth: AuthService,
     private route: ActivatedRoute,
