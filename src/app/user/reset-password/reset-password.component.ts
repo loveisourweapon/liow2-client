@@ -6,7 +6,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/first';
 
-import { AlertifyService, AuthService, ModalService, TitleService } from '../../core/services';
+import { AlertifyService, AuthService, EnvironmentService, ModalService, TitleService } from '../../core/services';
 
 @Component({
   templateUrl: './reset-password.component.html',
@@ -23,6 +23,7 @@ export class ResetPasswordComponent implements OnInit {
   private token: string;
 
   constructor(
+    public env: EnvironmentService,
     private alertify: AlertifyService,
     private auth: AuthService,
     private modal: ModalService,
