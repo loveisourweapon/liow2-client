@@ -18,6 +18,11 @@ import { SharedModule } from '../shared';
 import { AuthConfig } from './auth-config';
 import { NavbarComponent } from './navbar';
 import { NavbarSearchComponent } from './navbar-search';
+import {
+  PromoBannerComponent,
+  PromoBannerLiowComponent,
+  PromoBannerBekindComponent,
+} from './promo-banner';
 import { SidebarComponent } from './sidebar';
 import {
   ActService,
@@ -68,15 +73,15 @@ import {
   declarations: [
     NavbarComponent,
     NavbarSearchComponent,
+    PromoBannerComponent,
+    PromoBannerLiowComponent,
+    PromoBannerBekindComponent,
     SidebarComponent,
   ],
-  exports: [
-    NavbarComponent,
-    SidebarComponent,
-  ],
+  exports: [NavbarComponent, PromoBannerComponent, SidebarComponent],
 })
 export class CoreModule {
-  constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error(`CoreModule is already loaded. Import it in the AppModule only`);
     }

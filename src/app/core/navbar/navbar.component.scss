@@ -1,4 +1,15 @@
-@import "../../../styles/variables";
+@import '../../../styles/variables';
+
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.navbar-static-top {
+  margin-bottom: 0;
+}
 
 .navbar .container {
   display: flex;
@@ -53,13 +64,21 @@
   border: none;
   border-radius: 0;
 
-  &:hover { background: $dropdown-link-hover-bg; }
-  &:focus { background: inherit; }
+  &:hover {
+    background: $dropdown-link-hover-bg;
+  }
+  &:focus {
+    background: inherit;
+  }
 }
 
 .navbar-nav > li > a {
-  &:hover { background: $dropdown-link-hover-bg; }
-  &:focus { background: inherit; }
+  &:hover {
+    background: $dropdown-link-hover-bg;
+  }
+  &:focus {
+    background: inherit;
+  }
 
   @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     padding-left: 11px;
