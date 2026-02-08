@@ -43,6 +43,7 @@ liow-deed-list {
 }
 
 .home-footer {
+  position: relative;
   background: $gray-darker
     url('https://res.cloudinary.com/liow/image/upload/v1768945357/footer-conference_ixkkbh.jpg')
     center;
@@ -51,6 +52,22 @@ liow-deed-list {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 
   &--bekind {
-    background-image: url('https://res.cloudinary.com/liow/image/upload/v1768945279/footer-hallway_xu0qoy.jpg');
+    background-image: url('https://res.cloudinary.com/liow/image/upload/v1770552327/footer-hallway_gcudas.jpg');
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(4px);
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
   }
 }
