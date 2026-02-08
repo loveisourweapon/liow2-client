@@ -11,5 +11,7 @@ export const environment = {
   appNameLong: 'BeKind School',
   appNameShort: 'BeKind',
   facebookClientId: '1896569380638537',
+  resourcePackUrl:
+    'https://www.dropbox.com/scl/fo/482hzw571ct4aiulvdmb0/AFITlu_xTzlxcRHtMrGQ7qY?rlkey=lo19cttnam1emqp9qzmcw2808&e=2&st=139tpw8o&dl=0',
   sentry: false,
 };

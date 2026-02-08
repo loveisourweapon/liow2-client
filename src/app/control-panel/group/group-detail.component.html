@@ -2,6 +2,20 @@
   <div class="col-sm-3 col-sm-push-9 m-b-md">
     <img src="/images/group.png" class="profile img-responsive img-circle" />
 
+    <a
+      *ngIf="
+        env.resourcePackUrl &&
+        ((auth.isAdminOfGroup(group) | async) || (auth.isSuperAdmin() | async))
+      "
+      href="{{ env.resourcePackUrl }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-default btn-block"
+    >
+      <i class="fa fa-fw fa-download"></i>
+      Resource Pack
+    </a>
+
     <button
       type="button"
       class="btn btn-default btn-block"
