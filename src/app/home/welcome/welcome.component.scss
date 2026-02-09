@@ -44,6 +44,7 @@ liow-deed-list {
 
 .home-footer {
   position: relative;
+  z-index: 0;
   background: $gray-darker
     url('https://res.cloudinary.com/liow/image/upload/v1768945357/footer-conference_ixkkbh.jpg')
     center;
