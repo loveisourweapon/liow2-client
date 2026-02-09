@@ -11,5 +11,6 @@ export class EnvironmentService {
   readonly appNameLong = environment.appNameLong;
   readonly appNameShort = environment.appNameShort;
   readonly facebookClientId = environment.facebookClientId;
+  readonly resourcePackUrl = environment.resourcePackUrl;
   readonly sentry = environment.sentry;
 }

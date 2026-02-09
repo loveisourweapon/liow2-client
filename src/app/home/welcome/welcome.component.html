@@ -3,24 +3,59 @@
 <div class="home-welcome">
   <div class="container container-pad">
     <div class="row">
-      <div class="col-sm-9" *ngIf="env.appId === 'liow'; else bekindWelcome">
-        <h2>
-          {{ env.appNameLong }} is a movement that exists to change cities through the love of Jesus
-          by doing strategic practical acts of love.
-        </h2>
-        <p>
-          Thousands of people, doing thousands of acts of love, bringing change, value, healing and
-          hope throughout cities and communities everywhere.
-        </p>
-        <p>
-          <br /><br /><br />
-          <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
-            Start a Campaign for your Group!
-          </button>
-        </p>
-      </div>
-      <ng-template #bekindWelcome>
-        <div class="col-sm-9">
+      <div class="col-sm-9">
+        <div *ngIf="env.appId === 'liow'; then liowWelcome; else bekindWelcome"></div>
+        <ng-template #liowWelcome>
+          <h2>
+            {{ env.appNameLong }} is a movement that exists to change cities through the love of
+            Jesus by doing strategic practical acts of love.
+          </h2>
+          <p>
+            Thousands of people, doing thousands of acts of love, bringing change, value, healing
+            and hope throughout cities and communities everywhere.
+          </p>
+
+          <blockquote>
+            <p>"Implementing {{ env.appName }} resulted in our youth ministry doubling in size."</p>
+            <footer>Josh Clover, Urban Life Youth</footer>
+          </blockquote>
+
+          <blockquote>
+            <p>
+              "{{ env.appName }} genuinely worked. Members of our community were deeply impacted by
+              tangible expressions of God's love and goodness."
+            </p>
+            <footer>Caleb Dwyer, Generosity Church</footer>
+          </blockquote>
+
+          <blockquote>
+            <p>
+              "We witnessed amazing growth and a sense of excitement across our entire church
+              through {{ env.appName }}."
+            </p>
+            <footer>Rachel Worthy, Shellharbour Community Church</footer>
+          </blockquote>
+
+          <h4 class="m-t-lg m-b-sm">Did You Know?</h4>
+          <ul>
+            <li>
+              Churches and youth ministries who run {{ env.appName }} experience an average of 30%
+              growth
+            </li>
+            <li>69% of salvations recorded through {{ env.appName }} are first-time decisions</li>
+            <li>
+              {{ env.appName }} now offers Kids and Youth Ministry curriculum, along with a wide
+              range of free resources!
+            </li>
+          </ul>
+
+          <div class="m-t-xl">
+            <button type="button" (click)="modal.openGroupEdit()" class="btn btn-primary">
+              Start a Campaign for your Group!
+            </button>
+          </div>
+        </ng-template>
+        <ng-template #bekindWelcome>
           <h2>
             {{ env.appNameShort }} is a movement empowering students to positively impact their
             schools and communities through radical acts of kindness.
@@ -42,8 +77,8 @@
               Start a Campaign for your School!
             </button>
           </p>
-        </div>
-      </ng-template>
+        </ng-template>
+      </div>
 
       <div class="col-sm-3">
         <h1 class="text-primary m-b-none">
