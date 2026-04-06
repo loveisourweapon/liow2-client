@@ -3,11 +3,17 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { EnvironmentService, TitleService } from '../../core/services';
 
 @Component({
-  templateUrl: './faqs.component.html',
+  template: `
+    <liow-faqs-liow *ngIf="env.appId === 'liow'"></liow-faqs-liow>
+    <liow-faqs-bekind *ngIf="env.appId === 'bekind'"></liow-faqs-bekind>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FAQsComponent implements OnInit {
-  constructor(private title: TitleService, public env: EnvironmentService) {}
+  constructor(
+    private title: TitleService,
+    public env: EnvironmentService
+  ) {}
 
   ngOnInit(): void {
     this.title.set(`Frequently Asked Questions`);
