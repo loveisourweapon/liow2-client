@@ -11,11 +11,6 @@ import { GlobalFeedComponent } from './global-feed';
 import { AboutUsComponent, AboutUsLiowComponent, AboutUsBeKindComponent } from './about-us';
 import { ContactUsComponent } from './contact-us';
 import {
-  EasterCampaignComponent,
-  EasterCampaignLiowComponent,
-  EasterCampaignBeKindComponent,
-} from './easter-campaign';
-import {
   PrivacyPolicyComponent,
   PrivacyPolicyLiowComponent,
   PrivacyPolicyBeKindComponent,
@@ -38,9 +33,6 @@ import { WelcomeComponent } from './welcome';
     AboutUsLiowComponent,
     AboutUsBeKindComponent,
     ContactUsComponent,
-    EasterCampaignComponent,
-    EasterCampaignLiowComponent,
-    EasterCampaignBeKindComponent,
     PrivacyPolicyComponent,
     PrivacyPolicyLiowComponent,
     PrivacyPolicyBeKindComponent,

@@ -4,7 +4,10 @@ import { EnvironmentService } from '../services';
 
 @Component({
   selector: 'liow-promo-banner',
-  templateUrl: './promo-banner.component.html',
+  template: `
+    <liow-promo-banner-liow *ngIf="env.appId === 'liow'"></liow-promo-banner-liow>
+    <liow-promo-banner-bekind *ngIf="env.appId === 'bekind'"></liow-promo-banner-bekind>
+  `,
   styleUrls: ['./promo-banner.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
