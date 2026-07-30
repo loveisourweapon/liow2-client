@@ -3,7 +3,7 @@
     <ui-medium-editor
       [content]="content"
       (change)="change.emit($event)"
-      placeholder="Leave a testimony..."
+      [placeholder]="env.appId === 'liow' ? 'Leave a testimony...' : 'Leave a story of impact...'"
     ></ui-medium-editor>
 
     <button

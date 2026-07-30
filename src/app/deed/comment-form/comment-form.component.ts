@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { EnvironmentService } from '../../core/services/environment.service';
+
 @Component({
   selector: 'liow-comment-form',
   templateUrl: './comment-form.component.html',
@@ -10,4 +12,6 @@ export class CommentFormComponent {
   @Input() isSaving: boolean;
   @Output() change = new EventEmitter<string>();
   @Output() save = new EventEmitter<string>();
+
+  constructor(public env: EnvironmentService) {}
 }
