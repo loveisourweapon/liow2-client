@@ -3,6 +3,7 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { MediumEditorStubComponent } from '../../../testing';
+import { EnvironmentService } from '../../core/services/environment.service';
 import { CommentFormComponent } from './comment-form.component';
 
 describe(`CommentFormComponent`, () => {
@@ -18,6 +19,7 @@ describe(`CommentFormComponent`, () => {
           TestHostComponent,
           MediumEditorStubComponent,
         ],
+        providers: [EnvironmentService],
       })
       .compileComponents();
   }));
