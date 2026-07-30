@@ -3,14 +3,10 @@
     <ui-medium-editor
       [content]="content"
       (change)="change.emit($event)"
-      placeholder="Leave a testimony..."
+      [placeholder]="env.appId === 'liow' ? 'Leave a testimony...' : 'Leave an impact story...'"
     ></ui-medium-editor>
 
-    <button
-      type="submit"
-      class="btn btn-primary m-t-xs"
-      [disabled]="!content || isSaving"
-    >
+    <button type="submit" class="btn btn-primary m-t-xs" [disabled]="!content || isSaving">
       <i class="fa fa-fw fa-cog fa-spin" [hidden]="!isSaving"></i>
       Save
     </button>
