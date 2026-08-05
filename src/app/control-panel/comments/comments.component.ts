@@ -27,6 +27,8 @@ import { identifyBy, SearchParams } from '../../shared';
 
 export type StatusFilter = CommentStatus | 'all';
 
+type FilterInputs = [GroupId, string, StatusFilter, number, number, Date];
+
 @Component({
   templateUrl: './comments.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,12 +44,13 @@ export class CommentsComponent implements OnInit, OnDestroy {
   numberOfComments$: Observable<number>;
   filterParams$: Observable<SearchParams>;
 
-  readonly statusFilters: { value: StatusFilter; label: string }[] = [
-    { value: 'pending', label: 'Pending' },
-    { value: 'approved', label: 'Approved' },
-    { value: 'rejected', label: 'Rejected' },
-    { value: 'all', label: 'All' },
-  ];
+  readonly statusFilters: StatusFilter[] = ['pending', 'approved', 'rejected', 'all'];
+  readonly statusLabels: { [status: string]: string } = {
+    pending: 'Pending',
+    approved: 'Approved',
+    rejected: 'Rejected',
+    all: 'All',
+  };
 
   @ViewChild('confirmRemoveModal') confirmRemoveModal: ModalDirective;
   removeComment: Comment | undefined;
@@ -58,10 +61,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
   isSavingComment$ = new BehaviorSubject<boolean>(false);
 
   identifyBy = identifyBy;
-
-  get storyLabel(): string {
-    return this.env.appId === 'liow' ? 'testimony' : 'impact story';
-  }
 
   private commentsSubscription: Subscription;
   private groupIdSubscription: Subscription;
@@ -77,10 +76,12 @@ export class CommentsComponent implements OnInit, OnDestroy {
     private title: TitleService
   ) {}
 
+  get storyLabel(): string {
+    return this.env.appId === 'liow' ? 'testimony' : 'impact story';
+  }
+
   ngOnInit(): void {
     this.title.set(`Comments | Control Panel`);
-
-    this.status$.next(this.defaultStatusFilter);
 
     this.groupIdSubscription = this.route.parent.params
       .filter((params: Params) => has(params, 'groupId'))
@@ -96,6 +97,12 @@ export class CommentsComponent implements OnInit, OnDestroy {
         )
       );
 
+    // Get initial router params before anything reads them
+    this.route.queryParams.first().subscribe((queryParams: Params) => {
+      this.query$.next(queryParams.query || '');
+      this.status$.next(this.parseStatusFilter(queryParams.status));
+    });
+
     this.filterParams$ = Observable.combineLatest(
       this.groupId$,
       this.query$,
@@ -106,14 +113,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
     )
       .distinctUntilChanged()
       .map(
-        ([groupId, query, status, page, limit, _]: [
-          GroupId,
-          string,
-          StatusFilter,
-          number,
-          number,
-          Date,
-        ]) =>
+        ([groupId, query, status, page, limit, _]: FilterInputs) =>
           <SearchParams>{
             group: groupId || undefined,
             'target.group': 'null',
@@ -131,12 +131,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
     this.numberOfComments$ = this.filterParams$.switchMap((searchParams: SearchParams) =>
       this.commentService.count(searchParams)
     );
-
-    // Get initial router params
-    this.route.queryParams.first().subscribe((queryParams: Params) => {
-      this.query$.next(queryParams.query || '');
-      this.status$.next(this.parseStatusFilter(queryParams.status));
-    });
   }
 
   ngOnDestroy(): void {
@@ -162,12 +156,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
 
   statusOf(comment: Comment): CommentStatus {
     return comment.status || 'approved';
-  }
-
-  statusLabel(comment: Comment): string {
-    const status = this.statusOf(comment);
-    const filter = this.findStatusFilter(status);
-    return filter ? filter.label : status;
   }
 
   handleApproveComment(comment: Comment): void {
@@ -239,31 +227,24 @@ export class CommentsComponent implements OnInit, OnDestroy {
       );
   }
 
-  /**
-   * Moderating is the job on BeKind, so the queue is what opens by default.
-   * LIOW never turns approval on, so its tab keeps listing published
-   * testimonies exactly as it always has.
-   */
+  // Moderating is the job on BeKind. LIOW doesn't require approval, so its tab
+  // keeps listing published testimonies
   private get defaultStatusFilter(): StatusFilter {
     return this.env.appId === 'liow' ? 'approved' : 'pending';
   }
 
-  private findStatusFilter(value: string): { value: StatusFilter; label: string } | undefined {
-    return this.statusFilters.filter((filter) => filter.value === value)[0];
-  }
-
   private parseStatusFilter(value: string): StatusFilter {
-    const filter = this.findStatusFilter(value);
-    return filter ? filter.value : this.defaultStatusFilter;
+    return this.statusFilters.indexOf(<StatusFilter>value) === -1
+      ? this.defaultStatusFilter
+      : <StatusFilter>value;
   }
 
   /**
    * Map a filter to the `status` query param
    *
-   * Approved is the server's default view, so it's left off entirely - asking
-   * for it by name would exclude comments predating the status field, which
-   * have no status at all. Those same comments are missing from All until they
-   * are backfilled server side.
+   * Approved is left as the server's default view - naming it would exclude
+   * comments predating the status field, which have no status at all. All has
+   * to name it, so it misses those comments until they are backfilled.
    */
   private statusParam(status: StatusFilter): string | undefined {
     switch (status) {

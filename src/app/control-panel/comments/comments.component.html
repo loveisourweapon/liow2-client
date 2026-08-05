@@ -13,11 +13,11 @@
             *ngFor="let filter of statusFilters"
             type="button"
             class="btn"
-            [class.btn-primary]="(status$ | async) === filter.value"
-            [class.btn-default]="(status$ | async) !== filter.value"
-            (click)="onStatusChange(filter.value)"
+            [class.btn-primary]="(status$ | async) === filter"
+            [class.btn-default]="(status$ | async) !== filter"
+            (click)="onStatusChange(filter)"
           >
-            {{ filter.label }}
+            {{ statusLabels[filter] }}
           </button>
         </div>
 
@@ -87,7 +87,7 @@
                     [class.label-success]="statusOf(comment) === 'approved'"
                     [class.label-danger]="statusOf(comment) === 'rejected'"
                   >
-                    {{ statusLabel(comment) }}
+                    {{ statusLabels[statusOf(comment)] }}
                   </span>
                 </td>
                 <td>{{ comment?.created | moment : 'YYYY-MM-DD' }}</td>

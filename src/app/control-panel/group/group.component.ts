@@ -45,12 +45,12 @@ export class GroupComponent implements OnInit, OnDestroy {
       .switchMap((groupId: GroupId) => this.groupService.findOne({ _id: groupId }))
       .subscribe((group: Group) => (this.state.controlPanel.group = group));
 
-    // Only moderators may filter comments by status, so everyone else is left
-    // without a count rather than being sent a request that would be refused
+    // Only moderators may filter comments by status, so don't send anyone else
+    // a request the server would refuse
     this.numberOfPendingComments$ = Observable.combineLatest(
       this.state.controlPanel.group$.filter((group: Group) => group !== null),
       this.state.controlPanel.commentsChanged$
-    ).switchMap(([group, _]: [Group, Date]) =>
+    ).switchMap(([group]: [Group, Date]) =>
       Observable.combineLatest(this.auth.isAdminOfGroup(group), this.auth.isSuperAdmin())
         .map(([isAdmin, isSuperAdmin]: [boolean, boolean]) => isAdmin || isSuperAdmin)
         .switchMap((canModerate: boolean) =>

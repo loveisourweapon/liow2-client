@@ -21,7 +21,7 @@ export interface Comment {
   };
   likes: Like[];
   comments: Comment[];
-  // Comments predating approval have no status, and are treated as approved
+  // Comments predating approval have no status, and count as approved
   status?: CommentStatus;
   approvedBy?: UserId;
   approvedAt?: Date;
