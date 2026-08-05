@@ -28,6 +28,10 @@ export class StateService {
     comments$: new BehaviorSubject<Comment[]>([]),
     set comments(comments: Comment[]) { this.comments$.next(comments); },
 
+    // Moderating a comment invalidates the pending count on the group tab
+    commentsChanged$: new BehaviorSubject<Date>(new Date()),
+    commentsChanged(): void { this.commentsChanged$.next(new Date()); },
+
     deeds$: new BehaviorSubject<Deed[]>([]),
     set deeds(deeds: Deed[]) { this.deeds$.next(deeds); },
 

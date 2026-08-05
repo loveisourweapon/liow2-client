@@ -22,6 +22,7 @@ export class AuthStubService {
   isAdminOfGroup() { }
   isAuthenticated() { }
   isMemberOfGroup() { }
+  isSuperAdmin() { }
   logout() { }
   resetPassword() { }
   sendConfirmEmail() { }
@@ -38,8 +39,11 @@ export class CampaignStubService {
 
 @Injectable()
 export class CommentStubService {
+  approve() { }
   count() { }
   find() { }
+  reject() { }
+  remove() { }
   save() { }
 }
 

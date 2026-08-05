@@ -38,6 +38,16 @@ export class CommentService {
     );
   }
 
+  approve(comment: Comment): Observable<void> {
+    console.info('CommentService#approve', 'comment', comment);
+    return this.http.post(`${this.baseUrl}/comments/${comment._id}/approve`, {}).map(() => {});
+  }
+
+  reject(comment: Comment): Observable<void> {
+    console.info('CommentService#reject', 'comment', comment);
+    return this.http.post(`${this.baseUrl}/comments/${comment._id}/reject`, {}).map(() => {});
+  }
+
   remove(comment: Comment): Observable<void> {
     console.info('CommentService#remove', 'comment', comment);
     return this.http.delete(`${this.baseUrl}/comments/${comment._id}`).map(() => {});
@@ -65,6 +75,9 @@ export class CommentService {
     // Convert all date strings to Date objects
     if (comment.created) {
       comment.created = new Date(comment.created);
+    }
+    if (comment.approvedAt) {
+      comment.approvedAt = new Date(comment.approvedAt);
     }
 
     // Set a random profile picture seeded by the user ID

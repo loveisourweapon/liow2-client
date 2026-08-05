@@ -4,13 +4,20 @@ import { ActivatedRoute } from '@angular/router';
 import {
   ActivatedRouteStubService,
   AuthStubService,
+  CommentStubService,
   GroupStubService,
   ModalStubService,
   RouterLinkStubDirective,
   RouterLinkActiveStubDirective,
   RouterOutletStubComponent,
 } from '../../../testing';
-import { AuthService, GroupService, ModalService, StateService } from '../../core/services';
+import {
+  AuthService,
+  CommentService,
+  GroupService,
+  ModalService,
+  StateService,
+} from '../../core/services';
 import { GroupComponent } from './group.component';
 
 // TODO: add proper tests
@@ -31,6 +38,7 @@ describe(`GroupComponent`, () => {
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
           { provide: AuthService, useClass: AuthStubService },
+          { provide: CommentService, useClass: CommentStubService },
           { provide: GroupService, useClass: GroupStubService },
           { provide: ModalService, useClass: ModalStubService },
           StateService,
