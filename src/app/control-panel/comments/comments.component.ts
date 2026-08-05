@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
@@ -80,6 +82,10 @@ export class CommentsComponent implements OnInit, OnDestroy {
     return this.env.appId === 'liow' ? 'testimony' : 'impact story';
   }
 
+  get storiesLabel(): string {
+    return this.env.appId === 'liow' ? 'testimonies' : 'stories of impact';
+  }
+
   ngOnInit(): void {
     this.title.set(`Comments | Control Panel`);
 
@@ -125,11 +131,18 @@ export class CommentsComponent implements OnInit, OnDestroy {
           }
       );
 
+    // Catch inside the switchMap - an error reaching the outer stream would
+    // unsubscribe it, leaving the list stuck until the tab is reopened
     this.commentsSubscription = this.filterParams$
-      .switchMap((searchParams: SearchParams) => this.commentService.find(searchParams))
+      .switchMap((searchParams: SearchParams) =>
+        this.commentService.find(searchParams).catch(() => {
+          this.alertify.error(`Failed loading ${this.storiesLabel}`);
+          return Observable.of<Comment[]>([]);
+        })
+      )
       .subscribe((comments: Comment[]) => (this.state.controlPanel.comments = comments));
     this.numberOfComments$ = this.filterParams$.switchMap((searchParams: SearchParams) =>
-      this.commentService.count(searchParams)
+      this.commentService.count(searchParams).catch(() => Observable.of(0))
     );
   }
 
