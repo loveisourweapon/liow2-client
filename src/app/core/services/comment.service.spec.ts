@@ -6,7 +6,7 @@ import 'rxjs/add/observable/of';
 
 import { HttpStubService } from '../../../testing';
 import { Comment, NewComment } from '../models';
-import { CommentService } from '../services';
+import { CommentService, StateService } from '../services';
 
 describe(`CommentService`, () => {
   let service: CommentService;
@@ -17,6 +17,7 @@ describe(`CommentService`, () => {
       providers: [
         CommentService,
         { provide: JwtHttp, useClass: HttpStubService },
+        StateService,
       ],
     });
   });

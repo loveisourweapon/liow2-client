@@ -28,6 +28,13 @@
     <a [routerLink]="['testimonies']" routerLinkActive #rlaTestimonies="routerLinkActive">
       <i class="fa fa-fw fa-comment"></i>
       {{ env.appId === 'liow' ? 'Testimonies' : 'Stories of Impact' }}
+      <span
+        class="badge"
+        *ngIf="state.pendingCommentCount$(group?._id) | async as pendingComments"
+        title="{{ env.storiesLabel }} awaiting approval"
+      >
+        {{ pendingComments }}
+      </span>
     </a>
   </li>
 </ul>
