@@ -78,14 +78,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
     private title: TitleService
   ) {}
 
-  get storyLabel(): string {
-    return this.env.appId === 'liow' ? 'testimony' : 'impact story';
-  }
-
-  get storiesLabel(): string {
-    return this.env.appId === 'liow' ? 'testimonies' : 'stories of impact';
-  }
-
   ngOnInit(): void {
     this.title.set(`Comments | Control Panel`);
 
@@ -136,7 +128,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
     this.commentsSubscription = this.filterParams$
       .switchMap((searchParams: SearchParams) =>
         this.commentService.find(searchParams).catch(() => {
-          this.alertify.error(`Failed loading ${this.storiesLabel}`);
+          this.alertify.error(`Failed loading ${this.env.storiesLabel}`);
           return Observable.of<Comment[]>([]);
         })
       )
@@ -181,11 +173,11 @@ export class CommentsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.reload$.next(new Date());
-          this.state.controlPanel.commentsChanged();
-          this.alertify.success(`Approved ${this.storyLabel}`);
+          this.commentService.countPending(this.groupId$.getValue());
+          this.alertify.success(`Approved ${this.env.storyLabel}`);
         },
         () => {
-          this.alertify.error(`Failed approving ${this.storyLabel}`);
+          this.alertify.error(`Failed approving ${this.env.storyLabel}`);
         }
       );
   }
@@ -205,12 +197,12 @@ export class CommentsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.reload$.next(new Date());
-          this.state.controlPanel.commentsChanged();
-          this.alertify.success(`Rejected ${this.storyLabel}`);
+          this.commentService.countPending(this.groupId$.getValue());
+          this.alertify.success(`Rejected ${this.env.storyLabel}`);
           this.confirmRejectModal.hide();
         },
         () => {
-          this.alertify.error(`Failed rejecting ${this.storyLabel}`);
+          this.alertify.error(`Failed rejecting ${this.env.storyLabel}`);
         }
       );
   }
@@ -230,7 +222,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.reload$.next(new Date());
-          this.state.controlPanel.commentsChanged();
+          this.commentService.countPending(this.groupId$.getValue());
           this.alertify.success(`Deleted comment`);
           this.confirmRemoveModal.hide();
         },

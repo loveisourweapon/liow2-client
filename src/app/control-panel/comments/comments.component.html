@@ -134,13 +134,13 @@
   class="modal fade"
   tabindex="-1"
   role="dialog"
-  [attr.aria-label]="'Are you sure you want to reject this ' + storyLabel + '?'"
+  [attr.aria-label]="'Are you sure you want to reject this ' + env.storyLabel + '?'"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Are you sure you want to reject this {{ storyLabel }}?</h4>
+        <h4 class="modal-title">Are you sure you want to reject this {{ env.storyLabel }}?</h4>
       </div>
 
       <div class="modal-body">

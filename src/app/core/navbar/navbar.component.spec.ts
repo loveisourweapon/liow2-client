@@ -6,6 +6,7 @@ import 'rxjs/add/operator/first';
 import {
   ActStubService,
   AuthStubService,
+  CommentStubService,
   DropdownStubDirective,
   DropdownMenuStubDirective,
   DropdownToggleStubDirective,
@@ -13,7 +14,7 @@ import {
   NavbarSearchStubComponent,
   RouterLinkStubDirective,
 } from '../../../testing';
-import { ActService, AuthService, ModalService, StateService } from '../services';
+import { ActService, AuthService, CommentService, ModalService, StateService } from '../services';
 import { NavbarComponent } from './navbar.component';
 
 // TODO: add more tests around what's being displayed and clicking more buttons
@@ -38,6 +39,7 @@ describe(`NavbarComponent`, () => {
         providers: [
           { provide: ActService, useClass: ActStubService },
           { provide: AuthService, useClass: AuthStubService },
+          { provide: CommentService, useClass: CommentStubService },
           { provide: ModalService, useClass: ModalStubService },
           StateService,
         ],

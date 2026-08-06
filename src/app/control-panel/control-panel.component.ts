@@ -6,7 +6,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { StateService } from '../core/services';
+import { EnvironmentService, StateService } from '../core/services';
 import { identifyBy } from '../shared';
 
 @Component({
@@ -20,6 +20,7 @@ export class ControlPanelComponent implements OnInit {
   identifyBy = identifyBy;
 
   constructor(
+    public env: EnvironmentService,
     private router: Router,
     public state: StateService,
   ) { }

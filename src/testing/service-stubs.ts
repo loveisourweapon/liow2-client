@@ -41,6 +41,7 @@ export class CampaignStubService {
 export class CommentStubService {
   approve() { }
   count() { }
+  countPending() { }
   find() { }
   reject() { }
   remove() { }

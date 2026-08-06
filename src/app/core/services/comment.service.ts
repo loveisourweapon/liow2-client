@@ -7,15 +7,16 @@ import 'rxjs/add/operator/map';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
-import { Comment, NewComment } from '../models';
+import { Comment, GroupId, NewComment } from '../models';
 import { buildUrlSearchParams, SearchParams } from '../../shared';
+import { StateService } from './state.service';
 
 @Injectable()
 export class CommentService {
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly numberOfUserPictures = 12;
 
-  constructor(private http: JwtHttp) {}
+  constructor(private http: JwtHttp, private state: StateService) {}
 
   save(comment: Comment | NewComment): Observable<Comment> {
     console.info('CommentService#save', 'comment', comment);
@@ -69,6 +70,20 @@ export class CommentService {
     return this.http
       .get(`${this.baseUrl}/comments`, { search: buildUrlSearchParams(params) })
       .map((response: Response) => response.json());
+  }
+
+  /**
+   * Count the comments awaiting moderation in a group, into shared state
+   *
+   * Only moderators may filter by a pending status, so callers have to gate on
+   * that - a refused request leaves the count as it was rather than surfacing
+   */
+  countPending(groupId: GroupId): void {
+    console.info('CommentService#countPending', 'groupId', groupId);
+    this.count({ group: groupId, 'target.group': 'null', status: 'pending' }).subscribe(
+      (count: number) => this.state.updatePendingCommentCount(groupId, count),
+      () => {}
+    );
   }
 
   private transformComment(comment: Comment): Comment {

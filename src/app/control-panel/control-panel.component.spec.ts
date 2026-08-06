@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 import { RouterLinkStubDirective, RouterOutletStubComponent, RouterStubService } from '../../testing';
-import { StateService } from '../core/services';
+import { EnvironmentService, StateService } from '../core/services';
 import { ControlPanelComponent } from './control-panel.component';
 
 describe(`ControlPanelComponent`, () => {
@@ -18,6 +18,7 @@ describe(`ControlPanelComponent`, () => {
           RouterOutletStubComponent
         ],
         providers: [
+          EnvironmentService,
           { provide: Router, useClass: RouterStubService },
           StateService,
         ],

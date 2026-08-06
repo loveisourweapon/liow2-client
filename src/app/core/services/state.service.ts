@@ -7,7 +7,17 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { Campaign, Comment, Counters, Deed, FeedItem, Group, ModalState, User } from '../models';
+import {
+  Campaign,
+  Comment,
+  Counters,
+  Deed,
+  FeedItem,
+  Group,
+  GroupId,
+  ModalState,
+  User,
+} from '../models';
 
 @Injectable()
 export class StateService {
@@ -27,10 +37,6 @@ export class StateService {
   controlPanel = {
     comments$: new BehaviorSubject<Comment[]>([]),
     set comments(comments: Comment[]) { this.comments$.next(comments); },
-
-    // Moderating a comment invalidates the pending count on the group tab
-    commentsChanged$: new BehaviorSubject<Date>(new Date()),
-    commentsChanged(): void { this.commentsChanged$.next(new Date()); },
 
     deeds$: new BehaviorSubject<Deed[]>([]),
     set deeds(deeds: Deed[]) { this.deeds$.next(deeds); },
@@ -59,6 +65,19 @@ export class StateService {
       .subscribe((counters: Counters) => {
         const updatedCounters = assign({}, counters, { [counterId]: count });
         this.counters$.next(updatedCounters);
+      });
+  }
+
+  // Comments awaiting moderation, per group. Only loaded for groups the user
+  // moderates - everyone else reads a count of zero and sees no badge
+  pendingCommentCounts$ = new BehaviorSubject<Counters>({});
+  pendingCommentCount$(groupId: GroupId): Observable<number> {
+    return this.pendingCommentCounts$.map((counts: Counters) => counts[groupId] || 0);
+  }
+  updatePendingCommentCount(groupId: GroupId, count: number): void {
+    this.pendingCommentCounts$.first()
+      .subscribe((counts: Counters) => {
+        this.pendingCommentCounts$.next(assign({}, counts, { [groupId]: count }));
       });
   }
 

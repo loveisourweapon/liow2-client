@@ -105,6 +105,13 @@
             >
               <a [routerLink]="['/g', group?.urlName]">
                 {{ group?.name }}
+                <span
+                  class="badge"
+                  *ngIf="state.pendingCommentCount$(group?._id) | async as pendingComments"
+                  [title]="pendingComments + ' ' + env.storiesLabel + ' awaiting approval'"
+                >
+                  {{ pendingComments }}
+                </span>
               </a>
             </li>
             <li>

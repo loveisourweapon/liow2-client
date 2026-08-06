@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { has } from 'lodash';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
@@ -12,7 +9,6 @@ import 'rxjs/add/operator/switchMap';
 import { Group, GroupId } from '../../core/models';
 import {
   AuthService,
-  CommentService,
   EnvironmentService,
   GroupService,
   ModalService,
@@ -24,14 +20,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnInit, OnDestroy {
-  numberOfPendingComments$: Observable<number>;
-
   private routeSubscription: Subscription;
 
   constructor(
     public env: EnvironmentService,
     public auth: AuthService,
-    private commentService: CommentService,
     private groupService: GroupService,
     public modal: ModalService,
     private route: ActivatedRoute,
@@ -44,25 +37,6 @@ export class GroupComponent implements OnInit, OnDestroy {
       .map((params: Params) => params.groupId)
       .switchMap((groupId: GroupId) => this.groupService.findOne({ _id: groupId }))
       .subscribe((group: Group) => (this.state.controlPanel.group = group));
-
-    // Only moderators may filter comments by status, so don't send anyone else
-    // a request the server would refuse
-    this.numberOfPendingComments$ = Observable.combineLatest(
-      this.state.controlPanel.group$.filter((group: Group) => group !== null),
-      this.state.controlPanel.commentsChanged$
-    ).switchMap(([group]: [Group, Date]) =>
-      Observable.combineLatest(this.auth.isAdminOfGroup(group), this.auth.isSuperAdmin())
-        .map(([isAdmin, isSuperAdmin]: [boolean, boolean]) => isAdmin || isSuperAdmin)
-        .switchMap((canModerate: boolean) =>
-          canModerate
-            ? this.commentService.count({
-                group: group._id,
-                'target.group': 'null',
-                status: 'pending',
-              })
-            : Observable.of(0)
-        )
-    );
   }
 
   ngOnDestroy(): void {
