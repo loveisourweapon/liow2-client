@@ -80,6 +80,12 @@
  */
 .nav-pills {
   margin-bottom: 10px;
+
+  // Grey on the red tabs reads as disabled. Bootstrap already inverts the
+  // badge on the selected tab, which keeps it legible there
+  > li > a > .badge {
+    background-color: $brand-primary;
+  }
 }
 
 /**
