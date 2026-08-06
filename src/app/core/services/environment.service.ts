@@ -13,4 +13,8 @@ export class EnvironmentService {
   readonly facebookClientId = environment.facebookClientId;
   readonly resourcePackUrl = environment.resourcePackUrl;
   readonly sentry = environment.sentry;
+
+  // Deed comments are testimonies on LIOW and impact stories on BeKind
+  readonly storyLabel = this.appId === 'liow' ? 'testimony' : 'impact story';
+  readonly storiesLabel = this.appId === 'liow' ? 'testimonies' : 'stories of impact';
 }

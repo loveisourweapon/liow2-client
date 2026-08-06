@@ -1,6 +1,8 @@
-import { Act, ActId, Campaign, Deed, DeedId, Group, GroupId, Like, User } from './';
+import { Act, ActId, Campaign, Deed, DeedId, Group, GroupId, Like, User, UserId } from './';
 
 export type CommentId = string;
+
+export type CommentStatus = 'pending' | 'approved' | 'rejected';
 
 export interface Comment {
   _id: CommentId;
@@ -19,6 +21,10 @@ export interface Comment {
   };
   likes: Like[];
   comments: Comment[];
+  // Comments predating approval have no status, and count as approved
+  status?: CommentStatus;
+  approvedBy?: UserId;
+  approvedAt?: Date;
   created: Date;
   modified: Date;
 }

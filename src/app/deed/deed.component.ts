@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
 
 import {
   Campaign,
+  Comment,
   CounterQuery,
   Deed,
   DeedSlug,
@@ -110,10 +111,16 @@ export class DeedComponent implements OnDestroy, OnInit {
         this.isSavingTestimony$.next(false);
       })
       .subscribe(
-        () => {
+        (comment: Comment) => {
           this.testimony = '';
           this.state.feed.update();
-          this.alertify.success(`Comment saved`);
+          // A story held for approval has no feed item yet, so say so rather
+          // than leaving the author wondering where it went
+          this.alertify.success(
+            comment.status === 'pending'
+              ? `Your ${this.env.storyLabel} will appear once it's approved`
+              : `Comment saved`
+          );
         },
         async (response) => {
           const error = response.json();

@@ -26,6 +26,13 @@
             [routerLink]="['/control-panel/groups', group?._id]"
             routerLinkActive="active"
           >
+            <span
+              class="badge"
+              *ngIf="state.pendingCommentCount$(group?._id) | async as pendingComments"
+              title="{{ env.storiesLabel }} awaiting approval"
+            >
+              {{ pendingComments }}
+            </span>
             <i class="fa fa-fw fa-archive" *ngIf="group?.archived" title="Archived group"></i>
             {{ group?.name }}
           </a>

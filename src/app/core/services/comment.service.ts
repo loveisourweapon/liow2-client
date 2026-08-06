@@ -7,15 +7,16 @@ import 'rxjs/add/operator/map';
 import * as seedrandom from 'seedrandom';
 
 import { environment } from '../../../environments/environment';
-import { Comment, NewComment } from '../models';
+import { Comment, GroupId, NewComment } from '../models';
 import { buildUrlSearchParams, SearchParams } from '../../shared';
+import { StateService } from './state.service';
 
 @Injectable()
 export class CommentService {
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly numberOfUserPictures = 12;
 
-  constructor(private http: JwtHttp) {}
+  constructor(private http: JwtHttp, private state: StateService) {}
 
   save(comment: Comment | NewComment): Observable<Comment> {
     console.info('CommentService#save', 'comment', comment);
@@ -36,6 +37,16 @@ export class CommentService {
     return this.http[method](this.baseUrl + url, comment).map(
       (response: Response) => response.json() || {}
     );
+  }
+
+  approve(comment: Comment): Observable<void> {
+    console.info('CommentService#approve', 'comment', comment);
+    return this.http.post(`${this.baseUrl}/comments/${comment._id}/approve`, {}).map(() => {});
+  }
+
+  reject(comment: Comment): Observable<void> {
+    console.info('CommentService#reject', 'comment', comment);
+    return this.http.post(`${this.baseUrl}/comments/${comment._id}/reject`, {}).map(() => {});
   }
 
   remove(comment: Comment): Observable<void> {
@@ -61,10 +72,27 @@ export class CommentService {
       .map((response: Response) => response.json());
   }
 
+  /**
+   * Count the comments awaiting moderation in a group, into shared state
+   *
+   * Only moderators may filter by a pending status, so callers have to gate on
+   * that - a refused request leaves the count as it was rather than erroring
+   */
+  countPending(groupId: GroupId): void {
+    console.info('CommentService#countPending', 'groupId', groupId);
+    this.count({ group: groupId, 'target.group': 'null', status: 'pending' }).subscribe(
+      (count: number) => this.state.updatePendingCommentCount(groupId, count),
+      () => {}
+    );
+  }
+
   private transformComment(comment: Comment): Comment {
     // Convert all date strings to Date objects
     if (comment.created) {
       comment.created = new Date(comment.created);
+    }
+    if (comment.approvedAt) {
+      comment.approvedAt = new Date(comment.approvedAt);
     }
 
     // Set a random profile picture seeded by the user ID

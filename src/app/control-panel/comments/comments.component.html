@@ -8,6 +8,19 @@
           autofocus
         ></liow-control-panel-search>
 
+        <div class="btn-group m-b-md" role="group">
+          <button
+            *ngFor="let filter of statusFilters"
+            type="button"
+            class="btn"
+            [class.btn-primary]="(status$ | async) === filter"
+            [class.btn-default]="(status$ | async) !== filter"
+            (click)="onStatusChange(filter)"
+          >
+            {{ statusLabels[filter] }}
+          </button>
+        </div>
+
         <liow-control-panel-pagination
           typeOfItems="comments"
           [numberOfItems]="numberOfComments$ | async"
@@ -25,6 +38,7 @@
                 <th style="width: 190px">User</th>
                 <th style="width: 190px">Deed</th>
                 <th>Content</th>
+                <th style="width: 90px">Status</th>
                 <th style="width: 95px">Date</th>
                 <th style="width: 102px">&nbsp;</th>
               </tr>
@@ -66,6 +80,16 @@
                 <td>
                   <ui-marked [content]="comment?.content?.text"></ui-marked>
                 </td>
+                <td>
+                  <span
+                    class="label"
+                    [class.label-warning]="statusOf(comment) === 'pending'"
+                    [class.label-success]="statusOf(comment) === 'approved'"
+                    [class.label-danger]="statusOf(comment) === 'rejected'"
+                  >
+                    {{ statusLabels[statusOf(comment)] }}
+                  </span>
+                </td>
                 <td>{{ comment?.created | moment : 'YYYY-MM-DD' }}</td>
                 <td>
                   <div dropdown placement="bottom right" class="btn-group dropdown">
@@ -74,6 +98,18 @@
                       <span class="caret"></span>
                     </button>
                     <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                      <li *ngIf="statusOf(comment) !== 'approved'">
+                        <a (click)="handleApproveComment(comment); $event.preventDefault()" href>
+                          <i class="fa fa-fw fa-check"></i>
+                          Approve
+                        </a>
+                      </li>
+                      <li *ngIf="statusOf(comment) !== 'rejected'">
+                        <a (click)="confirmRejectComment(comment); $event.preventDefault()" href>
+                          <i class="fa fa-fw fa-ban"></i>
+                          Reject
+                        </a>
+                      </li>
                       <li>
                         <a (click)="confirmRemoveComment(comment); $event.preventDefault()" href>
                           <i class="fa fa-fw fa-trash-o"></i>
@@ -91,6 +127,52 @@
     </div>
   </ng-container>
 </ng-container>
+
+<div
+  bsModal
+  #confirmRejectModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  [attr.aria-label]="'Are you sure you want to reject this ' + env.storyLabel + '?'"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to reject this {{ env.storyLabel }}?</h4>
+      </div>
+
+      <div class="modal-body">
+        <blockquote>
+          <ui-marked [content]="rejectComment?.content?.text"></ui-marked>
+          <footer class="m-t-sm">
+            {{ rejectComment?.user?.name }} ({{ rejectComment?.created | moment : 'YYYY-MM-DD' }})
+          </footer>
+        </blockquote>
+        <p>
+          It won't appear anywhere on {{ env.appNameShort }}, but it isn't deleted &mdash; you can
+          approve it later.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="confirmRejectModal.hide()">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="handleRejectComment(rejectComment)"
+          [disabled]="isSavingComment$ | async"
+        >
+          <i class="fa fa-cog fa-lg fa-spin" [hidden]="!(isSavingComment$ | async)"></i>
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div
   bsModal
