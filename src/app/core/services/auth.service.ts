@@ -177,6 +177,9 @@ export class AuthService {
     this.state.auth.isAuthenticated = false;
     this.state.auth.user = null;
     this.state.auth.group = null;
+    // Counts belong to the groups this user moderates, and the next user to
+    // log in without a page load may not moderate the same ones
+    this.state.clearPendingCommentCounts();
     this.alertify.log(`Logged out`);
     this.setSentryUserContext();
     return this.auth.logout();

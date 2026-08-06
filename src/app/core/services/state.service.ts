@@ -80,6 +80,9 @@ export class StateService {
         this.pendingCommentCounts$.next(assign({}, counts, { [groupId]: count }));
       });
   }
+  clearPendingCommentCounts(): void {
+    this.pendingCommentCounts$.next({});
+  }
 
   deed$ = new BehaviorSubject<Deed>(null);
   set deed(deed: Deed) { this.deed$.next(deed); }

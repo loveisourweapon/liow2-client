@@ -47,9 +47,8 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
       .first()
       .subscribe(() => this.router.navigate(['/']));
 
-    // Load the counts behind the moderation badges, for the groups they belong
-    // to and moderate - anywhere else the badge is left off rather than asking
-    // for a count the server would refuse
+    // Load the counts behind the moderation badges. Only groups the user
+    // moderates are counted - the server refuses the filter for anyone else
     this.userSubscription = this.state.auth.user$
       .filter((user: User) => user !== null)
       .subscribe((user: User) =>

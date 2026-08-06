@@ -31,7 +31,7 @@
       <span
         class="badge"
         *ngIf="state.pendingCommentCount$(group?._id) | async as pendingComments"
-        [title]="pendingComments + ' ' + env.storiesLabel + ' awaiting approval'"
+        title="{{ env.storiesLabel }} awaiting approval"
       >
         {{ pendingComments }}
       </span>

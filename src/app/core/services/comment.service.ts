@@ -76,7 +76,7 @@ export class CommentService {
    * Count the comments awaiting moderation in a group, into shared state
    *
    * Only moderators may filter by a pending status, so callers have to gate on
-   * that - a refused request leaves the count as it was rather than surfacing
+   * that - a refused request leaves the count as it was rather than erroring
    */
   countPending(groupId: GroupId): void {
     console.info('CommentService#countPending', 'groupId', groupId);

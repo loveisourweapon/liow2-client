@@ -232,8 +232,8 @@ export class CommentsComponent implements OnInit, OnDestroy {
       );
   }
 
-  // Moderating is the job on BeKind. LIOW doesn't require approval, so its tab
-  // keeps listing published testimonies
+  // LIOW doesn't require approval, so its tab keeps listing published
+  // testimonies rather than opening on an empty queue
   private get defaultStatusFilter(): StatusFilter {
     return this.env.appId === 'liow' ? 'approved' : 'pending';
   }
