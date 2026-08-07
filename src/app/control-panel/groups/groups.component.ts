@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
@@ -77,11 +79,19 @@ export class GroupsComponent implements OnInit, OnDestroy {
           }
       );
 
+    // Catch inside the switchMap - an error reaching the outer stream would
+    // unsubscribe it, leaving the list stuck until the tab is reopened
     this.groupsSubscription = this.filterParams$
-      .switchMap((searchParams: SearchParams) => this.groupService.find(searchParams))
+      .switchMap((searchParams: SearchParams) =>
+        this.groupService.find(searchParams).catch(() => {
+          this.alertify.error(`Failed loading groups`);
+          return Observable.of<Group[]>([]);
+        })
+      )
       .subscribe((groups: Group[]) => (this.state.controlPanel.groups = groups));
+    // The list already reports the failure, so the count fails quietly
     this.numberOfGroups$ = this.filterParams$.switchMap((searchParams: SearchParams) =>
-      this.groupService.count(searchParams)
+      this.groupService.count(searchParams).catch(() => Observable.of(0))
     );
 
     // Get initial router params
