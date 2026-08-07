@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -34,6 +34,7 @@ import {
   EnvironmentService,
   FeedService,
   GroupService,
+  MetaService,
   ModalService,
   StateService,
   TitleService,
@@ -64,6 +65,8 @@ import {
     EnvironmentService,
     FeedService,
     GroupService,
+    Meta,
+    MetaService,
     ModalService,
     StateService,
     Title,

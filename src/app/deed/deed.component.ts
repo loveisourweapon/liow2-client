@@ -29,10 +29,12 @@ import {
   CommentService,
   DeedService,
   EnvironmentService,
+  MetaService,
   ModalService,
   StateService,
   TitleService,
 } from '../core/services';
+import { stripMarkdown } from '../shared';
 
 @Component({
   templateUrl: './deed.component.html',
@@ -55,6 +57,7 @@ export class DeedComponent implements OnDestroy, OnInit {
     private commentService: CommentService,
     private deedService: DeedService,
     public env: EnvironmentService,
+    private meta: MetaService,
     public modal: ModalService,
     private route: ActivatedRoute,
     public state: StateService,
@@ -80,10 +83,13 @@ export class DeedComponent implements OnDestroy, OnInit {
         this.loadCounter(deed, group, campaign);
         this.setFeedCriteria(deed, group, campaign);
         this.title.set(deed.title);
+        this.meta.set({ title: deed.title, description: stripMarkdown(deed.content) });
       });
   }
 
   ngOnDestroy(): void {
+    this.meta.clear();
+
     this.routeSubscription.unsubscribe();
     this.deedSubscription.unsubscribe();
   }

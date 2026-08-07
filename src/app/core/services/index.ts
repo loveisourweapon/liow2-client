@@ -7,6 +7,7 @@ export * from './deed.service';
 export * from './environment.service';
 export * from './feed.service';
 export * from './group.service';
+export * from './meta.service';
 export * from './modal.service';
 export * from './state.service';
 export * from './title.service';

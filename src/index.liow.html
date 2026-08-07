@@ -9,6 +9,38 @@
     <title>Love is our Weapon</title>
     <link rel="icon" type="image/png" href="favicon.png" />
 
+    <!--
+      Share card defaults. MetaService overrides these per page as you navigate, but
+      crawlers don't run JavaScript, so these are what Facebook, LinkedIn, Slack and X
+      see for every URL. Rendering per-deed and per-group tags server-side is BK-16.
+
+      og:url is deliberately absent - in a static file it could only name the homepage,
+      and Facebook treats it as canonical, so every shared deed link would resolve back
+      to the homepage. Without it, crawlers use the URL that was actually shared.
+    -->
+    <meta
+      name="description"
+      content="A Spirit-empowered movement equipping churches and believers to impact their communities through practical acts of love. Start or join a campaign today."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Love is our Weapon" />
+    <meta property="og:title" content="Love is our Weapon" />
+    <meta
+      property="og:description"
+      content="A Spirit-empowered movement equipping churches and believers to impact their communities through practical acts of love. Start or join a campaign today."
+    />
+    <!-- TODO: replace with the real 1200x630 artwork -->
+    <meta property="og:image" content="https://res.cloudinary.com/liow/image/upload/og-liow.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Love is our Weapon" />
+    <meta
+      name="twitter:description"
+      content="A Spirit-empowered movement equipping churches and believers to impact their communities through practical acts of love. Start or join a campaign today."
+    />
+    <meta name="twitter:image" content="https://res.cloudinary.com/liow/image/upload/og-liow.jpg" />
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-77VCPX2NVD"></script>
     <!-- prettier-ignore -->
