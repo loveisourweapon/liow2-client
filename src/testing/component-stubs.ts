@@ -60,6 +60,15 @@ export class JumbtronStubComponent {
 }
 
 @Component({
+  selector: 'ui-load-error',
+  template: ``,
+})
+export class LoadErrorStubComponent {
+  @Input() message: string;
+  @Output() retry = new EventEmitter<void>();
+}
+
+@Component({
   selector: 'ui-loading-spinner',
   template: ``,
 })

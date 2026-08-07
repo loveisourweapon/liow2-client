@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import {
   ActivatedRouteStubService,
+  AlertifyStubService,
   AuthStubService,
   GroupStubService,
   ModalStubService,
@@ -10,7 +11,14 @@ import {
   RouterLinkActiveStubDirective,
   RouterOutletStubComponent,
 } from '../../../testing';
-import { AuthService, GroupService, ModalService, StateService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  GroupService,
+  ModalService,
+  StateService,
+} from '../../core/services';
 import { GroupComponent } from './group.component';
 
 // TODO: add proper tests
@@ -30,7 +38,9 @@ describe(`GroupComponent`, () => {
         ],
         providers: [
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+          { provide: AlertifyService, useClass: AlertifyStubService },
           { provide: AuthService, useClass: AuthStubService },
+          EnvironmentService,
           { provide: GroupService, useClass: GroupStubService },
           { provide: ModalService, useClass: ModalStubService },
           StateService,

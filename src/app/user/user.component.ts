@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/do';
@@ -49,13 +49,14 @@ export class UserComponent implements OnDestroy, OnInit {
       .distinctUntilChanged();
 
     // Catch inside the switchMap - an error reaching the outer stream would
-    // unsubscribe it, so neither a new id nor a retry would reload the page
+    // unsubscribe it, so neither a new id nor a retry would reload the page.
+    // Emit null so the template drops the profile it was showing
     this.user$ = Observable.combineLatest(userId$, this.retry$)
       .do(() => this.loadError$.next(false))
       .switchMap(([userId]: [UserId, Date]) =>
         this.userService.get(userId).catch(() => {
           this.loadError$.next(true);
-          return Observable.empty<User>();
+          return Observable.of<User>(null);
         })
       );
 

@@ -38,9 +38,8 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Catch inside the switchMap - an error reaching the outer stream would
-    // unsubscribe it, leaving the control panel stuck until it is reopened.
-    // Clearing the group rather than keeping the last one loaded, so admin
-    // actions can't be aimed at a group the URL no longer names
+    // unsubscribe it, so switching to another group wouldn't load it either.
+    // Clear the group so the tabs can't act on a stale one
     this.routeSubscription = this.route.params
       .filter((params: Params) => has(params, 'groupId'))
       .map((params: Params) => params.groupId)
