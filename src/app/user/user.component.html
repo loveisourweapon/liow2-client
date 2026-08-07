@@ -1,3 +1,10 @@
+<div class="container container-pad" *ngIf="loadError$ | async">
+  <ui-load-error
+    message="Something went wrong loading this profile."
+    (retry)="retryLoad()"
+  ></ui-load-error>
+</div>
+
 <liow-jumbotron
   [image]="user?.picture"
   [background]="user?.coverImage"

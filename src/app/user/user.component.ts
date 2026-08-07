@@ -1,8 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
@@ -23,7 +28,9 @@ import {
 })
 export class UserComponent implements OnDestroy, OnInit {
   user$: Observable<User>;
+  loadError$ = new BehaviorSubject<boolean>(false);
 
+  private retry$ = new BehaviorSubject<Date>(new Date());
   private userSubscription: Subscription;
 
   constructor(
@@ -37,10 +44,20 @@ export class UserComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user$ = this.route.params
+    const userId$ = this.route.params
       .map((params: Params) => params['userId'])
-      .distinctUntilChanged()
-      .switchMap((userId: UserId) => this.userService.get(userId));
+      .distinctUntilChanged();
+
+    // Catch inside the switchMap - an error reaching the outer stream would
+    // unsubscribe it, so neither a new id nor a retry would reload the page
+    this.user$ = Observable.combineLatest(userId$, this.retry$)
+      .do(() => this.loadError$.next(false))
+      .switchMap(([userId]: [UserId, Date]) =>
+        this.userService.get(userId).catch(() => {
+          this.loadError$.next(true);
+          return Observable.empty<User>();
+        })
+      );
 
     this.userSubscription = this.user$
       .filter((user: User) => user !== null)
@@ -52,5 +69,9 @@ export class UserComponent implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+  }
+
+  retryLoad(): void {
+    this.retry$.next(new Date());
   }
 }
