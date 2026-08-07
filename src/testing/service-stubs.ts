@@ -77,6 +77,12 @@ export class HttpStubService {
 }
 
 @Injectable()
+export class MetaStubService {
+  clear() { }
+  set() { }
+}
+
+@Injectable()
 export class ModalStubService {
   openForgotPassword() { }
   openLogin() { }

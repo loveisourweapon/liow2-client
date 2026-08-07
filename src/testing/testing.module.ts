@@ -49,6 +49,7 @@ import {
   FeedStubService,
   GroupStubService,
   HttpStubService,
+  MetaStubService,
   ModalStubService,
   Ng2AuthStubService,
   TitleStubService,

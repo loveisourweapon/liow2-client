@@ -26,12 +26,13 @@ import {
   CampaignService,
   EnvironmentService,
   GroupService,
+  MetaService,
   ModalService,
   StateService,
   TitleService,
   UserService,
 } from '../core/services';
-import { identifyBy } from '../shared';
+import { identifyBy, stripMarkdown } from '../shared';
 import { GroupTab } from './group-tab.model';
 
 @Component({
@@ -62,6 +63,7 @@ export class GroupComponent implements OnDestroy, OnInit {
     public auth: AuthService,
     private campaignService: CampaignService,
     private groupService: GroupService,
+    private meta: MetaService,
     public modal: ModalService,
     private route: ActivatedRoute,
     public state: StateService,
@@ -83,6 +85,7 @@ export class GroupComponent implements OnDestroy, OnInit {
       .subscribe((group: Group) => {
         this.actService.count({ group: group._id });
         this.title.set(group.name);
+        this.meta.set({ title: group.name, description: stripMarkdown(group.welcomeMessage) });
       });
 
     this.campaignSubscription = this.state.campaign$
@@ -117,6 +120,7 @@ export class GroupComponent implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.state.group = null;
+    this.meta.clear();
 
     this.routeSubscription.unsubscribe();
     this.groupSubscription.unsubscribe();

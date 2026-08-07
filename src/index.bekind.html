@@ -9,6 +9,43 @@
     <title>BeKind School</title>
     <link rel="icon" type="image/png" href="favicon-bekind.png" />
 
+    <!--
+      Share card defaults, and all a crawler sees for any URL until BK-16 renders these
+      per page. MetaService keeps them current in the live DOM as you navigate.
+
+      No og:url on purpose: here it could only name the homepage, and Facebook treats it
+      as canonical, so every shared deed link would resolve back to /. Left out, crawlers
+      use the URL that was actually shared.
+    -->
+    <meta
+      name="description"
+      content="BeKind is Australia’s first measurable school culture program, a new approach to school wellbeing. Curriculum-aligned learning, practical acts of kindness and real-time impact measurement empower students to change their school and community for the better."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BeKind School" />
+    <meta property="og:title" content="BeKind School" />
+    <meta
+      property="og:description"
+      content="BeKind is Australia’s first measurable school culture program, a new approach to school wellbeing. Curriculum-aligned learning, practical acts of kindness and real-time impact measurement empower students to change their school and community for the better."
+    />
+    <!-- Source file kept alongside the app at src/images/og-bekind.jpg -->
+    <meta
+      property="og:image"
+      content="https://res.cloudinary.com/liow/image/upload/v1786076429/og-bekind_arjjip.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BeKind School" />
+    <meta
+      name="twitter:description"
+      content="BeKind is Australia’s first measurable school culture program, a new approach to school wellbeing. Curriculum-aligned learning, practical acts of kindness and real-time impact measurement empower students to change their school and community for the better."
+    />
+    <meta
+      name="twitter:image"
+      content="https://res.cloudinary.com/liow/image/upload/v1786076429/og-bekind_arjjip.jpg"
+    />
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9ETCB2020Z"></script>
     <!-- prettier-ignore -->
