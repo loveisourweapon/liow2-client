@@ -10,13 +10,12 @@
     <link rel="icon" type="image/png" href="favicon.png" />
 
     <!--
-      Share card defaults. MetaService overrides these per page as you navigate, but
-      crawlers don't run JavaScript, so these are what Facebook, LinkedIn, Slack and X
-      see for every URL. Rendering per-deed and per-group tags server-side is BK-16.
+      Share card defaults, and all a crawler sees for any URL until BK-16 renders these
+      per page. MetaService keeps them current in the live DOM as you navigate.
 
-      og:url is deliberately absent - in a static file it could only name the homepage,
-      and Facebook treats it as canonical, so every shared deed link would resolve back
-      to the homepage. Without it, crawlers use the URL that was actually shared.
+      No og:url on purpose: here it could only name the homepage, and Facebook treats it
+      as canonical, so every shared deed link would resolve back to /. Left out, crawlers
+      use the URL that was actually shared.
     -->
     <meta
       name="description"

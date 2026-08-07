@@ -44,6 +44,12 @@ describe(`stripMarkdown`, () => {
     expect(stripMarkdown(markdown)).toBe('Heading A quote first item second item numbered');
   });
 
+  it(`should strip a spaced horizontal rule rather than reading it as a list item`, () => {
+    ['---', '- - -', '***', '* * *', '___', '_ _ _'].forEach((rule) => {
+      expect(stripMarkdown(`one\n\n${rule}\n\ntwo`)).toBe('one two');
+    });
+  });
+
   it(`should keep the contents of a fenced code block`, () => {
     expect(stripMarkdown('```js\nconst a = 1;\n```')).toBe('const a = 1;');
   });

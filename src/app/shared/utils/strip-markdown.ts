@@ -22,12 +22,13 @@ export function stripMarkdown(markdown: string, maxLength = DEFAULT_MAX_LENGTH):
     // Images before links - an image is a link with a leading '!'
     .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    // Headings, blockquotes and list markers, only at the start of a line
+    // Headings and blockquotes, only at the start of a line
     .replace(/^[ \t]*#{1,6}[ \t]+/gm, '')
     .replace(/^[ \t]*>[ \t]?/gm, '')
-    .replace(/^[ \t]*(?:[-*+]|\d+\.)[ \t]+/gm, '')
-    // Horizontal rules, before emphasis so '---' doesn't survive as stray dashes
+    // Horizontal rules before list markers, so a spaced rule like '- - -' isn't first
+    // mistaken for a list item and left behind as stray dashes
     .replace(/^[ \t]*(?:[-*_][ \t]*){3,}$/gm, '')
+    .replace(/^[ \t]*(?:[-*+]|\d+\.)[ \t]+/gm, '')
     // Bold, italic and strikethrough
     .replace(/(\*\*|__)(.*?)\1/g, '$2')
     .replace(/(\*|_)(.*?)\1/g, '$2')

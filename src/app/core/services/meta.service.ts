@@ -10,21 +10,16 @@ export interface PageMeta {
 /**
  * Keeps the share card meta tags in step with the current page.
  *
- * The share image is always the brand artwork from index.html. Deeds and groups do carry
- * image fields, but there's no upload support behind them, so per-page images aren't worth
- * chasing - see the note in GroupService#transformGroup.
- *
- * Note this is only ever seen by things that read the live DOM - the AddToAny share
- * buttons on the deed and group pages, for instance. Crawlers don't run JavaScript, so
- * they still see the defaults from index.html. Rendering per-page tags server-side is
- * BK-16.
+ * Only things that read the live DOM see this, such as the AddToAny share buttons on the
+ * deed and group pages. Crawlers don't run JavaScript, so shared links still preview with
+ * the defaults from index.html until BK-16 renders these server-side.
  */
 @Injectable()
 export class MetaService {
   private readonly baseTitle = environment.appName;
 
-  // The brand default lives in index.liow.html / index.bekind.html. Snapshotting it rather
-  // than restating it here keeps one copy of the wording per brand.
+  // Snapshotted from index.html rather than restated here, so each brand's wording lives
+  // in one place
   private readonly defaultDescription: string;
 
   constructor(private meta: Meta, @Inject(DOCUMENT) private document: any) {
@@ -36,7 +31,7 @@ export class MetaService {
     console.info('MetaService#clear');
     this.apply(this.baseTitle, this.defaultDescription);
 
-    // The defaults carry no og:url on purpose - see the comment in index.liow.html
+    // index.html deliberately carries no og:url, so remove rather than reset it
     this.meta.removeTag('property="og:url"');
   }
 
