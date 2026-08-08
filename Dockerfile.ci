@@ -1,0 +1,29 @@
+# Image for running lint, typecheck and the unit tests in CI.
+#
+# The app is pinned to Node 8 (node-sass 4.5.3 only ships bindings for that
+# ABI), so the checks run here rather than against a runner-installed Node.
+# This also keeps CI running exactly what a developer can run locally:
+#   docker build -f Dockerfile.ci -t liow2-client-ci .
+#   docker run --rm liow2-client-ci yarn lint
+FROM mhart/alpine-node:8
+
+# Alpine 3.6 ships Chromium 57, which predates --headless, so karma drives it
+# under Xvfb instead. It's the only browser option for this image -
+# phantomjs-prebuilt downloads a glibc binary that musl can't run.
+# eudev-libs provides the libudev that Chromium aborts without; dbus and the
+# font package quiet the rest of its startup requirements.
+RUN apk add --no-cache chromium xvfb ttf-freefont eudev-libs dbus
+
+ENV CHROME_BIN=/usr/bin/chromium-browser
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN chmod +x docker-entrypoint.ci.sh
+
+ENTRYPOINT ["./docker-entrypoint.ci.sh"]
+CMD ["yarn", "test:ci"]

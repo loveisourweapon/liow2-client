@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    name: Format check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # Prettier 3 needs a modern Node, so it can't be a devDependency of a
+      # project pinned to Node 8. Pinned via npx instead, so nothing is added
+      # to package.json. Run the same command locally with a modern Node:
+      #   npx prettier@3.9.6 --check .
+      - name: Format check
+        run: npx prettier@3.9.6 --check .
+
+  checks:
+    name: Lint, typecheck, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Lint, typecheck and the karma suite all run in Docker rather than
+      # against a runner-installed Node. The app is pinned to Node 8 -
+      # node-sass 4.5.3 only ships bindings for that ABI, and the Angular CLI
+      # 1.2 toolchain around it is the same vintage. Dockerfile.ci also brings
+      # its own browser, so this runs exactly what developers can run locally.
+      #
+      # Runners are amd64, so the Node 8 image runs natively here. The
+      # --platform pin is only needed on arm64 machines.
+      - name: Build CI image
+        run: docker build -f Dockerfile.ci -t liow2-client-ci .
+
+      - name: Lint
+        run: docker run --rm liow2-client-ci yarn lint
+
+      - name: Typecheck
+        run: docker run --rm liow2-client-ci yarn typecheck
+
+      - name: Test
+        run: docker run --rm liow2-client-ci yarn test:ci
