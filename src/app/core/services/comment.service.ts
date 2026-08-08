@@ -16,7 +16,10 @@ export class CommentService {
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly numberOfUserPictures = 12;
 
-  constructor(private http: JwtHttp, private state: StateService) {}
+  constructor(
+    private http: JwtHttp,
+    private state: StateService
+  ) {}
 
   save(comment: Comment | NewComment): Observable<Comment> {
     console.info('CommentService#save', 'comment', comment);

@@ -15,7 +15,7 @@ export class ActivatedRouteStubService {
 @Injectable()
 export class RouterStubService {
   events = new BehaviorSubject<any>({});
-  navigate() { }
+  navigate() {}
 }
 
 @Component({

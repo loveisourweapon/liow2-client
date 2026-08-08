@@ -13,7 +13,9 @@
   padding: 4vw;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition:
+    background 0.3s ease-in-out,
+    color 0.3s ease-in-out;
 
   @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     width: calc(100% / 4);

@@ -23,35 +23,55 @@ import {
 export class StateService {
   auth = {
     isAuthenticated$: new BehaviorSubject<boolean>(false),
-    set isAuthenticated(isAuthenticated: boolean) { this.isAuthenticated$.next(isAuthenticated); },
+    set isAuthenticated(isAuthenticated: boolean) {
+      this.isAuthenticated$.next(isAuthenticated);
+    },
 
     group$: new BehaviorSubject<Group>(null),
-    set group(group: Group) { this.group$.next(group); },
+    set group(group: Group) {
+      this.group$.next(group);
+    },
     campaign$: new BehaviorSubject<Campaign>(null),
-    set campaign(campaign: Campaign) { this.campaign$.next(campaign); },
+    set campaign(campaign: Campaign) {
+      this.campaign$.next(campaign);
+    },
 
     user$: new BehaviorSubject<User>(null),
-    set user(user: User) { this.user$.next(user); },
+    set user(user: User) {
+      this.user$.next(user);
+    },
   };
 
   controlPanel = {
     comments$: new BehaviorSubject<Comment[]>([]),
-    set comments(comments: Comment[]) { this.comments$.next(comments); },
+    set comments(comments: Comment[]) {
+      this.comments$.next(comments);
+    },
 
     deeds$: new BehaviorSubject<Deed[]>([]),
-    set deeds(deeds: Deed[]) { this.deeds$.next(deeds); },
+    set deeds(deeds: Deed[]) {
+      this.deeds$.next(deeds);
+    },
 
     group$: new BehaviorSubject<Group>(null),
-    set group(group: Group) { this.group$.next(group); },
+    set group(group: Group) {
+      this.group$.next(group);
+    },
 
     groups$: new BehaviorSubject<Group[]>([]),
-    set groups(groups: Group[]) { this.groups$.next(groups); },
+    set groups(groups: Group[]) {
+      this.groups$.next(groups);
+    },
 
     user$: new BehaviorSubject<User>(null),
-    set user(user: User) { this.user$.next(user); },
+    set user(user: User) {
+      this.user$.next(user);
+    },
 
     users$: new BehaviorSubject<User[]>([]),
-    set users(users: User[]) { this.users$.next(users); },
+    set users(users: User[]) {
+      this.users$.next(users);
+    },
   };
 
   counters$ = new BehaviorSubject<Counters>({});
@@ -61,11 +81,10 @@ export class StateService {
       .map((counters: Counters) => counters[counterId]);
   }
   updateCounter(counterId: string, count: number): void {
-    this.counters$.first()
-      .subscribe((counters: Counters) => {
-        const updatedCounters = assign({}, counters, { [counterId]: count });
-        this.counters$.next(updatedCounters);
-      });
+    this.counters$.first().subscribe((counters: Counters) => {
+      const updatedCounters = assign({}, counters, { [counterId]: count });
+      this.counters$.next(updatedCounters);
+    });
   }
 
   // Comments awaiting moderation, per group. Only loaded for groups the user
@@ -75,22 +94,25 @@ export class StateService {
     return this.pendingCommentCounts$.map((counts: Counters) => counts[groupId] || 0);
   }
   updatePendingCommentCount(groupId: GroupId, count: number): void {
-    this.pendingCommentCounts$.first()
-      .subscribe((counts: Counters) => {
-        this.pendingCommentCounts$.next(assign({}, counts, { [groupId]: count }));
-      });
+    this.pendingCommentCounts$.first().subscribe((counts: Counters) => {
+      this.pendingCommentCounts$.next(assign({}, counts, { [groupId]: count }));
+    });
   }
   clearPendingCommentCounts(): void {
     this.pendingCommentCounts$.next({});
   }
 
   deed$ = new BehaviorSubject<Deed>(null);
-  set deed(deed: Deed) { this.deed$.next(deed); }
+  set deed(deed: Deed) {
+    this.deed$.next(deed);
+  }
 
   static readonly FEED_UPDATE_DELAY = 80;
   feed = {
     items$: new BehaviorSubject<FeedItem[]>([]),
-    set items(feedItems: FeedItem[]) { this.items$.next(feedItems); },
+    set items(feedItems: FeedItem[]) {
+      this.items$.next(feedItems);
+    },
     update$: new BehaviorSubject<boolean>(true),
     update(reload = false): void {
       setTimeout(() => this.update$.next(reload), StateService.FEED_UPDATE_DELAY);
@@ -98,16 +120,24 @@ export class StateService {
   };
 
   group$ = new BehaviorSubject<Group>(null);
-  set group(group: Group) { this.group$.next(group); }
+  set group(group: Group) {
+    this.group$.next(group);
+  }
   campaign$ = new BehaviorSubject<Campaign>(null);
-  set campaign(campaign: Campaign) { this.campaign$.next(campaign); }
+  set campaign(campaign: Campaign) {
+    this.campaign$.next(campaign);
+  }
 
   layout = {
     isMenuOpen$: new BehaviorSubject<boolean>(false),
-    set isMenuOpen(isMenuOpen: boolean) { this.isMenuOpen$.next(isMenuOpen); },
+    set isMenuOpen(isMenuOpen: boolean) {
+      this.isMenuOpen$.next(isMenuOpen);
+    },
 
     isSmallScreen$: new BehaviorSubject<boolean>(false),
-    set isSmallScreen(isSmallScreen: boolean) { this.isSmallScreen$.next(isSmallScreen); },
+    set isSmallScreen(isSmallScreen: boolean) {
+      this.isSmallScreen$.next(isSmallScreen);
+    },
   };
 
   modal = {

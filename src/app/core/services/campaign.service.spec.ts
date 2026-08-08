@@ -23,11 +23,7 @@ describe(`CampaignService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        CampaignService,
-        { provide: JwtHttp, useClass: HttpStubService },
-        StateService,
-      ],
+      providers: [CampaignService, { provide: JwtHttp, useClass: HttpStubService }, StateService],
     });
   });
 
@@ -69,13 +65,19 @@ describe(`CampaignService`, () => {
     it(`should throw an error if no Campaigns found`, () => {
       const response = new Response(new ResponseOptions({ body: [] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Campaign not found`));
+      service.findOne().subscribe(
+        () => {},
+        (error) => expect(error.message).toBe(`Campaign not found`)
+      );
     });
 
     it(`should throw an error if more than one Campaign found`, () => {
       const response = new Response(new ResponseOptions({ body: [testCampaign, testCampaign] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Campaign not found`));
+      service.findOne().subscribe(
+        () => {},
+        (error) => expect(error.message).toBe(`Campaign not found`)
+      );
     });
   });
 
@@ -99,7 +101,9 @@ describe(`CampaignService`, () => {
       const response = new Response(new ResponseOptions({ body: updatedCampaign }));
       const httpSpy = spyOn(http, 'put').and.returnValue(Observable.of(response));
       service.save(updatedCampaign).subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/campaigns/${updatedCampaign._id}$`));
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(
+          new RegExp(`/campaigns/${updatedCampaign._id}$`)
+        );
         expect(httpSpy.calls.mostRecent().args[1]).toBe(updatedCampaign);
       });
     });
@@ -112,7 +116,9 @@ describe(`CampaignService`, () => {
       const response = new Response(new ResponseOptions({ body: {} }));
       const httpSpy = spyOn(http, 'patch').and.returnValue(Observable.of(response));
       service.update(campaignToUpdate, changes).subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/campaigns/${campaignToUpdate._id}$`));
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(
+          new RegExp(`/campaigns/${campaignToUpdate._id}$`)
+        );
         expect(httpSpy.calls.mostRecent().args[1]).toBe(changes);
       });
     });

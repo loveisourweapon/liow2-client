@@ -12,16 +12,10 @@ describe(`CommentFormComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          CommentFormComponent,
-          TestHostComponent,
-          MediumEditorStubComponent,
-        ],
-        providers: [EnvironmentService],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [CommentFormComponent, TestHostComponent, MediumEditorStubComponent],
+      providers: [EnvironmentService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,7 +27,8 @@ describe(`CommentFormComponent`, () => {
 
   it(`should pass content through to MediumEditorComponent`, () => {
     const mediumEditorComponentElement = element.query(By.directive(MediumEditorStubComponent));
-    const mediumEditorComponent = mediumEditorComponentElement.injector.get(MediumEditorStubComponent);
+    const mediumEditorComponent =
+      mediumEditorComponentElement.injector.get(MediumEditorStubComponent);
     expect(mediumEditorComponent.content).toBe(testHost.content);
   });
 
@@ -65,5 +60,5 @@ class TestHostComponent {
     this.content = newContent;
   }
 
-  onSave() { }
+  onSave() {}
 }

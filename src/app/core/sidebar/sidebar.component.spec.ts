@@ -7,7 +7,7 @@ import {
   NavbarSearchStubComponent,
   RouterLinkStubDirective,
 } from '../../../testing';
-import { AuthService, ModalService, StateService } from '../services';
+import { AuthService, EnvironmentService, ModalService, StateService } from '../services';
 import { SidebarComponent } from './sidebar.component';
 
 // TODO: add proper tests
@@ -18,20 +18,15 @@ describe(`SidebarComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          SidebarComponent,
-          NavbarSearchStubComponent,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubDirective },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [SidebarComponent, NavbarSearchStubComponent, RouterLinkStubDirective],
+      providers: [
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        { provide: ModalService, useClass: ModalStubDirective },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

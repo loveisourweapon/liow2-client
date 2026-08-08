@@ -14,11 +14,7 @@ describe(`CommentService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        CommentService,
-        { provide: JwtHttp, useClass: HttpStubService },
-        StateService,
-      ],
+      providers: [CommentService, { provide: JwtHttp, useClass: HttpStubService }, StateService],
     });
   });
 
@@ -51,7 +47,7 @@ describe(`CommentService`, () => {
       group: 'def456',
       target: { deed: 'ghi789' },
       content: { text: 'A testimony' },
-      user: { _id: 'abc123' }
+      user: { _id: 'abc123' },
     };
 
     it(`should pass search params to http.get`, () => {

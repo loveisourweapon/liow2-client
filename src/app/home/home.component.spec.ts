@@ -8,7 +8,13 @@ import {
   TitleStubService,
   EmbedPlayerStubComponent,
 } from '../../testing';
-import { ActService, ModalService, StateService, TitleService } from '../core/services';
+import {
+  ActService,
+  EnvironmentService,
+  ModalService,
+  StateService,
+  TitleService,
+} from '../core/services';
 import { HomeComponent } from './home.component';
 
 // TODO: add proper tests
@@ -28,6 +34,7 @@ describe(`HomeComponent`, () => {
       ],
       providers: [
         { provide: ActService, useClass: ActStubService },
+        EnvironmentService,
         { provide: ModalService, useClass: ModalStubService },
         { provide: TitleService, useClass: TitleStubService },
         StateService,

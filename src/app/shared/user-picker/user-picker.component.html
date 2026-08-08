@@ -4,7 +4,7 @@
     *ngFor="let user of getSelectedUsers(userList, selectedIds); trackBy: identifyBy('_id')"
   >
     <div class="media-left">
-      <img [src]="user?.picture" class="img-circle">
+      <img [src]="user?.picture" class="img-circle" />
     </div>
     <div class="media-right media-middle">
       {{ user?.name }}
@@ -42,16 +42,19 @@
   <div class="modal-backdrop fade in" (click)="modal.hide()"></div>
 
   <div class="modal-dialog modal-sm" style="z-index: 1050">
-    <div class="modal-content" >
+    <div class="modal-content">
       <div class="list-group m-b-none">
         <button
           type="button"
           (click)="onSelectClick(user); modal.hide()"
-          *ngFor="let user of getNotSelectedUsers(userList, selectedIds); trackBy: identifyBy('_id')"
+          *ngFor="
+            let user of getNotSelectedUsers(userList, selectedIds);
+            trackBy: identifyBy('_id')
+          "
           class="list-group-item media m-t-none"
         >
           <div class="media-left">
-            <img [src]="user?.picture" class="img-circle">
+            <img [src]="user?.picture" class="img-circle" />
           </div>
           <div class="media-right media-middle">
             {{ user?.name }}
@@ -60,10 +63,12 @@
 
         <div *ngIf="getNotSelectedUsers(userList, selectedIds).length === 0" class="m-md">
           <p>There are no more users in your group that you can add as an admin.</p>
-          <p>You'll need to invite people to join your group, then you'll be able to add them as an admin.</p>
+          <p>
+            You'll need to invite people to join your group, then you'll be able to add them as an
+            admin.
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
-

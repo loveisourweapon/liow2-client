@@ -22,9 +22,7 @@ export class JumbotronComponent implements OnChanges, OnInit {
   backgroundUrl: string;
   hasContent: boolean;
 
-  constructor(
-    private element: ElementRef,
-  ) { }
+  constructor(private element: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes['background']) {

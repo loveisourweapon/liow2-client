@@ -11,7 +11,7 @@ import {
   AuthStubService,
   ModalStubDirective,
   ModalStubService,
-  SwitchStubComponent
+  SwitchStubComponent,
 } from '../../../testing';
 import { Group } from '../../core/models';
 import { AlertifyService, AuthService, ModalService, StateService } from '../../core/services';
@@ -28,27 +28,23 @@ describe(`LoginModalComponent`, () => {
   let auth: AuthService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          LoginModalComponent,
-          TestHostComponent,
-          AlertStubComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-          SwitchStubComponent,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        LoginModalComponent,
+        TestHostComponent,
+        AlertStubComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+        SwitchStubComponent,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

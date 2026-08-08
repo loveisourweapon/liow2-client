@@ -21,10 +21,7 @@ describe(`UserService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        UserService,
-        { provide: JwtHttp, useClass: HttpStubService },
-      ],
+      providers: [UserService, { provide: JwtHttp, useClass: HttpStubService }],
     });
   });
 
@@ -86,6 +83,8 @@ describe(`UserService`, () => {
       password: 'testing123',
       firstName: 'Test',
       lastName: 'User',
+      acceptTerms: true,
+      marketingOptIn: false,
     };
 
     it(`should POST to /users if passed in user doesn't have an ID`, () => {
@@ -102,7 +101,9 @@ describe(`UserService`, () => {
       const response = new Response(new ResponseOptions({ body: updatedUser }));
       const httpSpy = spyOn(http, 'put').and.returnValue(Observable.of(response));
       service.save(updatedUser).subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/users/${updatedUser._id}$`));
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(
+          new RegExp(`/users/${updatedUser._id}$`)
+        );
         expect(httpSpy.calls.mostRecent().args[1]).toBe(updatedUser);
       });
     });
@@ -115,7 +116,9 @@ describe(`UserService`, () => {
       const response = new Response(new ResponseOptions({ body: {} }));
       const httpSpy = spyOn(http, 'patch').and.returnValue(Observable.of(response));
       service.update(userToUpdate, changes).subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/users/${userToUpdate._id}$`));
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(
+          new RegExp(`/users/${userToUpdate._id}$`)
+        );
         expect(httpSpy.calls.mostRecent().args[1]).toBe(changes);
       });
     });

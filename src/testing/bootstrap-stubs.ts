@@ -3,7 +3,7 @@ import { Component, Directive, EventEmitter, Input, Output } from '@angular/core
 
 @Component({
   selector: 'alert',
-  template: ``
+  template: ``,
 })
 export class AlertStubComponent {
   @Input() dismissible: boolean;
@@ -11,13 +11,13 @@ export class AlertStubComponent {
 }
 
 @Directive({ selector: '[dropdown]' })
-export class DropdownStubDirective { }
+export class DropdownStubDirective {}
 
 @Directive({ selector: '[dropdownToggle]' })
-export class DropdownToggleStubDirective { }
+export class DropdownToggleStubDirective {}
 
 @Directive({ selector: '[dropdownMenu]' })
-export class DropdownMenuStubDirective { }
+export class DropdownMenuStubDirective {}
 
 @Directive({
   selector: '[bsModal]',
@@ -26,8 +26,8 @@ export class DropdownMenuStubDirective { }
 export class ModalStubDirective {
   @Input() config: any;
   @Output() onHide = new EventEmitter();
-  show() { }
-  hide() { }
+  show() {}
+  hide() {}
 }
 
 @Component({
@@ -51,7 +51,7 @@ export class PaginationStubComponent {
 
 @Component({
   selector: 'tabset',
-  template: ``
+  template: ``,
 })
 export class TabsetStubComponent {
   @Input() type: string;

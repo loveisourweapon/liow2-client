@@ -20,9 +20,7 @@ export class ControlPanelSearchComponent implements AfterViewInit {
   private readonly searchDebounce = 300;
   private debounceTimer;
 
-  constructor(
-    private element: ElementRef,
-  ) { }
+  constructor(private element: ElementRef) {}
 
   onQueryChange(query: string) {
     if (this.debounceTimer) {
@@ -36,7 +34,9 @@ export class ControlPanelSearchComponent implements AfterViewInit {
     const element = this.element.nativeElement;
     if (element.hasAttribute('autofocus')) {
       const inputElement = element.querySelector('input');
-      if (inputElement) { inputElement.focus(); }
+      if (inputElement) {
+        inputElement.focus();
+      }
     }
   }
 }

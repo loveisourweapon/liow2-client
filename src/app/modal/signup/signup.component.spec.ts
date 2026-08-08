@@ -15,7 +15,13 @@ import {
   UserStubService,
 } from '../../../testing';
 import { Group } from '../../core/models';
-import { AlertifyService, AuthService, ModalService, StateService, UserService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
 import { EmailValidatorDirective } from '../../shared';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { SignupModalComponent } from './signup.component';
@@ -30,29 +36,25 @@ describe(`SignupModalComponent`, () => {
   let auth: AuthService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          SignupModalComponent,
-          TestHostComponent,
-          AlertStubComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-          SwitchStubComponent,
-          EmailValidatorDirective,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        SignupModalComponent,
+        TestHostComponent,
+        AlertStubComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+        SwitchStubComponent,
+        EmailValidatorDirective,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

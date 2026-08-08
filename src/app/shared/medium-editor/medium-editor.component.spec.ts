@@ -10,17 +10,10 @@ describe(`MediumEditorComponent`, () => {
   let element: HTMLElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        imports: [
-          FormsModule,
-        ],
-        declarations: [
-          MediumEditorComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      imports: [FormsModule],
+      declarations: [MediumEditorComponent, TestHostComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
     testHost = fixture.componentInstance;

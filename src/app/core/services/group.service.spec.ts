@@ -20,10 +20,7 @@ describe(`GroupService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        GroupService,
-        { provide: JwtHttp, useClass: HttpStubService },
-      ],
+      providers: [GroupService, { provide: JwtHttp, useClass: HttpStubService }],
     });
   });
 
@@ -71,13 +68,19 @@ describe(`GroupService`, () => {
     it(`should throw an error if no Groups found`, () => {
       const response = new Response(new ResponseOptions({ body: [] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Group not found`));
+      service.findOne().subscribe(
+        () => {},
+        (error) => expect(error.message).toBe(`Group not found`)
+      );
     });
 
     it(`should throw an error if more than one Group found`, () => {
       const response = new Response(new ResponseOptions({ body: [testGroup, testGroup] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Group not found`));
+      service.findOne().subscribe(
+        () => {},
+        (error) => expect(error.message).toBe(`Group not found`)
+      );
     });
   });
 
@@ -102,7 +105,9 @@ describe(`GroupService`, () => {
       const response = new Response(new ResponseOptions({ body: updatedGroup }));
       const httpSpy = spyOn(http, 'put').and.returnValue(Observable.of(response));
       service.save(updatedGroup).subscribe(() => {
-        expect(httpSpy.calls.mostRecent().args[0]).toMatch(new RegExp(`/groups/${updatedGroup._id}$`));
+        expect(httpSpy.calls.mostRecent().args[0]).toMatch(
+          new RegExp(`/groups/${updatedGroup._id}$`)
+        );
         expect(httpSpy.calls.mostRecent().args[1]).toBe(updatedGroup);
       });
     });

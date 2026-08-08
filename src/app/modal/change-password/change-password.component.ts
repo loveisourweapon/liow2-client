@@ -32,22 +32,21 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
   constructor(
     private alertify: AlertifyService,
     private state: StateService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.stateSubscription = this.state.modal.changePassword$
-      .subscribe((state: ModalState) => {
-        if (state.isOpen && !this.modal.isShown) {
-          this.reset();
-          this.modal.show();
-        } else if (!state.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.changePassword$.subscribe((state: ModalState) => {
+      if (state.isOpen && !this.modal.isShown) {
+        this.reset();
+        this.modal.show();
+      } else if (!state.isOpen && this.modal.isShown) {
+        this.modal.hide();
+      }
 
-        const options = <ChangePasswordModalOptions>state.options;
-        this.user = has(options, 'user') ? options.user : null;
-      });
+      const options = <ChangePasswordModalOptions>state.options;
+      this.user = has(options, 'user') ? options.user : null;
+    });
   }
 
   ngOnDestroy(): void {
@@ -58,17 +57,18 @@ export class ChangePasswordModalComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
 
     this.isSaving$.next(true);
-    this.userService.update(user, [
-      { op: JsonPatchOp.Add, path: `/currentPassword`, value: currentPassword },
-      { op: JsonPatchOp.Add, path: `/newPassword`, value: newPassword },
-    ])
+    this.userService
+      .update(user, [
+        { op: JsonPatchOp.Add, path: `/currentPassword`, value: currentPassword },
+        { op: JsonPatchOp.Add, path: `/newPassword`, value: newPassword },
+      ])
       .finally(() => this.isSaving$.next(false))
       .subscribe(
         () => {
           this.alertify.success(`Password changed`);
           this.onClose();
         },
-        (error: ApiError) => this.errorMessage = error.message,
+        (error: ApiError) => (this.errorMessage = error.message)
       );
   }
 

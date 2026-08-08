@@ -22,7 +22,10 @@ export class MetaService {
   // in one place
   private readonly defaultDescription: string;
 
-  constructor(private meta: Meta, @Inject(DOCUMENT) private document: any) {
+  constructor(
+    private meta: Meta,
+    @Inject(DOCUMENT) private document: any
+  ) {
     const tag = this.meta.getTag('name="description"');
     this.defaultDescription = tag ? tag.content : '';
   }

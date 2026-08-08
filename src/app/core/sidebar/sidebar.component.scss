@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@import '../../../styles/variables';
 
 $sidebar-bg: $navbar-inverse-bg;
 $sidebar-border: $navbar-inverse-border;
@@ -43,7 +43,9 @@ $sidebar-lighter-color: lighten($sidebar-color, 10%);
 
   .current-campaign {
     line-height: 100%;
-    > small { padding-left: 25px; }
+    > small {
+      padding-left: 25px;
+    }
   }
 
   .list-group:not(:first-of-type) {
@@ -64,8 +66,12 @@ $sidebar-lighter-color: lighten($sidebar-color, 10%);
       color: $sidebar-lighter-color;
     }
 
-    &:hover { background: darken($sidebar-bg, 5%); }
-    &.active:hover { background: darken($sidebar-lighter-bg, 5%); }
+    &:hover {
+      background: darken($sidebar-bg, 5%);
+    }
+    &.active:hover {
+      background: darken($sidebar-lighter-bg, 5%);
+    }
   }
 }
 
@@ -94,10 +100,7 @@ $sidebar-lighter-color: lighten($sidebar-color, 10%);
   }
 
   > .btn-close {
-    @include button-variant(
-        $sidebar-lighter-color,
-        $sidebar-lighter-bg,
-        $sidebar-border);
+    @include button-variant($sidebar-lighter-color, $sidebar-lighter-bg, $sidebar-border);
 
     border: none;
     border-radius: 0;
@@ -126,10 +129,7 @@ liow-navbar-search {
   height: $footer-height;
 
   > .btn-logout {
-    @include button-variant(
-        $sidebar-color,
-        $sidebar-bg,
-        $sidebar-border);
+    @include button-variant($sidebar-color, $sidebar-bg, $sidebar-border);
 
     border: none;
     border-radius: 0;

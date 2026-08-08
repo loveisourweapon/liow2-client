@@ -28,25 +28,23 @@ describe(`GroupComponent`, () => {
   let component: GroupComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GroupComponent,
-          RouterLinkStubDirective,
-          RouterLinkActiveStubDirective,
-          RouterOutletStubComponent,
-        ],
-        providers: [
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          EnvironmentService,
-          { provide: GroupService, useClass: GroupStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupComponent,
+        RouterLinkStubDirective,
+        RouterLinkActiveStubDirective,
+        RouterOutletStubComponent,
+      ],
+      providers: [
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

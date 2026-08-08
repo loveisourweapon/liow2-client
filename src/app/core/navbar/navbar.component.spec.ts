@@ -13,7 +13,13 @@ import {
   NavbarSearchStubComponent,
   RouterLinkStubDirective,
 } from '../../../testing';
-import { ActService, AuthService, ModalService, StateService } from '../services';
+import {
+  ActService,
+  AuthService,
+  EnvironmentService,
+  ModalService,
+  StateService,
+} from '../services';
 import { NavbarComponent } from './navbar.component';
 
 // TODO: add more tests around what's being displayed and clicking more buttons
@@ -25,24 +31,23 @@ describe(`NavbarComponent`, () => {
   let state: StateService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          NavbarComponent,
-          NavbarSearchStubComponent,
-          DropdownStubDirective,
-          DropdownMenuStubDirective,
-          DropdownToggleStubDirective,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        NavbarComponent,
+        NavbarSearchStubComponent,
+        DropdownStubDirective,
+        DropdownMenuStubDirective,
+        DropdownToggleStubDirective,
+        RouterLinkStubDirective,
+      ],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -55,13 +60,15 @@ describe(`NavbarComponent`, () => {
   });
 
   it(`should set the menu state to open when clicking the navbar toggle button`, () => {
-    state.layout.isMenuOpen$.first()
+    state.layout.isMenuOpen$
+      .first()
       .subscribe((isMenuOpen: boolean) => expect(isMenuOpen).toBe(false));
 
     const toggleButton = element.query(By.css('button.navbar-toggle'));
     toggleButton.triggerEventHandler('click', null);
 
-    state.layout.isMenuOpen$.first()
+    state.layout.isMenuOpen$
+      .first()
       .subscribe((isMenuOpen: boolean) => expect(isMenuOpen).toBe(true));
   });
 });

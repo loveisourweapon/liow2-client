@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { AuthStubService, MarkedStubComponent, RouterLinkStubDirective } from '../../../testing';
 import { FeedItem, User } from '../../core/models';
-import { AuthService, StateService } from '../../core/services';
+import { AuthService, EnvironmentService, StateService } from '../../core/services';
 import { FromNowPipe, MomentPipe } from '../../shared';
 import { FeedItemComponent } from './feed-item.component';
 
@@ -14,22 +14,21 @@ describe(`FeedItemComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          FeedItemComponent,
-          TestHostComponent,
-          FromNowPipe,
-          MomentPipe,
-          MarkedStubComponent,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          { provide: AuthService, useClass: AuthStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        FeedItemComponent,
+        TestHostComponent,
+        FromNowPipe,
+        MomentPipe,
+        MarkedStubComponent,
+        RouterLinkStubDirective,
+      ],
+      providers: [
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -46,16 +45,12 @@ describe(`FeedItemComponent`, () => {
 });
 
 @Component({
-  template: `
-    <liow-feed-item
-      [item]="feedItem"
-    ></liow-feed-item>
-  `,
+  template: ` <liow-feed-item [item]="feedItem"></liow-feed-item> `,
 })
 class TestHostComponent {
   feedItem = <FeedItem>{
     _id: 'def456',
-      user: <User>{ _id: 'abc123' },
-      target: {},
+    user: <User>{ _id: 'abc123' },
+    target: {},
   };
 }

@@ -20,13 +20,7 @@ import { SalvationTestimonyModalComponent } from './salvation-testimony';
 import { SignupModalComponent } from './signup';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    AlertModule,
-    Ng2ModalModule,
-    TypeaheadModule,
-    DragulaModule,
-  ],
+  imports: [SharedModule, AlertModule, Ng2ModalModule, TypeaheadModule, DragulaModule],
   declarations: [
     ModalHeaderComponent,
     ModalsComponent,
@@ -42,8 +36,6 @@ import { SignupModalComponent } from './signup';
     SalvationTestimonyModalComponent,
     SignupModalComponent,
   ],
-  exports: [
-    ModalsComponent,
-  ],
+  exports: [ModalsComponent],
 })
-export class ModalModule { }
+export class ModalModule {}

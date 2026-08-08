@@ -19,8 +19,6 @@ import { GroupComponent } from './group.component';
     SharedModule,
     GroupRoutingModule,
   ],
-  declarations: [
-    GroupComponent,
-  ],
+  declarations: [GroupComponent],
 })
-export class GroupModule { }
+export class GroupModule {}

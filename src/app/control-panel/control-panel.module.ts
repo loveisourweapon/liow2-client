@@ -39,4 +39,4 @@ import { ApproveGroupComponent } from './approve-group';
     ApproveGroupComponent,
   ],
 })
-export class ControlPanelModule { }
+export class ControlPanelModule {}

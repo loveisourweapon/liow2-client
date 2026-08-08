@@ -76,7 +76,7 @@ export class AuthService {
         }
 
         // Clear currentGroup if there are no non-archived groups
-        let currentGroup: string | undefined = undefined;
+        let currentGroup: string | undefined;
         // Attempt to find the users most recent non-archived group
         if (!authGroup && has(user, 'groups') && user.groups.length) {
           const nonArchivedGroups = user.groups.filter((group: Group) => !group.archived);

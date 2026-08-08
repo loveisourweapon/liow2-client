@@ -22,7 +22,10 @@ export class ActService {
   private readonly baseUrl = `${environment.apiBaseUrl}/acts`;
   private readonly salvationsUrl = `${environment.apiBaseUrl}/salvations`;
 
-  constructor(private http: JwtHttp, private state: StateService) {}
+  constructor(
+    private http: JwtHttp,
+    private state: StateService
+  ) {}
 
   count(query: CounterQuery = {}): void {
     console.info('ActService#count', 'query', query);

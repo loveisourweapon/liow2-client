@@ -9,9 +9,15 @@
     z-index: 10000;
   }
 
-  > .default { background: darken($brand-info, 10%); }
-  > .error { background: $brand-danger; }
-  > .success { background: $brand-success; }
+  > .default {
+    background: darken($brand-info, 10%);
+  }
+  > .error {
+    background: $brand-danger;
+  }
+  > .success {
+    background: $brand-success;
+  }
 
   .show,
   .hide {

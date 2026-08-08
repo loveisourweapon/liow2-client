@@ -8,14 +8,7 @@ import { ConfirmEmailComponent } from './confirm-email';
 import { ResetPasswordComponent } from './reset-password';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    UserRoutingModule,
-  ],
-  declarations: [
-    UserComponent,
-    ConfirmEmailComponent,
-    ResetPasswordComponent,
-  ],
+  imports: [SharedModule, UserRoutingModule],
+  declarations: [UserComponent, ConfirmEmailComponent, ResetPasswordComponent],
 })
-export class UserModule { }
+export class UserModule {}

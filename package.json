@@ -25,7 +25,9 @@
     "build:prod": "ng build --prod --aot",
     "test": "ng test",
     "test:prod": "ng test --single-run --browsers PhantomJS",
+    "test:ci": "ng test --single-run --browsers ChromeCI",
     "lint": "ng lint",
+    "typecheck": "tsc -p src/tsconfig.app.json --noEmit && tsc -p src/tsconfig.spec.json --noEmit && tsc -p e2e/tsconfig.e2e.json --noEmit",
     "e2e": "ng e2e",
     "coveralls": "coveralls",
     "config-env": "envsubst < src/environments/environment.prod.template.ts > src/environments/environment.prod.ts"

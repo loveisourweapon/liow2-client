@@ -5,6 +5,8 @@ import 'rxjs/add/observable/of';
 
 import {
   ActivatedRouteStubService,
+  AlertifyStubService,
+  AuthStubService,
   ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   GroupStubService,
@@ -14,7 +16,14 @@ import {
   RouterStubService,
   TitleStubService,
 } from '../../../testing';
-import { GroupService, StateService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  GroupService,
+  StateService,
+  TitleService,
+} from '../../core/services';
 import { MomentPipe } from '../../shared';
 import { GroupsComponent } from './groups.component';
 
@@ -26,26 +35,27 @@ describe(`GroupsComponent`, () => {
   let groupService: GroupService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GroupsComponent,
-          ControlPanelPaginationStubComponent,
-          ControlPanelSearchStubComponent,
-          MarkedStubComponent,
-          ModalStubDirective,
-          RouterLinkStubDirective,
-          MomentPipe,
-        ],
-        providers: [
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: GroupService, useClass: GroupStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupsComponent,
+        ControlPanelPaginationStubComponent,
+        ControlPanelSearchStubComponent,
+        MarkedStubComponent,
+        ModalStubDirective,
+        RouterLinkStubDirective,
+        MomentPipe,
+      ],
+      providers: [
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        EnvironmentService,
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

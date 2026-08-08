@@ -17,5 +17,8 @@ export class DeedListVerticalComponent {
 
   identifyBy = identifyBy;
 
-  constructor(public env: EnvironmentService, public state: StateService) {}
+  constructor(
+    public env: EnvironmentService,
+    public state: StateService
+  ) {}
 }

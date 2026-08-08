@@ -161,7 +161,8 @@
               </span>
             </div>
           </div>
-        </div><!-- .modal-body.isAuthenticated -->
+        </div>
+        <!-- .modal-body.isAuthenticated -->
 
         <div class="modal-body" [hidden]="isAuthenticated">
           <p>Please sign up or login to setup a new group</p>
@@ -174,7 +175,8 @@
               Login
             </button>
           </p>
-        </div><!-- .modal-body.!isAuthenticated -->
+        </div>
+        <!-- .modal-body.!isAuthenticated -->
 
         <div class="modal-footer">
           <button type="button" (click)="onClose()" class="btn btn-default">Cancel</button>
@@ -187,7 +189,8 @@
             <i class="fa fa-cog fa-spin" [hidden]="!(isSaving$ | async)"></i>
             {{ action }}
           </button>
-        </div><!-- .modal-footer -->
+        </div>
+        <!-- .modal-footer -->
       </form>
     </div>
   </div>

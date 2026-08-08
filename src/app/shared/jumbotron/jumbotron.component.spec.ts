@@ -6,15 +6,9 @@ import { JumbotronComponent } from './jumbotron.component';
 
 describe(`JumbotronComponent`, () => {
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          JumbotronComponent,
-          TestHost1Component,
-          TestHost2Component,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [JumbotronComponent, TestHost1Component, TestHost2Component],
+    }).compileComponents();
   }));
 
   describe(`without [jumbotron-content]`, () => {
@@ -46,7 +40,9 @@ describe(`JumbotronComponent`, () => {
 
     it(`should append all classes from input property to the .jumbotron element`, () => {
       const classList = element.nativeElement.classList;
-      testHost.classes.forEach((className: string) => expect(classList.contains(className)).toBe(true));
+      testHost.classes.forEach((className: string) =>
+        expect(classList.contains(className)).toBe(true)
+      );
     });
   });
 
@@ -76,12 +72,7 @@ describe(`JumbotronComponent`, () => {
 });
 
 @Component({
-  template: `
-    <liow-jumbotron
-      [background]="background"
-      [classes]="classes"
-    ></liow-jumbotron>
-  `,
+  template: ` <liow-jumbotron [background]="background" [classes]="classes"></liow-jumbotron> `,
 })
 class TestHost1Component {
   background = '/test/image/url.png';
@@ -97,4 +88,4 @@ class TestHost1Component {
     </liow-jumbotron>
   `,
 })
-class TestHost2Component { }
+class TestHost2Component {}
