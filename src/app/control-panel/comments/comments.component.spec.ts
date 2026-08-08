@@ -4,14 +4,24 @@ import { Observable } from 'rxjs/Observable';
 
 import {
   ActivatedRouteStubService,
+  AlertifyStubService,
+  AuthStubService,
   CommentStubService,
   ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   MarkedStubComponent,
+  ModalStubDirective,
   RouterStubService,
   TitleStubService,
 } from '../../../testing';
-import { CommentService, StateService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  CommentService,
+  EnvironmentService,
+  StateService,
+  TitleService,
+} from '../../core/services';
 import { MomentPipe } from '../../shared';
 import { CommentsComponent } from './comments.component';
 
@@ -23,24 +33,26 @@ describe(`CommentsComponent`, () => {
   let commentService: CommentService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          CommentsComponent,
-          ControlPanelPaginationStubComponent,
-          ControlPanelSearchStubComponent,
-          MarkedStubComponent,
-          MomentPipe,
-        ],
-        providers: [
-          { provide: CommentService, useClass: CommentStubService },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        CommentsComponent,
+        ControlPanelPaginationStubComponent,
+        ControlPanelSearchStubComponent,
+        MarkedStubComponent,
+        ModalStubDirective,
+        MomentPipe,
+      ],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: CommentService, useClass: CommentStubService },
+        EnvironmentService,
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

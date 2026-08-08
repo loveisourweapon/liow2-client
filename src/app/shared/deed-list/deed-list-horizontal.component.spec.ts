@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { RouterLinkStubDirective } from '../../../testing';
 import { Deed } from '../../core/models';
-import { StateService } from '../../core/services';
+import { EnvironmentService, StateService } from '../../core/services';
 import { DeedListHorizontalComponent } from './deed-list-horizontal.component';
 
 // TODO: create better tests that actually test the deed output
@@ -15,18 +15,10 @@ describe(`DeedListHorizontalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          DeedListHorizontalComponent,
-          TestHostComponent,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [DeedListHorizontalComponent, TestHostComponent, RouterLinkStubDirective],
+      providers: [EnvironmentService, StateService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -42,9 +34,7 @@ describe(`DeedListHorizontalComponent`, () => {
 });
 
 @Component({
-  template: `
-    <liow-deed-list-horizontal [deeds]="deeds"></liow-deed-list-horizontal>
-  `,
+  template: ` <liow-deed-list-horizontal [deeds]="deeds"></liow-deed-list-horizontal> `,
 })
 class TestHostComponent {
   deeds: Deed[] = [];

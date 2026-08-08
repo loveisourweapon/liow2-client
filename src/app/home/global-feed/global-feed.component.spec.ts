@@ -2,8 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { DeedListStubComponent, FeedStubComponent, JumbtronStubComponent, TitleStubService } from '../../../testing';
-import { TitleService } from '../../core/services';
+import {
+  DeedListStubComponent,
+  FeedStubComponent,
+  JumbtronStubComponent,
+  TitleStubService,
+} from '../../../testing';
+import { EnvironmentService, TitleService } from '../../core/services';
 import { GlobalFeedComponent } from './global-feed.component';
 
 describe(`GlobalFeedComponent`, () => {
@@ -12,19 +17,15 @@ describe(`GlobalFeedComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GlobalFeedComponent,
-          DeedListStubComponent,
-          FeedStubComponent,
-          JumbtronStubComponent,
-        ],
-        providers: [
-          { provide: TitleService, useClass: TitleStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GlobalFeedComponent,
+        DeedListStubComponent,
+        FeedStubComponent,
+        JumbtronStubComponent,
+      ],
+      providers: [EnvironmentService, { provide: TitleService, useClass: TitleStubService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

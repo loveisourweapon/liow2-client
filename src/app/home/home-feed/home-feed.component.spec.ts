@@ -1,8 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeedListStubComponent, FeedStubComponent, RouterLinkStubDirective } from '../../../testing';
+import {
+  DeedListStubComponent,
+  FeedStubComponent,
+  RouterLinkStubDirective,
+} from '../../../testing';
 import { Group } from '../../core/models';
-import { StateService } from '../../core/services';
+import { EnvironmentService, StateService } from '../../core/services';
 import { HomeFeedComponent } from './home-feed.component';
 
 describe(`HomeFeedComponent`, () => {
@@ -10,19 +14,15 @@ describe(`HomeFeedComponent`, () => {
   let component: HomeFeedComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          HomeFeedComponent,
-          DeedListStubComponent,
-          FeedStubComponent,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        HomeFeedComponent,
+        DeedListStubComponent,
+        FeedStubComponent,
+        RouterLinkStubDirective,
+      ],
+      providers: [EnvironmentService, StateService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

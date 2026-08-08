@@ -10,14 +10,9 @@ describe(`ModalHeaderComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ModalHeaderComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [ModalHeaderComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -45,5 +40,5 @@ describe(`ModalHeaderComponent`, () => {
 })
 class TestHostComponent {
   modalTitle = 'Test Modal';
-  onClose() { }
+  onClose() {}
 }

@@ -16,11 +16,7 @@ describe(`ActService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        ActService,
-        { provide: JwtHttp, useClass: HttpStubService },
-        StateService,
-      ],
+      providers: [ActService, { provide: JwtHttp, useClass: HttpStubService }, StateService],
     });
   });
 

@@ -10,14 +10,9 @@ describe(`LoadErrorComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          LoadErrorComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [LoadErrorComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,10 +35,7 @@ describe(`LoadErrorComponent`, () => {
 
 @Component({
   template: `
-    <ui-load-error
-      [message]="message"
-      (retry)="retryCount = retryCount + 1"
-    ></ui-load-error>
+    <ui-load-error [message]="message" (retry)="retryCount = retryCount + 1"></ui-load-error>
   `,
 })
 class TestHostComponent {

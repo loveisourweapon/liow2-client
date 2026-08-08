@@ -6,7 +6,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/first';
 
-import { AlertifyStubService, HttpStubService, Ng2AuthStubService, UserStubService } from '../../../testing';
+import {
+  AlertifyStubService,
+  HttpStubService,
+  Ng2AuthStubService,
+  UserStubService,
+} from '../../../testing';
 import { Credentials, Group, User } from '../models';
 import { AlertifyService } from './alertify.service';
 import { StateService } from './state.service';
@@ -44,9 +49,12 @@ describe(`AuthService`, () => {
   describe(`#authenticateEmail`, () => {
     it(`should throw if email and password not provided`, () => {
       const credentials = <Credentials>{};
-      service.authenticateEmail(credentials).subscribe(() => {}, error => {
-        expect(error.message).toBe(`Please provide email and password`);
-      });
+      service.authenticateEmail(credentials).subscribe(
+        () => {},
+        (error) => {
+          expect(error.message).toBe(`Please provide email and password`);
+        }
+      );
     });
 
     it(`should pass credentials through to Ng2AuthService.login then load current user`, () => {
@@ -60,7 +68,8 @@ describe(`AuthService`, () => {
       service.authenticateEmail(credentials).subscribe(() => {
         expect(authSpy).toHaveBeenCalledWith(credentials);
         expect(userSpy).toHaveBeenCalled();
-        state.auth.isAuthenticated$.first()
+        state.auth.isAuthenticated$
+          .first()
           .subscribe((isAuthenticated: boolean) => expect(isAuthenticated).toBe(true));
       });
     });
@@ -98,10 +107,8 @@ describe(`AuthService`, () => {
       const updateSpy = spyOn(userService, 'update').and.returnValue(Observable.of({}));
       service.loadCurrentUser().subscribe(() => {
         expect(updateSpy).toHaveBeenCalled();
-        state.auth.user$.first()
-          .subscribe((user: User) => expect(user).toBe(userWithGroups));
-        state.auth.group$.first()
-          .subscribe((group: Group) => expect(group).toBe(testGroup));
+        state.auth.user$.first().subscribe((user: User) => expect(user).toBe(userWithGroups));
+        state.auth.group$.first().subscribe((group: Group) => expect(group).toBe(testGroup));
       });
     });
   });
@@ -110,29 +117,37 @@ describe(`AuthService`, () => {
     const userId1 = 'abc123';
     const userId2 = 'def456';
 
-    beforeEach(() => state.auth.user = <User>{ _id: userId1 });
+    beforeEach(() => (state.auth.user = <User>{ _id: userId1 }));
 
     it(`should return false if authUser or group aren't set`, () => {
       state.auth.user = null;
-      service.isAdminOfGroup(null).first()
+      service
+        .isAdminOfGroup(null)
+        .first()
         .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(false));
     });
 
     it(`should return false if group has no admins`, () => {
       const group = <Group>{ admins: [] };
-      service.isAdminOfGroup(group).first()
+      service
+        .isAdminOfGroup(group)
+        .first()
         .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(false));
     });
 
     it(`should return false if group admins doesn't include authUser`, () => {
       const group = <Group>{ admins: [userId2] };
-      service.isAdminOfGroup(group).first()
+      service
+        .isAdminOfGroup(group)
+        .first()
         .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(false));
     });
 
     it(`should return true if group admins includes authUser`, () => {
       const group = <Group>{ admins: [userId1, userId2] };
-      service.isAdminOfGroup(group).first()
+      service
+        .isAdminOfGroup(group)
+        .first()
         .subscribe((isAdminOfGroup: boolean) => expect(isAdminOfGroup).toBe(true));
     });
   });
@@ -142,25 +157,33 @@ describe(`AuthService`, () => {
     const group2 = <Group>{ _id: 'def456' };
 
     it(`should return false if authUser or group aren't set`, () => {
-      service.isMemberOfGroup(null).first()
+      service
+        .isMemberOfGroup(null)
+        .first()
         .subscribe((isMemberOfGroup: boolean) => expect(isMemberOfGroup).toBe(false));
     });
 
     it(`should return false if authUser has no groups`, () => {
       state.auth.user = <User>{ groups: [] };
-      service.isMemberOfGroup(group1).first()
+      service
+        .isMemberOfGroup(group1)
+        .first()
         .subscribe((isMemberOfGroup: boolean) => expect(isMemberOfGroup).toBe(false));
     });
 
     it(`should return false if authUser groups doesn't include specified group`, () => {
       state.auth.user = <User>{ groups: [group1] };
-      service.isMemberOfGroup(group2).first()
+      service
+        .isMemberOfGroup(group2)
+        .first()
         .subscribe((isMemberOfGroup: boolean) => expect(isMemberOfGroup).toBe(false));
     });
 
     it(`should return true if authUser groups includes specified group`, () => {
       state.auth.user = <User>{ groups: [group1, group2] };
-      service.isMemberOfGroup(group2).first()
+      service
+        .isMemberOfGroup(group2)
+        .first()
         .subscribe((isMemberOfGroup: boolean) => expect(isMemberOfGroup).toBe(true));
     });
   });
@@ -230,12 +253,11 @@ describe(`AuthService`, () => {
       state.auth.group = <Group>{};
 
       service.logout();
-      state.auth.isAuthenticated$.first()
+      state.auth.isAuthenticated$
+        .first()
         .subscribe((isAuthenticated: boolean) => expect(isAuthenticated).toBe(false));
-      state.auth.user$.first()
-        .subscribe((user: User) => expect(user).toBeNull());
-      state.auth.group$.first()
-        .subscribe((group: Group) => expect(group).toBeNull());
+      state.auth.user$.first().subscribe((user: User) => expect(user).toBeNull());
+      state.auth.group$.first().subscribe((group: Group) => expect(group).toBeNull());
     });
 
     it(`should pass through to Ng2AuthService.logout`, () => {

@@ -104,6 +104,14 @@ export class NavbarSearchStubComponent {
 }
 
 @Component({
+  selector: 'ui-share-buttons',
+  template: ``,
+})
+export class ShareButtonsStubComponent {
+  @Input() classes: string[] = [];
+}
+
+@Component({
   selector: 'ui-switch',
   template: ``,
 })

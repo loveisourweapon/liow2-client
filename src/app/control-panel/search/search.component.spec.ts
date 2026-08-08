@@ -11,17 +11,10 @@ describe(`ControlPanelSearchComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ControlPanelSearchComponent,
-          TestHostComponent,
-        ],
-        imports: [
-          FormsModule,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [ControlPanelSearchComponent, TestHostComponent],
+      imports: [FormsModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,8 +27,7 @@ describe(`ControlPanelSearchComponent`, () => {
     const newQuery = 'test query';
     testHost.query = newQuery;
     fixture.detectChanges();
-    fixture.whenStable()
-      .then(() => expect(element.nativeElement.value).toBe(newQuery));
+    fixture.whenStable().then(() => expect(element.nativeElement.value).toBe(newQuery));
   });
 
   it(`should emit changed query value after a delay`, (done) => {
@@ -61,5 +53,7 @@ describe(`ControlPanelSearchComponent`, () => {
 })
 class TestHostComponent {
   query = '';
-  onSearch(newQuery: string) { this.query = newQuery; }
+  onSearch(newQuery: string) {
+    this.query = newQuery;
+  }
 }

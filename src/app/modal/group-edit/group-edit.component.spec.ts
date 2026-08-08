@@ -39,33 +39,29 @@ describe(`GroupEditModalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GroupEditModalComponent,
-          TestHostComponent,
-          KebabCasePipe,
-          AlertStubComponent,
-          MediumEditorStubComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-          SwitchStubComponent,
-          UserPickerStubComponent,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: GroupService, useClass: GroupStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupEditModalComponent,
+        TestHostComponent,
+        KebabCasePipe,
+        AlertStubComponent,
+        MediumEditorStubComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+        SwitchStubComponent,
+        UserPickerStubComponent,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -79,7 +75,6 @@ describe(`GroupEditModalComponent`, () => {
   it(`should create`, () => {
     expect(component).toBeTruthy();
   });
-
 });
 
 @Component({

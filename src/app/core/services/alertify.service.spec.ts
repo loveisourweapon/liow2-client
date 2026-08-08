@@ -8,9 +8,7 @@ describe(`AlertifyService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AlertifyService,
-      ],
+      providers: [AlertifyService],
     });
   });
 

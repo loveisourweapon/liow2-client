@@ -13,7 +13,13 @@ import {
   ModalStubService,
 } from '../../../testing';
 import { Group } from '../../core/models';
-import { AlertifyService, CampaignService, DeedService, ModalService, StateService } from '../../core/services';
+import {
+  AlertifyService,
+  CampaignService,
+  DeedService,
+  ModalService,
+  StateService,
+} from '../../core/services';
 import { ModalHeaderComponent } from '../modal-header.component';
 import { CampaignEditModalComponent } from './campaign-edit.component';
 
@@ -26,28 +32,23 @@ describe(`CampaignEditModalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          CampaignEditModalComponent,
-          TestHostComponent,
-          AlertStubComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-        ],
-        imports: [
-          DragulaModule,
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: CampaignService, useClass: CampaignStubService },
-          { provide: DeedService, useClass: DeedStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        CampaignEditModalComponent,
+        TestHostComponent,
+        AlertStubComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+      ],
+      imports: [DragulaModule, FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: CampaignService, useClass: CampaignStubService },
+        { provide: DeedService, useClass: DeedStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -64,11 +65,7 @@ describe(`CampaignEditModalComponent`, () => {
 });
 
 @Component({
-  template: `
-    <liow-campaign-edit-modal
-      [group]="group"
-    ></liow-campaign-edit-modal>
-  `,
+  template: ` <liow-campaign-edit-modal [group]="group"></liow-campaign-edit-modal> `,
 })
 class TestHostComponent {
   group = <Group>{ _id: 'abc123' };
