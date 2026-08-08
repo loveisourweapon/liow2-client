@@ -8,11 +8,12 @@
 FROM mhart/alpine-node:8
 
 # Alpine 3.6 ships Chromium 57, which predates --headless, so karma drives it
-# under Xvfb instead. It's the only browser option for this image -
-# phantomjs-prebuilt downloads a glibc binary that musl can't run.
-# eudev-libs provides the libudev that Chromium aborts without; dbus and the
-# font package quiet the rest of its startup requirements.
-RUN apk add --no-cache chromium xvfb ttf-freefont eudev-libs dbus
+# under Xvfb instead. It's the only browser option here - phantomjs-prebuilt
+# ships a glibc binary that musl can't load.
+#
+# Chromium aborts on startup without libudev (eudev-libs) or a font
+# (ttf-freefont), so both are required, not nice-to-haves.
+RUN apk add --no-cache chromium xvfb ttf-freefont eudev-libs
 
 ENV CHROME_BIN=/usr/bin/chromium-browser
 

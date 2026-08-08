@@ -45,9 +45,6 @@ jobs:
       # node-sass 4.5.3 only ships bindings for that ABI, and the Angular CLI
       # 1.2 toolchain around it is the same vintage. Dockerfile.ci also brings
       # its own browser, so this runs exactly what developers can run locally.
-      #
-      # Runners are amd64, so the Node 8 image runs natively here. The
-      # --platform pin is only needed on arm64 machines.
       - name: Build CI image
         run: docker build -f Dockerfile.ci -t liow2-client-ci .
 
