@@ -90,7 +90,7 @@
                     {{ statusLabels[statusOf(comment)] }}
                   </span>
                 </td>
-                <td>{{ comment?.created | moment : 'YYYY-MM-DD' }}</td>
+                <td>{{ comment?.created | moment: 'YYYY-MM-DD' }}</td>
                 <td>
                   <div dropdown placement="bottom right" class="btn-group dropdown">
                     <button type="button" dropdownToggle class="btn btn-default dropdown-toggle">
@@ -147,7 +147,7 @@
         <blockquote>
           <ui-marked [content]="rejectComment?.content?.text"></ui-marked>
           <footer class="m-t-sm">
-            {{ rejectComment?.user?.name }} ({{ rejectComment?.created | moment : 'YYYY-MM-DD' }})
+            {{ rejectComment?.user?.name }} ({{ rejectComment?.created | moment: 'YYYY-MM-DD' }})
           </footer>
         </blockquote>
         <p>
@@ -193,7 +193,7 @@
         <blockquote>
           <ui-marked [content]="removeComment?.content?.text"></ui-marked>
           <footer class="m-t-sm">
-            {{ removeComment?.user?.name }} ({{ removeComment?.created | moment : 'YYYY-MM-DD' }})
+            {{ removeComment?.user?.name }} ({{ removeComment?.created | moment: 'YYYY-MM-DD' }})
           </footer>
         </blockquote>
       </div>

@@ -6,7 +6,13 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/first';
 
-import { AlertifyService, AuthService, EnvironmentService, ModalService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  ModalService,
+  TitleService,
+} from '../../core/services';
 
 @Component({
   templateUrl: './reset-password.component.html',
@@ -29,28 +35,32 @@ export class ResetPasswordComponent implements OnInit {
     private modal: ModalService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: TitleService,
-  ) { }
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.route.params
       .filter((params: Params) => has(params, 'token'))
       .first()
-      .subscribe((params: Params) => this.token = params.token);
+      .subscribe((params: Params) => (this.token = params.token));
 
     this.title.set(`Reset Password`);
   }
 
   save(newPassword: string): void {
     this.isSaving$.next(true);
-    this.auth.resetPassword(newPassword, this.token)
+    this.auth
+      .resetPassword(newPassword, this.token)
       .finally(() => this.router.navigate(['/']))
       .subscribe(
         () => {
           this.alertify.success(`Password reset`);
           this.modal.openLogin();
         },
-        () => this.alertify.error(`Invalid or expired password reset link. Please try again or contact us`),
+        () =>
+          this.alertify.error(
+            `Invalid or expired password reset link. Please try again or contact us`
+          )
       );
   }
 }

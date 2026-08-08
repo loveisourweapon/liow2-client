@@ -7,7 +7,13 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { AlertifyService, AuthService, EnvironmentService, GroupService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  GroupService,
+  TitleService,
+} from '../../core/services';
 
 @Component({
   templateUrl: './approve-group.component.html',

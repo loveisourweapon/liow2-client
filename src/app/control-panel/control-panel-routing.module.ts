@@ -37,11 +37,7 @@ const controlPanelRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(controlPanelRoutes),
-  ],
-  exports: [
-    RouterModule,
-  ],
+  imports: [RouterModule.forChild(controlPanelRoutes)],
+  exports: [RouterModule],
 })
-export class ControlPanelRoutingModule { }
+export class ControlPanelRoutingModule {}

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { assign, has } from 'lodash';
@@ -65,8 +72,8 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
     private deedService: DeedService,
     private dragula: DragulaService,
     public modalService: ModalService,
-    private state: StateService,
-  ) { }
+    private state: StateService
+  ) {}
 
   ngOnInit(): void {
     this.dragula.dropModel.subscribe(() => {
@@ -74,24 +81,23 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
       this.campaignDeeds$.next(this.selectedDeeds);
     });
 
-    this.stateSubscription = this.state.modal.campaignEdit$
-      .subscribe((state: ModalState) => {
-        if (state.isOpen && !this.modal.isShown) {
-          this.reset();
-          this.initDeeds();
-          this.modal.show();
-        } else if (!state.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.campaignEdit$.subscribe((state: ModalState) => {
+      if (state.isOpen && !this.modal.isShown) {
+        this.reset();
+        this.initDeeds();
+        this.modal.show();
+      } else if (!state.isOpen && this.modal.isShown) {
+        this.modal.hide();
+      }
 
-        const options = <CampaignEditModalOptions>state.options;
-        this.action = has(options, 'action') ? options.action : EditAction.Create;
-        this.campaign = has(options, 'campaign') ? options.campaign : null;
+      const options = <CampaignEditModalOptions>state.options;
+      this.action = has(options, 'action') ? options.action : EditAction.Create;
+      this.campaign = has(options, 'campaign') ? options.campaign : null;
 
-        const campaignDeeds = (this.campaign) ? options.campaign.deeds : [];
-        this.campaignDeeds$.next(campaignDeeds);
-        this.selectedDeeds = <DeedPublish[]>[...campaignDeeds];
-      });
+      const campaignDeeds = this.campaign ? options.campaign.deeds : [];
+      this.campaignDeeds$.next(campaignDeeds);
+      this.selectedDeeds = <DeedPublish[]>[...campaignDeeds];
+    });
   }
 
   ngOnDestroy(): void {
@@ -106,9 +112,12 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
       .first()
       .filter((deeds: DeedPublish[]) => deeds.length > 0)
       .do(() => this.isSaving$.next(true))
-      .map((deeds: DeedPublish[]) => deeds.map((item: DeedPublish) => assign({}, item, { deed: item.deed['_id'] })))
+      .map((deeds: DeedPublish[]) =>
+        deeds.map((item: DeedPublish) => assign({}, item, { deed: item.deed['_id'] }))
+      )
       .switchMap((deeds: DeedPublish[]) => {
-        const campaignToSave: Campaign|NewCampaign = campaign || <NewCampaign>{ group: group._id };
+        const campaignToSave: Campaign | NewCampaign =
+          campaign || <NewCampaign>{ group: group._id };
         campaignToSave.deeds = deeds;
         return this.campaignService.save(campaignToSave);
       })
@@ -122,7 +131,7 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
           this.alertify.success(`${this.action}d campaign`);
           this.onClose();
         },
-        (error: ApiError) => this.errorMessage = error.message,
+        (error: ApiError) => (this.errorMessage = error.message)
       );
   }
 
@@ -131,11 +140,14 @@ export class CampaignEditModalComponent implements OnInit, OnDestroy {
   }
 
   private initDeeds(): void {
-    this.deedService.find()
+    this.deedService
+      .find()
       .map((deeds: Deed[]) => deeds.map((deed: Deed) => <DeedPublish>{ deed }))
       .subscribe((deeds: DeedPublish[]) => {
         const selectedDeedIds = this.selectedDeeds.map((item: DeedPublish) => item.deed['_id']);
-        const remainingDeeds = deeds.filter((item: DeedPublish) => selectedDeedIds.indexOf(item.deed['_id']) === -1);
+        const remainingDeeds = deeds.filter(
+          (item: DeedPublish) => selectedDeedIds.indexOf(item.deed['_id']) === -1
+        );
 
         this.deeds$.next(remainingDeeds);
         this.availableDeeds = [...remainingDeeds];

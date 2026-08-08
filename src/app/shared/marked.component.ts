@@ -13,13 +13,12 @@ export class MarkedComponent implements OnChanges {
 
   htmlContent: SafeHtml;
 
-  constructor(
-    private sanitizer: DomSanitizer,
-  ) { }
+  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.htmlContent = has(changes, 'content.currentValue') && changes['content'].currentValue ?
-      this.sanitizer.bypassSecurityTrustHtml(marked(this.content)) :
-      '';
+    this.htmlContent =
+      has(changes, 'content.currentValue') && changes['content'].currentValue
+        ? this.sanitizer.bypassSecurityTrustHtml(marked(this.content))
+        : '';
   }
 }

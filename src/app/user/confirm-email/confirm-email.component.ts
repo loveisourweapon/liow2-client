@@ -7,7 +7,12 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { AlertifyService, AuthService, EnvironmentService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  TitleService,
+} from '../../core/services';
 
 @Component({
   templateUrl: './confirm-email.component.html',
@@ -20,8 +25,8 @@ export class ConfirmEmailComponent implements OnInit {
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: TitleService,
-  ) { }
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.route.params
@@ -31,7 +36,7 @@ export class ConfirmEmailComponent implements OnInit {
       .finally(() => this.router.navigate(['/']))
       .subscribe(
         () => this.alertify.success(`Confirmed email address`),
-        () => this.alertify.error(`Failed confirming email address`),
+        () => this.alertify.error(`Failed confirming email address`)
       );
 
     this.title.set(`Confirming Email Address`);

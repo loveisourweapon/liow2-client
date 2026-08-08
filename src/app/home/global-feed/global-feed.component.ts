@@ -7,7 +7,10 @@ import { EnvironmentService, StateService, TitleService } from '../../core/servi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalFeedComponent implements OnInit {
-  constructor(public env: EnvironmentService, private title: TitleService) {}
+  constructor(
+    public env: EnvironmentService,
+    private title: TitleService
+  ) {}
 
   ngOnInit(): void {
     this.title.set(`Global Activity Feed`);

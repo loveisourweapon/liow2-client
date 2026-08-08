@@ -8,7 +8,5 @@ import { StateService } from '../core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalsComponent {
-  constructor(
-    public state: StateService,
-  ) { }
+  constructor(public state: StateService) {}
 }

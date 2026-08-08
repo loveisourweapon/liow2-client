@@ -1,0 +1,6 @@
+yarn.lock
+dist
+out-tsc
+coverage
+node_modules
+src/images
