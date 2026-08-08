@@ -2,7 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AlertifyService, AuthService, ModalService, TitleService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  ModalService,
+  TitleService,
+} from '../../core/services';
 import { SameAsValidatorDirective } from '../../shared';
 import {
   AlertifyStubService,
@@ -22,26 +28,19 @@ describe(`ResetPasswordComponent`, () => {
   let component: ResetPasswordComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ResetPasswordComponent,
-          JumbtronStubComponent,
-          SameAsValidatorDirective,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          { provide: Router, useClass: RouterStubService },
-          { provide: TitleService, useClass: TitleStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [ResetPasswordComponent, JumbtronStubComponent, SameAsValidatorDirective],
+      imports: [FormsModule],
+      providers: [
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        { provide: ModalService, useClass: ModalStubService },
+        { provide: Router, useClass: RouterStubService },
+        { provide: TitleService, useClass: TitleStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

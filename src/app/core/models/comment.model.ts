@@ -33,10 +33,10 @@ export interface NewComment {
   _id?: CommentId;
   group?: GroupId;
   target: {
-    group?: GroupId,
-    deed?: DeedId,
-    act?: ActId,
-    comment?: CommentId,
+    group?: GroupId;
+    deed?: DeedId;
+    act?: ActId;
+    comment?: CommentId;
   };
   content: {
     text: string;

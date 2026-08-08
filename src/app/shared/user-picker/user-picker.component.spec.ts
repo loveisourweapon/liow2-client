@@ -13,13 +13,8 @@ describe(`UserPickerComponent`, () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        UserPickerComponent,
-        TestHostComponent,
-        ModalStubDirective,
-      ],
-    })
-    .compileComponents();
+      declarations: [UserPickerComponent, TestHostComponent, ModalStubDirective],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

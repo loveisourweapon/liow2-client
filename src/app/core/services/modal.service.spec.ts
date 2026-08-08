@@ -11,10 +11,7 @@ describe(`ModalService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        ModalService,
-        StateService
-      ],
+      providers: [ModalService, StateService],
     });
   });
 
@@ -26,7 +23,8 @@ describe(`ModalService`, () => {
   describe(`#openCampaignEdit`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openCampaignEdit();
-      state.modal.campaignEdit$.first()
+      state.modal.campaignEdit$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
@@ -46,7 +44,8 @@ describe(`ModalService`, () => {
 
     it(`should set modal isOpen property to true`, () => {
       service.openChangePassword(user);
-      state.modal.changePassword$.first()
+      state.modal.changePassword$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
@@ -63,7 +62,8 @@ describe(`ModalService`, () => {
 
     it(`should set modal isOpen property to true`, () => {
       service.openDeedPreview(deed);
-      state.modal.deedPreview$.first()
+      state.modal.deedPreview$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
@@ -78,22 +78,27 @@ describe(`ModalService`, () => {
   describe(`#openForgotPassword`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openForgotPassword();
-      state.modal.forgotPassword$.first()
+      state.modal.forgotPassword$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
     it(`should set optional initial emailAddress property`, () => {
       const emailAddress = 'test@example.com';
       service.openForgotPassword(emailAddress);
-      state.modal.forgotPassword$.first()
-        .subscribe((modalState: ModalState) => expect(modalState.options.emailAddress).toBe(emailAddress));
+      state.modal.forgotPassword$
+        .first()
+        .subscribe((modalState: ModalState) =>
+          expect(modalState.options.emailAddress).toBe(emailAddress)
+        );
     });
   });
 
   describe(`#openGroupEdit`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openGroupEdit();
-      state.modal.groupEdit$.first()
+      state.modal.groupEdit$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
@@ -111,7 +116,8 @@ describe(`ModalService`, () => {
   describe(`#openGroupJoin`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openGroupJoin();
-      state.modal.groupJoin$.first()
+      state.modal.groupJoin$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
   });
@@ -119,30 +125,38 @@ describe(`ModalService`, () => {
   describe(`#openLogin`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openLogin();
-      state.modal.login$.first()
+      state.modal.login$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
     it(`should set optional initial canSwitch property`, () => {
       const canSwitch = false;
       service.openLogin(canSwitch);
-      state.modal.login$.first()
-        .subscribe((modalState: ModalState) => expect(modalState.options.canSwitch).toBe(canSwitch));
+      state.modal.login$
+        .first()
+        .subscribe((modalState: ModalState) =>
+          expect(modalState.options.canSwitch).toBe(canSwitch)
+        );
     });
   });
 
   describe(`#openSignup`, () => {
     it(`should set modal isOpen property to true`, () => {
       service.openSignup();
-      state.modal.signup$.first()
+      state.modal.signup$
+        .first()
         .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(true));
     });
 
     it(`should set optional initial canSwitch property`, () => {
       const canSwitch = false;
       service.openSignup(canSwitch);
-      state.modal.signup$.first()
-        .subscribe((modalState: ModalState) => expect(modalState.options.canSwitch).toBe(canSwitch));
+      state.modal.signup$
+        .first()
+        .subscribe((modalState: ModalState) =>
+          expect(modalState.options.canSwitch).toBe(canSwitch)
+        );
     });
   });
 });

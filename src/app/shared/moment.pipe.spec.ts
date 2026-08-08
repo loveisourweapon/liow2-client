@@ -17,12 +17,9 @@ describe(`MomentPipe`, () => {
   });
 
   it(`should format the provided date using the provided format specification`, () => {
-    const testCases = [
-      'ddd, D MMM YYYY [at] HH:mm',
-      'ddd, hA',
-    ];
+    const testCases = ['ddd, D MMM YYYY [at] HH:mm', 'ddd, hA'];
 
-    testCases.forEach(testCase => {
+    testCases.forEach((testCase) => {
       const result = pipe.transform(date, testCase);
       expect(result).toBe(moment(date).format(testCase));
     });

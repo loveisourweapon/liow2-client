@@ -13,6 +13,7 @@ import {
   JumbtronStubComponent,
   LoadErrorStubComponent,
   MarkedStubComponent,
+  ShareButtonsStubComponent,
   MetaStubService,
   ModalStubService,
   TitleStubService,
@@ -47,6 +48,7 @@ describe(`DeedComponent`, () => {
         JumbtronStubComponent,
         LoadErrorStubComponent,
         MarkedStubComponent,
+        ShareButtonsStubComponent,
         EmbedPlayerStubComponent,
       ],
       providers: [

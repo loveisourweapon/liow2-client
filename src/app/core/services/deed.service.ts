@@ -15,7 +15,10 @@ import { StateService } from './state.service';
 export class DeedService {
   private readonly baseUrl = `${environment.apiBaseUrl}/deeds`;
 
-  constructor(private http: JwtHttp, private state: StateService) {}
+  constructor(
+    private http: JwtHttp,
+    private state: StateService
+  ) {}
 
   find(params: SearchParams = {}): Observable<Deed[]> {
     console.info('DeedService#find', 'params', params);

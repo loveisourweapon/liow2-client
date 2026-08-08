@@ -1,6 +1,6 @@
 import { Liow2ClientPage } from './app.po';
 
-describe('liow2-client App', function() {
+describe('liow2-client App', function () {
   let page: Liow2ClientPage;
 
   beforeEach(() => {

@@ -23,25 +23,23 @@ describe(`DeedsComponent`, () => {
   let component: DeedsComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          DeedsComponent,
-          LastPipe,
-          IconCheckedStubComponent,
-          DropdownStubDirective,
-          DropdownMenuStubDirective,
-          DropdownToggleStubDirective,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          { provide: DeedService, useClass: DeedStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        DeedsComponent,
+        LastPipe,
+        IconCheckedStubComponent,
+        DropdownStubDirective,
+        DropdownMenuStubDirective,
+        DropdownToggleStubDirective,
+        RouterLinkStubDirective,
+      ],
+      providers: [
+        { provide: DeedService, useClass: DeedStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

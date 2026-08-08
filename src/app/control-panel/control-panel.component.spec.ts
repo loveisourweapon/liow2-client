@@ -15,21 +15,15 @@ describe(`ControlPanelComponent`, () => {
   let fixture: ComponentFixture<ControlPanelComponent>;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ControlPanelComponent,
-          RouterLinkStubDirective,
-          RouterOutletStubComponent
-        ],
-        providers: [
-          { provide: CommentService, useClass: CommentStubService },
-          EnvironmentService,
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [ControlPanelComponent, RouterLinkStubDirective, RouterOutletStubComponent],
+      providers: [
+        { provide: CommentService, useClass: CommentStubService },
+        EnvironmentService,
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

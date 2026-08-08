@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'ui-switch',
@@ -19,22 +26,18 @@ export class SwitchComponent {
   borderColor = '#dfdfdf';
 
   getHandleColor(): string {
-    return this.checked
-      ? this.handleColor
-      : (this.handleOffColor || this.handleColor)
-      ;
+    return this.checked ? this.handleColor : this.handleOffColor || this.handleColor;
   }
 
   getBackgroundColor(): string {
-    return this.checked
-      ? this.color
-      : this.backgroundOffColor
-      ;
+    return this.checked ? this.color : this.backgroundOffColor;
   }
 
   @HostListener('click')
   onToggle() {
-    if (this.disabled) { return; }
+    if (this.disabled) {
+      return;
+    }
     this.change.emit(!this.checked);
   }
 }

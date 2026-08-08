@@ -16,10 +16,10 @@ export interface Campaign {
 export interface NewCampaign {
   _id?: CampaignId;
   group: GroupId;
-  deeds: Array<DeedPublish|DeedId>;
+  deeds: Array<DeedPublish | DeedId>;
 }
 
 export interface DeedPublish {
-  deed: Deed|DeedId;
+  deed: Deed | DeedId;
   published?: boolean;
 }

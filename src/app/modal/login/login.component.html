@@ -108,14 +108,16 @@
               Sign up now
             </button>
           </p>
-        </div><!-- .modal-body -->
+        </div>
+        <!-- .modal-body -->
 
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoggingIn$ | async">
             <i class="fa fa-fw fa-cog fa-spin" [hidden]="!(isLoggingIn$ | async)"></i>
             Login
           </button>
-        </div><!-- .modal-footer -->
+        </div>
+        <!-- .modal-footer -->
       </form>
     </div>
   </div>

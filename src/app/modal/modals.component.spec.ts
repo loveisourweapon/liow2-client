@@ -11,24 +11,22 @@ describe(`ModalsComponent`, () => {
   let component: ModalsComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ModalsComponent,
-          CampaignEditModalStubComponent,
-          ChangePasswordModalStubComponent,
-          DeedPreviewModalStubComponent,
-          ForgotPasswordModalStubComponent,
-          GroupEditModalStubComponent,
-          GroupJoinModalStubComponent,
-          LoginModalStubComponent,
-          SignupModalStubComponent,
-        ],
-        providers: [
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        ModalsComponent,
+        BulkDeedsModalStubComponent,
+        CampaignEditModalStubComponent,
+        ChangePasswordModalStubComponent,
+        DeedPreviewModalStubComponent,
+        ForgotPasswordModalStubComponent,
+        GroupEditModalStubComponent,
+        GroupJoinModalStubComponent,
+        LoginModalStubComponent,
+        SalvationTestimonyModalStubComponent,
+        SignupModalStubComponent,
+      ],
+      providers: [StateService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -43,6 +41,12 @@ describe(`ModalsComponent`, () => {
 });
 
 @Component({
+  selector: 'liow-bulk-deeds-modal',
+  template: ``,
+})
+class BulkDeedsModalStubComponent {}
+
+@Component({
   selector: 'liow-campaign-edit-modal',
   template: ``,
 })
@@ -54,19 +58,19 @@ class CampaignEditModalStubComponent {
   selector: 'liow-change-password-modal',
   template: ``,
 })
-class ChangePasswordModalStubComponent { }
+class ChangePasswordModalStubComponent {}
 
 @Component({
   selector: 'liow-deed-preview-modal',
   template: ``,
 })
-class DeedPreviewModalStubComponent { }
+class DeedPreviewModalStubComponent {}
 
 @Component({
   selector: 'liow-forgot-password-modal',
   template: ``,
 })
-class ForgotPasswordModalStubComponent { }
+class ForgotPasswordModalStubComponent {}
 
 @Component({
   selector: 'liow-group-edit-modal',
@@ -81,7 +85,7 @@ class GroupEditModalStubComponent {
   selector: 'liow-group-join-modal',
   template: ``,
 })
-class GroupJoinModalStubComponent { }
+class GroupJoinModalStubComponent {}
 
 @Component({
   selector: 'liow-login-modal',
@@ -90,6 +94,12 @@ class GroupJoinModalStubComponent { }
 class LoginModalStubComponent {
   @Input() group: any;
 }
+
+@Component({
+  selector: 'liow-salvation-testimony-modal',
+  template: ``,
+})
+class SalvationTestimonyModalStubComponent {}
 
 @Component({
   selector: 'liow-signup-modal',

@@ -25,8 +25,8 @@ export class DeedPreviewModalComponent implements OnInit {
   constructor(
     private actService: ActService,
     private deedService: DeedService,
-    public state: StateService,
-  ) { }
+    public state: StateService
+  ) {}
 
   ngOnInit(): void {
     this.deed$ = this.state.modal.deedPreview$
@@ -40,9 +40,12 @@ export class DeedPreviewModalComponent implements OnInit {
         const options = <DeedPreviewModalOptions>state.options;
         return has(options, 'deed') ? options.deed : {};
       })
-      .switchMap((deed?: Deed) => this.deedService.findOne({ _id: deed._id })
-        .do(() => this.actService.count({ deed: deed._id }))
-        .catch(() => Observable.of(null)));
+      .switchMap((deed?: Deed) =>
+        this.deedService
+          .findOne({ _id: deed._id })
+          .do(() => this.actService.count({ deed: deed._id }))
+          .catch(() => Observable.of(null))
+      );
   }
 
   onClose(): void {

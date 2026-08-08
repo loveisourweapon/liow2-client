@@ -26,7 +26,7 @@ describe(`FromNowPipe`, () => {
       { input: moment().add(1, 'day').toDate(), expected: 'in a day' },
     ];
 
-    testCases.forEach(testCase => {
+    testCases.forEach((testCase) => {
       const result = pipe.transform(testCase.input);
       expect(result).toBe(testCase.expected);
     });

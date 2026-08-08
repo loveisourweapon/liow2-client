@@ -7,6 +7,7 @@ import {
   AuthStubService,
   IconCheckedStubComponent,
   ModalStubService,
+  SwitchStubComponent,
   TitleStubService,
   UserStubService,
 } from '../../../testing';
@@ -14,6 +15,7 @@ import {
   ActService,
   AlertifyService,
   AuthService,
+  EnvironmentService,
   ModalService,
   StateService,
   TitleService,
@@ -29,27 +31,20 @@ describe(`UserComponent`, () => {
   let fixture: ComponentFixture<UserComponent>;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          UserComponent,
-          MomentPipe,
-          IconCheckedStubComponent,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [UserComponent, MomentPipe, IconCheckedStubComponent, SwitchStubComponent],
+      imports: [FormsModule],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

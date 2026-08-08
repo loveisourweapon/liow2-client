@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { find, has, isEqual } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -26,11 +34,14 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
 
   constructor(
     private deedService: DeedService,
-    private state: StateService,
-  ) { }
+    private state: StateService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (has(changes, 'campaign') && !isEqual(changes.campaign.currentValue, changes.campaign.previousValue)) {
+    if (
+      has(changes, 'campaign') &&
+      !isEqual(changes.campaign.currentValue, changes.campaign.previousValue)
+    ) {
       this.loadDeeds();
     }
   }
@@ -40,19 +51,18 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
 
     this.groupSubscription = Observable.combineLatest(
       this.state.auth.group$,
-      this.state.auth.campaign$,
-    )
-      .subscribe(([group, campaign]: [Group, Campaign]) => {
-        const queryParams: SearchParams = {};
-        if (!this.isGlobal) {
-          if (campaign) {
-            queryParams.campaign = campaign._id;
-          } else if (group) {
-            queryParams.group = group._id;
-          }
+      this.state.auth.campaign$
+    ).subscribe(([group, campaign]: [Group, Campaign]) => {
+      const queryParams: SearchParams = {};
+      if (!this.isGlobal) {
+        if (campaign) {
+          queryParams.campaign = campaign._id;
+        } else if (group) {
+          queryParams.group = group._id;
         }
-        this.deedService.countAll(queryParams);
-      });
+      }
+      this.deedService.countAll(queryParams);
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,9 +70,12 @@ export class DeedListComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private loadDeeds(): void {
-    this.deeds$ = this.deedService.find()
-      .map((deeds: Deed[]) => this.campaign
-        ? this.campaign.deeds.map((item: DeedPublish) => find(deeds, { _id: item.deed['_id'] }))
-        : deeds);
+    this.deeds$ = this.deedService
+      .find()
+      .map((deeds: Deed[]) =>
+        this.campaign
+          ? this.campaign.deeds.map((item: DeedPublish) => find(deeds, { _id: item.deed['_id'] }))
+          : deeds
+      );
   }
 }

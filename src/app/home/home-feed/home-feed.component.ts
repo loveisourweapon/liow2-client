@@ -13,7 +13,10 @@ import { identifyBy } from '../../shared';
 export class HomeFeedComponent {
   identifyBy = identifyBy;
 
-  constructor(public env: EnvironmentService, public state: StateService) {}
+  constructor(
+    public env: EnvironmentService,
+    public state: StateService
+  ) {}
 
   listGroupIds(groups: Group[]): string | null {
     return groups && groups.length ? groups.map((group: Group) => group._id).join(',') : null;

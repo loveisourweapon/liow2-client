@@ -35,30 +35,26 @@ describe(`GroupJoinModalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GroupJoinModalComponent,
-          TestHostComponent,
-          AlertStubComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-          TypeaheadStubDirective,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: GroupService, useClass: GroupStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupJoinModalComponent,
+        TestHostComponent,
+        AlertStubComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+        TypeaheadStubDirective,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -77,4 +73,4 @@ describe(`GroupJoinModalComponent`, () => {
 @Component({
   template: `<liow-group-join-modal></liow-group-join-modal>`,
 })
-class TestHostComponent { }
+class TestHostComponent {}

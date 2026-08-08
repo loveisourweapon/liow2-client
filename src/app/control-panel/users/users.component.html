@@ -43,8 +43,8 @@
                 </td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.created | moment : 'YYYY-MM-DD' }}</td>
-                <td>{{ user.lastSeen | moment : 'YYYY-MM-DD' }}</td>
+                <td>{{ user.created | moment: 'YYYY-MM-DD' }}</td>
+                <td>{{ user.lastSeen | moment: 'YYYY-MM-DD' }}</td>
                 <td class="text-center">
                   <ui-icon-checked [isChecked]="user.confirmed"></ui-icon-checked>
                 </td>

@@ -27,8 +27,8 @@ export class ControlPanelComponent implements OnInit, OnDestroy {
     private commentService: CommentService,
     public env: EnvironmentService,
     private router: Router,
-    public state: StateService,
-  ) { }
+    public state: StateService
+  ) {}
 
   ngOnInit(): void {
     // Get active page from router

@@ -3,16 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GroupComponent } from './group.component';
 
-const groupRoutes: Routes = [
-  { path: 'g/:groupSlug', component: GroupComponent },
-];
+const groupRoutes: Routes = [{ path: 'g/:groupSlug', component: GroupComponent }];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(groupRoutes),
-  ],
-  exports: [
-    RouterModule,
-  ],
+  imports: [RouterModule.forChild(groupRoutes)],
+  exports: [RouterModule],
 })
-export class GroupRoutingModule { }
+export class GroupRoutingModule {}

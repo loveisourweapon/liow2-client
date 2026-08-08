@@ -4,14 +4,24 @@ import { Observable } from 'rxjs/Observable';
 
 import {
   ActivatedRouteStubService,
+  AlertifyStubService,
+  AuthStubService,
   ControlPanelPaginationStubComponent,
   ControlPanelSearchStubComponent,
   IconCheckedStubComponent,
+  ModalStubDirective,
   RouterStubService,
   TitleStubService,
   UserStubService,
 } from '../../../testing';
-import { StateService, TitleService, UserService } from '../../core/services';
+import {
+  AlertifyService,
+  AuthService,
+  EnvironmentService,
+  StateService,
+  TitleService,
+  UserService,
+} from '../../core/services';
 import { MomentPipe } from '../../shared';
 import { UsersComponent } from './users.component';
 
@@ -23,24 +33,26 @@ describe(`UsersComponent`, () => {
   let userService: UserService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          UsersComponent,
-          ControlPanelPaginationStubComponent,
-          ControlPanelSearchStubComponent,
-          IconCheckedStubComponent,
-          MomentPipe,
-        ],
-        providers: [
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        UsersComponent,
+        ControlPanelPaginationStubComponent,
+        ControlPanelSearchStubComponent,
+        IconCheckedStubComponent,
+        ModalStubDirective,
+        MomentPipe,
+      ],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        EnvironmentService,
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

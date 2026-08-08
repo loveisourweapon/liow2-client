@@ -1,7 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeedListStubComponent, GroupStubService, ModalStubDirective, UserStubService } from '../../../testing';
-import { GroupService, ModalService, StateService, UserService } from '../../core/services';
+import {
+  DeedListStubComponent,
+  GroupStubService,
+  ModalStubDirective,
+  UserStubService,
+} from '../../../testing';
+import {
+  EnvironmentService,
+  GroupService,
+  ModalService,
+  StateService,
+  UserService,
+} from '../../core/services';
 import { WelcomeComponent } from './welcome.component';
 
 // TODO: add proper tests
@@ -11,20 +22,16 @@ describe(`WelcomeComponent`, () => {
   let component: WelcomeComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          WelcomeComponent,
-          DeedListStubComponent,
-        ],
-        providers: [
-          { provide: GroupService, useClass: GroupStubService },
-          { provide: ModalService, useClass: ModalStubDirective },
-          StateService,
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [WelcomeComponent, DeedListStubComponent],
+      providers: [
+        EnvironmentService,
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: ModalService, useClass: ModalStubDirective },
+        StateService,
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,25 +18,21 @@ describe(`ChangePasswordModalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ChangePasswordModalComponent,
-          TestHostComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-          SameAsValidatorDirective,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          StateService,
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        ChangePasswordModalComponent,
+        TestHostComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+        SameAsValidatorDirective,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        StateService,
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -55,4 +51,4 @@ describe(`ChangePasswordModalComponent`, () => {
 @Component({
   template: `<liow-change-password-modal></liow-change-password-modal>`,
 })
-class TestHostComponent { }
+class TestHostComponent {}

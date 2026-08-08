@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { RouterLinkStubDirective } from '../../../testing';
 import { Deed } from '../../core/models';
-import { StateService } from '../../core/services';
+import { EnvironmentService, StateService } from '../../core/services';
 import { DeedListVerticalComponent } from './deed-list-vertical.component';
 
 // TODO: create better tests that actually test the deed output
@@ -15,18 +15,10 @@ describe(`DeedListVerticalComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          DeedListVerticalComponent,
-          TestHostComponent,
-          RouterLinkStubDirective,
-        ],
-        providers: [
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [DeedListVerticalComponent, TestHostComponent, RouterLinkStubDirective],
+      providers: [EnvironmentService, StateService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -42,9 +34,7 @@ describe(`DeedListVerticalComponent`, () => {
 });
 
 @Component({
-  template: `
-    <liow-deed-list-vertical [deeds]="deeds"></liow-deed-list-vertical>
-  `,
+  template: ` <liow-deed-list-vertical [deeds]="deeds"></liow-deed-list-vertical> `,
 })
 class TestHostComponent {
   deeds: Deed[] = [];

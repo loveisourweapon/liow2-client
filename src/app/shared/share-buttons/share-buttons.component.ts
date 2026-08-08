@@ -16,10 +16,13 @@ import { DOCUMENT } from '@angular/platform-browser';
 export class ShareButtonsComponent implements AfterViewInit {
   @Input() classes: string[] = [];
 
-  constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document: any) {}
+  constructor(
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: any
+  ) {}
 
   ngAfterViewInit(): void {
-    let script = this.renderer.createElement('script');
+    const script = this.renderer.createElement('script');
     script.type = 'text/javascript';
     script.src = 'https://static.addtoany.com/menu/page.js';
     script.async = true;

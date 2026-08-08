@@ -28,30 +28,39 @@ export class NavbarSearchComponent implements OnInit {
   constructor(
     private deedService: DeedService,
     private groupService: GroupService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.searchResults$ = this.searchQuery$
       .debounceTime(200)
       .filter((searchQuery: string) => searchQuery.length >= 2)
-      .switchMap((searchQuery: string) => Observable.combineLatest(
-        this.deedService.find({ query: searchQuery, fields: '_id,title,urlTitle' }),
-        this.groupService.find({ query: searchQuery, fields: '_id,name,urlName' }),
-      )
-        .map(([deeds, groups]: [Deed[], Group[]]) => {
-          const deedResults = deeds.map((deed: Deed) =>
-            ({ id: deed.urlTitle, name: deed.title, type: SearchItemType.Deed }));
-          const groupResults = groups.map((group: Group) =>
-            ({ id: group.urlName, name: group.name, type: SearchItemType.Group }));
+      .switchMap((searchQuery: string) =>
+        Observable.combineLatest(
+          this.deedService.find({ query: searchQuery, fields: '_id,title,urlTitle' }),
+          this.groupService.find({ query: searchQuery, fields: '_id,name,urlName' })
+        ).map(([deeds, groups]: [Deed[], Group[]]) => {
+          const deedResults = deeds.map((deed: Deed) => ({
+            id: deed.urlTitle,
+            name: deed.title,
+            type: SearchItemType.Deed,
+          }));
+          const groupResults = groups.map((group: Group) => ({
+            id: group.urlName,
+            name: group.name,
+            type: SearchItemType.Group,
+          }));
 
           return [...deedResults, ...groupResults];
-        }))
+        })
+      )
       .startWith([]);
   }
 
   onSelectItem(item: SearchItem): void {
-    if (item.type !== SearchItemType.Deed && item.type !== SearchItemType.Group) { return; }
+    if (item.type !== SearchItemType.Deed && item.type !== SearchItemType.Group) {
+      return;
+    }
 
     const routePrefix = `/${item.type[0].toLowerCase()}`;
     this.router.navigate([routePrefix, item.id]);

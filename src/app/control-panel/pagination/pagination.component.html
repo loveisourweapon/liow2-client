@@ -1,14 +1,9 @@
 <p>
-  Number of {{ typeOfItems }}:
-  <strong>{{ numberOfItems }}</strong>,
-  showing:
-  <strong>{{ ((currentPage - 1) * pageSize) + 1 }}</strong>
+  Number of {{ typeOfItems }}: <strong>{{ numberOfItems }}</strong
+  >, showing:
+  <strong>{{ (currentPage - 1) * pageSize + 1 }}</strong>
   to
-  <strong>{{
-    currentPage === numberOfPages
-      ? numberOfItems
-      : currentPage * pageSize
-  }}</strong>
+  <strong>{{ currentPage === numberOfPages ? numberOfItems : currentPage * pageSize }}</strong>
 </p>
 
 <pagination

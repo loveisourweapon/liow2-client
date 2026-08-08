@@ -21,11 +21,7 @@ describe(`DeedService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        DeedService,
-        { provide: JwtHttp, useClass: HttpStubService },
-        StateService,
-      ],
+      providers: [DeedService, { provide: JwtHttp, useClass: HttpStubService }, StateService],
     });
   });
 
@@ -66,13 +62,19 @@ describe(`DeedService`, () => {
     it(`should throw an error if no Deeds found`, () => {
       const response = new Response(new ResponseOptions({ body: [] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Deed not found`));
+      service.findOne().subscribe(
+        () => {},
+        (error) => expect(error.message).toBe(`Deed not found`)
+      );
     });
 
     it(`should throw an error if more than one Deed found`, () => {
       const response = new Response(new ResponseOptions({ body: [testDeed, testDeed] }));
       spyOn(http, 'get').and.returnValue(Observable.of(response));
-      service.findOne().subscribe(() => {}, (error) => expect(error.message).toBe(`Deed not found`));
+      service.findOne().subscribe(
+        () => {},
+        (error) => expect(error.message).toBe(`Deed not found`)
+      );
     });
   });
 

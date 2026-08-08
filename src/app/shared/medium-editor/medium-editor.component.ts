@@ -30,14 +30,14 @@ export class MediumEditorComponent implements AfterViewInit, OnChanges, OnDestro
 
   private editor: any;
 
-  constructor(
-    private element: ElementRef,
-  ) { }
+  constructor(private element: ElementRef) {}
 
   ngAfterViewInit(): void {
     this.editor = new MediumEditor(this.element.nativeElement.querySelector('textarea'), {
       placeholder: { text: this.placeholder, hideOnClick: false },
-      toolbar: { buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'] },
+      toolbar: {
+        buttons: ['bold', 'italic', 'underline', 'anchor', 'orderedlist', 'unorderedlist'],
+      },
       buttonLabels: 'fontawesome',
     });
 
@@ -46,17 +46,22 @@ export class MediumEditorComponent implements AfterViewInit, OnChanges, OnDestro
     }
 
     this.editor.subscribe('editableInput', (event: Event, editable: HTMLElement) =>
-      this.change.emit(toMarkdown(editable.innerHTML, {
-        converters: [{
-          // Remove spans and divs
-          filter: function (node) {
-            return node.nodeName === 'SPAN' || node.nodeName === 'DIV';
-          },
-          replacement: function (content) {
-            return content;
-          },
-        }]
-      })));
+      this.change.emit(
+        toMarkdown(editable.innerHTML, {
+          converters: [
+            {
+              // Remove spans and divs
+              filter: function (node) {
+                return node.nodeName === 'SPAN' || node.nodeName === 'DIV';
+              },
+              replacement: function (content) {
+                return content;
+              },
+            },
+          ],
+        })
+      )
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -64,7 +69,9 @@ export class MediumEditorComponent implements AfterViewInit, OnChanges, OnDestro
       !this.editor || // editor isn't initialised
       !changes['content'] || // no change to content
       this.element.nativeElement.querySelectorAll(':focus').length // editor is currently focused/typing
-    ) { return; }
+    ) {
+      return;
+    }
 
     let newContent = changes['content'].currentValue;
     if (newContent === undefined || newContent === null) {

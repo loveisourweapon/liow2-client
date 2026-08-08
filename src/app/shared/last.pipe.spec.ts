@@ -20,7 +20,7 @@ describe(`LastPipe`, () => {
       { input: [1, 2, 3], expected: 3 },
     ];
 
-    testCases.forEach(testCase => {
+    testCases.forEach((testCase) => {
       const result = pipe.transform<any>(testCase.input);
       expect(result).toBe(testCase.expected);
     });

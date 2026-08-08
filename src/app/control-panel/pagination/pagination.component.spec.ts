@@ -11,15 +11,9 @@ describe(`ControlPanelPaginationComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ControlPanelPaginationComponent,
-          TestHostComponent,
-          PaginationStubComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [ControlPanelPaginationComponent, TestHostComponent, PaginationStubComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -51,6 +45,10 @@ class TestHostComponent {
   numberOfPages = 1;
   currentPage = 1;
   pageSize = 20;
-  onNumberOfPagesChanged(numberOfPages: number) { this.numberOfPages = numberOfPages; }
-  onCurrentPageChanged(currentPage: number) { this.currentPage = currentPage; }
+  onNumberOfPagesChanged(numberOfPages: number) {
+    this.numberOfPages = numberOfPages;
+  }
+  onCurrentPageChanged(currentPage: number) {
+    this.currentPage = currentPage;
+  }
 }

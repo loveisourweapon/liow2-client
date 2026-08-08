@@ -23,6 +23,7 @@ import {
   ModalStubDirective,
   ModalStubService,
   RouterLinkStubDirective,
+  ShareButtonsStubComponent,
   RouterStubService,
   TabsetStubComponent,
   TabStubComponent,
@@ -51,41 +52,40 @@ describe(`GroupComponent`, () => {
   let fixture: ComponentFixture<GroupComponent>;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GroupComponent,
-          AlertStubComponent,
-          DeedListStubComponent,
-          DropdownStubDirective,
-          DropdownMenuStubDirective,
-          DropdownToggleStubDirective,
-          FeedStubComponent,
-          JumbtronStubComponent,
-          LoadErrorStubComponent,
-          MarkedStubComponent,
-          ModalStubDirective,
-          RouterLinkStubDirective,
-          TabsetStubComponent,
-          TabStubComponent,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: CampaignService, useClass: CampaignStubService },
-          EnvironmentService,
-          { provide: GroupService, useClass: GroupStubService },
-          { provide: MetaService, useClass: MetaStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupComponent,
+        AlertStubComponent,
+        DeedListStubComponent,
+        DropdownStubDirective,
+        DropdownMenuStubDirective,
+        DropdownToggleStubDirective,
+        FeedStubComponent,
+        JumbtronStubComponent,
+        LoadErrorStubComponent,
+        MarkedStubComponent,
+        ModalStubDirective,
+        RouterLinkStubDirective,
+        ShareButtonsStubComponent,
+        TabsetStubComponent,
+        TabStubComponent,
+      ],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        { provide: CampaignService, useClass: CampaignStubService },
+        EnvironmentService,
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: MetaService, useClass: MetaStubService },
+        { provide: ModalService, useClass: ModalStubService },
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

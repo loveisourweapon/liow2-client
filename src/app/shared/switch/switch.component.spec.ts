@@ -10,14 +10,9 @@ describe(`SwitchComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          SwitchComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [SwitchComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -55,10 +50,7 @@ describe(`SwitchComponent`, () => {
 
 @Component({
   template: `
-    <ui-switch
-      [checked]="checked"
-      (change)="onChange($event)"
-    >
+    <ui-switch [checked]="checked" (change)="onChange($event)">
       {{ label }}
     </ui-switch>
   `,
@@ -66,5 +58,7 @@ describe(`SwitchComponent`, () => {
 class TestHostComponent {
   label = 'Test Switch Label';
   checked = true;
-  onChange(newValue: boolean) { this.checked = newValue; }
+  onChange(newValue: boolean) {
+    this.checked = newValue;
+  }
 }

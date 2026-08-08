@@ -17,20 +17,15 @@ describe(`DeedListComponent`, () => {
   const deeds: Deed[] = [<Deed>{ _id: 'abc123' }];
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          DeedListComponent,
-          TestHostComponent,
-          DeedListHorizontalStubComponent,
-          DeedListVerticalStubComponent,
-        ],
-        providers: [
-          { provide: DeedService, useClass: DeedStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        DeedListComponent,
+        TestHostComponent,
+        DeedListHorizontalStubComponent,
+        DeedListVerticalStubComponent,
+      ],
+      providers: [{ provide: DeedService, useClass: DeedStubService }, StateService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

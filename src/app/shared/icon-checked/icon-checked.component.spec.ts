@@ -10,14 +10,9 @@ describe(`IconCheckedComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          IconCheckedComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [IconCheckedComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

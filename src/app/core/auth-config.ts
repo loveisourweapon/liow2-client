@@ -8,7 +8,7 @@ export class AuthConfig extends CustomConfig {
   loginUrl = `${environment.apiBaseUrl}/auth/login`;
   signupUrl = `${environment.apiBaseUrl}/auth/signup`;
   defaultHeaders = {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
   };
   providers = {

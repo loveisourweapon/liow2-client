@@ -35,25 +35,23 @@ describe(`UserComponent`, () => {
   const testUser = <User>{ _id: 'abc123' };
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          UserComponent,
-          FeedStubComponent,
-          JumbtronStubComponent,
-          LoadErrorStubComponent,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
-          EnvironmentService,
-          { provide: ModalService, useClass: ModalStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-          { provide: UserService, useClass: UserStubService },
-        ]
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        UserComponent,
+        FeedStubComponent,
+        JumbtronStubComponent,
+        LoadErrorStubComponent,
+      ],
+      providers: [
+        { provide: ActService, useClass: ActStubService },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+        EnvironmentService,
+        { provide: ModalService, useClass: ModalStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

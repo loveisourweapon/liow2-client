@@ -20,10 +20,7 @@ describe(`FeedService`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        FeedService,
-        { provide: JwtHttp, useClass: HttpStubService },
-      ],
+      providers: [FeedService, { provide: JwtHttp, useClass: HttpStubService }],
     });
   });
 

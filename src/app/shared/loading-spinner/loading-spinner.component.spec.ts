@@ -10,14 +10,9 @@ describe(`LoadingSpinnerComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          LoadingSpinnerComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [LoadingSpinnerComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,17 +29,14 @@ describe(`LoadingSpinnerComponent`, () => {
 
   it(`should append all classes specified in the 'classes' input property`, () => {
     const classList = element.nativeElement.classList;
-    testHost.classes.forEach((className: string) => expect(classList.contains(className)).toBe(true));
+    testHost.classes.forEach((className: string) =>
+      expect(classList.contains(className)).toBe(true)
+    );
   });
 });
 
 @Component({
-  template: `
-    <ui-loading-spinner
-      [size]="size"
-      [classes]="classes"
-    ></ui-loading-spinner>
-  `,
+  template: ` <ui-loading-spinner [size]="size" [classes]="classes"></ui-loading-spinner> `,
 })
 class TestHostComponent {
   size = '2x';

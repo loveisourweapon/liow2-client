@@ -5,6 +5,8 @@ import {
   ActStubService,
   AlertifyStubService,
   AuthStubService,
+  GroupStubService,
+  IconCheckedStubComponent,
   MarkedStubComponent,
   ModalStubDirective,
   ModalStubService,
@@ -16,6 +18,8 @@ import {
   ActService,
   AlertifyService,
   AuthService,
+  EnvironmentService,
+  GroupService,
   ModalService,
   StateService,
   TitleService,
@@ -31,26 +35,27 @@ describe(`GroupDetailComponent`, () => {
   let component: GroupDetailComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          GroupDetailComponent,
-          MarkedStubComponent,
-          ModalStubDirective,
-          MomentPipe,
-        ],
-        providers: [
-          { provide: ActService, useClass: ActStubService },
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          { provide: ModalService, useClass: ModalStubService },
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-          { provide: TitleService, useClass: TitleStubService },
-          { provide: UserService, useClass: UserStubService },
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        GroupDetailComponent,
+        IconCheckedStubComponent,
+        MarkedStubComponent,
+        ModalStubDirective,
+        MomentPipe,
+      ],
+      providers: [
+        { provide: GroupService, useClass: GroupStubService },
+        { provide: ActService, useClass: ActStubService },
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        EnvironmentService,
+        { provide: ModalService, useClass: ModalStubService },
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+        { provide: TitleService, useClass: TitleStubService },
+        { provide: UserService, useClass: UserStubService },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

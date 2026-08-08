@@ -11,10 +11,7 @@
 >
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <liow-modal-header
-        modalTitle="Find a group to join"
-        (close)="onClose()"
-      ></liow-modal-header>
+      <liow-modal-header modalTitle="Find a group to join" (close)="onClose()"></liow-modal-header>
 
       <div class="modal-body">
         <div class="form-group">
@@ -29,7 +26,7 @@
               typeaheadOptionField="name"
               class="form-control"
               placeholder="Search for groups..."
-            >
+            />
           </label>
         </div>
 
@@ -49,23 +46,18 @@
           </p>
           <div class="media">
             <div class="media-left">
-              <img src="/images/group.png" class="media-object img-circle" alt="Group logo">
+              <img src="/images/group.png" class="media-object img-circle" alt="Group logo" />
             </div>
             <div class="media-body media-middle">
               <h5 class="media-heading">{{ selectedItem.name }}</h5>
             </div>
           </div>
         </div>
-      </div><!-- .modal-body -->
+      </div>
+      <!-- .modal-body -->
 
       <div class="modal-footer">
-        <button
-          type="button"
-          (click)="onClose()"
-          class="btn btn-default"
-        >
-          Cancel
-        </button>
+        <button type="button" (click)="onClose()" class="btn btn-default">Cancel</button>
 
         <button
           type="button"
@@ -78,7 +70,8 @@
           <span *ngIf="!(state.auth.isAuthenticated$ | async)">Login &amp;</span>
           Join
         </button>
-      </div><!-- .modal-footer -->
+      </div>
+      <!-- .modal-footer -->
     </div>
   </div>
 </div>

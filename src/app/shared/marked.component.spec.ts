@@ -10,14 +10,9 @@ describe(`MarkedComponent`, () => {
   let element: DebugElement;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          MarkedComponent,
-          TestHostComponent,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [MarkedComponent, TestHostComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,7 +28,7 @@ describe(`MarkedComponent`, () => {
       { input: `**Foo** _Bar_`, expected: `<p><strong>Foo</strong> <em>Bar</em></p>` },
     ];
 
-    testCases.forEach(testCase => {
+    testCases.forEach((testCase) => {
       testHost.rawContent = testCase.input;
       fixture.detectChanges();
 

@@ -22,7 +22,7 @@ describe(`KebabCasePipe`, () => {
       { input: 'foo___bar ', expected: 'foo-bar' },
     ];
 
-    testCases.forEach(testCase => {
+    testCases.forEach((testCase) => {
       const result = pipe.transform(testCase.input);
       expect(result).toBe(testCase.expected);
     });

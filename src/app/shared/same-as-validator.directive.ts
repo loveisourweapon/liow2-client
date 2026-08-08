@@ -9,9 +9,6 @@ export class SameAsValidatorDirective implements Validator {
   @Input() validateSameAs: NgModel;
 
   validate(control: AbstractControl): { [key: string]: any } {
-    return control.value !== this.validateSameAs.value
-      ? { sameAs: true }
-      : null
-      ;
+    return control.value !== this.validateSameAs.value ? { sameAs: true } : null;
   }
 }

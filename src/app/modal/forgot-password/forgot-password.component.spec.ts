@@ -21,24 +21,20 @@ describe(`ForgotPasswordModalComponent`, () => {
   let state: StateService;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          ForgotPasswordModalComponent,
-          TestHostComponent,
-          ModalHeaderComponent,
-          ModalStubDirective,
-        ],
-        imports: [
-          FormsModule,
-        ],
-        providers: [
-          { provide: AlertifyService, useClass: AlertifyStubService },
-          { provide: AuthService, useClass: AuthStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        ForgotPasswordModalComponent,
+        TestHostComponent,
+        ModalHeaderComponent,
+        ModalStubDirective,
+      ],
+      imports: [FormsModule],
+      providers: [
+        { provide: AlertifyService, useClass: AlertifyStubService },
+        { provide: AuthService, useClass: AuthStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -57,7 +53,7 @@ describe(`ForgotPasswordModalComponent`, () => {
     const sendSpy = spyOn(auth, 'sendForgotPassword').and.returnValue(Observable.of({}));
 
     const emailAddress = 'test@example.com';
-    const emailInput = element.query(By.css('#email'));
+    const emailInput = element.query(By.css('#email-forgot'));
     emailInput.triggerEventHandler('ngModelChange', emailAddress);
     fixture.detectChanges();
 
@@ -70,7 +66,8 @@ describe(`ForgotPasswordModalComponent`, () => {
     state.modal.forgotPassword$.next({ isOpen: true });
     const closeButton = element.query(By.css('button.close'));
     closeButton.triggerEventHandler('click', null);
-    state.modal.forgotPassword$.first()
+    state.modal.forgotPassword$
+      .first()
       .subscribe((modalState: ModalState) => expect(modalState.isOpen).toBe(false));
   });
 });
@@ -78,4 +75,4 @@ describe(`ForgotPasswordModalComponent`, () => {
 @Component({
   template: `<liow-forgot-password-modal></liow-forgot-password-modal>`,
 })
-class TestHostComponent { }
+class TestHostComponent {}

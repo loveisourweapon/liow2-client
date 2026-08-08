@@ -7,13 +7,7 @@ import { CommentFormComponent } from './comment-form';
 import { DeedComponent } from './deed.component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    DeedRoutingModule,
-  ],
-  declarations: [
-    CommentFormComponent,
-    DeedComponent,
-  ],
+  imports: [SharedModule, DeedRoutingModule],
+  declarations: [CommentFormComponent, DeedComponent],
 })
 export class DeedModule {}

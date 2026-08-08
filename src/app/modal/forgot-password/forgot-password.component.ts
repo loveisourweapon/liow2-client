@@ -26,22 +26,21 @@ export class ForgotPasswordModalComponent implements OnInit, OnDestroy {
   constructor(
     private alertify: AlertifyService,
     private auth: AuthService,
-    private state: StateService,
-  ) { }
+    private state: StateService
+  ) {}
 
   ngOnInit(): void {
-    this.stateSubscription = this.state.modal.forgotPassword$
-      .subscribe((state: ModalState) => {
-        if (state.isOpen && !this.modal.isShown) {
-          this.reset();
-          this.modal.show();
-        } else if (!state.isOpen && this.modal.isShown) {
-          this.modal.hide();
-        }
+    this.stateSubscription = this.state.modal.forgotPassword$.subscribe((state: ModalState) => {
+      if (state.isOpen && !this.modal.isShown) {
+        this.reset();
+        this.modal.show();
+      } else if (!state.isOpen && this.modal.isShown) {
+        this.modal.hide();
+      }
 
-        const options = <ForgotPasswordModalOptions>state.options;
-        this.emailAddress = has(options, 'emailAddress') ? options.emailAddress : '';
-      });
+      const options = <ForgotPasswordModalOptions>state.options;
+      this.emailAddress = has(options, 'emailAddress') ? options.emailAddress : '';
+    });
   }
 
   ngOnDestroy(): void {
@@ -50,14 +49,15 @@ export class ForgotPasswordModalComponent implements OnInit, OnDestroy {
 
   send(emailAddress: string): void {
     this.isSending$.next(true);
-    this.auth.sendForgotPassword(emailAddress)
+    this.auth
+      .sendForgotPassword(emailAddress)
       .finally(() => this.isSending$.next(false))
       .subscribe(
         () => {
           this.alertify.success(`Sent password recovery email to <b>${emailAddress}</b>`);
           this.onClose();
         },
-        () => this.alertify.error(`Failed sending password recovery email`),
+        () => this.alertify.error(`Failed sending password recovery email`)
       );
   }
 

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { RouterStubService, RouterOutletStubComponent } from '../testing';
-import { StateService } from './core/services';
+import { EnvironmentService, StateService } from './core/services';
 import { MomentPipe } from './shared';
 import { AppComponent } from './app.component';
 
@@ -13,22 +13,21 @@ describe(`AppComponent`, () => {
   let component: AppComponent;
 
   beforeEach(async(() => {
-    TestBed
-      .configureTestingModule({
-        declarations: [
-          AppComponent,
-          ModalsStubComponent,
-          MomentPipe,
-          NavbarStubComponent,
-          SidebarStubComponent,
-          RouterOutletStubComponent,
-        ],
-        providers: [
-          { provide: Router, useClass: RouterStubService },
-          StateService,
-        ],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,
+        ModalsStubComponent,
+        MomentPipe,
+        NavbarStubComponent,
+        SidebarStubComponent,
+        RouterOutletStubComponent,
+      ],
+      providers: [
+        EnvironmentService,
+        { provide: Router, useClass: RouterStubService },
+        StateService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -59,16 +58,16 @@ describe(`AppComponent`, () => {
   selector: 'liow-modals',
   template: ``,
 })
-class ModalsStubComponent { }
+class ModalsStubComponent {}
 
 @Component({
   selector: 'liow-navbar',
   template: ``,
 })
-class NavbarStubComponent { }
+class NavbarStubComponent {}
 
 @Component({
   selector: 'liow-sidebar',
   template: ``,
 })
-class SidebarStubComponent { }
+class SidebarStubComponent {}

@@ -18,7 +18,10 @@ import { StateService } from './state.service';
 export class CampaignService {
   private readonly baseUrl = `${environment.apiBaseUrl}/campaigns`;
 
-  constructor(private http: JwtHttp, private state: StateService) {
+  constructor(
+    private http: JwtHttp,
+    private state: StateService
+  ) {
     // Setup group$ and auth.group$ subscribers to set respective campaign$'s
     this.getCampaignForGroup(this.state.group$).subscribe(
       (campaign: Campaign) => (this.state.campaign = campaign)

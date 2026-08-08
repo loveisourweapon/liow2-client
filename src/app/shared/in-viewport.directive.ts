@@ -1,4 +1,11 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import * as inViewport from 'in-viewport';
 
 @Directive({
@@ -11,9 +18,7 @@ export class InViewportDirective implements AfterViewInit, OnDestroy {
   private watcher: any;
   private resetTimer: any;
 
-  constructor(
-    private element: ElementRef,
-  ) { }
+  constructor(private element: ElementRef) {}
 
   ngAfterViewInit(): void {
     this.watcher = inViewport(this.element.nativeElement, this.handleInViewport.bind(this));
@@ -21,11 +26,15 @@ export class InViewportDirective implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.watcher.dispose();
-    if (this.resetTimer) { clearInterval(this.resetTimer); }
+    if (this.resetTimer) {
+      clearInterval(this.resetTimer);
+    }
   }
 
   private handleInViewport(): void {
-    if (this.isInViewport) { return; }
+    if (this.isInViewport) {
+      return;
+    }
 
     this.isInViewport = true;
     this.inViewport.emit();
