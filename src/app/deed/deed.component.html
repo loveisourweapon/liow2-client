@@ -1,4 +1,11 @@
-<liow-jumbotron [classes]="['videotron']">
+<div class="container container-pad" *ngIf="loadError$ | async">
+  <ui-load-error
+    message="Something went wrong loading this deed."
+    (retry)="retryLoad()"
+  ></ui-load-error>
+</div>
+
+<liow-jumbotron [classes]="['videotron']" *ngIf="!(loadError$ | async)">
   <div jumbotron-content>
     <div
       class="embed-responsive embed-responsive-16by9"
@@ -32,7 +39,7 @@
   </div>
 </liow-jumbotron>
 
-<div class="container container-pad">
+<div class="container container-pad" *ngIf="!(loadError$ | async)">
   <div class="row">
     <div class="col-sm-3 col-sm-push-9 m-b-sm">
       <button

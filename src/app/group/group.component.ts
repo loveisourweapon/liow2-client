@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/if';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
@@ -43,6 +44,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   feedCriteria: FeedCriteria;
   currentTab: GroupTab;
   tabs = GroupTab;
+  loadError$ = new BehaviorSubject<boolean>(false);
 
   identifyBy = identifyBy;
 
@@ -55,6 +57,7 @@ export class GroupComponent implements OnDestroy, OnInit {
   @ViewChild('confirmModal') confirmModal: ModalDirective;
   confirmModalContent: string;
   private confirmation$ = new BehaviorSubject<boolean>(null);
+  private retry$ = new BehaviorSubject<Date>(new Date());
 
   constructor(
     private actService: ActService,
@@ -72,12 +75,24 @@ export class GroupComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.routeSubscription = this.route.params
+    const groupSlug$ = this.route.params
       .filter((params: Params) => has(params, 'groupSlug'))
       .map((params: Params) => params.groupSlug)
-      .distinctUntilChanged()
-      .do(() => (this.state.group = null))
-      .switchMap((groupSlug: GroupSlug) => this.groupService.findOne({ urlName: groupSlug }))
+      .distinctUntilChanged();
+
+    // Catch inside the switchMap - an error reaching the outer stream would
+    // unsubscribe it, so neither a new slug nor a retry would reload the page
+    this.routeSubscription = Observable.combineLatest(groupSlug$, this.retry$)
+      .do(() => {
+        this.state.group = null;
+        this.loadError$.next(false);
+      })
+      .switchMap(([groupSlug]: [GroupSlug, Date]) =>
+        this.groupService.findOne({ urlName: groupSlug }).catch(() => {
+          this.loadError$.next(true);
+          return Observable.empty<Group>();
+        })
+      )
       .subscribe((group: Group) => (this.state.group = group));
 
     this.groupSubscription = this.state.group$
@@ -127,6 +142,10 @@ export class GroupComponent implements OnDestroy, OnInit {
     this.campaignSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
     this.feedCriteriaSubscription.unsubscribe();
+  }
+
+  retryLoad(): void {
+    this.retry$.next(new Date());
   }
 
   isCurrentDeed(deed: Deed, campaign: Campaign): boolean {

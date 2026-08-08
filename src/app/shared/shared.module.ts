@@ -15,6 +15,7 @@ import { FeedComponent, FeedItemComponent } from './feed';
 import { IconCheckedComponent } from './icon-checked';
 import { InViewportDirective } from './in-viewport.directive';
 import { JumbotronComponent } from './jumbotron';
+import { LoadErrorComponent } from './load-error';
 import { LoadingSpinnerComponent } from './loading-spinner';
 import { MarkedComponent } from './marked.component';
 import { MediumEditorComponent } from './medium-editor';
@@ -41,6 +42,7 @@ import { MomentPipe } from './moment.pipe';
     IconCheckedComponent,
     InViewportDirective,
     JumbotronComponent,
+    LoadErrorComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
     MediumEditorComponent,
@@ -66,6 +68,7 @@ import { MomentPipe } from './moment.pipe';
     FeedComponent,
     IconCheckedComponent,
     JumbotronComponent,
+    LoadErrorComponent,
     LoadingSpinnerComponent,
     MarkedComponent,
     MediumEditorComponent,

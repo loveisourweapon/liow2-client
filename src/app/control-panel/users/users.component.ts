@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
@@ -89,11 +91,19 @@ export class UsersComponent implements OnInit, OnDestroy {
           }
       );
 
+    // Catch inside the switchMap - an error reaching the outer stream would
+    // unsubscribe it, leaving the list stuck until the tab is reopened
     this.usersSubscription = this.filterParams$
-      .switchMap((searchParams: SearchParams) => this.userService.find(searchParams))
+      .switchMap((searchParams: SearchParams) =>
+        this.userService.find(searchParams).catch(() => {
+          this.alertify.error(`Failed loading users`);
+          return Observable.of<User[]>([]);
+        })
+      )
       .subscribe((users: User[]) => (this.state.controlPanel.users = users));
+    // The list already reports the failure, so the count fails quietly
     this.numberOfUsers$ = this.filterParams$.switchMap((searchParams: SearchParams) =>
-      this.userService.count(searchParams)
+      this.userService.count(searchParams).catch(() => Observable.of(0))
     );
 
     // Get initial router params

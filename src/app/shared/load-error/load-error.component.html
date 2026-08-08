@@ -1,0 +1,11 @@
+<div class="text-center m-t-lg m-b-lg">
+  <p class="text-muted">
+    <i class="fa fa-fw fa-exclamation-triangle"></i>
+    {{ message }}
+  </p>
+
+  <button type="button" class="btn btn-default" (click)="retry.emit()">
+    <i class="fa fa-fw fa-refresh"></i>
+    Try again
+  </button>
+</div>

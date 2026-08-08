@@ -8,12 +8,20 @@ import {
   ActivatedRouteStubService,
   FeedStubComponent,
   JumbtronStubComponent,
+  LoadErrorStubComponent,
   ModalStubService,
   TitleStubService,
   UserStubService,
 } from '../../testing';
 import { User } from '../core/models';
-import { ActService, ModalService, StateService, TitleService, UserService } from '../core/services';
+import {
+  ActService,
+  EnvironmentService,
+  ModalService,
+  StateService,
+  TitleService,
+  UserService,
+} from '../core/services';
 import { UserComponent } from './user.component';
 
 // TODO: add proper tests
@@ -33,10 +41,12 @@ describe(`UserComponent`, () => {
           UserComponent,
           FeedStubComponent,
           JumbtronStubComponent,
+          LoadErrorStubComponent,
         ],
         providers: [
           { provide: ActService, useClass: ActStubService },
           { provide: ActivatedRoute, useClass: ActivatedRouteStubService },
+          EnvironmentService,
           { provide: ModalService, useClass: ModalStubService },
           StateService,
           { provide: TitleService, useClass: TitleStubService },

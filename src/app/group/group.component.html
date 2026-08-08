@@ -1,3 +1,10 @@
+<div class="container container-pad" *ngIf="loadError$ | async">
+  <ui-load-error
+    message="Something went wrong loading this group."
+    (retry)="retryLoad()"
+  ></ui-load-error>
+</div>
+
 <liow-jumbotron
   image="/images/group.png"
   [background]="group.coverImage"

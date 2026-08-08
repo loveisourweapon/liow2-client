@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
@@ -47,7 +49,9 @@ export class DeedComponent implements OnDestroy, OnInit {
   isSavingTestimony$ = new BehaviorSubject<boolean>(false);
   feedCriteria: FeedCriteria;
   testimony = '';
+  loadError$ = new BehaviorSubject<boolean>(false);
 
+  private retry$ = new BehaviorSubject<Date>(new Date());
   private routeSubscription: Subscription;
   private deedSubscription: Subscription;
 
@@ -65,12 +69,24 @@ export class DeedComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.routeSubscription = this.route.params
+    const deedSlug$ = this.route.params
       .filter((params: Params) => has(params, 'deedSlug'))
       .map((params: Params) => params.deedSlug)
-      .distinctUntilChanged()
-      .do(() => this.state.deed$.next(null))
-      .switchMap((deedSlug: DeedSlug) => this.deedService.findOne({ urlTitle: deedSlug }))
+      .distinctUntilChanged();
+
+    // Catch inside the switchMap - an error reaching the outer stream would
+    // unsubscribe it, so neither a new slug nor a retry would reload the page
+    this.routeSubscription = Observable.combineLatest(deedSlug$, this.retry$)
+      .do(() => {
+        this.state.deed$.next(null);
+        this.loadError$.next(false);
+      })
+      .switchMap(([deedSlug]: [DeedSlug, Date]) =>
+        this.deedService.findOne({ urlTitle: deedSlug }).catch(() => {
+          this.loadError$.next(true);
+          return Observable.empty<Deed>();
+        })
+      )
       .subscribe((deed: Deed) => (this.state.deed = deed));
 
     this.deedSubscription = Observable.combineLatest(
@@ -92,6 +108,10 @@ export class DeedComponent implements OnDestroy, OnInit {
 
     this.routeSubscription.unsubscribe();
     this.deedSubscription.unsubscribe();
+  }
+
+  retryLoad(): void {
+    this.retry$.next(new Date());
   }
 
   onSaveTestimony(
