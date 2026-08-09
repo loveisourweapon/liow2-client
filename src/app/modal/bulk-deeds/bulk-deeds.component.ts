@@ -28,10 +28,6 @@ interface BulkDeedsModalOptions {
   group: Group;
 }
 
-// Matches the server's own cap on POST /acts/bulk, so a mistyped count is
-// caught here rather than coming back as a 400
-const MAX_COUNT = 100;
-
 @Component({
   selector: 'liow-bulk-deeds-modal',
   templateUrl: './bulk-deeds.component.html',
@@ -50,7 +46,10 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   campaign: Campaign;
   group: Group;
   deeds: Deed[] = [];
-  maxCount = MAX_COUNT;
+
+  // Mirrors the server's cap on POST /acts/bulk, so a mistyped count is caught
+  // here rather than coming back as a 400
+  readonly maxCount = 100;
 
   private stateSubscription: Subscription;
 
@@ -82,6 +81,10 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  get showCountError(): boolean {
+    return !!this.form && this.form.submitted && !this.isValidCount(Number(this.formData.count));
+  }
+
   onSubmit(): void {
     if (!this.form.valid) {
       return;
@@ -93,15 +96,9 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Number rather than parseInt, which would quietly truncate 2.9 to 2 and
-    // register a count nobody asked for. The server rejects it either way
     const count = Number(this.formData.count);
-    if (!Number.isInteger(count) || count <= 0) {
-      this.errorMessage = 'Please enter a whole number greater than 0';
-      return;
-    }
-    if (count > MAX_COUNT) {
-      this.errorMessage = `Please enter a number no greater than ${MAX_COUNT}`;
+    if (!this.isValidCount(count)) {
+      this.errorMessage = `Please enter a whole number from 1 to ${this.maxCount}`;
       return;
     }
 
@@ -141,6 +138,10 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   onClose(): void {
     this.state.modal.bulkDeeds$.next({ isOpen: false });
     this.reset();
+  }
+
+  private isValidCount(count: number): boolean {
+    return Number.isInteger(count) && count > 0 && count <= this.maxCount;
   }
 
   private loadDeeds(): void {

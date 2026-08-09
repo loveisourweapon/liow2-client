@@ -183,8 +183,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.removeUser = undefined;
           this.refetch$.next(new Date());
         },
-        // Deleting the owner of a group is refused with a message naming the
-        // groups, which is more use than a generic failure
+        // Refusing to delete a group owner names the groups to deal with first
         (error: ApiError) => this.alertify.error(get(error, 'message', `Failed deleting user`))
       );
   }
