@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { has } from 'lodash';
+import { get, has } from 'lodash';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +15,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { Group, GroupId, JsonPatchOp, User } from '../../core/models';
+import { ApiError, Group, GroupId, JsonPatchOp, User } from '../../core/models';
 import {
   AlertifyService,
   AuthService,
@@ -183,7 +183,9 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.removeUser = undefined;
           this.refetch$.next(new Date());
         },
-        () => this.alertify.error(`Failed deleting user`)
+        // Deleting the owner of a group is refused with a message naming the
+        // groups, which is more use than a generic failure
+        (error: ApiError) => this.alertify.error(get(error, 'message', `Failed deleting user`))
       );
   }
 }
