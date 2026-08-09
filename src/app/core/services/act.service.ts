@@ -3,6 +3,8 @@ import { Response } from '@angular/http';
 import { JwtHttp } from 'ng2-ui-auth';
 import { has } from 'lodash';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { environment } from '../../../environments/environment';
@@ -78,6 +80,7 @@ export class ActService {
 
     return this.http
       .post(`${this.baseUrl}/bulk`, payload)
+      .catch((response: Response) => Observable.throw(response.json().error))
       .map((response: Response) => response.json());
   }
 }

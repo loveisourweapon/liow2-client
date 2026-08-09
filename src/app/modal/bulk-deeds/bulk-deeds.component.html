@@ -47,10 +47,7 @@
             </div>
           </div>
 
-          <div
-            class="form-group"
-            [class.has-error]="form.submitted && (!formData.count || formData.count <= 0)"
-          >
+          <div class="form-group" [class.has-error]="showCountError">
             <label for="count" class="col-xs-4 control-label">Number of deeds</label>
             <div class="col-xs-8">
               <input
@@ -61,14 +58,11 @@
                 [(ngModel)]="formData.count"
                 required
                 min="1"
+                [max]="maxCount"
                 step="1"
-                #countInput="ngModel"
               />
-              <span
-                class="help-block"
-                *ngIf="form.submitted && (countInput.invalid || formData.count <= 0)"
-              >
-                Please enter a valid number greater than 0
+              <span class="help-block" *ngIf="showCountError">
+                Please enter a whole number from 1 to {{ maxCount }}
               </span>
             </div>
           </div>

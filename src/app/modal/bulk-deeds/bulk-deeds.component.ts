@@ -47,6 +47,10 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   group: Group;
   deeds: Deed[] = [];
 
+  // Mirrors the server's cap on POST /acts/bulk, so a mistyped count is caught
+  // here rather than coming back as a 400
+  readonly maxCount = 100;
+
   private stateSubscription: Subscription;
 
   constructor(
@@ -77,6 +81,10 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  get showCountError(): boolean {
+    return !!this.form && this.form.submitted && !this.isValidCount(Number(this.formData.count));
+  }
+
   onSubmit(): void {
     if (!this.form.valid) {
       return;
@@ -88,9 +96,9 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const count = parseInt(String(this.formData.count), 10);
-    if (isNaN(count) || count <= 0) {
-      this.errorMessage = 'Please enter a valid number greater than 0';
+    const count = Number(this.formData.count);
+    if (!this.isValidCount(count)) {
+      this.errorMessage = `Please enter a whole number from 1 to ${this.maxCount}`;
       return;
     }
 
@@ -130,6 +138,10 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   onClose(): void {
     this.state.modal.bulkDeeds$.next({ isOpen: false });
     this.reset();
+  }
+
+  private isValidCount(count: number): boolean {
+    return Number.isInteger(count) && count > 0 && count <= this.maxCount;
   }
 
   private loadDeeds(): void {
