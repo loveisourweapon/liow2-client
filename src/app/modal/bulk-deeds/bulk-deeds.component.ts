@@ -28,6 +28,10 @@ interface BulkDeedsModalOptions {
   group: Group;
 }
 
+// Matches the server's own cap on POST /acts/bulk, so a mistyped count is
+// caught here rather than coming back as a 400
+const MAX_COUNT = 100;
+
 @Component({
   selector: 'liow-bulk-deeds-modal',
   templateUrl: './bulk-deeds.component.html',
@@ -46,6 +50,7 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
   campaign: Campaign;
   group: Group;
   deeds: Deed[] = [];
+  maxCount = MAX_COUNT;
 
   private stateSubscription: Subscription;
 
@@ -88,9 +93,15 @@ export class BulkDeedsModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const count = parseInt(String(this.formData.count), 10);
-    if (isNaN(count) || count <= 0) {
-      this.errorMessage = 'Please enter a valid number greater than 0';
+    // Number rather than parseInt, which would quietly truncate 2.9 to 2 and
+    // register a count nobody asked for. The server rejects it either way
+    const count = Number(this.formData.count);
+    if (!Number.isInteger(count) || count <= 0) {
+      this.errorMessage = 'Please enter a whole number greater than 0';
+      return;
+    }
+    if (count > MAX_COUNT) {
+      this.errorMessage = `Please enter a number no greater than ${MAX_COUNT}`;
       return;
     }
 
