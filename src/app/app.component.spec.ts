@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { RouterStubService, RouterOutletStubComponent } from '../testing';
-import { EmbedService, EnvironmentService, StateService } from './core/services';
+import { EnvironmentService, StateService } from './core/services';
 import { MomentPipe } from './shared';
 import { AppComponent } from './app.component';
 
@@ -23,7 +23,6 @@ describe(`AppComponent`, () => {
         RouterOutletStubComponent,
       ],
       providers: [
-        EmbedService,
         EnvironmentService,
         { provide: Router, useClass: RouterStubService },
         StateService,

@@ -1,4 +1,4 @@
-<div *ngIf="!embed.embedded" class="jumbotron {{ classes.join(' ') }}" [style.background-image]="backgroundUrl">
+<div *ngIf="!env.embedded" class="jumbotron {{ classes.join(' ') }}" [style.background-image]="backgroundUrl">
   <div class="container">
     <ng-content select="[jumbotron-content]"></ng-content>
 
