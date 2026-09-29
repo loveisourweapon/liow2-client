@@ -2,12 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+import { EnvironmentService } from '../../core/services';
 import { JumbotronComponent } from './jumbotron.component';
 
 describe(`JumbotronComponent`, () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JumbotronComponent, TestHost1Component, TestHost2Component],
+      providers: [EnvironmentService],
     }).compileComponents();
   }));
 

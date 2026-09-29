@@ -1,13 +1,13 @@
-<liow-navbar></liow-navbar>
-<liow-sidebar></liow-sidebar>
+<liow-navbar *ngIf="!env.embedded"></liow-navbar>
+<liow-sidebar *ngIf="!env.embedded"></liow-sidebar>
 
-<div class="content-wrapper">
+<div class="content-wrapper" [class.embedded]="env.embedded">
   <router-outlet></router-outlet>
 </div>
 
 <liow-modals></liow-modals>
 
-<footer>
+<footer *ngIf="!env.embedded">
   <div class="container f-sm">
     <div class="footer-copyright">
       &copy; {{ date | moment: 'YYYY' }}

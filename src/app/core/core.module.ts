@@ -62,7 +62,7 @@ import {
     CampaignService,
     CommentService,
     DeedService,
-    EnvironmentService,
+      EnvironmentService,
     FeedService,
     GroupService,
     Meta,
