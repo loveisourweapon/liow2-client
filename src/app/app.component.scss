@@ -11,6 +11,10 @@
   @media (max-width: $screen-xs-max) {
     padding-bottom: $footer-height-sm;
   }
+
+  &.embedded {
+    padding-bottom: 0;
+  }
 }
 
 footer {

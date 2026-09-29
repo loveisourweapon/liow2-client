@@ -6,7 +6,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
-import { EnvironmentService, StateService } from './core/services';
+import { EmbedService, EnvironmentService, StateService } from './core/services';
 
 @Component({
   selector: 'liow-root',
@@ -24,7 +24,8 @@ export class AppComponent implements OnDestroy, OnInit {
   constructor(
     private router: Router,
     private state: StateService,
-    public env: EnvironmentService
+    public env: EnvironmentService,
+    public embed: EmbedService
   ) {}
 
   ngOnInit(): void {

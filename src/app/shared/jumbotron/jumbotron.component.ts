@@ -8,6 +8,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
+import { EmbedService } from '../../core/services';
+
 @Component({
   selector: 'liow-jumbotron',
   templateUrl: './jumbotron.component.html',
@@ -22,7 +24,7 @@ export class JumbotronComponent implements OnChanges, OnInit {
   backgroundUrl: string;
   hasContent: boolean;
 
-  constructor(private element: ElementRef) {}
+  constructor(private element: ElementRef, public embed: EmbedService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes['background']) {
